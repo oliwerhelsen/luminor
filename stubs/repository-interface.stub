@@ -1,0 +1,40 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Domain\Repository\RepositoryInterface;
+
+/**
+ * Repository interface for {{ entity }} entities.
+ *
+ * Defines the contract for {{ entity }} persistence operations.
+ */
+interface {{ entity }}RepositoryInterface extends RepositoryInterface
+{
+    /**
+     * Find a {{ entity }} by its unique identifier.
+     */
+    public function findById(string $id): ?{{ entity }};
+
+    /**
+     * Find all {{ entityPlural }}.
+     *
+     * @return array<{{ entity }}>
+     */
+    public function findAll(): array;
+
+    /**
+     * Save a {{ entity }}.
+     */
+    public function save({{ entity }} ${{ entityVariable }}): void;
+
+    /**
+     * Delete a {{ entity }}.
+     */
+    public function delete({{ entity }} ${{ entityVariable }}): void;
+
+    // Add custom query methods here
+    // Example: public function findByEmail(string $email): ?{{ entity }};
+}

@@ -1,0 +1,140 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Infrastructure\Http\CrudController;
+use Lumina\DDD\Application\Bus\CommandBusInterface;
+use Lumina\DDD\Application\Bus\QueryBusInterface;
+use Utopia\Http\Request;
+use Utopia\Http\Response;
+
+/**
+ * {{ class }} CRUD controller.
+ *
+ * Provides full CRUD operations for {{ controllerName }} resources.
+ */
+final class {{ class }} extends CrudController
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        private readonly CommandBusInterface $commandBus,
+        private readonly QueryBusInterface $queryBus,
+    ) {
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getResourceName(): string
+    {
+        return '{{ resourceName }}';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getRoutePrefix(): string
+    {
+        return '{{ routePrefix }}';
+    }
+
+    /**
+     * List all {{ resourcePlural }}.
+     *
+     * GET {{ routePrefix }}
+     */
+    public function index(Request $request, Response $response): Response
+    {
+        // Example: Query for list
+        // $result = $this->queryBus->dispatch(new List{{ controllerName }}sQuery(
+        //     page: (int) $request->getQuery('page', 1),
+        //     perPage: (int) $request->getQuery('per_page', 15),
+        // ));
+
+        return $this->success($response, [
+            'data' => [],
+            'meta' => [
+                'page' => 1,
+                'per_page' => 15,
+                'total' => 0,
+            ],
+        ]);
+    }
+
+    /**
+     * Get a single {{ resourceName }}.
+     *
+     * GET {{ routePrefix }}/{id}
+     */
+    public function show(Request $request, Response $response, string $id): Response
+    {
+        // Example: Query for single item
+        // $result = $this->queryBus->dispatch(new Get{{ controllerName }}ByIdQuery($id));
+        // 
+        // if ($result === null) {
+        //     return $this->notFound($response, '{{ controllerName }} not found');
+        // }
+
+        return $this->success($response, [
+            'data' => null,
+        ]);
+    }
+
+    /**
+     * Create a new {{ resourceName }}.
+     *
+     * POST {{ routePrefix }}
+     */
+    public function store(Request $request, Response $response): Response
+    {
+        $data = $request->getPayload();
+
+        // Example: Dispatch create command
+        // $this->commandBus->dispatch(new Create{{ controllerName }}Command(
+        //     ...validated data...
+        // ));
+
+        return $this->created($response, [
+            'data' => null,
+            'message' => '{{ controllerName }} created successfully',
+        ]);
+    }
+
+    /**
+     * Update an existing {{ resourceName }}.
+     *
+     * PUT {{ routePrefix }}/{id}
+     */
+    public function update(Request $request, Response $response, string $id): Response
+    {
+        $data = $request->getPayload();
+
+        // Example: Dispatch update command
+        // $this->commandBus->dispatch(new Update{{ controllerName }}Command(
+        //     id: $id,
+        //     ...validated data...
+        // ));
+
+        return $this->success($response, [
+            'data' => null,
+            'message' => '{{ controllerName }} updated successfully',
+        ]);
+    }
+
+    /**
+     * Delete a {{ resourceName }}.
+     *
+     * DELETE {{ routePrefix }}/{id}
+     */
+    public function destroy(Request $request, Response $response, string $id): Response
+    {
+        // Example: Dispatch delete command
+        // $this->commandBus->dispatch(new Delete{{ controllerName }}Command($id));
+
+        return $this->noContent($response);
+    }
+}

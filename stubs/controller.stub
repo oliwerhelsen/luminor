@@ -1,0 +1,93 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Infrastructure\Http\ApiController;
+use Utopia\Http\Request;
+use Utopia\Http\Response;
+
+/**
+ * {{ class }} controller.
+ *
+ * Handles HTTP requests for {{ controllerName }} resources.
+ */
+final class {{ class }} extends ApiController
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        // Inject your dependencies here
+        // Example: private readonly CommandBusInterface $commandBus,
+    ) {
+    }
+
+    /**
+     * List all {{ resourcePlural }}.
+     *
+     * GET {{ routePrefix }}
+     */
+    public function index(Request $request, Response $response): Response
+    {
+        // Implement list logic
+        return $this->success($response, [
+            'data' => [],
+            'message' => '{{ controllerName }} list retrieved successfully',
+        ]);
+    }
+
+    /**
+     * Get a single {{ resourceName }}.
+     *
+     * GET {{ routePrefix }}/{id}
+     */
+    public function show(Request $request, Response $response, string $id): Response
+    {
+        // Implement show logic
+        return $this->success($response, [
+            'data' => null,
+            'message' => '{{ controllerName }} retrieved successfully',
+        ]);
+    }
+
+    /**
+     * Create a new {{ resourceName }}.
+     *
+     * POST {{ routePrefix }}
+     */
+    public function store(Request $request, Response $response): Response
+    {
+        // Implement create logic
+        return $this->created($response, [
+            'data' => null,
+            'message' => '{{ controllerName }} created successfully',
+        ]);
+    }
+
+    /**
+     * Update an existing {{ resourceName }}.
+     *
+     * PUT {{ routePrefix }}/{id}
+     */
+    public function update(Request $request, Response $response, string $id): Response
+    {
+        // Implement update logic
+        return $this->success($response, [
+            'data' => null,
+            'message' => '{{ controllerName }} updated successfully',
+        ]);
+    }
+
+    /**
+     * Delete a {{ resourceName }}.
+     *
+     * DELETE {{ routePrefix }}/{id}
+     */
+    public function destroy(Request $request, Response $response, string $id): Response
+    {
+        // Implement delete logic
+        return $this->noContent($response);
+    }
+}

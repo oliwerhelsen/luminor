@@ -1,0 +1,61 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Domain\Abstractions\ValueObject;
+
+/**
+ * {{ class }} value object.
+ *
+ * An immutable value object representing {{ class }}.
+ */
+final class {{ class }} extends ValueObject
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        // Add your value object properties here
+        // Example: private readonly string $value,
+    ) {
+    }
+
+    /**
+     * Create a new {{ class }} from a primitive value.
+     */
+    public static function fromString(string $value): self
+    {
+        // Add validation logic here
+        return new self($value);
+    }
+
+    /**
+     * Get the primitive representation of this value object.
+     */
+    public function toString(): string
+    {
+        // Return the primitive value
+        return '';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getEqualityComponents(): array
+    {
+        return [
+            // Return an array of values that determine equality
+            // Example: $this->value,
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function __toString(): string
+    {
+        return $this->toString();
+    }
+}

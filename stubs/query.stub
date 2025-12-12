@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Application\CQRS\Query;
+
+/**
+ * {{ class }} query.
+ *
+ * A query to retrieve {{ queryName }} data.
+ */
+final class {{ class }} implements Query
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        // Add your query parameters here
+        // Example: public readonly string $userId,
+    ) {
+    }
+
+    // Add helper methods if needed
+}

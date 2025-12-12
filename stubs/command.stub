@@ -1,0 +1,26 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Application\CQRS\Command;
+
+/**
+ * {{ class }} command.
+ *
+ * A command to perform the {{ commandName }} operation.
+ */
+final class {{ class }} implements Command
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        // Add your command properties here
+        // Example: public readonly string $userId,
+    ) {
+    }
+
+    // Add validation or helper methods if needed
+}

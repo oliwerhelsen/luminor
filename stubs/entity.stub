@@ -1,0 +1,39 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use {{ baseClassImport }};
+
+/**
+ * {{ class }} entity.
+ *
+ * Represents a {{ class }} in the domain model.
+ */
+final class {{ class }} extends {{ baseClass }}
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        string $id,
+        // Add your entity properties here
+    ) {
+        parent::__construct($id);
+    }
+
+    /**
+     * Create a new {{ class }} with a generated ID.
+     */
+    public static function create(
+        // Add your entity properties here
+    ): self {
+        return new self(
+            self::generateId(),
+            // Pass your properties here
+        );
+    }
+
+    // Add your entity methods here
+}

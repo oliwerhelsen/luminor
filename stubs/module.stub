@@ -1,0 +1,60 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Module\AbstractModule;
+use Lumina\DDD\Module\ModuleDefinition;
+
+/**
+ * {{ moduleName }} module.
+ *
+ * A self-contained module for {{ moduleName }} functionality.
+ */
+final class {{ class }} extends AbstractModule
+{
+    /**
+     * @inheritDoc
+     */
+    public function getDefinition(): ModuleDefinition
+    {
+        return new ModuleDefinition(
+            name: '{{ moduleName }}',
+            version: '1.0.0',
+            description: 'Module for {{ moduleName }} functionality',
+            dependencies: [],
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getServiceProviders(): array
+    {
+        return [
+            {{ moduleName }}ServiceProvider::class,
+        ];
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function boot(): void
+    {
+        // Module boot logic
+        // Load routes, register event listeners, etc.
+        
+        // Load module routes
+        // $this->loadRoutes(__DIR__ . '/routes.php');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function shutdown(): void
+    {
+        // Module shutdown logic
+        // Clean up resources, flush caches, etc.
+    }
+}

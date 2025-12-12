@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Lumina\DDD\Domain\Repository;
+
+use Lumina\DDD\Domain\Abstractions\DomainException;
+
+/**
+ * Exception thrown when an aggregate is not found in the repository.
+ */
+final class AggregateNotFoundException extends DomainException
+{
+    /**
+     * Create an exception for a missing aggregate.
+     *
+     * @param string $aggregateType The type of aggregate that was not found
+     * @param mixed $id The identifier that was searched for
+     */
+    public static function withId(string $aggregateType, mixed $id): self
+    {
+        return new self(
+            sprintf('%s with ID "%s" was not found', $aggregateType, (string) $id),
+            'AGGREGATE_NOT_FOUND',
+            [
+                'aggregateType' => $aggregateType,
+                'id' => $id,
+            ]
+        );
+    }
+}

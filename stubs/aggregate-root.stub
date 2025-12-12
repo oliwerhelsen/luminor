@@ -1,0 +1,49 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Lumina\DDD\Domain\Abstractions\AggregateRoot;
+
+/**
+ * {{ class }} aggregate root.
+ *
+ * Represents a {{ class }} aggregate in the domain model.
+ * This is the root entity that maintains consistency boundaries.
+ */
+final class {{ class }} extends AggregateRoot
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        string $id,
+        // Add your aggregate properties here
+    ) {
+        parent::__construct($id);
+    }
+
+    /**
+     * Create a new {{ class }} aggregate.
+     *
+     * This is the factory method that creates the aggregate and
+     * records the creation event.
+     */
+    public static function create(
+        // Add your aggregate properties here
+    ): self {
+        $aggregate = new self(
+            self::generateId(),
+            // Pass your properties here
+        );
+
+        // Record domain event
+        // $aggregate->recordEvent(new {{ class }}CreatedEvent($aggregate->getId()));
+
+        return $aggregate;
+    }
+
+    // Add your aggregate methods here
+    // Remember to record domain events for important state changes
+}

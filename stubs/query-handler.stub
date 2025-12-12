@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use {{ queryNamespace }}\{{ queryName }}Query;
+use Lumina\DDD\Application\Bus\QueryHandlerInterface;
+
+/**
+ * Handler for {{ queryName }}Query.
+ *
+ * Retrieves and returns the requested data.
+ */
+final class {{ class }} implements QueryHandlerInterface
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        // Inject your dependencies here
+        // Example: private readonly UserRepositoryInterface $userRepository,
+    ) {
+    }
+
+    /**
+     * Handle the {{ queryName }} query.
+     *
+     * @param {{ queryName }}Query $query
+     * @return mixed The query result (DTO, array, or value object)
+     */
+    public function __invoke({{ queryName }}Query $query): mixed
+    {
+        // Implement your query handling logic here
+        
+        // Example:
+        // 1. Fetch data from repository
+        // 2. Transform to DTO if needed
+        // 3. Return the result
+        
+        return null;
+    }
+}

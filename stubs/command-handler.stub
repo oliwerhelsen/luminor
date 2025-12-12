@@ -1,0 +1,42 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use {{ commandNamespace }}\{{ commandName }}Command;
+use Lumina\DDD\Application\Bus\CommandHandlerInterface;
+
+/**
+ * Handler for {{ commandName }}Command.
+ *
+ * Processes the {{ commandName }} command and performs the business logic.
+ */
+final class {{ class }} implements CommandHandlerInterface
+{
+    /**
+     * Create a new {{ class }} instance.
+     */
+    public function __construct(
+        // Inject your dependencies here
+        // Example: private readonly UserRepositoryInterface $userRepository,
+    ) {
+    }
+
+    /**
+     * Handle the {{ commandName }} command.
+     *
+     * @param {{ commandName }}Command $command
+     * @return void
+     */
+    public function __invoke({{ commandName }}Command $command): void
+    {
+        // Implement your command handling logic here
+        
+        // Example:
+        // 1. Validate business rules
+        // 2. Create/update domain entities
+        // 3. Persist changes
+        // 4. Dispatch domain events
+    }
+}

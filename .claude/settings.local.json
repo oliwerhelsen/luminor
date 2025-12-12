@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(./vendor/bin/phpunit:*)",
+      "Bash(php vendor/bin/phpunit:*)"
+    ]
+  }
+}

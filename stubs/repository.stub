@@ -1,0 +1,88 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use {{ interfaceNamespace }}\{{ entity }}RepositoryInterface;
+
+/**
+ * {{ class }} implementation.
+ *
+ * Concrete implementation of the {{ entity }} repository.
+ */
+final class {{ class }} implements {{ entity }}RepositoryInterface
+{
+    /** @var array<string, {{ entity }}> */
+    private array ${{ entityPlural }} = [];
+
+    /**
+     * @inheritDoc
+     */
+    public function findById(string $id): ?{{ entity }}
+    {
+        return $this->{{ entityPlural }}[$id] ?? null;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function findAll(): array
+    {
+        return array_values($this->{{ entityPlural }});
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function save({{ entity }} ${{ entityVariable }}): void
+    {
+        $this->{{ entityPlural }}[${{ entityVariable }}->getId()] = ${{ entityVariable }};
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function delete({{ entity }} ${{ entityVariable }}): void
+    {
+        unset($this->{{ entityPlural }}[${{ entityVariable }}->getId()]);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function find(string $id): ?object
+    {
+        return $this->findById($id);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function add(object $entity): void
+    {
+        if ($entity instanceof {{ entity }}) {
+            $this->save($entity);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function remove(object $entity): void
+    {
+        if ($entity instanceof {{ entity }}) {
+            $this->delete($entity);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function count(): int
+    {
+        return count($this->{{ entityPlural }});
+    }
+
+    // Add custom query method implementations here
+}
