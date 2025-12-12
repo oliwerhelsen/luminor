@@ -70,12 +70,48 @@ final class Application
      */
     private function registerDefaultCommands(): void
     {
+        // Core commands
+        $listCommand = new Commands\ListCommand();
+        $listCommand->setApplicationInfo($this->name, $this->version);
+        $this->register($listCommand);
+        $this->register(new Commands\ServeCommand());
+
+        // DDD Make commands
         $this->register(new Commands\MakeEntityCommand());
         $this->register(new Commands\MakeRepositoryCommand());
         $this->register(new Commands\MakeCommandCommand());
         $this->register(new Commands\MakeQueryCommand());
         $this->register(new Commands\MakeControllerCommand());
         $this->register(new Commands\MakeModuleCommand());
+
+        // Infrastructure Make commands
+        $this->register(new Commands\MakeJobCommand());
+        $this->register(new Commands\MakeMailCommand());
+        $this->register(new Commands\MakeMiddlewareCommand());
+        $this->register(new Commands\MakeProviderCommand());
+
+        // Queue commands (require container injection)
+        $this->register(new Commands\QueueWorkCommand());
+        $this->register(new Commands\QueueRetryCommand());
+        $this->register(new Commands\QueueFailedCommand());
+        $this->register(new Commands\QueueFlushCommand());
+    }
+
+    /**
+     * Set the container for commands that need it.
+     */
+    public function setContainer(ContainerInterface $container): self
+    {
+        $this->container = $container;
+
+        // Inject container into queue commands
+        foreach ($this->commands as $command) {
+            if (method_exists($command, 'setContainer')) {
+                $command->setContainer($container);
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -151,6 +187,12 @@ final class Application
 
         if ($command === null) {
             return 1;
+        }
+
+        // If running list command, inject commands
+        if ($command instanceof Commands\ListCommand) {
+            $command->setCommands($this->commands);
+            $command->setApplicationInfo($this->name, $this->version);
         }
 
         // Parse arguments

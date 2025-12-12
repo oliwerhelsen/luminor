@@ -1,52 +1,63 @@
 {
-    "name": "lumina/ddd-framework",
-    "description": "A commercial DDD boilerplate framework for building REST APIs and domain-driven applications",
-    "type": "library",
-    "license": "proprietary",
-    "keywords": [
-        "ddd",
-        "domain-driven-design",
-        "cqrs",
-        "framework",
-        "rest-api",
-        "lumina",
-        "php"
+  "name": "lumina/ddd-framework",
+  "description": "A commercial DDD boilerplate framework for building REST APIs and domain-driven applications",
+  "type": "library",
+  "license": "proprietary",
+  "keywords": [
+    "ddd",
+    "domain-driven-design",
+    "cqrs",
+    "framework",
+    "rest-api",
+    "lumina",
+    "php"
+  ],
+  "authors": [
+    {
+      "name": "Lumina DDD Framework Team"
+    }
+  ],
+  "require": {
+    "php": "^8.2",
+    "psr/log": "^3.0",
+    "utopia-php/http": "^0.34"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.5",
+    "phpstan/phpstan": "^1.10",
+    "phpstan/phpstan-strict-rules": "^1.5"
+  },
+  "autoload": {
+    "files": [
+      "src/Support/helpers.php"
     ],
-    "authors": [
-        {
-            "name": "Lumina DDD Framework Team"
-        }
-    ],
-    "require": {
-        "php": "^8.2",
-        "utopia-php/http": "^0.36"
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^10.5",
-        "phpstan/phpstan": "^1.10",
-        "phpstan/phpstan-strict-rules": "^1.5"
-    },
-    "autoload": {
-        "psr-4": {
-            "Lumina\\DDD\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Lumina\\DDD\\Tests\\": "tests/"
-        }
-    },
-    "scripts": {
-        "test": "phpunit",
-        "analyse": "phpstan analyse",
-        "check": [
-            "@analyse",
-            "@test"
-        ]
-    },
-    "config": {
-        "sort-packages": true
-    },
-    "minimum-stability": "stable",
-    "prefer-stable": true
+    "psr-4": {
+      "Lumina\\DDD\\": "src/"
+    }
+  },
+  "suggest": {
+    "vlucas/phpdotenv": "Required for .env file support (^5.5)",
+    "doctrine/dbal": "Required for database queue driver (^3.0|^4.0)",
+    "doctrine/migrations": "Required for database migrations (^3.0)",
+    "predis/predis": "Required for Redis queue/cache driver (^2.0)",
+    "monolog/monolog": "For advanced logging features (^3.0)"
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Lumina\\DDD\\Tests\\": "tests/"
+    }
+  },
+  "scripts": {
+    "test": "phpunit",
+    "analyse": "phpstan analyse",
+    "check": [
+      "@analyse",
+      "@test"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "stable",
+  "prefer-stable": true
 }

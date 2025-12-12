@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 return [
     'app' => [
-        'name' => 'Modular E-Commerce Example',
-        'env' => $_ENV['APP_ENV'] ?? 'development',
-        'debug' => true,
+        'name' => env('APP_NAME', 'Modular E-Commerce Example'),
+        'env' => env('APP_ENV', 'development'),
+        'debug' => (bool) env('APP_DEBUG', true),
     ],
-    
+
     'modules' => [
         'autoload' => false,
         'enabled' => [

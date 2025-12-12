@@ -11,6 +11,7 @@ use Lumina\DDD\Container\ContainerInterface;
 use Lumina\DDD\Container\ServiceProviderInterface;
 use Lumina\DDD\Module\ModuleInterface;
 use Lumina\DDD\Module\ModuleLoader;
+use Lumina\DDD\Support\Env;
 use Utopia\Http\Http;
 
 /**
@@ -24,6 +25,11 @@ use Utopia\Http\Http;
  */
 class Kernel
 {
+    /**
+     * The globally available kernel instance.
+     */
+    protected static ?Kernel $instance = null;
+
     protected ContainerInterface $container;
     protected ConfigRepository $config;
     protected bool $booted = false;
@@ -52,6 +58,25 @@ class Kernel
         $this->config = new ConfigRepository();
 
         $this->registerBaseBindings();
+
+        // Store instance for global access via helpers
+        static::$instance = $this;
+    }
+
+    /**
+     * Get the globally available kernel instance.
+     */
+    public static function getInstance(): ?Kernel
+    {
+        return static::$instance;
+    }
+
+    /**
+     * Set the globally available kernel instance.
+     */
+    public static function setInstance(?Kernel $kernel): void
+    {
+        static::$instance = $kernel;
     }
 
     /**
@@ -65,6 +90,7 @@ class Kernel
             return $this;
         }
 
+        $this->loadEnvironment();
         $this->loadConfiguration();
         $this->registerConfiguredProviders();
         $this->bootProviders();
@@ -73,6 +99,29 @@ class Kernel
         $this->booted = true;
 
         return $this;
+    }
+
+    /**
+     * Load environment variables from .env file if vlucas/phpdotenv is available.
+     */
+    protected function loadEnvironment(): void
+    {
+        $envFile = $this->basePath . '/.env';
+
+        // Only load if phpdotenv is available and .env exists
+        if (!class_exists(\Dotenv\Dotenv::class) || !file_exists($envFile)) {
+            return;
+        }
+
+        $repository = \Dotenv\Repository\RepositoryBuilder::createWithDefaultAdapters()
+            ->immutable()
+            ->make();
+
+        // Set the repository on our Env class for consistency
+        Env::setRepository($repository);
+
+        $dotenv = \Dotenv\Dotenv::create($repository, $this->basePath);
+        $dotenv->safeLoad();
     }
 
     /**
