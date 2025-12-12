@@ -217,4 +217,175 @@ final class Output
         // Unix systems generally support ANSI
         return function_exists('posix_isatty') && posix_isatty(STDOUT);
     }
+
+    /**
+     * Ask the user a question and return their input.
+     *
+     * @param string $question The question to ask
+     * @param string|null $default The default value if no input is provided
+     * @return string|null The user's input or default value
+     */
+    public function ask(string $question, ?string $default = null): ?string
+    {
+        $defaultDisplay = $default !== null ? " <comment>[$default]</comment>" : '';
+        $this->write("<question>$question</question>$defaultDisplay: ");
+
+        $handle = fopen('php://stdin', 'r');
+        if ($handle === false) {
+            return $default;
+        }
+
+        $input = fgets($handle);
+        fclose($handle);
+
+        if ($input === false) {
+            return $default;
+        }
+
+        $input = trim($input);
+
+        return $input !== '' ? $input : $default;
+    }
+
+    /**
+     * Ask the user a secret question (input hidden).
+     *
+     * @param string $question The question to ask
+     * @return string|null The user's input
+     */
+    public function secret(string $question): ?string
+    {
+        $this->write("<question>$question</question>: ");
+
+        // Disable echo on Unix systems
+        if (DIRECTORY_SEPARATOR !== '\\' && function_exists('shell_exec')) {
+            shell_exec('stty -echo');
+            $handle = fopen('php://stdin', 'r');
+            $input = $handle ? trim(fgets($handle) ?: '') : null;
+            if ($handle) {
+                fclose($handle);
+            }
+            shell_exec('stty echo');
+            $this->newLine();
+            return $input !== '' ? $input : null;
+        }
+
+        // Fallback for Windows or when stty is not available
+        $handle = fopen('php://stdin', 'r');
+        if ($handle === false) {
+            return null;
+        }
+
+        $input = trim(fgets($handle) ?: '');
+        fclose($handle);
+
+        return $input !== '' ? $input : null;
+    }
+
+    /**
+     * Ask the user for confirmation.
+     *
+     * @param string $question The question to ask
+     * @param bool $default The default value if no input is provided
+     * @return bool The user's confirmation
+     */
+    public function confirm(string $question, bool $default = false): bool
+    {
+        $defaultDisplay = $default ? 'Y/n' : 'y/N';
+        $this->write("<question>$question</question> <comment>[$defaultDisplay]</comment>: ");
+
+        $handle = fopen('php://stdin', 'r');
+        if ($handle === false) {
+            return $default;
+        }
+
+        $input = fgets($handle);
+        fclose($handle);
+
+        if ($input === false || trim($input) === '') {
+            return $default;
+        }
+
+        $input = strtolower(trim($input));
+
+        return in_array($input, ['y', 'yes', '1', 'true'], true);
+    }
+
+    /**
+     * Ask the user to choose from a list of options.
+     *
+     * @param string $question The question to ask
+     * @param array<string, string> $options Associative array of key => label options
+     * @param string|null $default The default option key
+     * @return string The selected option key
+     */
+    public function choice(string $question, array $options, ?string $default = null): string
+    {
+        $this->writeln("<question>$question</question>");
+
+        $keys = array_keys($options);
+        $index = 1;
+        $indexMap = [];
+
+        foreach ($options as $key => $label) {
+            $defaultMarker = ($key === $default) ? ' <comment>(default)</comment>' : '';
+            $this->writeln("  <info>[$index]</info> $label$defaultMarker");
+            $indexMap[$index] = $key;
+            $index++;
+        }
+
+        $defaultDisplay = $default !== null ? " <comment>[$default]</comment>" : '';
+        $this->write("Your choice$defaultDisplay: ");
+
+        $handle = fopen('php://stdin', 'r');
+        if ($handle === false) {
+            return $default ?? $keys[0];
+        }
+
+        $input = fgets($handle);
+        fclose($handle);
+
+        if ($input === false || trim($input) === '') {
+            return $default ?? $keys[0];
+        }
+
+        $input = trim($input);
+
+        // Check if input is a number (index)
+        if (is_numeric($input)) {
+            $inputIndex = (int) $input;
+            if (isset($indexMap[$inputIndex])) {
+                return $indexMap[$inputIndex];
+            }
+        }
+
+        // Check if input matches an option key
+        if (isset($options[$input])) {
+            return $input;
+        }
+
+        // Invalid input, return default
+        $this->warning("Invalid selection, using default.");
+        return $default ?? $keys[0];
+    }
+
+    /**
+     * Display a progress indicator.
+     *
+     * @param string $message The message to display
+     */
+    public function spinner(string $message): void
+    {
+        $this->write("<comment>⏳</comment> $message...");
+    }
+
+    /**
+     * Complete a progress indicator.
+     *
+     * @param string $message The completion message
+     */
+    public function spinnerDone(string $message = 'Done'): void
+    {
+        $this->writeln(" <success>✓</success> $message");
+    }
 }

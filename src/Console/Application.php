@@ -75,6 +75,7 @@ final class Application
         $listCommand->setApplicationInfo($this->name, $this->version);
         $this->register($listCommand);
         $this->register(new Commands\ServeCommand());
+        $this->register(new Commands\NewCommand());
 
         // DDD Make commands
         $this->register(new Commands\MakeEntityCommand());

@@ -17,6 +17,9 @@
       "name": "Lumina DDD Framework Team"
     }
   ],
+  "bin": [
+    "bin/lumina"
+  ],
   "require": {
     "php": "^8.2",
     "psr/log": "^3.0",

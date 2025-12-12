@@ -1,0 +1,62 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+/**
+ * Lumina DDD Framework CLI
+ *
+ * This is the entry point for the framework's CLI tools.
+ * It provides code generation commands, development utilities,
+ * and project scaffolding.
+ *
+ * Supports:
+ * - Local installation (vendor/bin/lumina)
+ * - Global installation (lumina)
+ */
+
+// Find autoloader - check multiple locations for different installation scenarios
+$autoloadPaths = [
+    // Local vendor (development within the framework itself)
+    __DIR__ . '/../vendor/autoload.php',
+    // Installed as a dependency (vendor/lumina/ddd-framework/bin/lumina)
+    __DIR__ . '/../../../autoload.php',
+    // Global installation via Composer (Linux/macOS)
+    getenv('HOME') . '/.composer/vendor/autoload.php',
+    // Global installation via Composer (alternative path)
+    getenv('HOME') . '/.config/composer/vendor/autoload.php',
+    // Global installation via Composer (Windows)
+    getenv('APPDATA') . '/Composer/vendor/autoload.php',
+];
+
+$autoloader = null;
+foreach ($autoloadPaths as $path) {
+    if ($path && file_exists($path)) {
+        $autoloader = $path;
+        break;
+    }
+}
+
+if ($autoloader === null) {
+    fwrite(STDERR, "Error: Could not find Composer autoloader.\n");
+    fwrite(STDERR, "\n");
+    fwrite(STDERR, "If you installed Lumina locally:\n");
+    fwrite(STDERR, "  Run 'composer install' first.\n");
+    fwrite(STDERR, "\n");
+    fwrite(STDERR, "If you want to install Lumina globally:\n");
+    fwrite(STDERR, "  Run 'composer global require lumina/ddd-framework'\n");
+    fwrite(STDERR, "  Make sure ~/.composer/vendor/bin is in your PATH.\n");
+    exit(1);
+}
+
+require $autoloader;
+
+use Lumina\DDD\Console\Application;
+
+// Create and run the console application
+$app = new Application();
+$app->setName('Lumina DDD Framework');
+$app->setVersion('1.0.0');
+
+$exitCode = $app->run($_SERVER['argv'] ?? []);
+exit($exitCode);

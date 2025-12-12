@@ -9,19 +9,19 @@ Configure your queue connections in `config/queue.php`:
 ```php
 return [
     'default' => env('QUEUE_CONNECTION', 'sync'),
-    
+
     'connections' => [
         'sync' => [
             'driver' => 'sync',
         ],
-        
+
         'database' => [
             'driver' => 'database',
             'table' => 'jobs',
             'queue' => 'default',
             'retry_after' => 90,
         ],
-        
+
         'redis' => [
             'driver' => 'redis',
             'host' => env('REDIS_HOST', '127.0.0.1'),
@@ -32,7 +32,7 @@ return [
             'retry_after' => 90,
             'block_for' => null,
         ],
-        
+
         'valkey' => [
             'driver' => 'valkey',
             'host' => env('VALKEY_HOST', '127.0.0.1'),
@@ -42,7 +42,7 @@ return [
             'queue' => 'default',
         ],
     ],
-    
+
     'failed' => [
         'driver' => 'database',
         'table' => 'failed_jobs',
@@ -55,8 +55,8 @@ return [
 ### Using the Generator
 
 ```bash
-php bin/lumina-ddd make:job ProcessPayment
-php bin/lumina-ddd make:job SendReport --sync
+vendor/bin/lumina make:job ProcessPayment
+vendor/bin/lumina make:job SendReport --sync
 ```
 
 ### Manual Creation
@@ -141,17 +141,17 @@ class ProcessPayment extends Job implements ShouldQueue
 {
     // Maximum number of attempts
     public int $tries = 3;
-    
+
     // Seconds to wait before retrying (or array for exponential backoff)
     public int|array $backoff = 60;
     // Example: [30, 60, 120] - wait 30s, then 60s, then 120s
-    
+
     // Maximum execution time in seconds
     public int $timeout = 120;
-    
+
     // Queue name for this job
     public string $queue = 'payments';
-    
+
     // Unique job identifier (prevents duplicates)
     public ?string $unique = null;
 }
@@ -163,60 +163,60 @@ class ProcessPayment extends Job implements ShouldQueue
 
 ```bash
 # Process jobs from the default queue
-php bin/lumina-ddd queue:work
+vendor/bin/lumina queue:work
 
 # Process jobs from a specific connection
-php bin/lumina-ddd queue:work --connection=redis
+vendor/bin/lumina queue:work --connection=redis
 
 # Process jobs from a specific queue
-php bin/lumina-ddd queue:work --queue=payments
+vendor/bin/lumina queue:work --queue=payments
 
 # Process a single job
-php bin/lumina-ddd queue:work --once
+vendor/bin/lumina queue:work --once
 
 # Stop when queue is empty
-php bin/lumina-ddd queue:work --stop-when-empty
+vendor/bin/lumina queue:work --stop-when-empty
 ```
 
 ### Worker Options
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--connection` | Queue connection to use | default |
-| `--queue` | Queue name to process | default |
-| `--sleep` | Seconds to sleep when no jobs | 3 |
-| `--tries` | Override job max attempts | 3 |
-| `--timeout` | Seconds before timeout | 60 |
-| `--memory` | Memory limit in MB | 128 |
-| `--once` | Process single job and exit | - |
-| `--stop-when-empty` | Stop when queue empty | - |
+| Option              | Description                   | Default |
+| ------------------- | ----------------------------- | ------- |
+| `--connection`      | Queue connection to use       | default |
+| `--queue`           | Queue name to process         | default |
+| `--sleep`           | Seconds to sleep when no jobs | 3       |
+| `--tries`           | Override job max attempts     | 3       |
+| `--timeout`         | Seconds before timeout        | 60      |
+| `--memory`          | Memory limit in MB            | 128     |
+| `--once`            | Process single job and exit   | -       |
+| `--stop-when-empty` | Stop when queue empty         | -       |
 
 ## Failed Jobs
 
 ### Listing Failed Jobs
 
 ```bash
-php bin/lumina-ddd queue:failed
+vendor/bin/lumina queue:failed
 ```
 
 ### Retrying Failed Jobs
 
 ```bash
 # Retry a specific job
-php bin/lumina-ddd queue:retry abc-123
+vendor/bin/lumina queue:retry abc-123
 
 # Retry all failed jobs
-php bin/lumina-ddd queue:retry --all
+vendor/bin/lumina queue:retry --all
 ```
 
 ### Clearing Failed Jobs
 
 ```bash
 # Clear all failed jobs
-php bin/lumina-ddd queue:flush
+vendor/bin/lumina queue:flush
 
 # Clear jobs older than 24 hours
-php bin/lumina-ddd queue:flush --hours=24
+vendor/bin/lumina queue:flush --hours=24
 ```
 
 ## Database Queue Setup
@@ -314,7 +314,7 @@ For production, use Supervisor to keep workers running:
 ```ini
 [program:lumina-worker]
 process_name=%(program_name)s_%(process_num)02d
-command=php /path/to/project/bin/lumina-ddd queue:work --sleep=3 --tries=3
+command=php /path/to/project/vendor/bin/lumina queue:work --sleep=3 --tries=3
 autostart=true
 autorestart=true
 stopasgroup=true

@@ -6,32 +6,63 @@ Lumina provides a powerful CLI interface for running commands, managing queues, 
 
 ```bash
 # List all available commands
-php bin/lumina-ddd list
+vendor/bin/lumina list
 
 # Run a specific command
-php bin/lumina-ddd serve
+vendor/bin/lumina serve
 
 # Get help for a command
-php bin/lumina-ddd serve --help
+vendor/bin/lumina serve --help
 ```
 
 ## Built-in Commands
+
+### Project Scaffolding
+
+Create a new Lumina project with interactive configuration:
+
+```bash
+# Interactive mode (recommended)
+lumina new my-app
+
+# Non-interactive with options
+lumina new my-app --type=basic --database=mysql --multitenancy=none
+
+# Skip composer install
+lumina new my-app --no-install
+
+# Overwrite existing directory
+lumina new my-app --force
+```
+
+| Option             | Description                                | Default |
+| ------------------ | ------------------------------------------ | ------- |
+| `--vendor`         | Vendor name for composer.json              | (asked) |
+| `--namespace`      | Root PHP namespace                         | App     |
+| `--type`, `-t`     | Project type: basic or modular             | basic   |
+| `--database`, `-d` | Database: none, mysql, postgres, or sqlite | none    |
+| `--multitenancy`   | Strategy: none, header, subdomain, or path | none    |
+| `--git`            | Initialize git repository                  | true    |
+| `--no-git`         | Skip git initialization                    |         |
+| `--no-install`     | Skip composer install                      |         |
+| `--no-interaction` | Do not ask any interactive questions       |         |
+| `--force`, `-f`    | Overwrite existing directory               |         |
 
 ### Development Server
 
 Start the built-in PHP development server:
 
 ```bash
-php bin/lumina-ddd serve
-php bin/lumina-ddd serve --host=0.0.0.0 --port=8080
-php bin/lumina-ddd serve --docroot=public
+vendor/bin/lumina serve
+vendor/bin/lumina serve --host=0.0.0.0 --port=8080
+vendor/bin/lumina serve --docroot=public
 ```
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--host`, `-H` | Host address | 127.0.0.1 |
-| `--port`, `-p` | Port number | 8000 |
-| `--docroot`, `-d` | Document root | public |
+| Option            | Description   | Default   |
+| ----------------- | ------------- | --------- |
+| `--host`, `-H`    | Host address  | 127.0.0.1 |
+| `--port`, `-p`    | Port number   | 8000      |
+| `--docroot`, `-d` | Document root | public    |
 
 ### Code Generators
 
@@ -39,77 +70,77 @@ php bin/lumina-ddd serve --docroot=public
 
 ```bash
 # Create an entity
-php bin/lumina-ddd make:entity User
+vendor/bin/lumina make:entity User
 
 # Create a repository interface and implementation
-php bin/lumina-ddd make:repository User
+vendor/bin/lumina make:repository User
 
 # Create a value object
-php bin/lumina-ddd make:value-object Email
+vendor/bin/lumina make:value-object Email
 ```
 
 #### Application Layer
 
 ```bash
 # Create a command and handler
-php bin/lumina-ddd make:command CreateUser
+vendor/bin/lumina make:command CreateUser
 
 # Create a query and handler
-php bin/lumina-ddd make:query GetUserById
+vendor/bin/lumina make:query GetUserById
 ```
 
 #### HTTP Layer
 
 ```bash
 # Create a controller
-php bin/lumina-ddd make:controller UserController
+vendor/bin/lumina make:controller UserController
 
 # Create a CRUD controller
-php bin/lumina-ddd make:controller UserController --crud
+vendor/bin/lumina make:controller UserController --crud
 
 # Create middleware
-php bin/lumina-ddd make:middleware RateLimiter
+vendor/bin/lumina make:middleware RateLimiter
 ```
 
 #### Infrastructure
 
 ```bash
 # Create a job class
-php bin/lumina-ddd make:job ProcessPayment
-php bin/lumina-ddd make:job SyncData --sync
+vendor/bin/lumina make:job ProcessPayment
+vendor/bin/lumina make:job SyncData --sync
 
 # Create a mailable class
-php bin/lumina-ddd make:mail WelcomeEmail
-php bin/lumina-ddd make:mail Newsletter --queued
+vendor/bin/lumina make:mail WelcomeEmail
+vendor/bin/lumina make:mail Newsletter --queued
 
 # Create a service provider
-php bin/lumina-ddd make:provider PaymentServiceProvider
+vendor/bin/lumina make:provider PaymentServiceProvider
 ```
 
 #### Modules
 
 ```bash
 # Create a complete module structure
-php bin/lumina-ddd make:module Billing
+vendor/bin/lumina make:module Billing
 ```
 
 ### Queue Commands
 
 ```bash
 # Process queue jobs
-php bin/lumina-ddd queue:work
-php bin/lumina-ddd queue:work --connection=redis --queue=emails
+vendor/bin/lumina queue:work
+vendor/bin/lumina queue:work --connection=redis --queue=emails
 
 # List failed jobs
-php bin/lumina-ddd queue:failed
+vendor/bin/lumina queue:failed
 
 # Retry failed jobs
-php bin/lumina-ddd queue:retry job-id
-php bin/lumina-ddd queue:retry --all
+vendor/bin/lumina queue:retry job-id
+vendor/bin/lumina queue:retry --all
 
 # Clear failed jobs
-php bin/lumina-ddd queue:flush
-php bin/lumina-ddd queue:flush --hours=24
+vendor/bin/lumina queue:flush
+vendor/bin/lumina queue:flush --hours=24
 ```
 
 ## Creating Custom Commands

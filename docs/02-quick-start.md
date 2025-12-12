@@ -7,7 +7,7 @@ This guide will help you create a simple CRUD API using the Lumina DDD Framework
 Use the CLI to generate an entity:
 
 ```bash
-./vendor/bin/lumina-ddd make:entity User
+./vendor/bin/lumina make:entity User
 ```
 
 This creates `src/Domain/Entities/User.php`:
@@ -58,7 +58,7 @@ final class User extends Entity
 Generate a repository interface and implementation:
 
 ```bash
-./vendor/bin/lumina-ddd make:repository User --implementation
+./vendor/bin/lumina make:repository User --implementation
 ```
 
 ## Creating Commands and Queries
@@ -67,10 +67,10 @@ Generate CQRS components:
 
 ```bash
 # Create a command with handler
-./vendor/bin/lumina-ddd make:command CreateUser
+./vendor/bin/lumina make:command CreateUser
 
 # Create a query with handler
-./vendor/bin/lumina-ddd make:query GetUserById
+./vendor/bin/lumina make:query GetUserById
 ```
 
 Example command:
@@ -119,7 +119,7 @@ final class CreateUserCommandHandler implements CommandHandlerInterface
     {
         $user = User::create($command->name, $command->email);
         $this->userRepository->save($user);
-        
+
         return $user->getId();
     }
 }
@@ -130,7 +130,7 @@ final class CreateUserCommandHandler implements CommandHandlerInterface
 Generate an API controller:
 
 ```bash
-./vendor/bin/lumina-ddd make:controller User
+./vendor/bin/lumina make:controller User
 ```
 
 Example controller usage:
@@ -158,7 +158,7 @@ final class UserController extends ApiController
     public function store(Request $request, Response $response): Response
     {
         $data = $request->getPayload();
-        
+
         $userId = $this->commandBus->dispatch(new CreateUserCommand(
             name: $data['name'] ?? '',
             email: $data['email'] ?? '',
@@ -214,14 +214,14 @@ final class CreateUserCommandHandlerTest extends TestCase
     {
         $repository = new InMemoryUserRepository();
         $handler = new CreateUserCommandHandler($repository);
-        
+
         $command = new CreateUserCommand(
             name: 'John Doe',
             email: 'john@example.com',
         );
-        
+
         $userId = $handler($command);
-        
+
         $this->assertNotEmpty($userId);
         $this->assertNotNull($repository->findById($userId));
     }

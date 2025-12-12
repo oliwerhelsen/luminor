@@ -9,7 +9,7 @@ Configure your mail settings in `config/mail.php`:
 ```php
 return [
     'default' => env('MAIL_MAILER', 'smtp'),
-    
+
     'mailers' => [
         'smtp' => [
             'transport' => 'smtp',
@@ -20,17 +20,17 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => 30,
         ],
-        
+
         'log' => [
             'transport' => 'log',
             'channel' => 'mail',
         ],
-        
+
         'array' => [
             'transport' => 'array',
         ],
     ],
-    
+
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Lumina App'),
@@ -70,8 +70,8 @@ $mailer->to('user@example.com')
 ### Using the Generator
 
 ```bash
-php bin/lumina-ddd make:mail WelcomeEmail
-php bin/lumina-ddd make:mail OrderConfirmation --queued
+vendor/bin/lumina make:mail WelcomeEmail
+vendor/bin/lumina make:mail OrderConfirmation --queued
 ```
 
 ### Manual Creation
@@ -194,7 +194,7 @@ final class MonthlyReport extends Mailable implements ShouldQueue
         return $this->subject('Your Monthly Report')
             ->html($this->generateReport());
     }
-    
+
     private function generateReport(): string
     {
         // Time-consuming report generation...

@@ -9,26 +9,26 @@ The logging configuration is stored in `config/logging.php`:
 ```php
 return [
     'default' => env('LOG_CHANNEL', 'stack'),
-    
+
     'channels' => [
         'stack' => [
             'driver' => 'stack',
             'channels' => ['daily', 'stderr'],
             'ignore_exceptions' => false,
         ],
-        
+
         'daily' => [
             'driver' => 'file',
             'path' => storage_path('logs/app.log'),
             'level' => 'debug',
             'days' => 14,
         ],
-        
+
         'stderr' => [
             'driver' => 'stdout',
             'level' => 'error',
         ],
-        
+
         'null' => [
             'driver' => 'null',
         ],
@@ -76,16 +76,16 @@ $log->error('Failed to process payment', [
 
 Lumina supports all standard PSR-3 log levels:
 
-| Level | Description |
-|-------|-------------|
-| `emergency` | System is unusable |
-| `alert` | Action must be taken immediately |
-| `critical` | Critical conditions |
-| `error` | Error conditions |
-| `warning` | Warning conditions |
-| `notice` | Normal but significant conditions |
-| `info` | Informational messages |
-| `debug` | Debug-level messages |
+| Level       | Description                       |
+| ----------- | --------------------------------- |
+| `emergency` | System is unusable                |
+| `alert`     | Action must be taken immediately  |
+| `critical`  | Critical conditions               |
+| `error`     | Error conditions                  |
+| `warning`   | Warning conditions                |
+| `notice`    | Normal but significant conditions |
+| `info`      | Informational messages            |
+| `debug`     | Debug-level messages              |
 
 ## Available Drivers
 
@@ -180,7 +180,7 @@ class SlackLogger extends AbstractLogger
             'text' => "[{$level->value}] {$message}",
             'channel' => $this->channel,
         ];
-        
+
         // HTTP request to Slack...
     }
 }

@@ -7,7 +7,7 @@ The module system allows you to organize your application into self-contained, r
 Use the CLI to scaffold a new module:
 
 ```bash
-./vendor/bin/lumina-ddd make:module Inventory
+./vendor/bin/lumina make:module Inventory
 ```
 
 This creates the following structure:
@@ -72,7 +72,7 @@ final class InventoryModule extends AbstractModule
     {
         // Load routes
         $this->loadRoutes(__DIR__ . '/routes.php');
-        
+
         // Register event listeners
         $this->registerEventListeners();
     }
@@ -80,7 +80,7 @@ final class InventoryModule extends AbstractModule
     private function registerEventListeners(): void
     {
         $dispatcher = $this->container->get(EventDispatcherInterface::class);
-        
+
         $dispatcher->subscribe(
             OrderPlacedEvent::class,
             $this->container->get(ReserveInventoryHandler::class)
@@ -112,7 +112,7 @@ final class InventoryServiceProvider extends AbstractServiceProvider
             InventoryRepositoryInterface::class,
             DoctrineInventoryRepository::class
         );
-        
+
         // Register services
         $container->singleton(InventoryService::class, function ($c) {
             return new InventoryService(
@@ -120,10 +120,10 @@ final class InventoryServiceProvider extends AbstractServiceProvider
                 $c->get(EventDispatcherInterface::class),
             );
         });
-        
+
         // Register command handlers
         $this->registerCommandHandlers($container);
-        
+
         // Register query handlers
         $this->registerQueryHandlers($container);
     }
@@ -131,7 +131,7 @@ final class InventoryServiceProvider extends AbstractServiceProvider
     private function registerCommandHandlers(ContainerInterface $container): void
     {
         $commandBus = $container->get(CommandBusInterface::class);
-        
+
         $commandBus->registerHandler(
             AdjustStockCommand::class,
             $container->get(AdjustStockCommandHandler::class)
@@ -141,7 +141,7 @@ final class InventoryServiceProvider extends AbstractServiceProvider
     private function registerQueryHandlers(ContainerInterface $container): void
     {
         $queryBus = $container->get(QueryBusInterface::class);
-        
+
         $queryBus->registerHandler(
             GetStockLevelQuery::class,
             $container->get(GetStockLevelQueryHandler::class)
@@ -205,7 +205,7 @@ return [
     'modules' => [
         'autoload' => true,
         'path' => __DIR__ . '/../src/Modules',
-        
+
         // Or explicitly list modules
         'enabled' => [
             \App\Modules\Inventory\InventoryModule::class,
@@ -274,7 +274,7 @@ final class PlaceOrderCommandHandler implements CommandHandlerInterface
                 throw new InsufficientInventoryException($item['productId']);
             }
         }
-        
+
         // ... continue with order placement
     }
 }
@@ -312,13 +312,13 @@ final class InventoryModuleTest extends TestCase
             quantity: 10,
             reason: 'Initial stock'
         );
-        
+
         $this->getCommandBus()->dispatch($command);
-        
+
         $stock = $this->getQueryBus()->dispatch(
             new GetStockLevelQuery('product-1')
         );
-        
+
         $this->assertSame(10, $stock->quantity);
     }
 }

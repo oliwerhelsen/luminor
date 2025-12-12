@@ -14,7 +14,7 @@ Building a commercial DDD boilerplate framework on top of Lumina PHP, similar to
 ## Directory Structure
 
 ```
-lumina-ddd-framework/
+lumina-framework/
 ├── src/
 │   ├── Domain/
 │   │   ├── Abstractions/
@@ -46,9 +46,11 @@ lumina-ddd-framework/
 ## Implementation Phases
 
 ### Phase 1: Project Foundation
+
 **Goal**: Set up project structure and composer configuration
 
 #### Tasks:
+
 - [x] 1.1 Initialize composer.json with proper namespacing and dependencies
 - [x] 1.2 Create directory structure
 - [x] 1.3 Set up PHPUnit for testing
@@ -56,6 +58,7 @@ lumina-ddd-framework/
 - [x] 1.5 Create basic README.md with framework description
 
 #### Files to create:
+
 - `composer.json`
 - `phpunit.xml`
 - `phpstan.neon`
@@ -65,9 +68,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 2: Domain Layer Abstractions
+
 **Goal**: Create base classes for DDD building blocks
 
 #### Tasks:
+
 - [x] 2.1 Create `Entity` base class with identity handling
 - [x] 2.2 Create `AggregateRoot` extending Entity with event recording
 - [x] 2.3 Create `ValueObject` abstract class with equality comparison
@@ -77,6 +82,7 @@ lumina-ddd-framework/
 - [x] 2.7 Create `Enumeration` base class for type-safe enums
 
 #### Files to create:
+
 - `src/Domain/Abstractions/Entity.php`
 - `src/Domain/Abstractions/AggregateRoot.php`
 - `src/Domain/Abstractions/ValueObject.php`
@@ -86,6 +92,7 @@ lumina-ddd-framework/
 - `src/Domain/Abstractions/Enumeration.php`
 
 #### Tests:
+
 - `tests/Unit/Domain/EntityTest.php`
 - `tests/Unit/Domain/AggregateRootTest.php`
 - `tests/Unit/Domain/ValueObjectTest.php`
@@ -94,9 +101,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 3: Repository Contracts
+
 **Goal**: Define repository interfaces and query abstractions
 
 #### Tasks:
+
 - [x] 3.1 Create `RepositoryInterface` with CRUD operations
 - [x] 3.2 Create `ReadRepositoryInterface` for read-only access
 - [x] 3.3 Create `Criteria` class for query building
@@ -105,6 +114,7 @@ lumina-ddd-framework/
 - [x] 3.6 Create `Filter` specification classes
 
 #### Files to create:
+
 - `src/Domain/Repository/RepositoryInterface.php`
 - `src/Domain/Repository/ReadRepositoryInterface.php`
 - `src/Domain/Repository/Criteria.php`
@@ -119,15 +129,18 @@ lumina-ddd-framework/
 ---
 
 ### Phase 4: Domain Events System
+
 **Goal**: Implement event dispatching and handling
 
 #### Tasks:
+
 - [x] 4.1 Create `EventDispatcherInterface`
 - [x] 4.2 Create `EventHandlerInterface`
 - [x] 4.3 Create `EventStore` interface for event sourcing support
 - [x] 4.4 Create `DomainEventPublisher` for aggregate events
 
 #### Files to create:
+
 - `src/Domain/Events/EventDispatcherInterface.php`
 - `src/Domain/Events/EventHandlerInterface.php`
 - `src/Domain/Events/EventStoreInterface.php`
@@ -136,9 +149,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 5: Application Layer - CQRS
+
 **Goal**: Implement Command/Query separation
 
 #### Tasks:
+
 - [x] 5.1 Create `Command` marker interface
 - [x] 5.2 Create `CommandHandler` interface
 - [x] 5.3 Create `CommandBusInterface`
@@ -148,6 +163,7 @@ lumina-ddd-framework/
 - [x] 5.7 Create `CommandValidator` for input validation
 
 #### Files to create:
+
 - `src/Application/CQRS/Command.php`
 - `src/Application/CQRS/Query.php`
 - `src/Application/Bus/CommandHandlerInterface.php`
@@ -160,15 +176,18 @@ lumina-ddd-framework/
 ---
 
 ### Phase 6: Application Layer - DTOs & Services
+
 **Goal**: Create data transfer and service abstractions
 
 #### Tasks:
+
 - [x] 6.1 Create `DataTransferObject` base class with mapping
 - [x] 6.2 Create `PagedResult` for paginated responses
 - [x] 6.3 Create `ApplicationService` base class
 - [x] 6.4 Create `CrudApplicationService` with standard operations
 
 #### Files to create:
+
 - `src/Application/DTO/DataTransferObject.php`
 - `src/Application/DTO/PagedResult.php`
 - `src/Application/DTO/Mapper.php`
@@ -178,15 +197,18 @@ lumina-ddd-framework/
 ---
 
 ### Phase 7: Infrastructure - Bus Implementations
+
 **Goal**: Concrete implementations of command/query buses
 
 #### Tasks:
+
 - [x] 7.1 Implement `SimpleCommandBus` with handler resolution
 - [x] 7.2 Implement `SimpleQueryBus` with handler resolution
 - [x] 7.3 Implement `SimpleEventDispatcher`
 - [x] 7.4 Create `HandlerResolver` for dependency injection
 
 #### Files to create:
+
 - `src/Infrastructure/Bus/SimpleCommandBus.php`
 - `src/Infrastructure/Bus/SimpleQueryBus.php`
 - `src/Infrastructure/EventBus/SimpleEventDispatcher.php`
@@ -195,9 +217,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 8: Infrastructure - HTTP Layer
+
 **Goal**: Lumina PHP integration with DDD patterns
 
 #### Tasks:
+
 - [x] 8.1 Create `ApiController` base class with common helpers
 - [x] 8.2 Create `CrudController` for automatic CRUD endpoints
 - [x] 8.3 Create `ApiResponse` standardized response format
@@ -209,6 +233,7 @@ lumina-ddd-framework/
 - [x] 8.9 Create route registration helpers
 
 #### Files to create:
+
 - `src/Infrastructure/Http/ApiController.php`
 - `src/Infrastructure/Http/CrudController.php`
 - `src/Infrastructure/Http/Response/ApiResponse.php`
@@ -225,9 +250,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 9: Infrastructure - Persistence
+
 **Goal**: Database abstraction layer
 
 #### Tasks:
+
 - [x] 9.1 Create `UnitOfWork` interface
 - [x] 9.2 Create `Transaction` wrapper
 - [x] 9.3 Create `DoctrineRepository` base implementation
@@ -235,6 +262,7 @@ lumina-ddd-framework/
 - [x] 9.5 Create entity mapping helpers
 
 #### Files to create:
+
 - `src/Infrastructure/Persistence/UnitOfWorkInterface.php`
 - `src/Infrastructure/Persistence/Transaction.php`
 - `src/Infrastructure/Persistence/Doctrine/DoctrineRepository.php`
@@ -245,15 +273,18 @@ lumina-ddd-framework/
 ---
 
 ### Phase 10: Module System
+
 **Goal**: Modular architecture support
 
 #### Tasks:
+
 - [x] 10.1 Create `ModuleInterface` for module definition
 - [x] 10.2 Create `ModuleLoader` for auto-discovery
 - [x] 10.3 Create `ModuleDefinition` for configuration
 - [x] 10.4 Create module lifecycle hooks
 
 #### Files to create:
+
 - `src/Module/ModuleInterface.php`
 - `src/Module/ModuleLoader.php`
 - `src/Module/ModuleDefinition.php`
@@ -263,9 +294,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 11: Multitenancy Support
+
 **Goal**: Built-in multi-tenant capabilities
 
 #### Tasks:
+
 - [x] 11.1 Create `TenantInterface`
 - [x] 11.2 Create `TenantResolver` strategies (subdomain, header, path)
 - [x] 11.3 Create `TenantAware` trait for entities
@@ -273,6 +306,7 @@ lumina-ddd-framework/
 - [x] 11.5 Create tenant-scoped repository decorator
 
 #### Files to create:
+
 - `src/Multitenancy/TenantInterface.php`
 - `src/Multitenancy/TenantContext.php`
 - `src/Multitenancy/TenantResolver.php`
@@ -288,6 +322,7 @@ lumina-ddd-framework/
 - `src/Multitenancy/TenantScopedRepository.php`
 
 #### Tests:
+
 - `tests/Unit/Multitenancy/TenantContextTest.php`
 - `tests/Unit/Multitenancy/TenantResolverTest.php`
 - `tests/Unit/Multitenancy/TenantAwareTest.php`
@@ -299,9 +334,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 12: Authentication & Authorization
+
 **Goal**: Security abstractions
 
 #### Tasks:
+
 - [x] 12.1 Create `AuthenticatableInterface`
 - [x] 12.2 Create `PermissionInterface`
 - [x] 12.3 Create `RoleInterface`
@@ -310,6 +347,7 @@ lumina-ddd-framework/
 - [x] 12.6 Create `CurrentUser` context
 
 #### Files to create:
+
 - `src/Auth/AuthenticatableInterface.php`
 - `src/Auth/PermissionInterface.php`
 - `src/Auth/RoleInterface.php`
@@ -326,6 +364,7 @@ lumina-ddd-framework/
 - `src/Auth/Attributes/RequireAuth.php`
 
 #### Tests:
+
 - `tests/Unit/Auth/CurrentUserTest.php`
 - `tests/Unit/Auth/AuthorizationServiceTest.php`
 - `tests/Unit/Auth/AttributesTest.php`
@@ -333,15 +372,18 @@ lumina-ddd-framework/
 ---
 
 ### Phase 13: Framework Kernel
+
 **Goal**: Main entry point and bootstrapping
 
 #### Tasks:
+
 - [x] 13.1 Create `Kernel` class for application bootstrap
 - [x] 13.2 Create `Container` wrapper for DI
 - [x] 13.3 Create configuration loading
 - [x] 13.4 Create service provider registration
 
 #### Files to create:
+
 - `src/Kernel.php`
 - `src/Container/Container.php`
 - `src/Container/ContainerException.php`
@@ -353,6 +395,7 @@ lumina-ddd-framework/
 - `config/framework.php`
 
 #### Tests:
+
 - `tests/Unit/Container/ContainerTest.php`
 - `tests/Unit/Config/ConfigRepositoryTest.php`
 - `tests/Unit/Kernel/KernelTest.php`
@@ -360,9 +403,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 14: CLI Tools
+
 **Goal**: Code generation and development tools
 
 #### Tasks:
+
 - [x] 14.1 Create CLI application entry point
 - [x] 14.2 Create `make:entity` command
 - [x] 14.3 Create `make:repository` command
@@ -373,7 +418,8 @@ lumina-ddd-framework/
 - [x] 14.8 Create stub templates for all generators
 
 #### Files to create:
-- `bin/lumina-ddd`
+
+- `bin/lumina`
 - `src/Console/Application.php`
 - `src/Console/Commands/MakeEntityCommand.php`
 - `src/Console/Commands/MakeRepositoryCommand.php`
@@ -397,9 +443,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 15: Testing Utilities
+
 **Goal**: Test helpers for framework users
 
 #### Tasks:
+
 - [x] 15.1 Create `TestCase` base class
 - [x] 15.2 Create `InMemoryCommandBus` for testing
 - [x] 15.3 Create `InMemoryQueryBus` for testing
@@ -408,6 +456,7 @@ lumina-ddd-framework/
 - [x] 15.6 Create factory helpers for entities
 
 #### Files to create:
+
 - `src/Testing/TestCase.php`
 - `src/Testing/InMemoryCommandBus.php`
 - `src/Testing/InMemoryQueryBus.php`
@@ -418,9 +467,11 @@ lumina-ddd-framework/
 ---
 
 ### Phase 16: Documentation & Examples
+
 **Goal**: User documentation and sample code
 
 #### Tasks:
+
 - [x] 16.1 Write installation guide
 - [x] 16.2 Write quick start guide
 - [x] 16.3 Document domain layer usage
@@ -430,6 +481,7 @@ lumina-ddd-framework/
 - [x] 16.7 Create example application
 
 #### Files to create:
+
 - `docs/01-installation.md`
 - `docs/02-quick-start.md`
 - `docs/03-domain-layer.md`
@@ -500,14 +552,14 @@ When working on this project:
 ### Example prompt for Claude Code:
 
 ```
-Implement Phase 2 - Domain Layer Abstractions. Start with Entity.php, 
-then AggregateRoot.php. Include unit tests. Follow the code style 
+Implement Phase 2 - Domain Layer Abstractions. Start with Entity.php,
+then AggregateRoot.php. Include unit tests. Follow the code style
 guidelines in CLAUDE.md.
 ```
 
 ### To continue work:
 
 ```
-Continue implementing the Lumina DDD Framework. Check CLAUDE.md for 
+Continue implementing the Lumina DDD Framework. Check CLAUDE.md for
 current progress and implement the next incomplete phase.
 ```
