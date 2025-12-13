@@ -1,3 +1,11 @@
+---
+title: Multi-Factor Authentication (MFA) Tutorial
+layout: default
+parent: Authentication
+nav_order: 4
+description: "Learn how to implement TOTP-based multi-factor authentication for enhanced security"
+---
+
 # Multi-Factor Authentication (MFA) Tutorial
 
 This tutorial walks you through implementing Time-based One-Time Password (TOTP) multi-factor authentication, compatible with Google Authenticator, Authy, and other authenticator apps.

@@ -1,3 +1,11 @@
+---
+title: JWT Authentication Tutorial
+layout: default
+parent: Authentication
+nav_order: 2
+description: "Learn how to implement JWT (JSON Web Token) authentication for stateless API authentication"
+---
+
 # JWT Authentication Tutorial
 
 This tutorial walks you through implementing JWT (JSON Web Token) authentication for your API from scratch. By the end, you'll have a fully functional stateless authentication system.

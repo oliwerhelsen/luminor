@@ -1,3 +1,12 @@
+---
+title: Authentication
+layout: default
+nav_order: 10
+has_children: true
+description: "Enterprise-grade authentication with JWT, OpenID Connect, sessions, API tokens, and MFA"
+permalink: /authentication/
+---
+
 # Enterprise Authentication Guide
 
 Luminor provides comprehensive, enterprise-grade authentication with support for multiple authentication methods:

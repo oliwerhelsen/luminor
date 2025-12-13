@@ -1,3 +1,11 @@
+---
+title: OpenID Connect (SSO) Tutorial
+layout: default
+parent: Authentication
+nav_order: 3
+description: "Learn how to implement Single Sign-On (SSO) with OpenID Connect providers"
+---
+
 # OpenID Connect (SSO) Tutorial
 
 This tutorial guides you through implementing Single Sign-On (SSO) with OpenID Connect providers like Azure AD, Google, and Okta.

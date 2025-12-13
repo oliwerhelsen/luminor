@@ -1,3 +1,11 @@
+---
+title: Session Authentication Tutorial
+layout: default
+parent: Authentication
+nav_order: 5
+description: "Learn how to implement traditional session-based authentication for web applications"
+---
+
 # Session Authentication Tutorial
 
 This tutorial walks you through implementing traditional session-based authentication for web applications, including login forms, remember me functionality, and secure session management.

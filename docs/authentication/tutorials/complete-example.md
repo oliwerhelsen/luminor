@@ -1,3 +1,11 @@
+---
+title: Complete Authentication Example
+layout: default
+parent: Authentication
+nav_order: 6
+description: "Complete, production-ready authentication setup combining all authentication methods"
+---
+
 # Complete Authentication Example
 
 This guide provides a complete, production-ready authentication setup combining all authentication methods in a single application.

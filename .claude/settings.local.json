@@ -3,7 +3,12 @@
     "allow": [
       "Bash(mkdir:*)",
       "Bash(./vendor/bin/phpunit:*)",
-      "Bash(php vendor/bin/phpunit:*)"
+      "Bash(php vendor/bin/phpunit:*)",
+      "Bash(head:*)",
+      "Bash(for f in /Users/oliwerhelsen/Projects/luminor/docs/*.md)",
+      "Bash(do if head -1 \"$f\")",
+      "Bash(grep:*)",
+      "Bash(find:*)"
     ]
   }
 }

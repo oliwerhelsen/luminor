@@ -1,3 +1,11 @@
+---
+title: API Tokens Tutorial
+layout: default
+parent: Authentication
+nav_order: 1
+description: "Learn how to implement API token authentication for service accounts and integrations"
+---
+
 # API Tokens Tutorial
 
 This tutorial walks you through implementing API token authentication for service accounts, CLI tools, and third-party integrations.

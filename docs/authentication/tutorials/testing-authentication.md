@@ -1,3 +1,11 @@
+---
+title: Testing Authentication Guide
+layout: default
+parent: Authentication
+nav_order: 7
+description: "Learn how to write comprehensive tests for your authentication system"
+---
+
 # Testing Authentication Guide
 
 This guide covers how to write comprehensive tests for your authentication system, including unit tests, integration tests, and end-to-end tests.
