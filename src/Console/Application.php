@@ -90,12 +90,20 @@ final class Application
         $this->register(new Commands\MakeMailCommand());
         $this->register(new Commands\MakeMiddlewareCommand());
         $this->register(new Commands\MakeProviderCommand());
+        $this->register(new Commands\MakeMigrationCommand());
 
         // Queue commands (require container injection)
         $this->register(new Commands\QueueWorkCommand());
         $this->register(new Commands\QueueRetryCommand());
         $this->register(new Commands\QueueFailedCommand());
         $this->register(new Commands\QueueFlushCommand());
+
+        // Migration commands
+        $this->register(new Commands\MigrateCommand());
+        $this->register(new Commands\MigrateRollbackCommand());
+        $this->register(new Commands\MigrateResetCommand());
+        $this->register(new Commands\MigrateFreshCommand());
+        $this->register(new Commands\MigrateStatusCommand());
     }
 
     /**
