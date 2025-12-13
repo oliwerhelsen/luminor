@@ -60,16 +60,37 @@ Name your classes, methods, and variables using terms from the business domain, 
 
 **Good:**
 ```php
-class PlaceOrderCommand implements Command {}
-class OrderHandler {}
-$order->ship();
+final readonly class PlaceOrderCommand implements Command
+{
+    public function __construct(
+        public string $customerId,
+        public array $items,
+    ) {}
+}
+
+final class PlaceOrderHandler implements CommandHandler
+{
+    public function handle(PlaceOrderCommand $command): string
+    {
+        $order = Order::create(new CustomerId($command->customerId));
+
+        foreach ($command->items as $item) {
+            $order->addItem($item['productId'], $item['quantity']);
+        }
+
+        $this->repository->save($order);
+        return $order->getId();
+    }
+}
 ```
 
 **Bad:**
 ```php
 class CreateDataCommand implements Command {}
 class ProcessorService {}
-$order->setStatus('shipped');
+public function setData($data): void {
+    $this->status = 'processed';
+}
 ```
 
 ### Respect Bounded Contexts
@@ -188,7 +209,7 @@ final class Order extends AggregateRoot
 
     public function addItem(OrderItem $item): void
     {
-        if (!$this->status->allows(OrderStatus::PENDING)) {
+        if (!$this->status->is(OrderStatus::PENDING)) {
             throw new OrderAlreadyProcessed();
         }
 
@@ -224,6 +245,9 @@ Record events for significant business occurrences. This enables loose coupling 
 ```php
 final class Order extends AggregateRoot
 {
+    private OrderStatus $status;
+    private ?TrackingNumber $trackingNumber = null;
+
     public function ship(TrackingNumber $trackingNumber): void
     {
         if (!$this->canBeShipped()) {
@@ -306,7 +330,13 @@ final class GetProductHandler implements QueryHandler
 {
     public function handle(GetProductQuery $query): ProductDTO
     {
-        return $this->repository->findById($query->productId);
+        $product = $this->repository->findById($query->productId);
+
+        if ($product === null) {
+            throw new ProductNotFound($query->productId);
+        }
+
+        return ProductDTO::fromEntity($product);
     }
 }
 ```
@@ -360,12 +390,12 @@ final readonly class ProductDTO
     public static function fromEntity(Product $product): self
     {
         return new self(
-            id: $product->getId(),
-            name: $product->getName(),
-            priceInCents: $product->getPrice()->getCents(),
-            currency: $product->getPrice()->getCurrency(),
-            sku: $product->getSku()->getValue(),
-            createdAt: $product->getCreatedAt()->format('c'),
+            $product->getId(),
+            $product->getName(),
+            $product->getPrice()->getCents(),
+            $product->getPrice()->getCurrency(),
+            $product->getSku()->getValue(),
+            $product->getCreatedAt()->format('c'),
         );
     }
 }
@@ -536,14 +566,16 @@ class Order
     public function setItems(array $items): void { $this->items = $items; }
 }
 
-// Business logic in service
+// Business logic in service instead of domain
 class OrderService
 {
     public function calculateTotal(Order $order): Money
     {
         $total = 0;
         foreach ($order->getItems() as $item) {
-            $total += $item->getPrice() * $item->getQuantity();
+            // ❌ Money objects and primitives mixed
+            // ❌ Business logic outside domain
+            $total += $item->getPrice()->getCents() * $item->getQuantity();
         }
         return Money::fromCents($total);
     }
@@ -684,6 +716,12 @@ class Product extends Entity
 Use pagination, filtering, and proper indexing for list queries.
 
 ```php
+enum SortOrder: string
+{
+    case ASC = 'asc';
+    case DESC = 'desc';
+}
+
 final class ListProductsQuery implements Query
 {
     public function __construct(
@@ -691,7 +729,7 @@ final class ListProductsQuery implements Query
         public readonly int $perPage = 20,
         public readonly ?string $category = null,
         public readonly ?string $sortBy = 'created_at',
-        public readonly string $sortOrder = 'desc',
+        public readonly SortOrder $sortOrder = SortOrder::DESC,
     ) {}
 }
 
@@ -779,15 +817,17 @@ For complex reporting or analytics, use dedicated read models instead of queryin
 class Order extends AggregateRoot { /* ... */ }
 
 // Read model (denormalized, optimized for queries)
-class OrderReportView
+final readonly class OrderReportView
 {
-    public string $orderId;
-    public string $customerName;
-    public string $customerEmail;
-    public int $totalInCents;
-    public int $itemCount;
-    public string $status;
-    public string $createdAt;
+    public function __construct(
+        public string $orderId,
+        public string $customerName,
+        public string $customerEmail,
+        public int $totalInCents,
+        public int $itemCount,
+        public string $status,
+        public string $createdAt,
+    ) {}
 }
 
 // Projection: update read model when events occur
@@ -834,11 +874,23 @@ final class CreateProductHandler implements CommandHandler
 Check permissions before executing sensitive operations.
 
 ```php
+final readonly class DeleteProductCommand implements Command
+{
+    public function __construct(
+        public string $productId,
+        public string $userId,
+    ) {}
+}
+
 final class DeleteProductHandler implements CommandHandler
 {
     public function handle(DeleteProductCommand $command): void
     {
         $product = $this->repository->findById($command->productId);
+
+        if ($product === null) {
+            throw new ProductNotFound($command->productId);
+        }
 
         // Check authorization
         if (!$this->policy->can($command->userId, 'delete', $product)) {
@@ -846,6 +898,8 @@ final class DeleteProductHandler implements CommandHandler
         }
 
         $this->repository->delete($product);
+        $product->recordEvent(new ProductDeleted($product->getId()));
+        $this->repository->save($product);
     }
 }
 ```
@@ -1085,11 +1139,11 @@ final class GlobalExceptionHandler
 
 Always use migrations for schema changes—never modify the database manually.
 
-```php
-// Good: versioned, reversible, trackable
-php luminor migrate
+```bash
+# Good: versioned, reversible, trackable
+php bin/luminor migrate
 
-// Bad: manual changes
+# Bad: manual changes
 mysql> ALTER TABLE products ADD COLUMN sku VARCHAR(255);
 ```
 
