@@ -1,3 +1,11 @@
+---
+title: Mail
+layout: default
+parent: Features
+nav_order: 6
+description: "Email sending with SMTP, log, and array transports"
+---
+
 # Mail
 
 Luminor provides a clean, fluent API for sending emails with support for multiple transports and queue integration.

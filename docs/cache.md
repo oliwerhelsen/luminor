@@ -1,3 +1,11 @@
+---
+title: Cache
+layout: default
+parent: Features
+nav_order: 8
+description: "Caching system with array and file drivers"
+---
+
 # Cache
 
 Luminor provides a powerful and flexible caching system that supports multiple drivers. The cache system follows a clean interface-based design, making it easy to swap between different cache backends.
@@ -116,6 +124,7 @@ The array driver stores cache data in memory for the current request. Perfect fo
 ```
 
 **Use cases:**
+
 - Testing
 - Development
 - Temporary caching within a single request
@@ -134,12 +143,14 @@ The file driver stores cache data in the filesystem:
 ```
 
 **Features:**
+
 - Persistent storage
 - Automatic serialization
 - TTL support
 - Garbage collection
 
 **Use cases:**
+
 - Production applications
 - Persistent caching across requests
 - Small to medium-sized applications

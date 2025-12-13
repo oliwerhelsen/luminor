@@ -1,3 +1,11 @@
+---
+title: HTTP Layer
+layout: default
+parent: Core Concepts
+nav_order: 3
+description: "Controllers, Routes, Middleware, and Request/Response handling"
+---
+
 # HTTP Layer
 
 The HTTP layer integrates with Utopia PHP to provide a clean API for your domain-driven application.
@@ -163,7 +171,7 @@ $registrar = new RouteRegistrar($http);
 $registrar->group('/api/v1', function (RouteRegistrar $routes) {
     $routes->resource('products', ProductController::class);
     $routes->resource('orders', OrderController::class);
-    
+
     $routes->group('/admin', function (RouteRegistrar $routes) {
         $routes->resource('users', AdminUserController::class);
     });
@@ -196,7 +204,7 @@ final class RateLimitMiddleware implements MiddlewareInterface
     public function handle(Request $request, Response $response, callable $next): Response
     {
         $key = $this->getKey($request);
-        
+
         if (!$this->limiter->attempt($key, $this->maxRequests)) {
             $response->setStatusCode(429);
             return $response->json([
@@ -233,28 +241,28 @@ final class JwtAuthMiddleware extends AbstractAuthMiddleware
     protected function authenticate(Request $request): ?AuthenticatableInterface
     {
         $token = $this->extractBearerToken($request);
-        
+
         if ($token === null) {
             return null;
         }
-        
+
         $payload = $this->jwtService->verify($token);
-        
+
         if ($payload === null) {
             return null;
         }
-        
+
         return $this->userRepository->findById($payload['sub']);
     }
 
     private function extractBearerToken(Request $request): ?string
     {
         $header = $request->getHeader('Authorization', '');
-        
+
         if (str_starts_with($header, 'Bearer ')) {
             return substr($header, 7);
         }
-        
+
         return null;
     }
 }

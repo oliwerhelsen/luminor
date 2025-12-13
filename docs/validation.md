@@ -1,3 +1,11 @@
+---
+title: Validation
+layout: default
+parent: Features
+nav_order: 13
+description: "Comprehensive validation system with 30+ built-in rules"
+---
+
 # Validation
 
 Luminor provides a comprehensive validation system to ensure data integrity and security. The validator supports a wide range of validation rules and custom rule creation.

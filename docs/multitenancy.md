@@ -1,3 +1,11 @@
+---
+title: Multitenancy
+layout: default
+parent: Features
+nav_order: 2
+description: "Header, subdomain, and path-based tenant resolution strategies"
+---
+
 # Multitenancy
 
 The framework provides built-in support for multi-tenant applications with different tenant resolution strategies.
@@ -86,7 +94,7 @@ public function someMethod(): void
 {
     // Get the current tenant
     $tenant = $this->tenantContext->getTenant();
-    
+
     // Check if in a tenant context
     if ($this->tenantContext->hasTenant()) {
         $tenantId = $tenant->getId();
@@ -279,7 +287,7 @@ final class TenantDatabaseManager
     {
         $config = $this->config;
         $config['database'] = 'tenant_' . $tenant->getTenantId();
-        
+
         return new Connection($config);
     }
 }

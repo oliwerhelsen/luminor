@@ -1,3 +1,11 @@
+---
+title: Database & Migrations
+layout: default
+parent: Features
+nav_order: 9
+description: "Schema builder, migrations, and multi-database support"
+---
+
 # Database & Migrations
 
 Luminor provides a comprehensive database layer with schema building, migrations, and query execution capabilities. The system supports multiple database engines including MySQL, PostgreSQL, and SQLite.
@@ -445,6 +453,7 @@ php bin/luminor migrate
 ```
 
 Options:
+
 - `--force` - Force the operation to run in production
 - `--pretend` - Show the SQL that would be executed
 
@@ -465,6 +474,7 @@ php bin/luminor migrate:rollback
 ```
 
 Options:
+
 - `--step=N` - Rollback N batches
 - `--force` - Force the operation to run in production
 
@@ -485,6 +495,7 @@ php bin/luminor migrate:reset
 ```
 
 Options:
+
 - `--force` - Force the operation to run in production
 
 ```bash
@@ -502,6 +513,7 @@ php bin/luminor migrate:fresh
 **Warning:** This will destroy all data in the database!
 
 Options:
+
 - `--force` - Force the operation to run in production
 - `--seed` - Run seeders after migration (future feature)
 
@@ -522,6 +534,7 @@ php bin/luminor migrate:status
 ```
 
 Output:
+
 ```
 +------+-------------------------------------------------------+-------+
 | Ran? | Migration                                             | Batch |
@@ -753,6 +766,7 @@ Error: Cannot add foreign key constraint
 ```
 
 Solutions:
+
 1. Ensure referenced table exists
 2. Ensure referenced column exists
 3. Ensure data types match exactly
@@ -765,6 +779,7 @@ Error: Table 'users' already exists
 ```
 
 Solutions:
+
 1. Check if migration was already run: `php bin/luminor migrate:status`
 2. Use `dropIfExists()` instead of `drop()` in down method
 3. Run `migrate:rollback` before re-running

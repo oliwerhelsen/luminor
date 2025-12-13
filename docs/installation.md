@@ -1,3 +1,11 @@
+---
+title: Installation
+layout: default
+parent: Getting Started
+nav_order: 1
+description: "Installation and setup guide for Luminor DDD Framework"
+---
+
 # Installation
 
 This guide covers the installation and initial setup of the Luminor DDD Framework.

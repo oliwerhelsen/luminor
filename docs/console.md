@@ -1,3 +1,11 @@
+---
+title: Console Commands
+layout: default
+parent: Features
+nav_order: 7
+description: "CLI interface, code generators, and custom commands"
+---
+
 # Console Commands
 
 Luminor provides a powerful CLI interface for running commands, managing queues, and scaffolding code.

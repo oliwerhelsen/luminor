@@ -1,3 +1,11 @@
+---
+title: Application Layer
+layout: default
+parent: Core Concepts
+nav_order: 2
+description: "CQRS, Commands, Queries, Handlers, DTOs, and Validation"
+---
+
 # Application Layer
 
 The application layer orchestrates the domain layer to perform use cases. It contains commands, queries, handlers, and application services.
@@ -61,29 +69,29 @@ final class PlaceOrderCommandHandler implements CommandHandlerInterface
     {
         // Create the order aggregate
         $order = Order::place(new CustomerId($command->customerId));
-        
+
         // Add line items
         foreach ($command->items as $item) {
             $product = $this->productRepository->findById($item['productId']);
-            
+
             if ($product === null) {
                 throw new ProductNotFoundException($item['productId']);
             }
-            
+
             $order->addLine($product, $item['quantity']);
         }
-        
+
         // Submit the order
         $order->submit();
-        
+
         // Persist
         $this->orderRepository->save($order);
-        
+
         // Dispatch domain events
         foreach ($order->pullEvents() as $event) {
             $this->eventDispatcher->dispatch($event);
         }
-        
+
         return $order->getId();
     }
 }
@@ -137,11 +145,11 @@ final class GetOrderDetailsQueryHandler implements QueryHandlerInterface
     public function __invoke(GetOrderDetailsQuery $query): ?OrderDetailsDto
     {
         $order = $this->orderRepository->findById($query->orderId);
-        
+
         if ($order === null) {
             return null;
         }
-        
+
         return OrderDetailsDto::fromEntity($order);
     }
 }
@@ -163,9 +171,9 @@ public function placeOrder(Request $request): Response
         customerId: $request->getPayload()['customerId'],
         items: $request->getPayload()['items'],
     );
-    
+
     $orderId = $this->commandBus->dispatch($command);
-    
+
     return $this->created($response, ['orderId' => $orderId]);
 }
 ```
@@ -183,11 +191,11 @@ public function getOrder(string $orderId): Response
 {
     $query = new GetOrderDetailsQuery($orderId);
     $order = $this->queryBus->dispatch($query);
-    
+
     if ($order === null) {
         return $this->notFound($response);
     }
-    
+
     return $this->success($response, ['data' => $order]);
 }
 ```
@@ -290,25 +298,25 @@ final class OrderFulfillmentService extends ApplicationService
     public function fulfill(string $orderId): FulfillmentResult
     {
         $order = $this->orderRepository->findById($orderId);
-        
+
         if ($order === null) {
             return FulfillmentResult::failed('Order not found');
         }
-        
+
         // Reserve inventory
         $reservation = $this->inventoryService->reserve($order);
-        
+
         if (!$reservation->isSuccessful()) {
             return FulfillmentResult::failed('Inventory unavailable');
         }
-        
+
         // Create shipment
         $shipment = $this->shippingService->createShipment($order);
-        
+
         // Update order status
         $order->markAsFulfilled($shipment);
         $this->orderRepository->save($order);
-        
+
         return FulfillmentResult::success($shipment);
     }
 }

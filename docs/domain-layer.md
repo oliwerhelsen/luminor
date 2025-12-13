@@ -1,3 +1,11 @@
+---
+title: Domain Layer
+layout: default
+parent: Core Concepts
+nav_order: 1
+description: "Entities, Aggregate Roots, Value Objects, Domain Events, and Specifications"
+---
+
 # Domain Layer
 
 The domain layer is the heart of your application, containing all business logic and rules. This guide covers the DDD building blocks provided by the framework.
@@ -34,11 +42,11 @@ final class Product extends Entity
     public function adjustStock(int $quantity): void
     {
         $newStock = $this->stock + $quantity;
-        
+
         if ($newStock < 0) {
             throw new InsufficientStockException($this, abs($quantity));
         }
-        
+
         $this->stock = $newStock;
     }
 }
@@ -81,10 +89,10 @@ final class Order extends AggregateRoot
     public function addLine(Product $product, int $quantity): void
     {
         $this->ensureNotSubmitted();
-        
+
         $line = new OrderLine($product->getId(), $quantity, $product->getPrice());
         $this->lines[] = $line;
-        
+
         $this->recordEvent(new OrderLineAddedEvent(
             $this->getId(),
             $product->getId(),
@@ -95,11 +103,11 @@ final class Order extends AggregateRoot
     public function submit(): void
     {
         $this->ensureNotSubmitted();
-        
+
         if (empty($this->lines)) {
             throw new EmptyOrderException();
         }
-        
+
         $this->status = OrderStatus::Submitted;
         $this->recordEvent(new OrderSubmittedEvent($this->getId()));
     }
@@ -223,7 +231,7 @@ final class HighValueOrderSpecification extends Specification
         if (!$candidate instanceof Order) {
             return false;
         }
-        
+
         return $candidate->getTotal()->isGreaterThan($this->threshold);
     }
 }
@@ -257,11 +265,11 @@ use App\Domain\Entities\Order;
 interface OrderRepositoryInterface extends RepositoryInterface
 {
     public function findById(string $id): ?Order;
-    
+
     public function findByCustomer(CustomerId $customerId): array;
-    
+
     public function findPending(): array;
-    
+
     public function save(Order $order): void;
 }
 ```

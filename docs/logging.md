@@ -1,3 +1,11 @@
+---
+title: Logging
+layout: default
+parent: Features
+nav_order: 4
+description: "PSR-3 compatible logging with multiple drivers"
+---
+
 # Logging
 
 Luminor provides a robust, PSR-3 compatible logging system with support for multiple channels and drivers.

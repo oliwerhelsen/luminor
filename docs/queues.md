@@ -1,3 +1,11 @@
+---
+title: Queues
+layout: default
+parent: Features
+nav_order: 5
+description: "Background job processing with multiple queue drivers"
+---
+
 # Queues
 
 Luminor's queue system allows you to defer time-consuming tasks to be processed in the background, improving response times for your users.
