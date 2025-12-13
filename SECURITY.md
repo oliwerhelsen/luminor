@@ -16,7 +16,7 @@ We take the security of Luminor seriously. If you believe you have found a secur
 
 ### How to Report
 
-1. **Email**: Send a detailed report to us
+1. **Email**: Send a detailed report to [security@luminor-php.org](mailto:security@luminor-php.org)
 2. **Include**:
    - Type of issue (e.g., buffer overflow, SQL injection, cross-site scripting, etc.)
    - Full paths of source file(s) related to the manifestation of the issue
