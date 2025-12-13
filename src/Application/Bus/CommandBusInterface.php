@@ -19,9 +19,8 @@ interface CommandBusInterface
     /**
      * Dispatch a command to its handler.
      *
-     * @template TResult
      * @param Command $command The command to dispatch
-     * @return TResult The result from the command handler
+     * @return mixed The result from the command handler
      * @throws CommandHandlerNotFoundException If no handler is registered for the command
      */
     public function dispatch(Command $command): mixed;
