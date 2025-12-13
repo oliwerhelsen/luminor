@@ -88,7 +88,7 @@ final class UserCreated extends DomainEvent
         parent::__construct($aggregateId);
     }
 
-    protected function getPayload(): array
+    public function getPayload(): array
     {
         return ['email' => $this->email];
     }

@@ -17,14 +17,20 @@ abstract class DomainEvent
     private readonly string $eventId;
     private readonly DateTimeImmutable $occurredOn;
 
+    /** @var array<string, mixed> */
+    private array $metadata = [];
+
     /**
      * @param string|null $aggregateId The ID of the aggregate that raised this event
+     * @param array<string, mixed> $metadata Additional metadata for the event
      */
     public function __construct(
-        private readonly ?string $aggregateId = null
+        private readonly ?string $aggregateId = null,
+        array $metadata = []
     ) {
         $this->eventId = $this->generateEventId();
         $this->occurredOn = new DateTimeImmutable();
+        $this->metadata = $metadata;
     }
 
     /**
@@ -92,9 +98,31 @@ abstract class DomainEvent
      *
      * @return array<string, mixed>
      */
-    protected function getPayload(): array
+    public function getPayload(): array
     {
         return [];
+    }
+
+    /**
+     * Get event metadata.
+     *
+     * @return array<string, mixed>
+     */
+    public function getMetadata(): array
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * Add metadata to the event.
+     *
+     * @param array<string, mixed> $metadata
+     */
+    public function withMetadata(array $metadata): static
+    {
+        $clone = clone $this;
+        $clone->metadata = array_merge($this->metadata, $metadata);
+        return $clone;
     }
 
     /**

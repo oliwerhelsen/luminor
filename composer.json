@@ -1,16 +1,19 @@
 {
   "name": "luminor/luminor",
-  "description": "A modern, open-source DDD framework for building REST APIs and domain-driven applications",
+  "description": "A modern, open-source DDD framework for building REST APIs and domain-driven applications with event sourcing",
   "type": "library",
   "license": "MIT",
   "keywords": [
     "ddd",
     "domain-driven-design",
     "cqrs",
+    "event-sourcing",
     "framework",
     "rest-api",
     "luminor",
-    "php"
+    "php",
+    "openapi",
+    "observability"
   ],
   "homepage": "https://luminor-php.github.io/luminor",
   "support": {

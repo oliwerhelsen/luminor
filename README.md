@@ -8,14 +8,26 @@ A modern, open-source Domain-Driven Design (DDD) framework built on top of [Utop
 
 ## Features
 
+### Core DDD Features
 - **Domain-Driven Design** - Built-in abstractions for Entities, Aggregate Roots, Value Objects, Domain Events, and Specifications
 - **CQRS Pattern** - Command and Query Responsibility Segregation with dedicated buses
+- **Repository Pattern** - Clean data access abstractions with filtering, sorting, and pagination
 - **Modular Architecture** - Organize your application into self-contained modules
 - **Multi-tenancy Support** - Built-in tenant resolution strategies (subdomain, header, path)
-- **Repository Pattern** - Clean data access abstractions with filtering, sorting, and pagination
-- **HTTP Layer Integration** - Seamless integration with Luminor PHP HTTP library
+
+### Event Sourcing (v2.0+)
+- **Event Store** - Persist all domain events with database and in-memory implementations
+- **Event-Sourced Aggregates** - Rebuild state from event streams with automatic rehydration
+- **Snapshots** - Performance optimization for aggregates with many events
+- **Projections** - Build read models from event streams for optimized queries
+- **Temporal Queries** - Query events by date range, type, or aggregate
+
+### Infrastructure & Tools
+- **HTTP Layer Integration** - Seamless integration with Utopia PHP HTTP library
 - **Authentication & Authorization** - Role-based access control with policy support
-- **CLI Tools** - Code generators for rapid development
+- **OpenAPI Documentation** - Automatic API documentation generation with PHP attributes
+- **Observability & Metrics** - Track performance with counters, gauges, histograms, and timers
+- **CLI Tools** - 30+ console commands for code generation, event management, and more
 - **Testing Utilities** - In-memory implementations and test helpers
 
 ## Requirements
@@ -49,14 +61,28 @@ $kernel->boot();
 
 ## Documentation
 
-- [Installation Guide](docs/01-installation.md)
-- [Quick Start](docs/02-quick-start.md)
-- [Domain Layer](docs/03-domain-layer.md)
-- [Application Layer](docs/04-application-layer.md)
-- [HTTP Layer](docs/05-http-layer.md)
-- [Modules](docs/06-modules.md)
-- [Multi-tenancy](docs/07-multitenancy.md)
-- [Testing](docs/08-testing.md)
+### Getting Started
+- [Installation Guide](docs/installation.md)
+- [Quick Start](docs/quick-start.md)
+- [Core Concepts](docs/core-concepts.md)
+- [Tutorials](docs/tutorials.md)
+
+### Architecture
+- [Domain Layer](docs/domain-layer.md)
+- [Application Layer](docs/application-layer.md)
+- [HTTP Layer](docs/http-layer.md)
+- [Modules](docs/modules.md)
+
+### Event Sourcing (v2.0+)
+- [Event Sourcing Guide](docs/event-sourcing.md)
+- [OpenAPI Documentation](docs/openapi.md)
+- [Observability & Metrics](docs/observability.md)
+
+### Features
+- [Authentication](docs/AUTHENTICATION.md)
+- [Multi-tenancy](docs/multitenancy.md)
+- [Testing](docs/testing.md)
+- [Best Practices](docs/best-practices.md)
 
 ## Project Structure
 
