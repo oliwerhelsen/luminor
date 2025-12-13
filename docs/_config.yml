@@ -3,8 +3,8 @@
 
 title: Luminor Framework
 description: A modern Domain-Driven Design (DDD) framework for PHP
-url: "https://luminor-php.github.io"
-baseurl: "/luminor"
+url: "https://luminor.github.io"
+baseurl: "/"
 
 # Theme
 remote_theme: just-the-docs/just-the-docs
