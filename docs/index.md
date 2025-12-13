@@ -24,39 +24,14 @@ Luminor brings the elegance of Laravel's developer experience to the world of Do
 
 ### Key Features
 
-<div class="features-grid">
-
-**🏛️ DDD-First Architecture**
-{: .text-purple-300 }
-
-Built-in abstractions for Entities, Aggregate Roots, Value Objects, Domain Events, and Specifications. Design your domain model the right way.
-
-**⚡ CQRS Pattern**
-{: .text-purple-300 }
-
-Command and Query Responsibility Segregation out of the box. Separate your read and write operations for cleaner, more scalable code.
-
-**📦 Modular Architecture**
-{: .text-purple-300 }
-
-Organize your application into self-contained modules with bounded contexts. Perfect for large-scale applications and microservice preparation.
-
-**🏢 Multi-tenancy Support**
-{: .text-purple-300 }
-
-Built-in support for header, subdomain, and path-based tenant resolution strategies. Build SaaS applications with ease.
-
-**💜 Laravel-Inspired DX**
-{: .text-purple-300 }
-
-Familiar patterns and elegant syntax that Laravel developers will love. Powerful without the learning curve.
-
-**🛠️ CLI Tools**
-{: .text-purple-300 }
-
-Comprehensive code generators for rapid development. Generate entities, commands, queries, controllers, and entire modules with a single command.
-
-</div>
+|                               |                                                                                                                                                   |
+| :---------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **🏛️ DDD-First Architecture** | Built-in abstractions for Entities, Aggregate Roots, Value Objects, Domain Events, and Specifications. Design your domain model the right way.    |
+| **⚡ CQRS Pattern**           | Command and Query Responsibility Segregation out of the box. Separate your read and write operations for cleaner, more scalable code.             |
+| **📦 Modular Architecture**   | Organize your application into self-contained modules with bounded contexts. Perfect for large-scale applications and microservice preparation.   |
+| **🏢 Multi-tenancy Support**  | Built-in support for header, subdomain, and path-based tenant resolution strategies. Build SaaS applications with ease.                           |
+| **💜 Laravel-Inspired DX**    | Familiar patterns and elegant syntax that Laravel developers will love. Powerful without the learning curve.                                      |
+| **🛠️ CLI Tools**              | Comprehensive code generators for rapid development. Generate entities, commands, queries, controllers, and entire modules with a single command. |
 
 ---
 
