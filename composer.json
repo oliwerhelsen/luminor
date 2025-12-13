@@ -12,6 +12,13 @@
     "luminor",
     "php"
   ],
+  "homepage": "https://luminor-php.github.io/luminor",
+  "support": {
+    "issues": "https://github.com/luminor-php/luminor/issues",
+    "source": "https://github.com/luminor-php/luminor",
+    "docs": "https://luminor-php.github.io/luminor",
+    "discussions": "https://github.com/luminor-php/luminor/discussions"
+  },
   "authors": [
     {
       "name": "Luminor DDD Framework Team"
