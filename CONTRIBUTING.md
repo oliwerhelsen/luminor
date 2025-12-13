@@ -38,7 +38,7 @@ This project and everyone participating in it is governed by our commitment to p
 3. **Add the upstream remote**:
 
    ```bash
-   git remote add upstream https://github.com/luminor/ddd-framework.git
+   git remote add upstream https://github.com/luminor/luminor.git
    ```
 
 4. **Install dependencies**:

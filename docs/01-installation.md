@@ -15,7 +15,7 @@ The easiest way to create a new Luminor project is using the global installer:
 ### 1. Install Luminor Globally
 
 ```bash
-composer global require luminor/ddd-framework
+composer global require luminor/luminor
 ```
 
 Make sure the Composer global bin directory is in your PATH:
@@ -58,7 +58,7 @@ Visit `http://localhost:8000` to see your application running.
 If you prefer to set up the framework manually:
 
 ```bash
-composer require luminor/ddd-framework
+composer require luminor/luminor
 ```
 
 ## Project Structure

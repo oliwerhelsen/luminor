@@ -135,13 +135,13 @@ Please ensure your code follows PSR-12 coding standards and passes static analys
 
 ## Community
 
-- **Issues**: Found a bug or have a feature request? [Open an issue](https://github.com/luminor/ddd-framework/issues)
-- **Discussions**: Have questions or want to discuss ideas? [Start a discussion](https://github.com/luminor/ddd-framework/discussions)
+- **Issues**: Found a bug or have a feature request? [Open an issue](https://github.com/luminor/luminor/issues)
+- **Discussions**: Have questions or want to discuss ideas? [Start a discussion](https://github.com/luminor/luminor/discussions)
 - **Security**: For security vulnerabilities, please see our [Security Policy](SECURITY.md)
 
 ## Roadmap
 
-We're constantly improving Luminor. Check out our [project board](https://github.com/luminor/ddd-framework/projects) to see what's coming next.
+We're constantly improving Luminor. Check out our [project board](https://github.com/luminor/luminor/projects) to see what's coming next.
 
 ## License
 
