@@ -16,6 +16,7 @@ interface Rule
      *
      * @param string $attribute The attribute name
      * @param mixed $value The value to validate
+     *
      * @return bool True if validation passes
      */
     public function passes(string $attribute, mixed $value): bool;

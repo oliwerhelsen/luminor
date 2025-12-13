@@ -22,6 +22,7 @@ interface CommandHandlerInterface
      * Handle a command and return the result.
      *
      * @param TCommand $command The command to handle
+     *
      * @return TResult The result of the command execution
      */
     public function handle(Command $command): mixed;

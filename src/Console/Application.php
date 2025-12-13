@@ -6,6 +6,7 @@ namespace Luminor\DDD\Console;
 
 use Luminor\DDD\Console\Commands\CommandInterface;
 use Luminor\DDD\Container\ContainerInterface;
+use Throwable;
 
 /**
  * Console application for CLI commands.
@@ -20,6 +21,7 @@ final class Application
     private ?ContainerInterface $container = null;
 
     private string $name = 'Luminor DDD Framework';
+
     private string $version = '1.0.0';
 
     /**
@@ -37,6 +39,7 @@ final class Application
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -46,6 +49,7 @@ final class Application
     public function setVersion(string $version): self
     {
         $this->version = $version;
+
         return $this;
     }
 
@@ -129,6 +133,7 @@ final class Application
     public function register(CommandInterface $command): self
     {
         $this->commands[$command->getName()] = $command;
+
         return $this;
     }
 
@@ -162,6 +167,7 @@ final class Application
      * Run the console application.
      *
      * @param array<string> $argv Command line arguments
+     *
      * @return int Exit code (0 for success, non-zero for failure)
      */
     public function run(array $argv = []): int
@@ -171,6 +177,7 @@ final class Application
 
         if (empty($argv)) {
             $this->showHelp();
+
             return 0;
         }
 
@@ -178,17 +185,20 @@ final class Application
 
         if ($commandName === '--help' || $commandName === '-h') {
             $this->showHelp();
+
             return 0;
         }
 
         if ($commandName === '--version' || $commandName === '-v') {
             $this->showVersion();
+
             return 0;
         }
 
-        if (!$this->hasCommand($commandName)) {
+        if (! $this->hasCommand($commandName)) {
             $this->error(sprintf('Command "%s" not found.', $commandName));
             $this->showAvailableCommands();
+
             return 1;
         }
 
@@ -210,13 +220,15 @@ final class Application
         // Check for help flag
         if ($input->hasOption('help')) {
             $this->showCommandHelp($command);
+
             return 0;
         }
 
         try {
             return $command->execute($input, new Output());
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->error($e->getMessage());
+
             return 1;
         }
     }
@@ -321,7 +333,7 @@ final class Application
         $this->line(sprintf('  %s [options] [arguments]', $command->getName()));
 
         $arguments = $command->getArguments();
-        if (!empty($arguments)) {
+        if (! empty($arguments)) {
             $this->line('');
             $this->line('Arguments:');
             foreach ($arguments as $name => $definition) {
@@ -332,13 +344,13 @@ final class Application
                     $name,
                     $definition['description'] ?? '',
                     $required,
-                    $default
+                    $default,
                 ));
             }
         }
 
         $options = $command->getOptions();
-        if (!empty($options)) {
+        if (! empty($options)) {
             $this->line('');
             $this->line('Options:');
             foreach ($options as $name => $definition) {
@@ -349,7 +361,7 @@ final class Application
                     $shortcut,
                     $name,
                     $definition['description'] ?? '',
-                    $default
+                    $default,
                 ));
             }
         }

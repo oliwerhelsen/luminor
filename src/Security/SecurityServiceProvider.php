@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Security;
 
+use InvalidArgumentException;
 use Luminor\DDD\Container\AbstractServiceProvider;
 
 /**
@@ -27,7 +28,7 @@ final class SecurityServiceProvider extends AbstractServiceProvider
             if (in_array($driver, ['bcrypt', 'argon2id'])) {
                 try {
                     $manager->setDefaultDriver($driver);
-                } catch (\InvalidArgumentException $e) {
+                } catch (InvalidArgumentException $e) {
                     // Fall back to bcrypt if argon2id not available
                     $manager->setDefaultDriver('bcrypt');
                 }

@@ -121,6 +121,7 @@ final class MakeControllerCommand extends AbstractMakeCommand
         foreach ($stubPaths as $path) {
             if (file_exists($path)) {
                 $content = file_get_contents($path);
+
                 return $content !== false ? $content : null;
             }
         }
@@ -136,7 +137,7 @@ final class MakeControllerCommand extends AbstractMakeCommand
         $result = parent::parseClassName($name);
 
         // Adjust class name to include Controller suffix
-        if (!str_ends_with($result['class'], 'Controller')) {
+        if (! str_ends_with($result['class'], 'Controller')) {
             // Keep as-is, suffix is added by getFileSuffix
         }
 

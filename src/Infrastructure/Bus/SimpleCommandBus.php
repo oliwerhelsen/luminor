@@ -9,6 +9,7 @@ use Luminor\DDD\Application\Bus\CommandHandlerInterface;
 use Luminor\DDD\Application\Bus\CommandHandlerNotFoundException;
 use Luminor\DDD\Application\CQRS\Command;
 use Luminor\DDD\Application\Validation\CommandValidator;
+use RuntimeException;
 
 /**
  * Simple in-memory command bus implementation.
@@ -29,7 +30,7 @@ final class SimpleCommandBus implements CommandBusInterface
 
     public function __construct(
         private readonly ?CommandValidator $validator = null,
-        private readonly ?HandlerResolver $resolver = null
+        private readonly ?HandlerResolver $resolver = null,
     ) {
     }
 
@@ -47,7 +48,7 @@ final class SimpleCommandBus implements CommandBusInterface
         $handler = $this->resolveHandler($commandClass);
 
         // Execute through middleware pipeline
-        $execute = fn(Command $cmd) => $handler->handle($cmd);
+        $execute = fn (Command $cmd) => $handler->handle($cmd);
 
         return $this->executeWithMiddleware($command, $execute);
     }
@@ -76,8 +77,8 @@ final class SimpleCommandBus implements CommandBusInterface
      */
     public function registerHandler(string $commandClass, string $handlerClass): void
     {
-        $this->lazyHandlers[$commandClass] = fn() => $this->resolver?->resolve($handlerClass)
-            ?? throw new \RuntimeException('HandlerResolver is required for class-based registration');
+        $this->lazyHandlers[$commandClass] = fn () => $this->resolver?->resolve($handlerClass)
+            ?? throw new RuntimeException('HandlerResolver is required for class-based registration');
     }
 
     /**
@@ -113,6 +114,7 @@ final class SimpleCommandBus implements CommandBusInterface
             $handler = ($this->lazyHandlers[$commandClass])();
             $this->handlers[$commandClass] = $handler;
             unset($this->lazyHandlers[$commandClass]);
+
             return $handler;
         }
 
@@ -132,8 +134,8 @@ final class SimpleCommandBus implements CommandBusInterface
 
         $pipeline = array_reduce(
             array_reverse($this->middlewares),
-            fn(callable $next, MiddlewareInterface $middleware) => fn(Command $cmd) => $middleware->handle($cmd, $next),
-            $finalHandler
+            fn (callable $next, MiddlewareInterface $middleware) => fn (Command $cmd) => $middleware->handle($cmd, $next),
+            $finalHandler,
         );
 
         return $pipeline($command);

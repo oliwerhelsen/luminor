@@ -21,7 +21,7 @@ final class ArrayCache implements CacheInterface
      */
     public function get(string $key, mixed $default = null): mixed
     {
-        if (!isset($this->cache[$key])) {
+        if (! isset($this->cache[$key])) {
             return $default;
         }
 
@@ -29,6 +29,7 @@ final class ArrayCache implements CacheInterface
 
         if ($data['expires'] !== 0 && $data['expires'] < time()) {
             unset($this->cache[$key]);
+
             return $default;
         }
 
@@ -64,6 +65,7 @@ final class ArrayCache implements CacheInterface
     public function forget(string $key): bool
     {
         unset($this->cache[$key]);
+
         return true;
     }
 
@@ -73,6 +75,7 @@ final class ArrayCache implements CacheInterface
     public function flush(): bool
     {
         $this->cache = [];
+
         return true;
     }
 
@@ -109,7 +112,7 @@ final class ArrayCache implements CacheInterface
     {
         $current = $this->get($key, 0);
 
-        if (!is_numeric($current)) {
+        if (! is_numeric($current)) {
             return false;
         }
 

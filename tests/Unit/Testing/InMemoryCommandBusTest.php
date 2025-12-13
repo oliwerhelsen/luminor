@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Testing;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Application\CQRS\Command;
 use Luminor\DDD\Testing\InMemoryCommandBus;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class InMemoryCommandBusTest extends TestCase
 {
@@ -45,6 +46,7 @@ final class InMemoryCommandBusTest extends TestCase
         $called = false;
         $this->bus->handle(TestCommand::class, function (TestCommand $cmd) use (&$called) {
             $called = true;
+
             return 'result';
         });
 
@@ -56,10 +58,10 @@ final class InMemoryCommandBusTest extends TestCase
 
     public function testThrowsExceptionWhenConfigured(): void
     {
-        $exception = new \RuntimeException('Test exception');
+        $exception = new RuntimeException('Test exception');
         $this->bus->throwWhen(TestCommand::class, $exception);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Test exception');
 
         $this->bus->dispatch(new TestCommand('test'));
@@ -84,7 +86,7 @@ final class InMemoryCommandBusTest extends TestCase
     public function testResetClearsAllState(): void
     {
         $this->bus->dispatch(new TestCommand('test'));
-        $this->bus->handle(TestCommand::class, fn() => null);
+        $this->bus->handle(TestCommand::class, fn () => null);
 
         $this->bus->reset();
 
@@ -114,7 +116,7 @@ final class InMemoryCommandBusTest extends TestCase
     {
         $this->bus->dispatch(new TestCommand('test'));
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->bus->assertNothingDispatched();
     }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Application\DTO;
 
+use InvalidArgumentException;
 use ReflectionClass;
 use ReflectionProperty;
 
@@ -19,7 +20,6 @@ abstract class DataTransferObject
      * Create a DTO from an array of data.
      *
      * @param array<string, mixed> $data
-     * @return static
      */
     public static function fromArray(array $data): static
     {
@@ -34,6 +34,7 @@ abstract class DataTransferObject
                     $property->setValue($instance, $value);
                 }
             }
+
             return $instance;
         }
 
@@ -49,8 +50,8 @@ abstract class DataTransferObject
             } elseif ($parameter->allowsNull()) {
                 $args[] = null;
             } else {
-                throw new \InvalidArgumentException(
-                    sprintf('Missing required parameter "%s" for %s', $name, static::class)
+                throw new InvalidArgumentException(
+                    sprintf('Missing required parameter "%s" for %s', $name, static::class),
                 );
             }
         }
@@ -76,8 +77,8 @@ abstract class DataTransferObject
                 $value = $value->toArray();
             } elseif (is_array($value)) {
                 $value = array_map(
-                    fn($item) => $item instanceof DataTransferObject ? $item->toArray() : $item,
-                    $value
+                    fn ($item) => $item instanceof DataTransferObject ? $item->toArray() : $item,
+                    $value,
                 );
             }
 
@@ -91,7 +92,6 @@ abstract class DataTransferObject
      * Create a new instance with modified values.
      *
      * @param array<string, mixed> $data
-     * @return static
      */
     public function with(array $data): static
     {
@@ -107,7 +107,7 @@ abstract class DataTransferObject
             return false;
         }
 
-        if (!$other instanceof static) {
+        if (! $other instanceof static) {
             return false;
         }
 
@@ -124,12 +124,11 @@ abstract class DataTransferObject
 
     /**
      * Create a DTO from a JSON string.
-     *
-     * @return static
      */
     public static function fromJson(string $json): static
     {
         $data = json_decode($json, true, 512, JSON_THROW_ON_ERROR);
+
         return static::fromArray($data);
     }
 }

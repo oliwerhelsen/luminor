@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Application\DTO;
 
+use BadMethodCallException;
 use Luminor\DDD\Domain\Abstractions\Entity;
 
 /**
@@ -20,6 +21,7 @@ abstract class Mapper
      * Map a domain entity to a DTO.
      *
      * @param TEntity $entity
+     *
      * @return TDto
      */
     abstract public function toDto(Entity $entity): DataTransferObject;
@@ -28,6 +30,7 @@ abstract class Mapper
      * Map a DTO to a domain entity.
      *
      * @param TDto $dto
+     *
      * @return TEntity
      */
     abstract public function toEntity(DataTransferObject $dto): Entity;
@@ -36,33 +39,36 @@ abstract class Mapper
      * Map an array of entities to DTOs.
      *
      * @param array<int, TEntity> $entities
+     *
      * @return array<int, TDto>
      */
     public function toDtoList(array $entities): array
     {
-        return array_map(fn(Entity $entity) => $this->toDto($entity), $entities);
+        return array_map(fn (Entity $entity) => $this->toDto($entity), $entities);
     }
 
     /**
      * Map an array of DTOs to entities.
      *
      * @param array<int, TDto> $dtos
+     *
      * @return array<int, TEntity>
      */
     public function toEntityList(array $dtos): array
     {
-        return array_map(fn(DataTransferObject $dto) => $this->toEntity($dto), $dtos);
+        return array_map(fn (DataTransferObject $dto) => $this->toEntity($dto), $dtos);
     }
 
     /**
      * Map a paged result of entities to a paged result of DTOs.
      *
      * @param PagedResult<TEntity> $pagedResult
+     *
      * @return PagedResult<TDto>
      */
     public function toPagedDto(PagedResult $pagedResult): PagedResult
     {
-        return $pagedResult->map(fn(Entity $entity) => $this->toDto($entity));
+        return $pagedResult->map(fn (Entity $entity) => $this->toDto($entity));
     }
 
     /**
@@ -72,12 +78,13 @@ abstract class Mapper
      *
      * @param TEntity $entity
      * @param TDto $dto
+     *
      * @return TEntity
      */
     public function updateEntity(Entity $entity, DataTransferObject $dto): Entity
     {
-        throw new \BadMethodCallException(
-            sprintf('Method %s::updateEntity() must be implemented to support entity updates', static::class)
+        throw new BadMethodCallException(
+            sprintf('Method %s::updateEntity() must be implemented to support entity updates', static::class),
         );
     }
 }

@@ -43,6 +43,7 @@ interface TenantInterface
      *
      * @param string $key The configuration key
      * @param mixed $default Default value if key doesn't exist
+     *
      * @return mixed The configuration value
      */
     public function getConfig(string $key, mixed $default = null): mixed;

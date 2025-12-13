@@ -40,6 +40,7 @@ final class Output
     public function setAnsi(bool $ansi): self
     {
         $this->ansi = $ansi;
+
         return $this;
     }
 
@@ -177,7 +178,7 @@ final class Output
      */
     private function format(string $message): string
     {
-        if (!$this->ansi) {
+        if (! $this->ansi) {
             // Strip all tags
             return preg_replace('/<\/?[a-z]+>/', '', $message) ?? $message;
         }
@@ -223,6 +224,7 @@ final class Output
      *
      * @param string $question The question to ask
      * @param string|null $default The default value if no input is provided
+     *
      * @return string|null The user's input or default value
      */
     public function ask(string $question, ?string $default = null): ?string
@@ -251,6 +253,7 @@ final class Output
      * Ask the user a secret question (input hidden).
      *
      * @param string $question The question to ask
+     *
      * @return string|null The user's input
      */
     public function secret(string $question): ?string
@@ -267,6 +270,7 @@ final class Output
             }
             shell_exec('stty echo');
             $this->newLine();
+
             return $input !== '' ? $input : null;
         }
 
@@ -287,6 +291,7 @@ final class Output
      *
      * @param string $question The question to ask
      * @param bool $default The default value if no input is provided
+     *
      * @return bool The user's confirmation
      */
     public function confirm(string $question, bool $default = false): bool
@@ -317,6 +322,7 @@ final class Output
      * @param string $question The question to ask
      * @param array<string, string> $options Associative array of key => label options
      * @param string|null $default The default option key
+     *
      * @return string The selected option key
      */
     public function choice(string $question, array $options, ?string $default = null): string
@@ -365,7 +371,8 @@ final class Output
         }
 
         // Invalid input, return default
-        $this->warning("Invalid selection, using default.");
+        $this->warning('Invalid selection, using default.');
+
         return $default ?? $keys[0];
     }
 

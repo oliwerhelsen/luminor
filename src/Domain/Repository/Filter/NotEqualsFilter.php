@@ -11,7 +11,7 @@ final class NotEqualsFilter extends Filter
 {
     public function __construct(
         private readonly string $field,
-        private readonly mixed $value
+        private readonly mixed $value,
     ) {
     }
 

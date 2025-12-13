@@ -8,7 +8,6 @@ use Luminor\DDD\Logging\Drivers\ArrayLogger;
 use Luminor\DDD\Logging\Drivers\FileLogger;
 use Luminor\DDD\Logging\Drivers\NullLogger;
 use Luminor\DDD\Logging\Drivers\StdoutLogger;
-use Psr\Log\LoggerInterface as PsrLoggerInterface;
 use RuntimeException;
 use Stringable;
 
@@ -44,11 +43,10 @@ final class LogManager implements LoggerInterface
      * Get a logger for a specific channel.
      *
      * @param string $channel The channel name
-     * @return LoggerInterface
      */
     public function channel(string $channel): LoggerInterface
     {
-        if (!isset($this->channels[$channel])) {
+        if (! isset($this->channels[$channel])) {
             $this->channels[$channel] = $this->resolveChannel($channel);
         }
 
@@ -65,8 +63,6 @@ final class LogManager implements LoggerInterface
 
     /**
      * Get the default logger.
-     *
-     * @return LoggerInterface
      */
     public function driver(?string $driver = null): LoggerInterface
     {
@@ -82,6 +78,7 @@ final class LogManager implements LoggerInterface
     public function extend(string $name, string $class): self
     {
         $this->customDrivers[$name] = $class;
+
         return $this;
     }
 
@@ -104,7 +101,7 @@ final class LogManager implements LoggerInterface
      *
      * @param string $driver The driver name
      * @param array<string, mixed> $config The driver configuration
-     * @return LoggerInterface
+     *
      * @throws RuntimeException If the driver is not supported
      */
     private function createDriver(string $driver, array $config): LoggerInterface
@@ -127,12 +124,11 @@ final class LogManager implements LoggerInterface
      * Create a stack of multiple channels.
      *
      * @param array<string> $channels The channels to stack
-     * @return LoggerInterface
      */
     public function stack(array $channels): LoggerInterface
     {
         return new StackLogger(
-            array_map(fn($channel) => $this->channel($channel), $channels)
+            array_map(fn ($channel) => $this->channel($channel), $channels),
         );
     }
 

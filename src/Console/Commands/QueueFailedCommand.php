@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Console\Commands;
 
+use DateTimeImmutable;
+use JsonException;
 use Luminor\DDD\Console\Input;
 use Luminor\DDD\Console\Output;
 use Luminor\DDD\Container\ContainerInterface;
@@ -37,12 +39,14 @@ final class QueueFailedCommand extends AbstractCommand
     {
         if ($this->container === null) {
             $output->error('Container not set. This command requires dependency injection.');
+
             return 1;
         }
 
-        if (!$this->container->has(FailedJobProviderInterface::class)) {
+        if (! $this->container->has(FailedJobProviderInterface::class)) {
             $output->error('Failed job provider is not configured.');
             $output->writeln('Add a FailedJobProviderInterface binding to your container.');
+
             return 1;
         }
 
@@ -52,6 +56,7 @@ final class QueueFailedCommand extends AbstractCommand
 
         if (empty($failedJobs)) {
             $output->comment('No failed jobs found.');
+
             return 0;
         }
 
@@ -59,9 +64,9 @@ final class QueueFailedCommand extends AbstractCommand
         $output->newLine();
 
         // Calculate column widths
-        $idWidth = max(4, ...array_map(fn($job) => strlen((string) $job['id']), $failedJobs));
-        $queueWidth = max(5, ...array_map(fn($job) => strlen($job['queue'] ?? 'default'), $failedJobs));
-        $connectionWidth = max(10, ...array_map(fn($job) => strlen($job['connection'] ?? 'default'), $failedJobs));
+        $idWidth = max(4, ...array_map(fn ($job) => strlen((string) $job['id']), $failedJobs));
+        $queueWidth = max(5, ...array_map(fn ($job) => strlen($job['queue'] ?? 'default'), $failedJobs));
+        $connectionWidth = max(10, ...array_map(fn ($job) => strlen($job['connection'] ?? 'default'), $failedJobs));
 
         // Header
         $header = sprintf(
@@ -70,15 +75,15 @@ final class QueueFailedCommand extends AbstractCommand
             'Connection',
             'Queue',
             'Failed At',
-            'Job Name'
+            'Job Name',
         );
         $output->writeln($header);
         $output->writeln('  ' . str_repeat('-', strlen($header) - 2));
 
         foreach ($failedJobs as $job) {
             $jobName = $this->extractJobName($job['payload'] ?? '');
-            $failedAt = isset($job['failed_at']) 
-                ? (new \DateTimeImmutable($job['failed_at']))->format('Y-m-d H:i:s')
+            $failedAt = isset($job['failed_at'])
+                ? (new DateTimeImmutable($job['failed_at']))->format('Y-m-d H:i:s')
                 : 'Unknown';
 
             $output->writeln(sprintf(
@@ -87,7 +92,7 @@ final class QueueFailedCommand extends AbstractCommand
                 $job['connection'] ?? 'default',
                 $job['queue'] ?? 'default',
                 $failedAt,
-                $jobName
+                $jobName,
             ));
         }
 
@@ -104,8 +109,9 @@ final class QueueFailedCommand extends AbstractCommand
     {
         try {
             $data = json_decode($payload, true, 512, JSON_THROW_ON_ERROR);
+
             return $data['name'] ?? 'Unknown';
-        } catch (\JsonException) {
+        } catch (JsonException) {
             return 'Unknown';
         }
     }

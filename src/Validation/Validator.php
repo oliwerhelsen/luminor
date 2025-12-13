@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Validation;
 
-use Luminor\DDD\Application\Validation\ValidationResult;
 use Luminor\DDD\Application\Validation\ValidationException;
+use Luminor\DDD\Application\Validation\ValidationResult;
+use RuntimeException;
 
 /**
  * Validator
@@ -34,7 +35,7 @@ final class Validator
     public function __construct(
         array $data,
         array $rules,
-        array $customMessages = []
+        array $customMessages = [],
     ) {
         $this->data = $data;
         $this->rules = $rules;
@@ -53,7 +54,7 @@ final class Validator
             $ruleList = is_array($rules) ? $rules : [$rules];
 
             foreach ($ruleList as $rule) {
-                if (!$this->validateRule($attribute, $value, $rule)) {
+                if (! $this->validateRule($attribute, $value, $rule)) {
                     break; // Stop on first error for this attribute
                 }
             }
@@ -68,13 +69,14 @@ final class Validator
      * Validate and throw exception if validation fails.
      *
      * @return array<string, mixed> Validated data
+     *
      * @throws ValidationException
      */
     public function validated(): array
     {
         $result = $this->validate();
 
-        if (!$result->isValid()) {
+        if (! $result->isValid()) {
             throw new ValidationException('Validation failed', $result->getErrors());
         }
 
@@ -94,7 +96,7 @@ final class Validator
      */
     public function fails(): bool
     {
-        return !$this->passes();
+        return ! $this->passes();
     }
 
     /**
@@ -117,10 +119,12 @@ final class Validator
     private function validateRule(string $attribute, mixed $value, string|Rule $rule): bool
     {
         if ($rule instanceof Rule) {
-            if (!$rule->passes($attribute, $value)) {
+            if (! $rule->passes($attribute, $value)) {
                 $this->errors[$attribute] = $rule->message();
+
                 return false;
             }
+
             return true;
         }
 
@@ -130,14 +134,15 @@ final class Validator
         // Get the rule validator method
         $method = 'validate' . ucfirst($ruleName);
 
-        if (!method_exists($this, $method)) {
-            throw new \RuntimeException("Validation rule [{$ruleName}] does not exist.");
+        if (! method_exists($this, $method)) {
+            throw new RuntimeException("Validation rule [{$ruleName}] does not exist.");
         }
 
         // Call the validation method
-        if (!$this->$method($attribute, $value, $parameters)) {
+        if (! $this->$method($attribute, $value, $parameters)) {
             $message = $this->getMessage($attribute, $ruleName, $parameters);
             $this->errors[$attribute] = $message;
+
             return false;
         }
 
@@ -154,6 +159,7 @@ final class Validator
         if (str_contains($rule, ':')) {
             [$name, $params] = explode(':', $rule, 2);
             $parameters = explode(',', $params);
+
             return [$name, $parameters];
         }
 
@@ -242,7 +248,7 @@ final class Validator
      */
     protected function validateEmail(string $attribute, mixed $value, array $parameters): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 
@@ -343,16 +349,19 @@ final class Validator
 
         if (is_numeric($value)) {
             $num = (float) $value;
+
             return $num >= $min && $num <= $max;
         }
 
         if (is_string($value)) {
             $length = mb_strlen($value);
+
             return $length >= $min && $length <= $max;
         }
 
         if (is_array($value)) {
             $count = count($value);
+
             return $count >= $min && $count <= $max;
         }
 
@@ -372,7 +381,7 @@ final class Validator
      */
     protected function validateRegex(string $attribute, mixed $value, array $parameters): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 
@@ -384,7 +393,7 @@ final class Validator
      */
     protected function validateUrl(string $attribute, mixed $value, array $parameters): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 
@@ -396,7 +405,7 @@ final class Validator
      */
     protected function validateAlpha(string $attribute, mixed $value, array $parameters): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 
@@ -408,7 +417,7 @@ final class Validator
      */
     protected function validateAlphaNumeric(string $attribute, mixed $value, array $parameters): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 
@@ -432,6 +441,7 @@ final class Validator
     protected function validateSame(string $attribute, mixed $value, array $parameters): bool
     {
         $other = $this->getValue($parameters[0]);
+
         return $value === $other;
     }
 
@@ -441,6 +451,7 @@ final class Validator
     protected function validateDifferent(string $attribute, mixed $value, array $parameters): bool
     {
         $other = $this->getValue($parameters[0]);
+
         return $value !== $other;
     }
 }

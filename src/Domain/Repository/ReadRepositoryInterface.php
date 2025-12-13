@@ -20,6 +20,7 @@ interface ReadRepositoryInterface
      * Find an aggregate by its identifier.
      *
      * @param mixed $id The unique identifier
+     *
      * @return T|null The aggregate or null if not found
      */
     public function findById(mixed $id): ?AggregateRoot;
@@ -28,7 +29,9 @@ interface ReadRepositoryInterface
      * Find an aggregate by its identifier or throw an exception.
      *
      * @param mixed $id The unique identifier
+     *
      * @return T The aggregate
+     *
      * @throws AggregateNotFoundException If the aggregate is not found
      */
     public function findByIdOrFail(mixed $id): AggregateRoot;

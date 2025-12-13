@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Queue;
 
-use Luminor\DDD\Logging\LoggerInterface;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
+use Throwable;
 
 /**
  * Queue worker that processes jobs from queues.
@@ -15,6 +15,7 @@ use Psr\Log\LoggerInterface as PsrLoggerInterface;
 final class Worker
 {
     private bool $shouldQuit = false;
+
     private bool $paused = false;
 
     /** @var array<string, mixed> */
@@ -29,6 +30,7 @@ final class Worker
     ];
 
     private int $jobsProcessed = 0;
+
     private float $startTime;
 
     public function __construct(
@@ -52,7 +54,7 @@ final class Worker
 
         $this->registerSignalHandlers();
 
-        while (!$this->shouldQuit) {
+        while (! $this->shouldQuit) {
             if ($this->paused) {
                 $this->sleep($this->options['sleep']);
                 continue;
@@ -84,6 +86,7 @@ final class Worker
      * @param string $connectionName The connection to use
      * @param string $queue The queue name
      * @param array<string, mixed> $options Worker options
+     *
      * @return bool Whether a job was processed
      */
     public function runNextJob(string $connectionName, string $queue, array $options = []): bool
@@ -97,6 +100,7 @@ final class Worker
         }
 
         $this->processJob($connectionName, $job);
+
         return true;
     }
 
@@ -107,12 +111,13 @@ final class Worker
     {
         try {
             return $this->manager->connection($connectionName)->pop($queue);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->logger?->error('Error fetching job from queue', [
                 'connection' => $connectionName,
                 'queue' => $queue,
                 'exception' => $e,
             ]);
+
             return null;
         }
     }
@@ -143,7 +148,7 @@ final class Worker
                 'job' => get_class($job),
                 'id' => $queuedJob->getId(),
             ]);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->handleJobException($connectionName, $queuedJob, $e);
         }
     }
@@ -151,7 +156,7 @@ final class Worker
     /**
      * Handle a job that threw an exception.
      */
-    private function handleJobException(string $connectionName, QueuedJob $queuedJob, \Throwable $e): void
+    private function handleJobException(string $connectionName, QueuedJob $queuedJob, Throwable $e): void
     {
         $queue = $this->manager->connection($connectionName);
         $job = $queuedJob->getJob();
@@ -185,14 +190,14 @@ final class Worker
     /**
      * Mark a job as failed.
      */
-    private function failJob(string $connectionName, QueuedJob $queuedJob, \Throwable $e): void
+    private function failJob(string $connectionName, QueuedJob $queuedJob, Throwable $e): void
     {
         $job = $queuedJob->getJob();
 
         // Call the job's failed method
         try {
             $job->failed($e);
-        } catch (\Throwable $failedException) {
+        } catch (Throwable $failedException) {
             $this->logger?->error('Error in job failed() handler', [
                 'job' => get_class($job),
                 'exception' => $failedException,
@@ -204,7 +209,7 @@ final class Worker
             $connectionName,
             $queuedJob->getQueue(),
             json_encode($queuedJob->rawPayload, JSON_THROW_ON_ERROR),
-            $e
+            $e,
         );
 
         $this->logger?->error('Job failed permanently', [
@@ -218,16 +223,16 @@ final class Worker
      */
     private function registerSignalHandlers(): void
     {
-        if (!extension_loaded('pcntl')) {
+        if (! extension_loaded('pcntl')) {
             return;
         }
 
         pcntl_async_signals(true);
 
-        pcntl_signal(SIGTERM, fn() => $this->stop());
-        pcntl_signal(SIGINT, fn() => $this->stop());
-        pcntl_signal(SIGUSR2, fn() => $this->paused = true);
-        pcntl_signal(SIGCONT, fn() => $this->paused = false);
+        pcntl_signal(SIGTERM, fn () => $this->stop());
+        pcntl_signal(SIGINT, fn () => $this->stop());
+        pcntl_signal(SIGUSR2, fn () => $this->paused = true);
+        pcntl_signal(SIGCONT, fn () => $this->paused = false);
     }
 
     /**

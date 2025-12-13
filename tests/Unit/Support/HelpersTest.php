@@ -4,9 +4,12 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Support;
 
-use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Kernel;
+use ArrayObject;
 use Luminor\DDD\Config\ConfigRepository;
+use Luminor\DDD\Kernel;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
+use stdClass;
 
 final class HelpersTest extends TestCase
 {
@@ -38,14 +41,14 @@ final class HelpersTest extends TestCase
 
     public function testValueResolvesClosures(): void
     {
-        $result = value(fn() => 'resolved');
+        $result = value(fn () => 'resolved');
 
         $this->assertSame('resolved', $result);
     }
 
     public function testValuePassesArgumentsToClosures(): void
     {
-        $result = value(fn($a, $b) => $a + $b, 2, 3);
+        $result = value(fn ($a, $b) => $a + $b, 2, 3);
 
         $this->assertSame(5, $result);
     }
@@ -72,8 +75,8 @@ final class HelpersTest extends TestCase
 
     public function testBlankHandlesCountable(): void
     {
-        $empty = new \ArrayObject();
-        $filled = new \ArrayObject(['item']);
+        $empty = new ArrayObject();
+        $filled = new ArrayObject(['item']);
 
         $this->assertTrue(blank($empty));
         $this->assertFalse(blank($filled));
@@ -116,7 +119,7 @@ final class HelpersTest extends TestCase
 
     public function testTapReturnsOriginalValue(): void
     {
-        $object = new \stdClass();
+        $object = new stdClass();
         $object->name = 'original';
 
         $result = tap($object, function ($obj) {
@@ -145,7 +148,7 @@ final class HelpersTest extends TestCase
 
     public function testWithAppliesCallback(): void
     {
-        $result = with('hello', fn($value) => strtoupper($value));
+        $result = with('hello', fn ($value) => strtoupper($value));
 
         $this->assertSame('HELLO', $result);
     }
@@ -156,21 +159,21 @@ final class HelpersTest extends TestCase
 
     public function testTransformAppliesCallbackWhenFilled(): void
     {
-        $result = transform('hello', fn($value) => strtoupper($value));
+        $result = transform('hello', fn ($value) => strtoupper($value));
 
         $this->assertSame('HELLO', $result);
     }
 
     public function testTransformReturnsDefaultWhenBlank(): void
     {
-        $result = transform('', fn($value) => strtoupper($value), 'default');
+        $result = transform('', fn ($value) => strtoupper($value), 'default');
 
         $this->assertSame('default', $result);
     }
 
     public function testTransformCallsDefaultWhenCallable(): void
     {
-        $result = transform(null, fn($value) => $value, fn() => 'callable_default');
+        $result = transform(null, fn ($value) => $value, fn () => 'callable_default');
 
         $this->assertSame('callable_default', $result);
     }
@@ -181,37 +184,37 @@ final class HelpersTest extends TestCase
 
     public function testThrowIfThrowsWhenConditionTrue(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Condition was true');
 
-        throw_if(true, \RuntimeException::class, 'Condition was true');
+        throw_if(true, RuntimeException::class, 'Condition was true');
     }
 
     public function testThrowIfReturnsConditionWhenFalse(): void
     {
-        $result = throw_if(false, \RuntimeException::class, 'Should not throw');
+        $result = throw_if(false, RuntimeException::class, 'Should not throw');
 
         $this->assertFalse($result);
     }
 
     public function testThrowUnlessThrowsWhenConditionFalse(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Condition was false');
 
-        throw_unless(false, \RuntimeException::class, 'Condition was false');
+        throw_unless(false, RuntimeException::class, 'Condition was false');
     }
 
     public function testThrowUnlessReturnsConditionWhenTrue(): void
     {
-        $result = throw_unless(true, \RuntimeException::class, 'Should not throw');
+        $result = throw_unless(true, RuntimeException::class, 'Should not throw');
 
         $this->assertTrue($result);
     }
 
     public function testThrowIfWithStringMessage(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Custom message');
 
         throw_if(true, 'Custom message');

@@ -187,8 +187,6 @@ final class Container implements ContainerInterface
 
     /**
      * Build an instance of the given type.
-     *
-     * @param callable|string $concrete
      */
     private function build(callable|string $concrete): object
     {
@@ -198,31 +196,31 @@ final class Container implements ContainerInterface
         }
 
         // If concrete is callable (but not a class string), call it
-        if (is_callable($concrete) && !is_string($concrete)) {
+        if (is_callable($concrete) && ! is_string($concrete)) {
             return $concrete($this);
         }
 
         // Build from class name
-        if (!is_string($concrete)) {
+        if (! is_string($concrete)) {
             throw new ContainerException(sprintf(
                 'Cannot build non-string concrete: %s',
-                get_debug_type($concrete)
+                get_debug_type($concrete),
             ));
         }
 
-        if (!class_exists($concrete)) {
+        if (! class_exists($concrete)) {
             throw new ContainerException(sprintf(
                 'Class %s does not exist.',
-                $concrete
+                $concrete,
             ));
         }
 
         $reflection = new ReflectionClass($concrete);
 
-        if (!$reflection->isInstantiable()) {
+        if (! $reflection->isInstantiable()) {
             throw new ContainerException(sprintf(
                 'Class %s is not instantiable.',
-                $concrete
+                $concrete,
             ));
         }
 
@@ -242,6 +240,7 @@ final class Container implements ContainerInterface
      *
      * @param array<ReflectionParameter> $parameters
      * @param array<string, mixed> $primitives
+     *
      * @return array<mixed>
      */
     private function resolveDependencies(array $parameters, array $primitives = []): array
@@ -260,7 +259,7 @@ final class Container implements ContainerInterface
             $type = $parameter->getType();
 
             // Handle untyped or non-class parameters
-            if ($type === null || !$type instanceof ReflectionNamedType || $type->isBuiltin()) {
+            if ($type === null || ! $type instanceof ReflectionNamedType || $type->isBuiltin()) {
                 if ($parameter->isDefaultValueAvailable()) {
                     $dependencies[] = $parameter->getDefaultValue();
                     continue;
@@ -273,7 +272,7 @@ final class Container implements ContainerInterface
 
                 throw new ContainerException(sprintf(
                     'Unable to resolve parameter $%s with no type hint or default value.',
-                    $name
+                    $name,
                 ));
             }
 

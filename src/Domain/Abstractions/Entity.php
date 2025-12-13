@@ -18,7 +18,7 @@ abstract class Entity
      * @param TId $id The unique identifier for this entity
      */
     public function __construct(
-        protected mixed $id
+        protected mixed $id,
     ) {
     }
 
@@ -47,7 +47,7 @@ abstract class Entity
             return true;
         }
 
-        if (!$other instanceof static) {
+        if (! $other instanceof static) {
             return false;
         }
 

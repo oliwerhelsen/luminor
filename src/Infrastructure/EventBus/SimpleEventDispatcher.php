@@ -67,7 +67,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
      */
     public function subscribe(string $eventClass, EventHandlerInterface $handler): void
     {
-        if (!isset($this->handlers[$eventClass])) {
+        if (! isset($this->handlers[$eventClass])) {
             $this->handlers[$eventClass] = [];
         }
 
@@ -82,7 +82,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
      */
     public function subscribeCallable(string $eventClass, callable $callable): void
     {
-        if (!isset($this->callableHandlers[$eventClass])) {
+        if (! isset($this->callableHandlers[$eventClass])) {
             $this->callableHandlers[$eventClass] = [];
         }
 
@@ -113,7 +113,7 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
             foreach ($methods as $method) {
                 $this->subscribeCallable(
                     $eventClass,
-                    fn(DomainEvent $event) => $subscriber->$method($event)
+                    fn (DomainEvent $event) => $subscriber->$method($event),
                 );
             }
         }
@@ -124,13 +124,13 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
      */
     public function unsubscribe(string $eventClass, EventHandlerInterface $handler): void
     {
-        if (!isset($this->handlers[$eventClass])) {
+        if (! isset($this->handlers[$eventClass])) {
             return;
         }
 
         $this->handlers[$eventClass] = array_filter(
             $this->handlers[$eventClass],
-            fn(EventHandlerInterface $h) => $h !== $handler
+            fn (EventHandlerInterface $h) => $h !== $handler,
         );
     }
 
@@ -143,14 +143,14 @@ final class SimpleEventDispatcher implements EventDispatcherInterface
         foreach ($this->handlers as $eventClass => $handlers) {
             $this->handlers[$eventClass] = array_filter(
                 $handlers,
-                fn(EventHandlerInterface $h) => $h !== $handler
+                fn (EventHandlerInterface $h) => $h !== $handler,
             );
         }
 
         // Remove from global handlers
         $this->globalHandlers = array_filter(
             $this->globalHandlers,
-            fn(EventHandlerInterface $h) => $h !== $handler
+            fn (EventHandlerInterface $h) => $h !== $handler,
         );
     }
 

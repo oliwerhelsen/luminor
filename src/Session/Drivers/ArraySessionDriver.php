@@ -30,6 +30,7 @@ final class ArraySessionDriver implements SessionDriver
     public function write(string $sessionId, array $data): bool
     {
         $this->sessions[$sessionId] = $data;
+
         return true;
     }
 
@@ -39,6 +40,7 @@ final class ArraySessionDriver implements SessionDriver
     public function destroy(string $sessionId): bool
     {
         unset($this->sessions[$sessionId]);
+
         return true;
     }
 

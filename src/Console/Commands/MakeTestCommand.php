@@ -39,48 +39,51 @@ final class MakeTestCommand
         if ($name === null) {
             $output->writeln('<error>Please provide a test name.</error>');
             $output->writeln('Usage: make:test <name> [--unit]');
+
             return 1;
         }
 
         $kernel = Kernel::getInstance();
         if ($kernel === null) {
             $output->writeln('<error>Kernel not initialized.</error>');
+
             return 1;
         }
 
         $unit = $input->hasOption('unit');
         $type = $unit ? 'Unit' : 'Feature';
-        
+
         // Parse namespace and class name
         $parts = explode('/', str_replace('\\', '/', $name));
         $className = array_pop($parts);
-        
+
         // Ensure name ends with Test
-        if (!str_ends_with($className, 'Test')) {
+        if (! str_ends_with($className, 'Test')) {
             $className .= 'Test';
         }
-        
-        $subNamespace = !empty($parts) ? '\\' . implode('\\', $parts) : '';
+
+        $subNamespace = ! empty($parts) ? '\\' . implode('\\', $parts) : '';
 
         // Determine output path
         $basePath = $kernel->getBasePath();
-        $directory = $basePath . '/tests/' . $type . (!empty($parts) ? '/' . implode('/', $parts) : '');
+        $directory = $basePath . '/tests/' . $type . (! empty($parts) ? '/' . implode('/', $parts) : '');
         $filePath = $directory . '/' . $className . '.php';
 
         // Create directory if needed
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         if (file_exists($filePath)) {
             $output->writeln("<error>Test already exists: {$filePath}</error>");
+
             return 1;
         }
 
-        $stub = $unit 
-            ? $this->getUnitStub($className, $subNamespace) 
+        $stub = $unit
+            ? $this->getUnitStub($className, $subNamespace)
             : $this->getFeatureStub($className, $subNamespace);
-        
+
         file_put_contents($filePath, $stub);
 
         $output->writeln("<info>Test created successfully:</info> {$filePath}");
@@ -96,30 +99,30 @@ final class MakeTestCommand
         $namespace = 'Tests\\Unit' . $subNamespace;
 
         return <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-namespace {$namespace};
+            namespace {$namespace};
 
-use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\TestCase;
+            use PHPUnit\Framework\Attributes\Test;
+            use PHPUnit\Framework\TestCase;
 
-final class {$className} extends TestCase
-{
-    #[Test]
-    public function it_does_something(): void
-    {
-        // Arrange
-        
-        // Act
-        
-        // Assert
-        \$this->assertTrue(true);
-    }
-}
+            final class {$className} extends TestCase
+            {
+                #[Test]
+                public function it_does_something(): void
+                {
+                    // Arrange
+                    
+                    // Act
+                    
+                    // Assert
+                    \$this->assertTrue(true);
+                }
+            }
 
-PHP;
+            PHP;
     }
 
     /**
@@ -130,29 +133,29 @@ PHP;
         $namespace = 'Tests\\Feature' . $subNamespace;
 
         return <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-namespace {$namespace};
+            namespace {$namespace};
 
-use Luminor\DDD\Testing\TestCase;
-use PHPUnit\Framework\Attributes\Test;
+            use Luminor\DDD\Testing\TestCase;
+            use PHPUnit\Framework\Attributes\Test;
 
-final class {$className} extends TestCase
-{
-    #[Test]
-    public function it_does_something(): void
-    {
-        // Arrange
-        
-        // Act
-        
-        // Assert
-        \$this->assertTrue(true);
-    }
-}
+            final class {$className} extends TestCase
+            {
+                #[Test]
+                public function it_does_something(): void
+                {
+                    // Arrange
+                    
+                    // Act
+                    
+                    // Assert
+                    \$this->assertTrue(true);
+                }
+            }
 
-PHP;
+            PHP;
     }
 }

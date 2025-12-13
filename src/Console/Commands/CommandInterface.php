@@ -66,6 +66,7 @@ interface CommandInterface
      *
      * @param Input $input The command input
      * @param Output $output The console output
+     *
      * @return int Exit code (0 for success, non-zero for failure)
      */
     public function execute(Input $input, Output $output): int;

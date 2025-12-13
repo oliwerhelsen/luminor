@@ -27,7 +27,7 @@ final class DoctrineUnitOfWork implements UnitOfWorkInterface
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly ?DomainEventPublisher $eventPublisher = null
+        private readonly ?DomainEventPublisher $eventPublisher = null,
     ) {
     }
 
@@ -48,7 +48,7 @@ final class DoctrineUnitOfWork implements UnitOfWorkInterface
     {
         $id = $this->getAggregateId($aggregate);
 
-        if (!isset($this->newAggregates[$id])) {
+        if (! isset($this->newAggregates[$id])) {
             $this->dirtyAggregates[$id] = $aggregate;
         }
     }
@@ -76,7 +76,7 @@ final class DoctrineUnitOfWork implements UnitOfWorkInterface
         unset(
             $this->newAggregates[$id],
             $this->dirtyAggregates[$id],
-            $this->removedAggregates[$id]
+            $this->removedAggregates[$id],
         );
     }
 
@@ -155,7 +155,7 @@ final class DoctrineUnitOfWork implements UnitOfWorkInterface
         $allAggregates = array_merge(
             array_values($this->newAggregates),
             array_values($this->dirtyAggregates),
-            array_values($this->removedAggregates)
+            array_values($this->removedAggregates),
         );
 
         $this->eventPublisher->collectEventsFromAll($allAggregates);

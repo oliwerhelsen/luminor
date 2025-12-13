@@ -41,7 +41,7 @@ final class ModuleException extends RuntimeException
     public static function dependencyNotFound(string $module, string $dependency): self
     {
         return new self(
-            sprintf('Module "%s" requires "%s" which is not registered', $module, $dependency)
+            sprintf('Module "%s" requires "%s" which is not registered', $module, $dependency),
         );
     }
 

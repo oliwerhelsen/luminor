@@ -23,8 +23,8 @@ final class StdoutLogger extends AbstractLogger
 
     /**
      * @param array<string, mixed> $config Configuration options:
-     *                                      - level: Minimum log level (default: debug)
-     *                                      - stderr_level: Minimum level for stderr (default: warning)
+     *                                     - level: Minimum log level (default: debug)
+     *                                     - stderr_level: Minimum level for stderr (default: warning)
      */
     public function __construct(array $config = [])
     {

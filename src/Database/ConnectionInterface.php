@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Database;
 
 use PDO;
+use PDOStatement;
 
 /**
  * Database Connection Interface
@@ -25,15 +26,17 @@ interface ConnectionInterface
      *
      * @param string $query The SQL query
      * @param array<mixed> $bindings Parameter bindings
-     * @return \PDOStatement The executed statement
+     *
+     * @return PDOStatement The executed statement
      */
-    public function query(string $query, array $bindings = []): \PDOStatement;
+    public function query(string $query, array $bindings = []): PDOStatement;
 
     /**
      * Execute a statement.
      *
      * @param string $query The SQL query
      * @param array<mixed> $bindings Parameter bindings
+     *
      * @return int The number of affected rows
      */
     public function statement(string $query, array $bindings = []): int;

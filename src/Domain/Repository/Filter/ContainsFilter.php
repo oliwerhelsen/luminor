@@ -12,7 +12,7 @@ final class ContainsFilter extends Filter
     public function __construct(
         private readonly string $field,
         private readonly string $value,
-        private readonly bool $caseSensitive = false
+        private readonly bool $caseSensitive = false,
     ) {
     }
 

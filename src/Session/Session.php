@@ -12,14 +12,17 @@ namespace Luminor\DDD\Session;
 final class Session implements SessionInterface
 {
     private SessionDriver $driver;
+
     private string $name;
+
     private bool $started = false;
+
     /** @var array<string, mixed> */
     private array $data = [];
 
     public function __construct(
         SessionDriver $driver,
-        string $name = 'luminor_session'
+        string $name = 'luminor_session',
     ) {
         $this->driver = $driver;
         $this->name = $name;
@@ -52,7 +55,7 @@ final class Session implements SessionInterface
      */
     public function save(): void
     {
-        if (!$this->started) {
+        if (! $this->started) {
             return;
         }
 

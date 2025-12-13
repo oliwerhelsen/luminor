@@ -15,6 +15,7 @@ use Luminor\DDD\Database\Schema\Schema;
 abstract class Migration implements MigrationInterface
 {
     protected Schema $schema;
+
     private string $name;
 
     public function __construct(Schema $schema)

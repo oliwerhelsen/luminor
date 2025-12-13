@@ -12,11 +12,15 @@ namespace Luminor\DDD\Database\Schema;
 final class Blueprint
 {
     private string $table;
+
     /** @var array<Column> */
     private array $columns = [];
+
     /** @var array<string> */
     private array $indexes = [];
+
     private ?string $primaryKey = null;
+
     private bool $timestamps = false;
 
     public function __construct(string $table)
@@ -39,6 +43,7 @@ final class Blueprint
     {
         $column = $this->integer($name)->autoIncrement()->unsigned();
         $this->primaryKey = $name;
+
         return $column;
     }
 
@@ -149,8 +154,9 @@ final class Blueprint
     public function index(string|array $columns, ?string $name = null): self
     {
         $columns = is_array($columns) ? $columns : [$columns];
-        $name = $name ?? $this->table . '_' . implode('_', $columns) . '_index';
+        $name ??= $this->table . '_' . implode('_', $columns) . '_index';
         $this->indexes[] = ['type' => 'index', 'columns' => $columns, 'name' => $name];
+
         return $this;
     }
 
@@ -160,8 +166,9 @@ final class Blueprint
     public function unique(string|array $columns, ?string $name = null): self
     {
         $columns = is_array($columns) ? $columns : [$columns];
-        $name = $name ?? $this->table . '_' . implode('_', $columns) . '_unique';
+        $name ??= $this->table . '_' . implode('_', $columns) . '_unique';
         $this->indexes[] = ['type' => 'unique', 'columns' => $columns, 'name' => $name];
+
         return $this;
     }
 
@@ -210,6 +217,7 @@ final class Blueprint
     {
         $column = new Column($type, $name, $attributes);
         $this->columns[] = $column;
+
         return $column;
     }
 }

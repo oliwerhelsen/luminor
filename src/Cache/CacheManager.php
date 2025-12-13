@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Cache;
 
-use Luminor\DDD\Cache\Drivers\FileCache;
+use InvalidArgumentException;
 use Luminor\DDD\Cache\Drivers\ArrayCache;
+use Luminor\DDD\Cache\Drivers\FileCache;
 
 /**
  * Cache Manager
@@ -15,8 +16,10 @@ use Luminor\DDD\Cache\Drivers\ArrayCache;
 final class CacheManager implements CacheInterface
 {
     private CacheInterface $driver;
+
     /** @var array<string, CacheInterface> */
     private array $drivers = [];
+
     private string $defaultDriver = 'file';
 
     public function __construct(?CacheInterface $driver = null)
@@ -45,12 +48,13 @@ final class CacheManager implements CacheInterface
      */
     public function setDefaultDriver(string $driver): self
     {
-        if (!isset($this->drivers[$driver])) {
-            throw new \InvalidArgumentException("Cache driver [{$driver}] not found.");
+        if (! isset($this->drivers[$driver])) {
+            throw new InvalidArgumentException("Cache driver [{$driver}] not found.");
         }
 
         $this->defaultDriver = $driver;
         $this->driver = $this->drivers[$driver];
+
         return $this;
     }
 
@@ -59,8 +63,8 @@ final class CacheManager implements CacheInterface
      */
     public function driver(string $name): CacheInterface
     {
-        if (!isset($this->drivers[$name])) {
-            throw new \InvalidArgumentException("Cache driver [{$name}] not found.");
+        if (! isset($this->drivers[$name])) {
+            throw new InvalidArgumentException("Cache driver [{$name}] not found.");
         }
 
         return $this->drivers[$name];
@@ -72,6 +76,7 @@ final class CacheManager implements CacheInterface
     public function extend(string $name, CacheInterface $driver): self
     {
         $this->drivers[$name] = $driver;
+
         return $this;
     }
 

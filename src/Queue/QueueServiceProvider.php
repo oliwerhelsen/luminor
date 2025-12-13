@@ -43,6 +43,7 @@ final class QueueServiceProvider extends AbstractServiceProvider
         $container->bind(QueueInterface::class, function (PsrContainerInterface $c) {
             /** @var QueueManager $manager */
             $manager = $c->get(QueueManager::class);
+
             return $manager->connection();
         });
 
@@ -50,11 +51,11 @@ final class QueueServiceProvider extends AbstractServiceProvider
         $container->bind(Worker::class, function (PsrContainerInterface $c) {
             /** @var QueueManager $manager */
             $manager = $c->get(QueueManager::class);
-            
+
             $failedProvider = $c->has(FailedJobProviderInterface::class)
                 ? $c->get(FailedJobProviderInterface::class)
                 : null;
-            
+
             $logger = $c->has('log')
                 ? $c->get('log')
                 : null;

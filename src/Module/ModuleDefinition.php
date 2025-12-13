@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Module;
 
+use InvalidArgumentException;
+
 /**
  * Module configuration and metadata.
  *
@@ -29,7 +31,7 @@ final class ModuleDefinition
         private readonly string $path = '',
         private readonly array $dependencies = [],
         private readonly array $config = [],
-        private readonly bool $enabled = true
+        private readonly bool $enabled = true,
     ) {
     }
 
@@ -41,14 +43,14 @@ final class ModuleDefinition
     public static function fromArray(array $data): self
     {
         return new self(
-            name: $data['name'] ?? throw new \InvalidArgumentException('Module name is required'),
+            name: $data['name'] ?? throw new InvalidArgumentException('Module name is required'),
             version: $data['version'] ?? '1.0.0',
             description: $data['description'] ?? '',
             namespace: $data['namespace'] ?? '',
             path: $data['path'] ?? '',
             dependencies: $data['dependencies'] ?? [],
             config: $data['config'] ?? [],
-            enabled: $data['enabled'] ?? true
+            enabled: $data['enabled'] ?? true,
         );
     }
 
@@ -143,7 +145,7 @@ final class ModuleDefinition
             $this->path,
             $this->dependencies,
             array_merge($this->config, $config),
-            $this->enabled
+            $this->enabled,
         );
     }
 
@@ -160,7 +162,7 @@ final class ModuleDefinition
             $this->path,
             $this->dependencies,
             $this->config,
-            $enabled
+            $enabled,
         );
     }
 

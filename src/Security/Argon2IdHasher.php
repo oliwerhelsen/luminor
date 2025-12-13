@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Security;
 
+use RuntimeException;
+
 /**
  * Argon2id Password Hasher
  *
@@ -12,7 +14,9 @@ namespace Luminor\DDD\Security;
 final class Argon2IdHasher implements Hasher
 {
     private int $memory;
+
     private int $time;
+
     private int $threads;
 
     /**
@@ -23,7 +27,7 @@ final class Argon2IdHasher implements Hasher
     public function __construct(
         int $memory = 65536,
         int $time = 4,
-        int $threads = 1
+        int $threads = 1,
     ) {
         $this->memory = $memory;
         $this->time = $time;
@@ -35,8 +39,8 @@ final class Argon2IdHasher implements Hasher
      */
     public function make(string $value): string
     {
-        if (!defined('PASSWORD_ARGON2ID')) {
-            throw new \RuntimeException('Argon2id is not supported on this system.');
+        if (! defined('PASSWORD_ARGON2ID')) {
+            throw new RuntimeException('Argon2id is not supported on this system.');
         }
 
         $hash = password_hash($value, PASSWORD_ARGON2ID, [
@@ -46,7 +50,7 @@ final class Argon2IdHasher implements Hasher
         ]);
 
         if ($hash === false) {
-            throw new \RuntimeException('Argon2id hashing failed.');
+            throw new RuntimeException('Argon2id hashing failed.');
         }
 
         return $hash;
@@ -69,7 +73,7 @@ final class Argon2IdHasher implements Hasher
      */
     public function needsRehash(string $hashedValue): bool
     {
-        if (!defined('PASSWORD_ARGON2ID')) {
+        if (! defined('PASSWORD_ARGON2ID')) {
             return false;
         }
 

@@ -16,7 +16,9 @@ use Utopia\Http\Response;
 final class ApiResponse
 {
     private const DEFAULT_SUCCESS_CODE = 200;
+
     private const DEFAULT_CREATED_CODE = 201;
+
     private const DEFAULT_NO_CONTENT_CODE = 204;
 
     /**
@@ -24,6 +26,7 @@ final class ApiResponse
      *
      * @param mixed $data The response data
      * @param int $statusCode HTTP status code
+     *
      * @return array<string, mixed>
      */
     public static function success(mixed $data = null, int $statusCode = self::DEFAULT_SUCCESS_CODE): array
@@ -44,6 +47,7 @@ final class ApiResponse
      * Create a success response for created resources.
      *
      * @param mixed $data The created resource data
+     *
      * @return array<string, mixed>
      */
     public static function created(mixed $data = null): array
@@ -68,6 +72,7 @@ final class ApiResponse
      * Create a paginated response.
      *
      * @param PagedResult<mixed> $pagedResult
+     *
      * @return array<string, mixed>
      */
     public static function paginated(PagedResult $pagedResult): array
@@ -76,8 +81,8 @@ final class ApiResponse
             'success' => true,
             'statusCode' => self::DEFAULT_SUCCESS_CODE,
             'data' => array_map(
-                fn($item) => self::normalizeData($item),
-                $pagedResult->getItems()
+                fn ($item) => self::normalizeData($item),
+                $pagedResult->getItems(),
             ),
             'pagination' => [
                 'page' => $pagedResult->getPage(),
@@ -97,13 +102,14 @@ final class ApiResponse
      * @param string $code Error code
      * @param int $statusCode HTTP status code
      * @param array<string, mixed>|null $details Additional error details
+     *
      * @return array<string, mixed>
      */
     public static function error(
         string $message,
         string $code = 'ERROR',
         int $statusCode = 400,
-        ?array $details = null
+        ?array $details = null,
     ): array {
         $response = [
             'success' => false,
@@ -125,6 +131,7 @@ final class ApiResponse
      * Create a not found error response.
      *
      * @param string $message Error message
+     *
      * @return array<string, mixed>
      */
     public static function notFound(string $message = 'Resource not found'): array
@@ -136,6 +143,7 @@ final class ApiResponse
      * Create an unauthorized error response.
      *
      * @param string $message Error message
+     *
      * @return array<string, mixed>
      */
     public static function unauthorized(string $message = 'Unauthorized'): array
@@ -147,6 +155,7 @@ final class ApiResponse
      * Create a forbidden error response.
      *
      * @param string $message Error message
+     *
      * @return array<string, mixed>
      */
     public static function forbidden(string $message = 'Forbidden'): array
@@ -158,6 +167,7 @@ final class ApiResponse
      * Create an internal server error response.
      *
      * @param string $message Error message
+     *
      * @return array<string, mixed>
      */
     public static function serverError(string $message = 'Internal server error'): array
@@ -179,7 +189,7 @@ final class ApiResponse
         }
 
         if (is_array($data)) {
-            return array_map(fn($item) => self::normalizeData($item), $data);
+            return array_map(fn ($item) => self::normalizeData($item), $data);
         }
 
         return $data;

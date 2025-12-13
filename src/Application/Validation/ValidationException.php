@@ -13,7 +13,7 @@ final class ValidationException extends Exception
 {
     public function __construct(
         private readonly ValidationResult $result,
-        string $message = 'Validation failed'
+        string $message = 'Validation failed',
     ) {
         parent::__construct($message);
     }
@@ -24,6 +24,7 @@ final class ValidationException extends Exception
     public static function fromResult(ValidationResult $result): self
     {
         $message = $result->getFirstError() ?? 'Validation failed';
+
         return new self($result, $message);
     }
 

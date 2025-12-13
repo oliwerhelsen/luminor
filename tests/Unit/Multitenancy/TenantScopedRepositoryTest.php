@@ -4,10 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Multitenancy;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Repository\Criteria;
-use Luminor\DDD\Domain\Repository\RepositoryInterface;
 use Luminor\DDD\Infrastructure\Persistence\InMemory\InMemoryRepository;
 use Luminor\DDD\Multitenancy\TenantAccessDeniedException;
 use Luminor\DDD\Multitenancy\TenantAware;
@@ -15,15 +12,17 @@ use Luminor\DDD\Multitenancy\TenantContext;
 use Luminor\DDD\Multitenancy\TenantInterface;
 use Luminor\DDD\Multitenancy\TenantNotResolvedException;
 use Luminor\DDD\Multitenancy\TenantScopedRepository;
+use PHPUnit\Framework\TestCase;
 
 final class TenantScopedRepositoryTest extends TestCase
 {
     private InMemoryRepository $innerRepository;
+
     private TenantScopedRepository $scopedRepository;
 
     protected function setUp(): void
     {
-        $this->innerRepository = new class extends InMemoryRepository {
+        $this->innerRepository = new class () extends InMemoryRepository {
             protected function getEntityClass(): string
             {
                 return TenantAwareAggregate::class;
@@ -243,7 +242,7 @@ final class TenantScopedRepositoryTest extends TestCase
 
     private function setTenant(string $tenantId): void
     {
-        $tenant = new class($tenantId) implements TenantInterface {
+        $tenant = new class ($tenantId) implements TenantInterface {
             public function __construct(private readonly string $id)
             {
             }

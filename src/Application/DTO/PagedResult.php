@@ -21,7 +21,7 @@ final class PagedResult
         private readonly array $items,
         private readonly int $totalCount,
         private readonly int $page,
-        private readonly int $perPage
+        private readonly int $perPage,
     ) {
     }
 
@@ -39,6 +39,7 @@ final class PagedResult
      * Create a paged result from an array of items.
      *
      * @param array<int, T> $items
+     *
      * @return self<T>
      */
     public static function fromItems(array $items, int $totalCount, int $page = 1, int $perPage = 25): self
@@ -152,7 +153,9 @@ final class PagedResult
      * Map the items using a callback function.
      *
      * @template TNew
+     *
      * @param callable(T): TNew $callback
+     *
      * @return self<TNew>
      */
     public function map(callable $callback): self
@@ -161,7 +164,7 @@ final class PagedResult
             array_map($callback, $this->items),
             $this->totalCount,
             $this->page,
-            $this->perPage
+            $this->perPage,
         );
     }
 
@@ -174,8 +177,8 @@ final class PagedResult
     {
         return [
             'items' => array_map(
-                fn($item) => $item instanceof DataTransferObject ? $item->toArray() : $item,
-                $this->items
+                fn ($item) => $item instanceof DataTransferObject ? $item->toArray() : $item,
+                $this->items,
             ),
             'pagination' => [
                 'page' => $this->page,

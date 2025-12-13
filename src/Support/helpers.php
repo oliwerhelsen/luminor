@@ -6,13 +6,12 @@ use Luminor\DDD\Config\ConfigRepository;
 use Luminor\DDD\Kernel;
 use Luminor\DDD\Support\Env;
 
-if (!function_exists('env')) {
+if (! function_exists('env')) {
     /**
      * Gets the value of an environment variable.
      *
      * @param string $key The environment variable name
      * @param mixed $default Default value if not found
-     * @return mixed
      */
     function env(string $key, mixed $default = null): mixed
     {
@@ -20,7 +19,7 @@ if (!function_exists('env')) {
     }
 }
 
-if (!function_exists('config')) {
+if (! function_exists('config')) {
     /**
      * Get or set configuration values.
      *
@@ -28,6 +27,7 @@ if (!function_exists('config')) {
      *
      * @param array<string, mixed>|string|null $key The config key or array of key-value pairs
      * @param mixed $default Default value for get operations
+     *
      * @return mixed|ConfigRepository
      */
     function config(array|string|null $key = null, mixed $default = null): mixed
@@ -50,6 +50,7 @@ if (!function_exists('config')) {
             foreach ($key as $k => $v) {
                 $config->set($k, $v);
             }
+
             return null;
         }
 
@@ -58,12 +59,14 @@ if (!function_exists('config')) {
     }
 }
 
-if (!function_exists('app')) {
+if (! function_exists('app')) {
     /**
      * Get the application instance or resolve a service from the container.
      *
      * @template T of object
+     *
      * @param class-string<T>|string|null $abstract Service to resolve
+     *
      * @return T|Kernel|mixed
      */
     function app(?string $abstract = null): mixed
@@ -82,12 +85,11 @@ if (!function_exists('app')) {
     }
 }
 
-if (!function_exists('base_path')) {
+if (! function_exists('base_path')) {
     /**
      * Get the path to the base of the application.
      *
      * @param string $path Path to append
-     * @return string
      */
     function base_path(string $path = ''): string
     {
@@ -103,12 +105,11 @@ if (!function_exists('base_path')) {
     }
 }
 
-if (!function_exists('config_path')) {
+if (! function_exists('config_path')) {
     /**
      * Get the configuration path.
      *
      * @param string $path Path to append
-     * @return string
      */
     function config_path(string $path = ''): string
     {
@@ -124,12 +125,11 @@ if (!function_exists('config_path')) {
     }
 }
 
-if (!function_exists('storage_path')) {
+if (! function_exists('storage_path')) {
     /**
      * Get the storage path.
      *
      * @param string $path Path to append
-     * @return string
      */
     function storage_path(string $path = ''): string
     {
@@ -145,13 +145,15 @@ if (!function_exists('storage_path')) {
     }
 }
 
-if (!function_exists('value')) {
+if (! function_exists('value')) {
     /**
      * Return the default value of the given value.
      *
      * @template T
+     *
      * @param T|callable(): T $value
      * @param mixed ...$args Arguments to pass if value is callable
+     *
      * @return T
      */
     function value(mixed $value, mixed ...$args): mixed
@@ -160,12 +162,9 @@ if (!function_exists('value')) {
     }
 }
 
-if (!function_exists('blank')) {
+if (! function_exists('blank')) {
     /**
      * Determine if the given value is "blank".
-     *
-     * @param mixed $value
-     * @return bool
      */
     function blank(mixed $value): bool
     {
@@ -193,25 +192,19 @@ if (!function_exists('blank')) {
     }
 }
 
-if (!function_exists('filled')) {
+if (! function_exists('filled')) {
     /**
      * Determine if a value is "filled".
-     *
-     * @param mixed $value
-     * @return bool
      */
     function filled(mixed $value): bool
     {
-        return !blank($value);
+        return ! blank($value);
     }
 }
 
-if (!function_exists('class_basename')) {
+if (! function_exists('class_basename')) {
     /**
      * Get the class "basename" of the given object / class.
-     *
-     * @param string|object $class
-     * @return string
      */
     function class_basename(string|object $class): string
     {
@@ -221,13 +214,15 @@ if (!function_exists('class_basename')) {
     }
 }
 
-if (!function_exists('tap')) {
+if (! function_exists('tap')) {
     /**
      * Call the given Closure with the given value then return the value.
      *
      * @template T
+     *
      * @param T $value
      * @param (callable(T): mixed)|null $callback
+     *
      * @return T
      */
     function tap(mixed $value, ?callable $callback = null): mixed
@@ -242,14 +237,16 @@ if (!function_exists('tap')) {
     }
 }
 
-if (!function_exists('with')) {
+if (! function_exists('with')) {
     /**
      * Return the given value, optionally passed through the given callback.
      *
      * @template T
      * @template TReturn
+     *
      * @param T $value
      * @param (callable(T): TReturn)|null $callback
+     *
      * @return ($callback is null ? T : TReturn)
      */
     function with(mixed $value, ?callable $callback = null): mixed
@@ -258,16 +255,18 @@ if (!function_exists('with')) {
     }
 }
 
-if (!function_exists('transform')) {
+if (! function_exists('transform')) {
     /**
      * Transform the given value if it is present.
      *
      * @template T
      * @template TReturn
      * @template TDefault
+     *
      * @param T $value
      * @param callable(T): TReturn $callback
      * @param TDefault|callable(T): TDefault $default
+     *
      * @return ($value is empty ? TDefault : TReturn)
      */
     function transform(mixed $value, callable $callback, mixed $default = null): mixed
@@ -284,14 +283,15 @@ if (!function_exists('transform')) {
     }
 }
 
-if (!function_exists('throw_if')) {
+if (! function_exists('throw_if')) {
     /**
      * Throw the given exception if the given condition is true.
      *
      * @template T
+     *
      * @param T $condition
      * @param Throwable|class-string<Throwable>|string $exception
-     * @param mixed ...$parameters
+     *
      * @return T
      *
      * @throws Throwable
@@ -314,34 +314,32 @@ if (!function_exists('throw_if')) {
     }
 }
 
-if (!function_exists('throw_unless')) {
+if (! function_exists('throw_unless')) {
     /**
      * Throw the given exception unless the given condition is true.
      *
      * @template T
+     *
      * @param T $condition
      * @param Throwable|class-string<Throwable>|string $exception
-     * @param mixed ...$parameters
+     *
      * @return T
      *
      * @throws Throwable
      */
     function throw_unless(mixed $condition, Throwable|string $exception = RuntimeException::class, mixed ...$parameters): mixed
     {
-        throw_if(!$condition, $exception, ...$parameters);
+        throw_if(! $condition, $exception, ...$parameters);
 
         return $condition;
     }
 }
 
-if (!function_exists('data_get')) {
+if (! function_exists('data_get')) {
     /**
      * Get an item from an array or object using "dot" notation.
      *
-     * @param mixed $target
      * @param string|array<int, string>|null $key
-     * @param mixed $default
-     * @return mixed
      */
     function data_get(mixed $target, string|array|null $key, mixed $default = null): mixed
     {
@@ -353,7 +351,7 @@ if (!function_exists('data_get')) {
 
         foreach ($key as $segment) {
             if ($segment === '*') {
-                if (!is_iterable($target)) {
+                if (! is_iterable($target)) {
                     return value($default);
                 }
 
@@ -381,15 +379,11 @@ if (!function_exists('data_get')) {
     }
 }
 
-if (!function_exists('data_set')) {
+if (! function_exists('data_set')) {
     /**
      * Set an item on an array or object using "dot" notation.
      *
-     * @param mixed $target
      * @param string|array<int, string> $key
-     * @param mixed $value
-     * @param bool $overwrite
-     * @return mixed
      */
     function data_set(mixed &$target, string|array $key, mixed $value, bool $overwrite = true): mixed
     {
@@ -397,7 +391,7 @@ if (!function_exists('data_set')) {
         $segment = array_shift($segments);
 
         if ($segment === '*') {
-            if (!is_array($target)) {
+            if (! is_array($target)) {
                 $target = [];
             }
 
@@ -412,22 +406,22 @@ if (!function_exists('data_set')) {
             }
         } elseif (is_array($target)) {
             if ($segments) {
-                if (!array_key_exists($segment, $target)) {
+                if (! array_key_exists($segment, $target)) {
                     $target[$segment] = [];
                 }
 
                 data_set($target[$segment], $segments, $value, $overwrite);
-            } elseif ($overwrite || !array_key_exists($segment, $target)) {
+            } elseif ($overwrite || ! array_key_exists($segment, $target)) {
                 $target[$segment] = $value;
             }
         } elseif (is_object($target)) {
             if ($segments) {
-                if (!isset($target->{$segment})) {
+                if (! isset($target->{$segment})) {
                     $target->{$segment} = [];
                 }
 
                 data_set($target->{$segment}, $segments, $value, $overwrite);
-            } elseif ($overwrite || !isset($target->{$segment})) {
+            } elseif ($overwrite || ! isset($target->{$segment})) {
                 $target->{$segment} = $value;
             }
         } else {
@@ -444,7 +438,7 @@ if (!function_exists('data_set')) {
     }
 }
 
-if (!function_exists('windows_os')) {
+if (! function_exists('windows_os')) {
     /**
      * Determine whether the current environment is Windows based.
      */
@@ -454,13 +448,14 @@ if (!function_exists('windows_os')) {
     }
 }
 
-if (!function_exists('logger')) {
+if (! function_exists('logger')) {
     /**
      * Get a logger instance or log a message.
      *
      * @param string|null $message Message to log (optional)
      * @param array<string, mixed> $context Context data
      * @param string|null $channel Channel to use (optional)
+     *
      * @return \Luminor\DDD\Logging\LoggerInterface|\Luminor\DDD\Logging\LogManager
      */
     function logger(?string $message = null, array $context = [], ?string $channel = null): mixed
@@ -485,13 +480,12 @@ if (!function_exists('logger')) {
     }
 }
 
-if (!function_exists('info')) {
+if (! function_exists('info')) {
     /**
      * Log an info message.
      *
      * @param string $message Message to log
      * @param array<string, mixed> $context Context data
-     * @return void
      */
     function info(string $message, array $context = []): void
     {
@@ -499,11 +493,12 @@ if (!function_exists('info')) {
     }
 }
 
-if (!function_exists('mail')) {
+if (! function_exists('mail')) {
     /**
      * Get a pending mail instance for fluent mail building.
      *
      * @param string|array<string>|null $to Recipients (optional)
+     *
      * @return \Luminor\DDD\Mail\PendingMail|\Luminor\DDD\Mail\Mailer
      */
     function mail(string|array|null $to = null): mixed
@@ -525,12 +520,13 @@ if (!function_exists('mail')) {
     }
 }
 
-if (!function_exists('dispatch')) {
+if (! function_exists('dispatch')) {
     /**
      * Dispatch a job to the queue.
      *
      * @param \Luminor\DDD\Queue\JobInterface $job Job to dispatch
      * @param string|null $queue Queue name (optional)
+     *
      * @return string Job ID
      */
     function dispatch(\Luminor\DDD\Queue\JobInterface $job, ?string $queue = null): string
@@ -548,12 +544,11 @@ if (!function_exists('dispatch')) {
     }
 }
 
-if (!function_exists('dispatch_sync')) {
+if (! function_exists('dispatch_sync')) {
     /**
      * Dispatch a job synchronously (immediate execution).
      *
      * @param \Luminor\DDD\Queue\JobInterface $job Job to execute
-     * @return void
      */
     function dispatch_sync(\Luminor\DDD\Queue\JobInterface $job): void
     {
@@ -569,14 +564,13 @@ if (!function_exists('dispatch_sync')) {
     }
 }
 
-if (!function_exists('validator')) {
+if (! function_exists('validator')) {
     /**
      * Create a new validator instance.
      *
      * @param array<string, mixed> $data Data to validate
      * @param array<string, array<string|\Luminor\DDD\Validation\Rule>> $rules Validation rules
      * @param array<string, string> $messages Custom error messages
-     * @return \Luminor\DDD\Validation\Validator
      */
     function validator(array $data, array $rules, array $messages = []): \Luminor\DDD\Validation\Validator
     {
@@ -584,14 +578,16 @@ if (!function_exists('validator')) {
     }
 }
 
-if (!function_exists('validate')) {
+if (! function_exists('validate')) {
     /**
      * Validate data and return validated data or throw exception.
      *
      * @param array<string, mixed> $data Data to validate
      * @param array<string, array<string|\Luminor\DDD\Validation\Rule>> $rules Validation rules
      * @param array<string, string> $messages Custom error messages
+     *
      * @return array<string, mixed> Validated data
+     *
      * @throws \Luminor\DDD\Application\Validation\ValidationException
      */
     function validate(array $data, array $rules, array $messages = []): array
@@ -600,12 +596,13 @@ if (!function_exists('validate')) {
     }
 }
 
-if (!function_exists('hash_make')) {
+if (! function_exists('hash_make')) {
     /**
      * Hash a value (typically a password).
      *
      * @param string $value Value to hash
      * @param string|null $driver Hash driver to use (bcrypt, argon2id)
+     *
      * @return string Hashed value
      */
     function hash_make(string $value, ?string $driver = null): string
@@ -627,12 +624,13 @@ if (!function_exists('hash_make')) {
     }
 }
 
-if (!function_exists('hash_check')) {
+if (! function_exists('hash_check')) {
     /**
      * Verify a value against a hash.
      *
      * @param string $value Plain value
      * @param string $hashedValue Hashed value
+     *
      * @return bool True if value matches hash
      */
     function hash_check(string $value, string $hashedValue): bool
@@ -650,17 +648,19 @@ if (!function_exists('hash_check')) {
     }
 }
 
-if (!function_exists('bcrypt')) {
+if (! function_exists('bcrypt')) {
     /**
      * Hash a value using Bcrypt.
      *
      * @param string $value Value to hash
      * @param int $rounds Cost factor (4-31)
+     *
      * @return string Hashed value
      */
     function bcrypt(string $value, int $rounds = 10): string
     {
         $hasher = new \Luminor\DDD\Security\BcryptHasher($rounds);
+
         return $hasher->make($value);
     }
 }

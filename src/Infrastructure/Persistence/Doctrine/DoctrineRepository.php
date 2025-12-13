@@ -6,6 +6,7 @@ namespace Luminor\DDD\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Luminor\DDD\Domain\Abstractions\AggregateRoot;
 use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
 use Luminor\DDD\Domain\Repository\Criteria;
@@ -19,7 +20,6 @@ use Luminor\DDD\Domain\Repository\Filter\IsNullFilter;
 use Luminor\DDD\Domain\Repository\Filter\NotEqualsFilter;
 use Luminor\DDD\Domain\Repository\Filter\OrFilter;
 use Luminor\DDD\Domain\Repository\RepositoryInterface;
-use Doctrine\ORM\QueryBuilder;
 
 /**
  * Base Doctrine repository implementation.
@@ -27,6 +27,7 @@ use Doctrine\ORM\QueryBuilder;
  * Provides a foundation for repositories using Doctrine ORM.
  *
  * @template T of AggregateRoot
+ *
  * @implements RepositoryInterface<T>
  */
 abstract class DoctrineRepository implements RepositoryInterface
@@ -35,7 +36,7 @@ abstract class DoctrineRepository implements RepositoryInterface
 
     public function __construct(
         protected readonly EntityManagerInterface $entityManager,
-        string $entityClass
+        string $entityClass,
     ) {
         $this->entityRepository = $entityManager->getRepository($entityClass);
     }
@@ -212,14 +213,18 @@ abstract class DoctrineRepository implements RepositoryInterface
         QueryBuilder $qb,
         Filter $filter,
         string $alias,
-        int &$paramIndex
+        int &$paramIndex,
     ): ?string {
         if ($filter instanceof AndFilter) {
             $left = $this->buildFilterExpression($qb, $filter->getLeft(), $alias, $paramIndex);
             $right = $this->buildFilterExpression($qb, $filter->getRight(), $alias, $paramIndex);
 
-            if ($left === null) return $right;
-            if ($right === null) return $left;
+            if ($left === null) {
+                return $right;
+            }
+            if ($right === null) {
+                return $left;
+            }
 
             return "({$left} AND {$right})";
         }
@@ -228,8 +233,12 @@ abstract class DoctrineRepository implements RepositoryInterface
             $left = $this->buildFilterExpression($qb, $filter->getLeft(), $alias, $paramIndex);
             $right = $this->buildFilterExpression($qb, $filter->getRight(), $alias, $paramIndex);
 
-            if ($left === null) return $right;
-            if ($right === null) return $left;
+            if ($left === null) {
+                return $right;
+            }
+            if ($right === null) {
+                return $left;
+            }
 
             return "({$left} OR {$right})";
         }
@@ -240,16 +249,19 @@ abstract class DoctrineRepository implements RepositoryInterface
 
         if ($filter instanceof EqualsFilter) {
             $qb->setParameter($paramName, $filter->getValue());
+
             return "{$field} = :{$paramName}";
         }
 
         if ($filter instanceof NotEqualsFilter) {
             $qb->setParameter($paramName, $filter->getValue());
+
             return "{$field} != :{$paramName}";
         }
 
         if ($filter instanceof ContainsFilter) {
             $qb->setParameter($paramName, '%' . $filter->getValue() . '%');
+
             return $filter->isCaseSensitive()
                 ? "{$field} LIKE :{$paramName}"
                 : "LOWER({$field}) LIKE LOWER(:{$paramName})";
@@ -257,6 +269,7 @@ abstract class DoctrineRepository implements RepositoryInterface
 
         if ($filter instanceof InFilter) {
             $qb->setParameter($paramName, $filter->getValue());
+
             return "{$field} IN (:{$paramName})";
         }
 
@@ -275,6 +288,7 @@ abstract class DoctrineRepository implements RepositoryInterface
                 ComparisonFilter::LESS_THAN_OR_EQUAL => '<=',
                 default => '=',
             };
+
             return "{$field} {$operator} :{$paramName}";
         }
 

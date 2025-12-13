@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Domain;
 
+use Luminor\DDD\Domain\Abstractions\DomainException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Luminor\DDD\Domain\Abstractions\DomainException;
 
 final class DomainExceptionTest extends TestCase
 {
@@ -59,7 +59,7 @@ final class DomainExceptionTest extends TestCase
         $exception = new DomainException(
             'User not found',
             'USER_NOT_FOUND',
-            ['userId' => 123]
+            ['userId' => 123],
         );
 
         $array = $exception->toArray();
@@ -76,7 +76,7 @@ final class DomainExceptionTest extends TestCase
         $exception = DomainException::withCode(
             'Invalid email format',
             'INVALID_EMAIL',
-            ['email' => 'not-an-email']
+            ['email' => 'not-an-email'],
         );
 
         $this->assertSame('Invalid email format', $exception->getMessage());
@@ -89,7 +89,7 @@ final class DomainExceptionTest extends TestCase
         $exception = UserNotFoundException::withCode(
             'User with ID 123 not found',
             'USER_NOT_FOUND',
-            ['userId' => 123]
+            ['userId' => 123],
         );
 
         $this->assertInstanceOf(UserNotFoundException::class, $exception);

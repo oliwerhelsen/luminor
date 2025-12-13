@@ -42,13 +42,12 @@ final class QueueManager
      * Get a queue connection instance.
      *
      * @param string|null $name The connection name (null for default)
-     * @return QueueInterface
      */
     public function connection(?string $name = null): QueueInterface
     {
-        $name = $name ?? $this->defaultConnection;
+        $name ??= $this->defaultConnection;
 
-        if (!isset($this->connections[$name])) {
+        if (! isset($this->connections[$name])) {
             $this->connections[$name] = $this->resolve($name);
         }
 
@@ -60,6 +59,7 @@ final class QueueManager
      *
      * @param JobInterface $job The job to queue
      * @param string|null $queue The queue name
+     *
      * @return string|int The job ID
      */
     public function push(JobInterface $job, ?string $queue = null): string|int
@@ -73,6 +73,7 @@ final class QueueManager
      * @param JobInterface $job The job to queue
      * @param int $delay Delay in seconds
      * @param string|null $queue The queue name
+     *
      * @return string|int The job ID
      */
     public function later(JobInterface $job, int $delay, ?string $queue = null): string|int
@@ -89,6 +90,7 @@ final class QueueManager
     public function extend(string $name, callable $callback): self
     {
         $this->customDrivers[$name] = $callback;
+
         return $this;
     }
 
@@ -96,7 +98,7 @@ final class QueueManager
      * Resolve a queue connection by name.
      *
      * @param string $name The connection name
-     * @return QueueInterface
+     *
      * @throws RuntimeException If the connection is not configured
      */
     private function resolve(string $name): QueueInterface
@@ -118,7 +120,7 @@ final class QueueManager
      *
      * @param string $driver The driver name
      * @param array<string, mixed> $config The driver configuration
-     * @return QueueInterface
+     *
      * @throws RuntimeException If the driver is not supported
      */
     private function createDriver(string $driver, array $config): QueueInterface
@@ -139,8 +141,6 @@ final class QueueManager
 
     /**
      * Get the default connection name.
-     *
-     * @return string
      */
     public function getDefaultConnection(): string
     {
@@ -161,6 +161,7 @@ final class QueueManager
      * Get the configuration for a connection.
      *
      * @param string $name The connection name
+     *
      * @return array<string, mixed>|null
      */
     public function getConnectionConfig(string $name): ?array

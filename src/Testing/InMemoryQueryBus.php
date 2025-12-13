@@ -7,6 +7,8 @@ namespace Luminor\DDD\Testing;
 use Luminor\DDD\Application\Bus\QueryBusInterface;
 use Luminor\DDD\Application\Bus\QueryHandlerInterface;
 use Luminor\DDD\Application\CQRS\Query;
+use RuntimeException;
+use Throwable;
 
 /**
  * In-memory query bus for testing.
@@ -25,7 +27,7 @@ final class InMemoryQueryBus implements QueryBusInterface
     /** @var array<class-string, mixed> */
     private array $results = [];
 
-    /** @var array<class-string, \Throwable> */
+    /** @var array<class-string, Throwable> */
     private array $exceptions = [];
 
     /**
@@ -70,6 +72,7 @@ final class InMemoryQueryBus implements QueryBusInterface
     public function handle(string $queryClass, callable $handler): self
     {
         $this->handlers[$queryClass] = $handler;
+
         return $this;
     }
 
@@ -81,6 +84,7 @@ final class InMemoryQueryBus implements QueryBusInterface
     public function willReturn(string $queryClass, mixed $result): self
     {
         $this->results[$queryClass] = $result;
+
         return $this;
     }
 
@@ -89,9 +93,10 @@ final class InMemoryQueryBus implements QueryBusInterface
      *
      * @param class-string<Query> $queryClass
      */
-    public function throwWhen(string $queryClass, \Throwable $exception): self
+    public function throwWhen(string $queryClass, Throwable $exception): self
     {
         $this->exceptions[$queryClass] = $exception;
+
         return $this;
     }
 
@@ -144,6 +149,7 @@ final class InMemoryQueryBus implements QueryBusInterface
     public function getLastQuery(): ?Query
     {
         $count = count($this->dispatchedQueries);
+
         return $count > 0 ? $this->dispatchedQueries[$count - 1] : null;
     }
 
@@ -151,13 +157,14 @@ final class InMemoryQueryBus implements QueryBusInterface
      * Get dispatched queries of a specific type.
      *
      * @param class-string<Query> $queryClass
+     *
      * @return array<Query>
      */
     public function getDispatchedOfType(string $queryClass): array
     {
         return array_filter(
             $this->dispatchedQueries,
-            fn(Query $query) => $query instanceof $queryClass
+            fn (Query $query) => $query instanceof $queryClass,
         );
     }
 
@@ -175,17 +182,18 @@ final class InMemoryQueryBus implements QueryBusInterface
     /**
      * Assert that no queries were dispatched.
      *
-     * @throws \RuntimeException if queries were dispatched
+     * @throws RuntimeException if queries were dispatched
      */
     public function assertNothingDispatched(): void
     {
         if (count($this->dispatchedQueries) > 0) {
             $classes = array_map(
-                fn(Query $q) => $q::class,
-                $this->dispatchedQueries
+                fn (Query $q) => $q::class,
+                $this->dispatchedQueries,
             );
-            throw new \RuntimeException(
-                sprintf('Expected no queries to be dispatched, but [%s] were dispatched.', implode(', ', $classes))
+
+            throw new RuntimeException(
+                sprintf('Expected no queries to be dispatched, but [%s] were dispatched.', implode(', ', $classes)),
             );
         }
     }

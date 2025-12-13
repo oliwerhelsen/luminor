@@ -16,6 +16,7 @@ use Luminor\DDD\Container\ContainerInterface;
 abstract class ModuleServiceProvider
 {
     protected ContainerInterface $container;
+
     protected ModuleDefinition $definition;
 
     /**

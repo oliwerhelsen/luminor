@@ -7,6 +7,7 @@ namespace Luminor\DDD\Testing;
 use Luminor\DDD\Domain\Abstractions\DomainEvent;
 use Luminor\DDD\Domain\Events\EventDispatcherInterface;
 use Luminor\DDD\Domain\Events\EventHandlerInterface;
+use RuntimeException;
 
 /**
  * In-memory event dispatcher for testing.
@@ -22,7 +23,7 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     /** @var array<class-string, array<callable>> */
     private array $handlers = [];
 
-    /** @var bool */
+    /**  */
     private bool $shouldPropagate = true;
 
     /**
@@ -32,7 +33,7 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     {
         $this->dispatchedEvents[] = $event;
 
-        if (!$this->shouldPropagate) {
+        if (! $this->shouldPropagate) {
             return;
         }
 
@@ -71,6 +72,7 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     public function listen(string $eventClass, callable $handler): self
     {
         $this->handlers[$eventClass][] = $handler;
+
         return $this;
     }
 
@@ -80,6 +82,7 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     public function stopPropagation(): self
     {
         $this->shouldPropagate = false;
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     public function resumePropagation(): self
     {
         $this->shouldPropagate = true;
+
         return $this;
     }
 
@@ -141,6 +145,7 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     public function getLastEvent(): ?DomainEvent
     {
         $count = count($this->dispatchedEvents);
+
         return $count > 0 ? $this->dispatchedEvents[$count - 1] : null;
     }
 
@@ -148,13 +153,14 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
      * Get dispatched events of a specific type.
      *
      * @param class-string<DomainEvent> $eventClass
+     *
      * @return array<DomainEvent>
      */
     public function getDispatchedOfType(string $eventClass): array
     {
         return array_filter(
             $this->dispatchedEvents,
-            fn(DomainEvent $event) => $event instanceof $eventClass
+            fn (DomainEvent $event) => $event instanceof $eventClass,
         );
     }
 
@@ -187,17 +193,18 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     /**
      * Assert that no events were dispatched.
      *
-     * @throws \RuntimeException if events were dispatched
+     * @throws RuntimeException if events were dispatched
      */
     public function assertNothingDispatched(): void
     {
         if (count($this->dispatchedEvents) > 0) {
             $classes = array_map(
-                fn(DomainEvent $e) => $e::class,
-                $this->dispatchedEvents
+                fn (DomainEvent $e) => $e::class,
+                $this->dispatchedEvents,
             );
-            throw new \RuntimeException(
-                sprintf('Expected no events to be dispatched, but [%s] were dispatched.', implode(', ', array_unique($classes)))
+
+            throw new RuntimeException(
+                sprintf('Expected no events to be dispatched, but [%s] were dispatched.', implode(', ', array_unique($classes))),
             );
         }
     }
@@ -207,7 +214,8 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
      *
      * @param class-string<DomainEvent> $eventClass
      * @param callable(DomainEvent): bool $assertion
-     * @throws \RuntimeException if no matching event was found
+     *
+     * @throws RuntimeException if no matching event was found
      */
     public function assertDispatchedWith(string $eventClass, callable $assertion): void
     {
@@ -219,8 +227,8 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
             }
         }
 
-        throw new \RuntimeException(
-            sprintf('No event of type [%s] matching the assertion was dispatched.', $eventClass)
+        throw new RuntimeException(
+            sprintf('No event of type [%s] matching the assertion was dispatched.', $eventClass),
         );
     }
 }

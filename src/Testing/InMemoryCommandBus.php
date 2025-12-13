@@ -7,6 +7,8 @@ namespace Luminor\DDD\Testing;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Application\Bus\CommandHandlerInterface;
 use Luminor\DDD\Application\CQRS\Command;
+use RuntimeException;
+use Throwable;
 
 /**
  * In-memory command bus for testing.
@@ -22,7 +24,7 @@ final class InMemoryCommandBus implements CommandBusInterface
     /** @var array<class-string, callable> */
     private array $handlers = [];
 
-    /** @var array<class-string, \Throwable> */
+    /** @var array<class-string, Throwable> */
     private array $exceptions = [];
 
     /**
@@ -62,6 +64,7 @@ final class InMemoryCommandBus implements CommandBusInterface
     public function handle(string $commandClass, callable $handler): self
     {
         $this->handlers[$commandClass] = $handler;
+
         return $this;
     }
 
@@ -70,9 +73,10 @@ final class InMemoryCommandBus implements CommandBusInterface
      *
      * @param class-string<Command> $commandClass
      */
-    public function throwWhen(string $commandClass, \Throwable $exception): self
+    public function throwWhen(string $commandClass, Throwable $exception): self
     {
         $this->exceptions[$commandClass] = $exception;
+
         return $this;
     }
 
@@ -125,6 +129,7 @@ final class InMemoryCommandBus implements CommandBusInterface
     public function getLastCommand(): ?Command
     {
         $count = count($this->dispatchedCommands);
+
         return $count > 0 ? $this->dispatchedCommands[$count - 1] : null;
     }
 
@@ -132,13 +137,14 @@ final class InMemoryCommandBus implements CommandBusInterface
      * Get dispatched commands of a specific type.
      *
      * @param class-string<Command> $commandClass
+     *
      * @return array<Command>
      */
     public function getDispatchedOfType(string $commandClass): array
     {
         return array_filter(
             $this->dispatchedCommands,
-            fn(Command $command) => $command instanceof $commandClass
+            fn (Command $command) => $command instanceof $commandClass,
         );
     }
 
@@ -155,17 +161,18 @@ final class InMemoryCommandBus implements CommandBusInterface
     /**
      * Assert that no commands were dispatched.
      *
-     * @throws \RuntimeException if commands were dispatched
+     * @throws RuntimeException if commands were dispatched
      */
     public function assertNothingDispatched(): void
     {
         if (count($this->dispatchedCommands) > 0) {
             $classes = array_map(
-                fn(Command $c) => $c::class,
-                $this->dispatchedCommands
+                fn (Command $c) => $c::class,
+                $this->dispatchedCommands,
             );
-            throw new \RuntimeException(
-                sprintf('Expected no commands to be dispatched, but [%s] were dispatched.', implode(', ', $classes))
+
+            throw new RuntimeException(
+                sprintf('Expected no commands to be dispatched, but [%s] were dispatched.', implode(', ', $classes)),
             );
         }
     }

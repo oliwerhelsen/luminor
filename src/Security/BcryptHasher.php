@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Security;
 
+use RuntimeException;
+
 /**
  * Bcrypt Password Hasher
  *
@@ -31,7 +33,7 @@ final class BcryptHasher implements Hasher
         ]);
 
         if ($hash === false) {
-            throw new \RuntimeException('Bcrypt hashing failed.');
+            throw new RuntimeException('Bcrypt hashing failed.');
         }
 
         return $hash;
@@ -65,6 +67,7 @@ final class BcryptHasher implements Hasher
     public function setRounds(int $rounds): self
     {
         $this->rounds = max(4, min(31, $rounds));
+
         return $this;
     }
 }

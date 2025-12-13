@@ -36,6 +36,7 @@ final class TenantResolver implements TenantResolverInterface
     public function addResolver(TenantResolverInterface $resolver): self
     {
         $this->resolvers[] = $resolver;
+
         return $this;
     }
 

@@ -26,6 +26,7 @@ abstract class Specification
      * and the other specification are satisfied (AND).
      *
      * @param Specification<T> $other
+     *
      * @return Specification<T>
      */
     public function and(Specification $other): Specification
@@ -38,6 +39,7 @@ abstract class Specification
      * or the other specification is satisfied (OR).
      *
      * @param Specification<T> $other
+     *
      * @return Specification<T>
      */
     public function or(Specification $other): Specification
@@ -61,6 +63,7 @@ abstract class Specification
  * Specification that combines two specifications with AND logic.
  *
  * @template T
+ *
  * @extends Specification<T>
  */
 final class AndSpecification extends Specification
@@ -71,7 +74,7 @@ final class AndSpecification extends Specification
      */
     public function __construct(
         private readonly Specification $left,
-        private readonly Specification $right
+        private readonly Specification $right,
     ) {
     }
 
@@ -85,6 +88,7 @@ final class AndSpecification extends Specification
  * Specification that combines two specifications with OR logic.
  *
  * @template T
+ *
  * @extends Specification<T>
  */
 final class OrSpecification extends Specification
@@ -95,7 +99,7 @@ final class OrSpecification extends Specification
      */
     public function __construct(
         private readonly Specification $left,
-        private readonly Specification $right
+        private readonly Specification $right,
     ) {
     }
 
@@ -109,6 +113,7 @@ final class OrSpecification extends Specification
  * Specification that negates another specification.
  *
  * @template T
+ *
  * @extends Specification<T>
  */
 final class NotSpecification extends Specification
@@ -117,12 +122,12 @@ final class NotSpecification extends Specification
      * @param Specification<T> $specification
      */
     public function __construct(
-        private readonly Specification $specification
+        private readonly Specification $specification,
     ) {
     }
 
     public function isSatisfiedBy(mixed $candidate): bool
     {
-        return !$this->specification->isSatisfiedBy($candidate);
+        return ! $this->specification->isSatisfiedBy($candidate);
     }
 }

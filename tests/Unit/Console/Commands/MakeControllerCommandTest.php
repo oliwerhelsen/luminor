@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Console\Commands;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Console\Commands\MakeControllerCommand;
+use PHPUnit\Framework\TestCase;
 
 final class MakeControllerCommandTest extends TestCase
 {

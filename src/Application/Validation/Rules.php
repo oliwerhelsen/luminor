@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Application\Validation;
 
+use DateTimeImmutable;
+
 /**
  * Collection of common validation rules.
  *
@@ -53,6 +55,7 @@ final class Rules
     public static function lengthBetween(string $value, int $min, int $max): bool
     {
         $length = mb_strlen($value);
+
         return $length >= $min && $length <= $max;
     }
 
@@ -121,7 +124,7 @@ final class Rules
      */
     public static function notIn(mixed $value, array $disallowed): bool
     {
-        return !in_array($value, $disallowed, true);
+        return ! in_array($value, $disallowed, true);
     }
 
     /**
@@ -163,7 +166,7 @@ final class Rules
     {
         return preg_match(
             '/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i',
-            $value
+            $value,
         ) === 1;
     }
 
@@ -172,7 +175,8 @@ final class Rules
      */
     public static function date(string $value, string $format = 'Y-m-d'): bool
     {
-        $date = \DateTimeImmutable::createFromFormat($format, $value);
+        $date = DateTimeImmutable::createFromFormat($format, $value);
+
         return $date !== false && $date->format($format) === $value;
     }
 

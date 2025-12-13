@@ -17,6 +17,7 @@ use Luminor\DDD\Domain\Repository\Filter\IsNullFilter;
 use Luminor\DDD\Domain\Repository\Filter\NotEqualsFilter;
 use Luminor\DDD\Domain\Repository\Filter\OrFilter;
 use Luminor\DDD\Domain\Repository\RepositoryInterface;
+use ReflectionClass;
 
 /**
  * In-memory repository implementation for testing.
@@ -24,6 +25,7 @@ use Luminor\DDD\Domain\Repository\RepositoryInterface;
  * Stores aggregates in memory, useful for unit tests and prototyping.
  *
  * @template T of AggregateRoot
+ *
  * @implements RepositoryInterface<T>
  */
 class InMemoryRepository implements RepositoryInterface
@@ -47,6 +49,7 @@ class InMemoryRepository implements RepositoryInterface
     public function findById(mixed $id): ?AggregateRoot
     {
         $key = $this->getKey($id);
+
         return $this->entities[$key] ?? null;
     }
 
@@ -83,7 +86,7 @@ class InMemoryRepository implements RepositoryInterface
         if ($criteria->hasFilter()) {
             $results = array_filter(
                 $results,
-                fn(AggregateRoot $entity) => $this->matchesFilter($entity, $criteria->getFilter())
+                fn (AggregateRoot $entity) => $this->matchesFilter($entity, $criteria->getFilter()),
             );
         }
 
@@ -104,6 +107,7 @@ class InMemoryRepository implements RepositoryInterface
                         return $direction === 'DESC' ? -$comparison : $comparison;
                     }
                 }
+
                 return 0;
             });
         }
@@ -114,7 +118,7 @@ class InMemoryRepository implements RepositoryInterface
             $results = array_slice(
                 array_values($results),
                 $pagination->getOffset(),
-                $pagination->getLimit()
+                $pagination->getLimit(),
             );
         }
 
@@ -134,7 +138,7 @@ class InMemoryRepository implements RepositoryInterface
      */
     public function countByCriteria(Criteria $criteria): int
     {
-        if (!$criteria->hasFilter()) {
+        if (! $criteria->hasFilter()) {
             return $this->count();
         }
 
@@ -236,9 +240,10 @@ class InMemoryRepository implements RepositoryInterface
         }
 
         if ($filter instanceof ContainsFilter) {
-            if (!is_string($value)) {
+            if (! is_string($value)) {
                 return false;
             }
+
             return $filter->isCaseSensitive()
                 ? str_contains($value, $filterValue)
                 : str_contains(strtolower($value), strtolower($filterValue));
@@ -277,9 +282,10 @@ class InMemoryRepository implements RepositoryInterface
         }
 
         // Try direct property access
-        $reflection = new \ReflectionClass($entity);
+        $reflection = new ReflectionClass($entity);
         if ($reflection->hasProperty($field)) {
             $property = $reflection->getProperty($field);
+
             return $property->getValue($entity);
         }
 

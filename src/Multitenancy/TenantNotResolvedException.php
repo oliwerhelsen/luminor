@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Luminor\DDD\Multitenancy;
 
 use RuntimeException;
+use Throwable;
 
 /**
  * Exception thrown when a tenant cannot be resolved or is required but not set.
  */
 final class TenantNotResolvedException extends RuntimeException
 {
-    public function __construct(string $message = 'Tenant could not be resolved.', int $code = 0, ?\Throwable $previous = null)
+    public function __construct(string $message = 'Tenant could not be resolved.', int $code = 0, ?Throwable $previous = null)
     {
         parent::__construct($message, $code, $previous);
     }

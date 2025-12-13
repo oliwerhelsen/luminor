@@ -8,6 +8,7 @@ use Luminor\DDD\Application\CQRS\Command;
 use Luminor\DDD\Application\CQRS\Query;
 use Luminor\DDD\Infrastructure\Bus\MiddlewareInterface;
 use Luminor\DDD\Infrastructure\Persistence\TransactionInterface;
+use Throwable;
 
 /**
  * Middleware that wraps command execution in a database transaction.
@@ -17,7 +18,7 @@ use Luminor\DDD\Infrastructure\Persistence\TransactionInterface;
 final class TransactionMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly TransactionInterface $transaction
+        private readonly TransactionInterface $transaction,
     ) {
     }
 
@@ -33,9 +34,11 @@ final class TransactionMiddleware implements MiddlewareInterface
         try {
             $result = $next($message);
             $this->transaction->commit();
+
             return $result;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->transaction->rollback();
+
             throw $e;
         }
     }

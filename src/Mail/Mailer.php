@@ -28,6 +28,7 @@ final class Mailer
     private string $defaultMailer;
 
     private ?QueueManager $queueManager = null;
+
     private ?LoggerInterface $logger = null;
 
     /** @var array<string, callable> */
@@ -48,6 +49,7 @@ final class Mailer
     public function setQueueManager(QueueManager $queueManager): self
     {
         $this->queueManager = $queueManager;
+
         return $this;
     }
 
@@ -57,6 +59,7 @@ final class Mailer
     public function setLogger(LoggerInterface $logger): self
     {
         $this->logger = $logger;
+
         return $this;
     }
 
@@ -64,13 +67,12 @@ final class Mailer
      * Get a transport instance by name.
      *
      * @param string|null $name The mailer name (null for default)
-     * @return TransportInterface
      */
     public function mailer(?string $name = null): TransportInterface
     {
-        $name = $name ?? $this->defaultMailer;
+        $name ??= $this->defaultMailer;
 
-        if (!isset($this->transports[$name])) {
+        if (! isset($this->transports[$name])) {
             $this->transports[$name] = $this->resolveTransport($name);
         }
 
@@ -82,7 +84,6 @@ final class Mailer
      *
      * @param Mailable $mailable The mailable to send
      * @param string|null $mailer The mailer name (null for default)
-     * @return bool
      */
     public function send(Mailable $mailable, ?string $mailer = null): bool
     {
@@ -102,11 +103,11 @@ final class Mailer
      *
      * @param Message $message The message to send
      * @param string|null $mailer The mailer name (null for default)
-     * @return bool
      */
     public function sendMessage(Message $message, ?string $mailer = null): bool
     {
         $this->applyDefaults($message);
+
         return $this->mailer($mailer)->send($message);
     }
 
@@ -114,7 +115,6 @@ final class Mailer
      * Queue a mailable for later sending.
      *
      * @param Mailable $mailable The mailable to queue
-     * @return bool
      */
     public function queue(Mailable $mailable): bool
     {
@@ -145,7 +145,6 @@ final class Mailer
      * Create a pending mail builder.
      *
      * @param string|array<string> $to Recipients
-     * @return PendingMail
      */
     public function to(string|array $to): PendingMail
     {
@@ -161,6 +160,7 @@ final class Mailer
     public function extend(string $name, callable $callback): self
     {
         $this->customDrivers[$name] = $callback;
+
         return $this;
     }
 
@@ -168,7 +168,7 @@ final class Mailer
      * Resolve a transport by name.
      *
      * @param string $name The mailer name
-     * @return TransportInterface
+     *
      * @throws RuntimeException If the mailer is not configured
      */
     private function resolveTransport(string $name): TransportInterface
@@ -189,7 +189,7 @@ final class Mailer
      *
      * @param string $driver The driver name
      * @param array<string, mixed> $config The driver configuration
-     * @return TransportInterface
+     *
      * @throws RuntimeException If the driver is not supported
      */
     private function createTransport(string $driver, array $config): TransportInterface
@@ -225,8 +225,6 @@ final class Mailer
 
     /**
      * Get the default mailer name.
-     *
-     * @return string
      */
     public function getDefaultMailer(): string
     {

@@ -21,6 +21,7 @@ interface MiddlewareInterface
      *
      * @param Command|Query $message The message to handle
      * @param callable(Command|Query): mixed $next The next handler in the pipeline
+     *
      * @return mixed The result from the handler
      */
     public function handle(Command|Query $message, callable $next): mixed;

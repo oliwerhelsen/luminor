@@ -12,14 +12,22 @@ namespace Luminor\DDD\Database\Schema;
 final class Column
 {
     private string $type;
+
     private string $name;
+
     /** @var array<string, mixed> */
     private array $attributes;
+
     private bool $nullable = false;
+
     private mixed $default = null;
+
     private bool $hasDefault = false;
+
     private bool $unsigned = false;
+
     private bool $autoIncrement = false;
+
     private ?string $comment = null;
 
     /**
@@ -64,6 +72,7 @@ final class Column
     public function nullable(): self
     {
         $this->nullable = true;
+
         return $this;
     }
 
@@ -82,6 +91,7 @@ final class Column
     {
         $this->default = $value;
         $this->hasDefault = true;
+
         return $this;
     }
 
@@ -107,6 +117,7 @@ final class Column
     public function unsigned(): self
     {
         $this->unsigned = true;
+
         return $this;
     }
 
@@ -124,6 +135,7 @@ final class Column
     public function autoIncrement(): self
     {
         $this->autoIncrement = true;
+
         return $this;
     }
 
@@ -141,6 +153,7 @@ final class Column
     public function comment(string $comment): self
     {
         $this->comment = $comment;
+
         return $this;
     }
 

@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
-use PHPUnit\Framework\TestCase;
+use Exception;
+use InvalidArgumentException;
 use Luminor\DDD\Application\Validation\ValidationException;
-use Luminor\DDD\Application\Validation\ValidationResult;
 use Luminor\DDD\Domain\Abstractions\DomainException;
 use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
 use Luminor\DDD\Infrastructure\Http\ExceptionHandler;
+use PHPUnit\Framework\TestCase;
+use Throwable;
 
 final class ExceptionHandlerTest extends TestCase
 {
@@ -40,7 +42,7 @@ final class ExceptionHandlerTest extends TestCase
     public function testGetStatusCodeForInvalidArgumentException(): void
     {
         $handler = new ExceptionHandler();
-        $exception = new \InvalidArgumentException('Invalid input');
+        $exception = new InvalidArgumentException('Invalid input');
 
         $this->assertSame(400, $handler->getStatusCode($exception));
     }
@@ -48,7 +50,7 @@ final class ExceptionHandlerTest extends TestCase
     public function testGetStatusCodeForGenericException(): void
     {
         $handler = new ExceptionHandler();
-        $exception = new \Exception('Something went wrong');
+        $exception = new Exception('Something went wrong');
 
         $this->assertSame(500, $handler->getStatusCode($exception));
     }
@@ -93,7 +95,7 @@ final class ExceptionHandlerTest extends TestCase
     public function testDebugModeIncludesStackTrace(): void
     {
         $handler = ExceptionHandler::forDevelopment();
-        $exception = new \Exception('Test error');
+        $exception = new Exception('Test error');
 
         $array = $handler->toArray($exception);
 
@@ -107,7 +109,7 @@ final class ExceptionHandlerTest extends TestCase
     public function testProductionModeExcludesStackTrace(): void
     {
         $handler = ExceptionHandler::forProduction();
-        $exception = new \Exception('Test error');
+        $exception = new Exception('Test error');
 
         $array = $handler->toArray($exception);
 
@@ -117,7 +119,7 @@ final class ExceptionHandlerTest extends TestCase
     public function testProductionModeHidesGenericErrorMessage(): void
     {
         $handler = ExceptionHandler::forProduction();
-        $exception = new \Exception('Sensitive internal error message');
+        $exception = new Exception('Sensitive internal error message');
 
         $array = $handler->toArray($exception);
 
@@ -127,7 +129,7 @@ final class ExceptionHandlerTest extends TestCase
     public function testDebugModeShowsActualErrorMessage(): void
     {
         $handler = ExceptionHandler::forDevelopment();
-        $exception = new \Exception('Actual error message');
+        $exception = new Exception('Actual error message');
 
         $array = $handler->toArray($exception);
 
@@ -138,7 +140,7 @@ final class ExceptionHandlerTest extends TestCase
     {
         $handler = new ExceptionHandler();
         $handler->setDebug(true);
-        $exception = new \Exception('Test error');
+        $exception = new Exception('Test error');
 
         $array = $handler->toArray($exception);
 
@@ -149,14 +151,14 @@ final class ExceptionHandlerTest extends TestCase
     {
         $loggedExceptions = [];
         $handler = new ExceptionHandler();
-        $handler->setErrorLogger(function (\Throwable $e) use (&$loggedExceptions) {
+        $handler->setErrorLogger(function (Throwable $e) use (&$loggedExceptions) {
             $loggedExceptions[] = $e;
         });
 
         // Create a mock response to test handle() method
         // Since we can't easily mock Utopia\Http\Response, we test toArray instead
         // which is used internally
-        $exception = new \Exception('Test error');
+        $exception = new Exception('Test error');
         $handler->toArray($exception);
 
         // For the logger test, we'd need to call handle() with a real Response
@@ -171,9 +173,9 @@ final class ExceptionHandlerTest extends TestCase
 
         $handler->registerHandler(
             TestDomainException::class,
-            function (\Throwable $e) use (&$customHandled) {
+            function (Throwable $e) use (&$customHandled) {
                 $customHandled = true;
-            }
+            },
         );
 
         // Custom handlers are used in handle() method which requires Response

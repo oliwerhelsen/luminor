@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Security;
 
+use InvalidArgumentException;
+
 /**
  * Hash Manager
  *
@@ -12,8 +14,10 @@ namespace Luminor\DDD\Security;
 final class HashManager implements Hasher
 {
     private Hasher $driver;
+
     /** @var array<string, Hasher> */
     private array $drivers = [];
+
     private string $default = 'bcrypt';
 
     public function __construct(?Hasher $driver = null)
@@ -40,12 +44,13 @@ final class HashManager implements Hasher
      */
     public function setDefaultDriver(string $driver): self
     {
-        if (!isset($this->drivers[$driver])) {
-            throw new \InvalidArgumentException("Hash driver [{$driver}] not found.");
+        if (! isset($this->drivers[$driver])) {
+            throw new InvalidArgumentException("Hash driver [{$driver}] not found.");
         }
 
         $this->default = $driver;
         $this->driver = $this->drivers[$driver];
+
         return $this;
     }
 
@@ -54,8 +59,8 @@ final class HashManager implements Hasher
      */
     public function driver(string $name): Hasher
     {
-        if (!isset($this->drivers[$name])) {
-            throw new \InvalidArgumentException("Hash driver [{$name}] not found.");
+        if (! isset($this->drivers[$name])) {
+            throw new InvalidArgumentException("Hash driver [{$name}] not found.");
         }
 
         return $this->drivers[$name];
@@ -67,6 +72,7 @@ final class HashManager implements Hasher
     public function extend(string $name, Hasher $driver): self
     {
         $this->drivers[$name] = $driver;
+
         return $this;
     }
 

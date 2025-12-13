@@ -45,22 +45,24 @@ final class ArrayLogger extends AbstractLogger
      * Get logs filtered by level.
      *
      * @param string $level The log level to filter by
+     *
      * @return array<int, array{level: string, message: string, context: array<string, mixed>, channel: string, timestamp: string}>
      */
     public function getLogsByLevel(string $level): array
     {
-        return array_filter($this->logs, fn($log) => $log['level'] === $level);
+        return array_filter($this->logs, fn ($log) => $log['level'] === $level);
     }
 
     /**
      * Get logs filtered by channel.
      *
      * @param string $channel The channel to filter by
+     *
      * @return array<int, array{level: string, message: string, context: array<string, mixed>, channel: string, timestamp: string}>
      */
     public function getLogsByChannel(string $channel): array
     {
-        return array_filter($this->logs, fn($log) => $log['channel'] === $channel);
+        return array_filter($this->logs, fn ($log) => $log['channel'] === $channel);
     }
 
     /**
@@ -68,7 +70,6 @@ final class ArrayLogger extends AbstractLogger
      *
      * @param string $message The message to search for (partial match)
      * @param string|null $level Optional level to filter by
-     * @return bool
      */
     public function hasLogged(string $message, ?string $level = null): bool
     {

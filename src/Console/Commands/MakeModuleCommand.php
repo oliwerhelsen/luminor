@@ -104,6 +104,7 @@ final class MakeModuleCommand extends AbstractMakeCommand
         $name = $input->getArgument('name');
         if ($name === null) {
             $output->error('Name argument is required.');
+
             return 1;
         }
 
@@ -142,8 +143,8 @@ final class MakeModuleCommand extends AbstractMakeCommand
 
         foreach ($directories as $dir) {
             $fullPath = $modulePath . $dir;
-            if (!is_dir($fullPath)) {
-                if (mkdir($fullPath, 0755, true)) {
+            if (! is_dir($fullPath)) {
+                if (mkdir($fullPath, 0o755, true)) {
                     $output->line(sprintf('  Created directory: %s', $dir ?: '/'));
                 }
             }
@@ -151,7 +152,7 @@ final class MakeModuleCommand extends AbstractMakeCommand
 
         // Create the main module class
         $moduleFile = $modulePath . '/' . $moduleName . 'Module.php';
-        if (!file_exists($moduleFile) || $input->hasOption('force')) {
+        if (! file_exists($moduleFile) || $input->hasOption('force')) {
             $stubContent = $this->loadStub();
             if ($stubContent !== null) {
                 $namespace = 'App\\Modules\\' . $moduleName;
@@ -171,7 +172,7 @@ final class MakeModuleCommand extends AbstractMakeCommand
                 $content = str_replace(
                     array_keys($replacements),
                     array_values($replacements),
-                    $stubContent
+                    $stubContent,
                 );
 
                 file_put_contents($moduleFile, $content);
@@ -180,7 +181,7 @@ final class MakeModuleCommand extends AbstractMakeCommand
         }
 
         // Create additional module files unless minimal
-        if (!$input->hasOption('minimal')) {
+        if (! $input->hasOption('minimal')) {
             $this->createModuleServiceProvider($modulePath, $moduleName, $input, $output);
             $this->createModuleRoutes($modulePath, $moduleName, $input, $output);
         }
@@ -201,68 +202,68 @@ final class MakeModuleCommand extends AbstractMakeCommand
         string $modulePath,
         string $moduleName,
         Input $input,
-        Output $output
+        Output $output,
     ): void {
         $filePath = $modulePath . '/' . $moduleName . 'ServiceProvider.php';
 
-        if (file_exists($filePath) && !$input->hasOption('force')) {
+        if (file_exists($filePath) && ! $input->hasOption('force')) {
             return;
         }
 
         $namespace = 'App\\Modules\\' . $moduleName;
 
         $content = <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-namespace {$namespace};
+            namespace {$namespace};
 
-use Luminor\\DDD\\Container\\AbstractServiceProvider;
-use Luminor\\DDD\\Container\\ContainerInterface;
+            use Luminor\\DDD\\Container\\AbstractServiceProvider;
+            use Luminor\\DDD\\Container\\ContainerInterface;
 
-/**
- * Service provider for the {$moduleName} module.
- *
- * Registers module dependencies and bindings.
- */
-final class {$moduleName}ServiceProvider extends AbstractServiceProvider
-{
-    /**
-     * @inheritDoc
-     */
-    public function register(ContainerInterface \$container): void
-    {
-        // Register repository implementations
-        // \$container->bind(
-        //     {$moduleName}RepositoryInterface::class,
-        //     {$moduleName}Repository::class
-        // );
+            /**
+             * Service provider for the {$moduleName} module.
+             *
+             * Registers module dependencies and bindings.
+             */
+            final class {$moduleName}ServiceProvider extends AbstractServiceProvider
+            {
+                /**
+                 * @inheritDoc
+                 */
+                public function register(ContainerInterface \$container): void
+                {
+                    // Register repository implementations
+                    // \$container->bind(
+                    //     {$moduleName}RepositoryInterface::class,
+                    //     {$moduleName}Repository::class
+                    // );
 
-        // Register services
-        // \$container->singleton({$moduleName}Service::class);
-    }
+                    // Register services
+                    // \$container->singleton({$moduleName}Service::class);
+                }
 
-    /**
-     * @inheritDoc
-     */
-    public function boot(ContainerInterface \$container): void
-    {
-        // Boot module services
-    }
+                /**
+                 * @inheritDoc
+                 */
+                public function boot(ContainerInterface \$container): void
+                {
+                    // Boot module services
+                }
 
-    /**
-     * @inheritDoc
-     */
-    public function provides(): array
-    {
-        return [
-            // List of services this provider registers
-        ];
-    }
-}
+                /**
+                 * @inheritDoc
+                 */
+                public function provides(): array
+                {
+                    return [
+                        // List of services this provider registers
+                    ];
+                }
+            }
 
-PHP;
+            PHP;
 
         file_put_contents($filePath, $content);
         $output->success(sprintf('Created: %s', $filePath));
@@ -275,11 +276,11 @@ PHP;
         string $modulePath,
         string $moduleName,
         Input $input,
-        Output $output
+        Output $output,
     ): void {
         $filePath = $modulePath . '/routes.php';
 
-        if (file_exists($filePath) && !$input->hasOption('force')) {
+        if (file_exists($filePath) && ! $input->hasOption('force')) {
             return;
         }
 
@@ -287,67 +288,67 @@ PHP;
         $resourcePlural = $this->plural($routePrefix);
 
         $content = <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-/**
- * Routes for the {$moduleName} module.
- *
- * Define your module's HTTP routes here.
- */
+            /**
+             * Routes for the {$moduleName} module.
+             *
+             * Define your module's HTTP routes here.
+             */
 
-use Utopia\\Http\\Http;
+            use Utopia\\Http\\Http;
 
-// Example routes for the {$moduleName} module
-// Uncomment and customize as needed
+            // Example routes for the {$moduleName} module
+            // Uncomment and customize as needed
 
-// \$http = Http::getInstance();
+            // \$http = Http::getInstance();
 
-// List all
-// \$http->get('/{$resourcePlural}')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (\$request, \$response) {
-//         // Handle list request
-//     });
+            // List all
+            // \$http->get('/{$resourcePlural}')
+            //     ->inject('request')
+            //     ->inject('response')
+            //     ->action(function (\$request, \$response) {
+            //         // Handle list request
+            //     });
 
-// Get one
-// \$http->get('/{$resourcePlural}/:id')
-//     ->param('id', '', 'string', 'Resource ID')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (string \$id, \$request, \$response) {
-//         // Handle get request
-//     });
+            // Get one
+            // \$http->get('/{$resourcePlural}/:id')
+            //     ->param('id', '', 'string', 'Resource ID')
+            //     ->inject('request')
+            //     ->inject('response')
+            //     ->action(function (string \$id, \$request, \$response) {
+            //         // Handle get request
+            //     });
 
-// Create
-// \$http->post('/{$resourcePlural}')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (\$request, \$response) {
-//         // Handle create request
-//     });
+            // Create
+            // \$http->post('/{$resourcePlural}')
+            //     ->inject('request')
+            //     ->inject('response')
+            //     ->action(function (\$request, \$response) {
+            //         // Handle create request
+            //     });
 
-// Update
-// \$http->put('/{$resourcePlural}/:id')
-//     ->param('id', '', 'string', 'Resource ID')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (string \$id, \$request, \$response) {
-//         // Handle update request
-//     });
+            // Update
+            // \$http->put('/{$resourcePlural}/:id')
+            //     ->param('id', '', 'string', 'Resource ID')
+            //     ->inject('request')
+            //     ->inject('response')
+            //     ->action(function (string \$id, \$request, \$response) {
+            //         // Handle update request
+            //     });
 
-// Delete
-// \$http->delete('/{$resourcePlural}/:id')
-//     ->param('id', '', 'string', 'Resource ID')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (string \$id, \$request, \$response) {
-//         // Handle delete request
-//     });
+            // Delete
+            // \$http->delete('/{$resourcePlural}/:id')
+            //     ->param('id', '', 'string', 'Resource ID')
+            //     ->inject('request')
+            //     ->inject('response')
+            //     ->action(function (string \$id, \$request, \$response) {
+            //         // Handle delete request
+            //     });
 
-PHP;
+            PHP;
 
         file_put_contents($filePath, $content);
         $output->success(sprintf('Created: %s', $filePath));
@@ -377,7 +378,7 @@ PHP;
 
         foreach ($keepDirectories as $dir) {
             $gitkeepPath = $modulePath . $dir . '/.gitkeep';
-            if (!file_exists($gitkeepPath)) {
+            if (! file_exists($gitkeepPath)) {
                 touch($gitkeepPath);
             }
         }

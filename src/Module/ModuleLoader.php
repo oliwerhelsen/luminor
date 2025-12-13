@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Luminor\DDD\Module;
 
 use Luminor\DDD\Container\ContainerInterface;
+use RecursiveDirectoryIterator;
+use RecursiveIteratorIterator;
 
 /**
  * Loads and manages application modules.
@@ -26,7 +28,7 @@ final class ModuleLoader
     private bool $isBooted = false;
 
     public function __construct(
-        private readonly ContainerInterface $container
+        private readonly ContainerInterface $container,
     ) {
     }
 
@@ -68,12 +70,12 @@ final class ModuleLoader
      */
     public function discover(string $directory, string $namespace): void
     {
-        if (!is_dir($directory)) {
+        if (! is_dir($directory)) {
             return;
         }
 
-        $iterator = new \RecursiveIteratorIterator(
-            new \RecursiveDirectoryIterator($directory, \RecursiveDirectoryIterator::SKIP_DOTS)
+        $iterator = new RecursiveIteratorIterator(
+            new RecursiveDirectoryIterator($directory, RecursiveDirectoryIterator::SKIP_DOTS),
         );
 
         foreach ($iterator as $file) {
@@ -144,6 +146,7 @@ final class ModuleLoader
     public function isModuleEnabled(string $name): bool
     {
         $module = $this->getModule($name);
+
         return $module !== null && $module->getDefinition()->isEnabled();
     }
 
@@ -177,7 +180,7 @@ final class ModuleLoader
 
         $className = $baseNamespace . '\\' . $relativePath;
 
-        if (!class_exists($className)) {
+        if (! class_exists($className)) {
             require_once $filePath;
         }
 
@@ -195,6 +198,7 @@ final class ModuleLoader
     private function implementsModule(string $className): bool
     {
         $interfaces = class_implements($className);
+
         return $interfaces !== false && in_array(ModuleInterface::class, $interfaces, true);
     }
 
@@ -202,6 +206,7 @@ final class ModuleLoader
      * Resolve module dependencies and return load order.
      *
      * @return array<int, string>
+     *
      * @throws ModuleException If circular dependency detected
      */
     private function resolveDependencies(): array
@@ -221,6 +226,7 @@ final class ModuleLoader
      *
      * @param array<int, string> $resolved
      * @param array<int, string> $unresolved
+     *
      * @throws ModuleException If dependency not found or circular
      */
     private function resolveDependency(string $name, array &$resolved, array &$unresolved): void
@@ -238,7 +244,7 @@ final class ModuleLoader
         $module = $this->modules[$name] ?? throw ModuleException::notFound($name);
 
         foreach ($module->getDependencies() as $dependency) {
-            if (!isset($this->modules[$dependency])) {
+            if (! isset($this->modules[$dependency])) {
                 throw ModuleException::dependencyNotFound($name, $dependency);
             }
             $this->resolveDependency($dependency, $resolved, $unresolved);
@@ -259,7 +265,7 @@ final class ModuleLoader
 
         $module = $this->modules[$name];
 
-        if (!$module->getDefinition()->isEnabled()) {
+        if (! $module->getDefinition()->isEnabled()) {
             return;
         }
 
@@ -276,7 +282,7 @@ final class ModuleLoader
             return;
         }
 
-        if (!($this->registered[$name] ?? false)) {
+        if (! ($this->registered[$name] ?? false)) {
             return;
         }
 

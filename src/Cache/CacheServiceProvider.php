@@ -23,7 +23,7 @@ final class CacheServiceProvider extends AbstractServiceProvider
 
             return match ($driver) {
                 'file' => CacheManager::file(
-                    getenv('CACHE_PATH') ?: sys_get_temp_dir() . '/luminor_cache'
+                    getenv('CACHE_PATH') ?: sys_get_temp_dir() . '/luminor_cache',
                 ),
                 'array' => CacheManager::array(),
                 default => CacheManager::file(sys_get_temp_dir() . '/luminor_cache'),

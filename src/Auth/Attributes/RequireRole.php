@@ -15,7 +15,6 @@ use Attribute;
  * @example
  * #[RequireRole('admin')]
  * class AdminController { }
- *
  * @example
  * #[RequireRole(['editor', 'admin'], RequireRole::MODE_ANY)]
  * public function publish() { }
@@ -44,7 +43,7 @@ final class RequireRole
     public function __construct(
         string|array $roles,
         public readonly string $mode = self::MODE_ANY,
-        public readonly ?string $message = null
+        public readonly ?string $message = null,
     ) {
         $this->roles = is_array($roles) ? $roles : [$roles];
     }

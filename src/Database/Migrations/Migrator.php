@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Database\Migrations;
 
-use Luminor\DDD\Database\Schema\Schema;
 use Luminor\DDD\Container\ContainerInterface;
+use Luminor\DDD\Database\Schema\Schema;
 
 /**
  * Migrator
@@ -15,8 +15,11 @@ use Luminor\DDD\Container\ContainerInterface;
 final class Migrator
 {
     private MigrationRepositoryInterface $repository;
+
     private Schema $schema;
+
     private ContainerInterface $container;
+
     /** @var array<string> */
     private array $paths;
 
@@ -27,7 +30,7 @@ final class Migrator
         MigrationRepositoryInterface $repository,
         Schema $schema,
         ContainerInterface $container,
-        array $paths = []
+        array $paths = [],
     ) {
         $this->repository = $repository;
         $this->schema = $schema;
@@ -131,7 +134,7 @@ final class Migrator
         $files = [];
 
         foreach ($this->paths as $path) {
-            if (!is_dir($path)) {
+            if (! is_dir($path)) {
                 continue;
             }
 
@@ -142,6 +145,7 @@ final class Migrator
         }
 
         sort($files);
+
         return $files;
     }
 
@@ -157,7 +161,8 @@ final class Migrator
 
         return array_filter($files, function ($file) use ($executed) {
             $className = $this->getClassName($file);
-            return !in_array($className, $executed, true);
+
+            return ! in_array($className, $executed, true);
         });
     }
 
@@ -188,13 +193,13 @@ final class Migrator
 
         require_once $file;
 
-        if (!class_exists($class)) {
+        if (! class_exists($class)) {
             throw new MigrationException("Migration class not found: {$class}");
         }
 
         $migration = new $class($this->schema);
 
-        if (!$migration instanceof MigrationInterface) {
+        if (! $migration instanceof MigrationInterface) {
             throw new MigrationException("Migration must implement MigrationInterface: {$class}");
         }
 
@@ -240,7 +245,7 @@ final class Migrator
      */
     private function ensureRepositoryExists(): void
     {
-        if (!$this->repository->repositoryExists()) {
+        if (! $this->repository->repositoryExists()) {
             $this->repository->createRepository();
         }
     }

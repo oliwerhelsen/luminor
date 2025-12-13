@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http\Response;
 
+use Throwable;
+
 /**
  * Error response with structured error information.
  */
@@ -21,7 +23,7 @@ final class ErrorResponse
         private readonly string $code,
         private readonly int $statusCode = 400,
         private readonly ?array $details = null,
-        private readonly ?string $traceId = null
+        private readonly ?string $traceId = null,
     ) {
     }
 
@@ -87,6 +89,7 @@ final class ErrorResponse
     public static function tooManyRequests(string $message = 'Too many requests', ?int $retryAfter = null): self
     {
         $details = $retryAfter !== null ? ['retryAfter' => $retryAfter] : null;
+
         return new self($message, 'TOO_MANY_REQUESTS', 429, $details);
     }
 
@@ -109,7 +112,7 @@ final class ErrorResponse
     /**
      * Create from an exception.
      */
-    public static function fromException(\Throwable $exception, bool $includeTrace = false): self
+    public static function fromException(Throwable $exception, bool $includeTrace = false): self
     {
         $details = $includeTrace ? [
             'exception' => $exception::class,
@@ -121,7 +124,7 @@ final class ErrorResponse
             $exception->getMessage(),
             'EXCEPTION',
             500,
-            $details
+            $details,
         );
     }
 
@@ -163,7 +166,7 @@ final class ErrorResponse
             $this->code,
             $this->statusCode,
             $this->details,
-            $traceId
+            $traceId,
         );
     }
 

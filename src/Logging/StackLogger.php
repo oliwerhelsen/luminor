@@ -34,6 +34,7 @@ final class StackLogger implements LoggerInterface
     {
         $clone = clone $this;
         $clone->channel = $channel;
+
         return $clone;
     }
 

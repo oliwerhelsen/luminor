@@ -25,7 +25,7 @@ final class AggregateNotFoundException extends DomainException
             [
                 'aggregateType' => $aggregateType,
                 'id' => $id,
-            ]
+            ],
         );
     }
 }

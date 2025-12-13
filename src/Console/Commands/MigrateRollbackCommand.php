@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Console\Commands;
 
+use Exception;
 use Luminor\DDD\Console\Input;
 use Luminor\DDD\Console\Output;
-use Luminor\DDD\Database\Migrations\Migrator;
-use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
-use Luminor\DDD\Database\Schema\Schema;
 use Luminor\DDD\Database\Connection;
+use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
+use Luminor\DDD\Database\Migrations\Migrator;
+use Luminor\DDD\Database\Schema\Schema;
 use PDO;
+use RuntimeException;
 
 /**
  * Migrate Rollback Command
@@ -35,7 +37,7 @@ final class MigrateRollbackCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    public function execute(Input $input, Output $output): int
     {
         $output->info('Rolling back migrations...');
 
@@ -45,6 +47,7 @@ final class MigrateRollbackCommand extends AbstractCommand
 
             if (empty($rolledBack)) {
                 $output->info('Nothing to rollback.');
+
                 return 0;
             }
 
@@ -55,8 +58,9 @@ final class MigrateRollbackCommand extends AbstractCommand
             }
 
             return 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->error('Rollback failed: ' . $e->getMessage());
+
             return 1;
         }
     }
@@ -71,6 +75,7 @@ final class MigrateRollbackCommand extends AbstractCommand
         $repository = new DatabaseMigrationRepository($connection);
 
         $path = getcwd() . '/' . $input->getOption('path');
+
         return new Migrator($repository, $schema, $this->container, [$path]);
     }
 
@@ -90,7 +95,7 @@ final class MigrateRollbackCommand extends AbstractCommand
             'mysql' => "mysql:host={$host};port={$port};dbname={$database}",
             'pgsql' => "pgsql:host={$host};port={$port};dbname={$database}",
             'sqlite' => "sqlite:{$database}",
-            default => throw new \RuntimeException("Unsupported database driver: {$driver}"),
+            default => throw new RuntimeException("Unsupported database driver: {$driver}"),
         };
 
         return Connection::create($dsn, $username, $password, [

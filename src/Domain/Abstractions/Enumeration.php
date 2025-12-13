@@ -26,7 +26,7 @@ abstract class Enumeration
      */
     final protected function __construct(
         private readonly int|string $value,
-        private readonly string $name
+        private readonly string $name,
     ) {
     }
 
@@ -77,7 +77,7 @@ abstract class Enumeration
     {
         $class = static::class;
 
-        if (!isset(self::$instances[$class])) {
+        if (! isset(self::$instances[$class])) {
             self::$instances[$class] = self::initializeInstances();
         }
 
@@ -95,6 +95,7 @@ abstract class Enumeration
         foreach (static::getAll() as $name => $instance) {
             $values[$name] = $instance->getValue();
         }
+
         return $values;
     }
 
@@ -112,7 +113,7 @@ abstract class Enumeration
      * Create an enumeration instance from a value.
      *
      * @param TValue $value
-     * @return static
+     *
      * @throws InvalidArgumentException If the value is not valid
      */
     public static function from(int|string $value): static
@@ -124,7 +125,7 @@ abstract class Enumeration
         }
 
         throw new InvalidArgumentException(
-            sprintf('Invalid value "%s" for enumeration %s', $value, static::class)
+            sprintf('Invalid value "%s" for enumeration %s', $value, static::class),
         );
     }
 
@@ -132,7 +133,6 @@ abstract class Enumeration
      * Try to create an enumeration instance from a value.
      *
      * @param TValue $value
-     * @return static|null
      */
     public static function tryFrom(int|string $value): ?static
     {
@@ -152,9 +152,9 @@ abstract class Enumeration
     {
         $all = static::getAll();
 
-        if (!isset($all[$name])) {
+        if (! isset($all[$name])) {
             throw new InvalidArgumentException(
-                sprintf('Invalid name "%s" for enumeration %s', $name, static::class)
+                sprintf('Invalid name "%s" for enumeration %s', $name, static::class),
             );
         }
 

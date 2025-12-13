@@ -22,6 +22,7 @@ interface QueryHandlerInterface
      * Handle a query and return the result.
      *
      * @param TQuery $query The query to handle
+     *
      * @return TResult The query result
      */
     public function handle(Query $query): mixed;

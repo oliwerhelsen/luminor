@@ -18,7 +18,7 @@ final class StoredEvent
     public function __construct(
         private readonly int $sequenceNumber,
         private readonly DomainEvent $event,
-        private readonly DateTimeImmutable $storedAt
+        private readonly DateTimeImmutable $storedAt,
     ) {
     }
 

@@ -21,7 +21,7 @@ final class ValidatorFactory
     public function make(
         array $data,
         array $rules,
-        array $customMessages = []
+        array $customMessages = [],
     ): Validator {
         return new Validator($data, $rules, $customMessages);
     }

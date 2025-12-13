@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Persistence;
 
+use PDO;
+use RuntimeException;
+use Throwable;
+
 /**
  * Transaction wrapper for database operations.
  *
@@ -28,22 +32,22 @@ final class Transaction implements TransactionInterface
         private readonly mixed $rollbackCallback,
         private readonly mixed $savepointCallback = null,
         private readonly mixed $releaseSavepointCallback = null,
-        private readonly mixed $rollbackToSavepointCallback = null
+        private readonly mixed $rollbackToSavepointCallback = null,
     ) {
     }
 
     /**
      * Create a transaction wrapper from PDO.
      */
-    public static function fromPdo(\PDO $pdo): self
+    public static function fromPdo(PDO $pdo): self
     {
         return new self(
-            fn() => $pdo->beginTransaction(),
-            fn() => $pdo->commit(),
-            fn() => $pdo->rollBack(),
-            fn(string $name) => $pdo->exec("SAVEPOINT {$name}"),
-            fn(string $name) => $pdo->exec("RELEASE SAVEPOINT {$name}"),
-            fn(string $name) => $pdo->exec("ROLLBACK TO SAVEPOINT {$name}")
+            fn () => $pdo->beginTransaction(),
+            fn () => $pdo->commit(),
+            fn () => $pdo->rollBack(),
+            fn (string $name) => $pdo->exec("SAVEPOINT {$name}"),
+            fn (string $name) => $pdo->exec("RELEASE SAVEPOINT {$name}"),
+            fn (string $name) => $pdo->exec("ROLLBACK TO SAVEPOINT {$name}"),
         );
     }
 
@@ -67,7 +71,7 @@ final class Transaction implements TransactionInterface
     public function commit(): void
     {
         if ($this->transactionLevel === 0) {
-            throw new \RuntimeException('No active transaction to commit');
+            throw new RuntimeException('No active transaction to commit');
         }
 
         $this->transactionLevel--;
@@ -85,7 +89,7 @@ final class Transaction implements TransactionInterface
     public function rollback(): void
     {
         if ($this->transactionLevel === 0) {
-            throw new \RuntimeException('No active transaction to rollback');
+            throw new RuntimeException('No active transaction to rollback');
         }
 
         $this->transactionLevel--;
@@ -115,9 +119,11 @@ final class Transaction implements TransactionInterface
         try {
             $result = $callback();
             $this->commit();
+
             return $result;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $this->rollback();
+
             throw $e;
         }
     }

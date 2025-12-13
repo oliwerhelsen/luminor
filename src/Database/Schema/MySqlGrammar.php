@@ -68,6 +68,7 @@ final class MySqlGrammar extends SchemaGrammar
     protected function typeString(Column $column): string
     {
         $length = $column->getAttributes()['length'] ?? 255;
+
         return "VARCHAR({$length})";
     }
 
@@ -95,6 +96,7 @@ final class MySqlGrammar extends SchemaGrammar
     {
         $precision = $column->getAttributes()['precision'] ?? 8;
         $scale = $column->getAttributes()['scale'] ?? 2;
+
         return "DECIMAL({$precision}, {$scale})";
     }
 

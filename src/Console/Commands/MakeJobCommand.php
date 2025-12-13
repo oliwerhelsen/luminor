@@ -39,34 +39,37 @@ final class MakeJobCommand extends AbstractCommand
         if ($name === null) {
             $output->error('Please provide a job name.');
             $output->writeln('Usage: make:job <name> [--sync]');
+
             return 1;
         }
 
         $kernel = Kernel::getInstance();
         if ($kernel === null) {
             $output->error('Kernel not initialized.');
+
             return 1;
         }
 
         $sync = $input->hasOption('sync') && $input->getOption('sync') !== false;
-        
+
         // Parse namespace and class name
         $parts = explode('/', str_replace('\\', '/', (string) $name));
         $className = array_pop($parts);
-        $subNamespace = !empty($parts) ? '\\' . implode('\\', $parts) : '';
+        $subNamespace = ! empty($parts) ? '\\' . implode('\\', $parts) : '';
 
         // Determine output path
         $basePath = $kernel->getBasePath();
-        $directory = $basePath . '/src/Jobs' . (!empty($parts) ? '/' . implode('/', $parts) : '');
+        $directory = $basePath . '/src/Jobs' . (! empty($parts) ? '/' . implode('/', $parts) : '');
         $filePath = $directory . '/' . $className . '.php';
 
         // Create directory if needed
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         if (file_exists($filePath)) {
             $output->error("Job already exists: {$filePath}");
+
             return 1;
         }
 
@@ -84,97 +87,97 @@ final class MakeJobCommand extends AbstractCommand
     private function getStub(string $className, string $subNamespace, bool $sync): string
     {
         $namespace = 'App\\Jobs' . $subNamespace;
-        
+
         if ($sync) {
             return <<<PHP
-<?php
+                <?php
 
-declare(strict_types=1);
+                declare(strict_types=1);
 
-namespace {$namespace};
+                namespace {$namespace};
 
-use Luminor\DDD\Queue\Job;
+                use Luminor\DDD\Queue\Job;
 
-/**
- * Synchronous job that runs immediately.
- */
-final class {$className} extends Job
-{
-    public function __construct(
-        // Add your job data here
-    ) {}
+                /**
+                 * Synchronous job that runs immediately.
+                 */
+                final class {$className} extends Job
+                {
+                    public function __construct(
+                        // Add your job data here
+                    ) {}
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
-    {
-        // Implement job logic
-    }
+                    /**
+                     * Execute the job.
+                     */
+                    public function handle(): void
+                    {
+                        // Implement job logic
+                    }
 
-    /**
-     * Handle job failure.
-     */
-    public function failed(\\Throwable \$exception): void
-    {
-        // Log or handle the failure
-    }
-}
+                    /**
+                     * Handle job failure.
+                     */
+                    public function failed(\\Throwable \$exception): void
+                    {
+                        // Log or handle the failure
+                    }
+                }
 
-PHP;
+                PHP;
         }
 
         return <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-namespace {$namespace};
+            namespace {$namespace};
 
-use Luminor\DDD\Queue\Job;
-use Luminor\DDD\Queue\ShouldQueue;
+            use Luminor\DDD\Queue\Job;
+            use Luminor\DDD\Queue\ShouldQueue;
 
-/**
- * Queued job that runs in the background.
- */
-final class {$className} extends Job implements ShouldQueue
-{
-    /**
-     * The number of times the job may be attempted.
-     */
-    public int \$tries = 3;
+            /**
+             * Queued job that runs in the background.
+             */
+            final class {$className} extends Job implements ShouldQueue
+            {
+                /**
+                 * The number of times the job may be attempted.
+                 */
+                public int \$tries = 3;
 
-    /**
-     * The number of seconds to wait before retrying.
-     */
-    public int \$backoff = 60;
+                /**
+                 * The number of seconds to wait before retrying.
+                 */
+                public int \$backoff = 60;
 
-    /**
-     * The maximum number of seconds the job can run.
-     */
-    public int \$timeout = 120;
+                /**
+                 * The maximum number of seconds the job can run.
+                 */
+                public int \$timeout = 120;
 
-    public function __construct(
-        // Add your job data here
-    ) {}
+                public function __construct(
+                    // Add your job data here
+                ) {}
 
-    /**
-     * Execute the job.
-     */
-    public function handle(): void
-    {
-        // Implement job logic
-    }
+                /**
+                 * Execute the job.
+                 */
+                public function handle(): void
+                {
+                    // Implement job logic
+                }
 
-    /**
-     * Handle job failure.
-     */
-    public function failed(\\Throwable \$exception): void
-    {
-        // Log or handle the failure
-    }
-}
+                /**
+                 * Handle job failure.
+                 */
+                public function failed(\\Throwable \$exception): void
+                {
+                    // Log or handle the failure
+                }
+            }
 
-PHP;
+            PHP;
     }
 }

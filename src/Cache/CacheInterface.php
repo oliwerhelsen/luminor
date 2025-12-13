@@ -42,6 +42,7 @@ interface CacheInterface
      * Get multiple values from the cache.
      *
      * @param array<string> $keys
+     *
      * @return array<string, mixed>
      */
     public function many(array $keys): array;

@@ -48,7 +48,7 @@ final class CommandValidator
     {
         $commandClass = $command::class;
 
-        if (!isset($this->validators[$commandClass])) {
+        if (! isset($this->validators[$commandClass])) {
             return ValidationResult::valid();
         }
 

@@ -17,10 +17,15 @@ use RuntimeException;
 final class SmtpTransport implements TransportInterface
 {
     private string $host;
+
     private int $port;
+
     private ?string $username;
+
     private ?string $password;
+
     private string $encryption;
+
     private int $timeout;
 
     /** @var resource|null */
@@ -44,7 +49,7 @@ final class SmtpTransport implements TransportInterface
      */
     public function send(Message $message): bool
     {
-        if (!$message->hasRecipients()) {
+        if (! $message->hasRecipients()) {
             throw new RuntimeException('Message has no recipients.');
         }
 
@@ -95,7 +100,7 @@ final class SmtpTransport implements TransportInterface
 
         $this->socket = @fsockopen($host, $this->port, $errno, $errstr, $this->timeout);
 
-        if (!$this->socket) {
+        if (! $this->socket) {
             throw new RuntimeException(sprintf('Could not connect to SMTP server: %s (%d)', $errstr, $errno));
         }
 
@@ -103,7 +108,7 @@ final class SmtpTransport implements TransportInterface
 
         $response = $this->getResponse();
 
-        if (!str_starts_with($response, '220')) {
+        if (! str_starts_with($response, '220')) {
             throw new RuntimeException('SMTP server did not send greeting: ' . $response);
         }
     }
@@ -127,11 +132,11 @@ final class SmtpTransport implements TransportInterface
         $hostname = gethostname() ?: 'localhost';
         $response = $this->sendCommand('EHLO ' . $hostname);
 
-        if (!str_starts_with($response, '250')) {
+        if (! str_starts_with($response, '250')) {
             // Fall back to HELO
             $response = $this->sendCommand('HELO ' . $hostname);
 
-            if (!str_starts_with($response, '250')) {
+            if (! str_starts_with($response, '250')) {
                 throw new RuntimeException('SMTP HELO failed: ' . $response);
             }
         }
@@ -144,13 +149,13 @@ final class SmtpTransport implements TransportInterface
     {
         $response = $this->sendCommand('STARTTLS');
 
-        if (!str_starts_with($response, '220')) {
+        if (! str_starts_with($response, '220')) {
             throw new RuntimeException('SMTP STARTTLS failed: ' . $response);
         }
 
         $crypto = stream_socket_enable_crypto($this->socket, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 
-        if (!$crypto) {
+        if (! $crypto) {
             throw new RuntimeException('Could not enable TLS encryption.');
         }
     }
@@ -162,19 +167,19 @@ final class SmtpTransport implements TransportInterface
     {
         $response = $this->sendCommand('AUTH LOGIN');
 
-        if (!str_starts_with($response, '334')) {
+        if (! str_starts_with($response, '334')) {
             throw new RuntimeException('SMTP AUTH LOGIN failed: ' . $response);
         }
 
         $response = $this->sendCommand(base64_encode($this->username));
 
-        if (!str_starts_with($response, '334')) {
+        if (! str_starts_with($response, '334')) {
             throw new RuntimeException('SMTP username rejected: ' . $response);
         }
 
         $response = $this->sendCommand(base64_encode($this->password));
 
-        if (!str_starts_with($response, '235')) {
+        if (! str_starts_with($response, '235')) {
             throw new RuntimeException('SMTP authentication failed: ' . $response);
         }
     }
@@ -186,13 +191,13 @@ final class SmtpTransport implements TransportInterface
     {
         $from = $message->getFromAddress();
 
-        if (!$from) {
+        if (! $from) {
             throw new RuntimeException('Message has no from address.');
         }
 
         $response = $this->sendCommand('MAIL FROM:<' . $from . '>');
 
-        if (!str_starts_with($response, '250')) {
+        if (! str_starts_with($response, '250')) {
             throw new RuntimeException('SMTP MAIL FROM rejected: ' . $response);
         }
     }
@@ -205,13 +210,13 @@ final class SmtpTransport implements TransportInterface
         $recipients = array_merge(
             array_keys($message->getTo()),
             array_keys($message->getCc()),
-            array_keys($message->getBcc())
+            array_keys($message->getBcc()),
         );
 
         foreach ($recipients as $recipient) {
             $response = $this->sendCommand('RCPT TO:<' . $recipient . '>');
 
-            if (!str_starts_with($response, '250') && !str_starts_with($response, '251')) {
+            if (! str_starts_with($response, '250') && ! str_starts_with($response, '251')) {
                 throw new RuntimeException('SMTP RCPT TO rejected for ' . $recipient . ': ' . $response);
             }
         }
@@ -224,7 +229,7 @@ final class SmtpTransport implements TransportInterface
     {
         $response = $this->sendCommand('DATA');
 
-        if (!str_starts_with($response, '354')) {
+        if (! str_starts_with($response, '354')) {
             throw new RuntimeException('SMTP DATA rejected: ' . $response);
         }
 
@@ -237,7 +242,7 @@ final class SmtpTransport implements TransportInterface
 
         $response = $this->getResponse();
 
-        if (!str_starts_with($response, '250')) {
+        if (! str_starts_with($response, '250')) {
             throw new RuntimeException('SMTP message rejected: ' . $response);
         }
     }
@@ -267,7 +272,7 @@ final class SmtpTransport implements TransportInterface
         $headers[] = 'To: ' . implode(', ', $toList);
 
         // CC
-        if (!empty($message->getCc())) {
+        if (! empty($message->getCc())) {
             $ccList = [];
             foreach ($message->getCc() as $address => $name) {
                 $ccList[] = $name
@@ -278,7 +283,7 @@ final class SmtpTransport implements TransportInterface
         }
 
         // Reply-To
-        if (!empty($message->getReplyTo())) {
+        if (! empty($message->getReplyTo())) {
             $replyToList = [];
             foreach ($message->getReplyTo() as $address => $name) {
                 $replyToList[] = $name
@@ -316,7 +321,7 @@ final class SmtpTransport implements TransportInterface
         $text = $message->getText();
         $attachments = $message->getAttachments();
 
-        if (!empty($attachments)) {
+        if (! empty($attachments)) {
             // Multipart with attachments
             $headers[] = sprintf('Content-Type: multipart/mixed; boundary="%s"', $boundary);
             $body = $this->buildMultipartBody($message, $boundary);
@@ -375,7 +380,7 @@ final class SmtpTransport implements TransportInterface
             $name = $attachment['name'] ?? basename($path);
             $mime = $attachment['mime'] ?? mime_content_type($path) ?: 'application/octet-stream';
 
-            if (!file_exists($path)) {
+            if (! file_exists($path)) {
                 continue;
             }
 
@@ -429,6 +434,7 @@ final class SmtpTransport implements TransportInterface
     private function sendCommand(string $command): string
     {
         fwrite($this->socket, $command . "\r\n");
+
         return $this->getResponse();
     }
 

@@ -26,11 +26,13 @@ final class AuthorizationService
      *
      * @param class-string $resourceClass The resource class this policy applies to
      * @param PolicyInterface $policy The policy instance
+     *
      * @return $this
      */
     public function registerPolicy(string $resourceClass, PolicyInterface $policy): self
     {
         $this->policies[$resourceClass] = $policy;
+
         return $this;
     }
 
@@ -38,11 +40,13 @@ final class AuthorizationService
      * Set the user resolver callback.
      *
      * @param callable(): ?AuthenticatableInterface $resolver
+     *
      * @return $this
      */
     public function setUserResolver(callable $resolver): self
     {
         $this->userResolver = $resolver;
+
         return $this;
     }
 
@@ -52,11 +56,13 @@ final class AuthorizationService
      * Super admins bypass all authorization checks.
      *
      * @param callable(AuthenticatableInterface): bool $checker
+     *
      * @return $this
      */
     public function setSuperAdminChecker(callable $checker): self
     {
         $this->superAdminChecker = $checker;
+
         return $this;
     }
 
@@ -80,7 +86,7 @@ final class AuthorizationService
      */
     public function hasPermission(string|PermissionInterface $permission, ?AuthenticatableInterface $user = null): bool
     {
-        $user = $user ?? $this->getUser();
+        $user ??= $this->getUser();
 
         if ($user === null) {
             return false;
@@ -110,7 +116,7 @@ final class AuthorizationService
      */
     public function hasRole(string|RoleInterface $role, ?AuthenticatableInterface $user = null): bool
     {
-        $user = $user ?? $this->getUser();
+        $user ??= $this->getUser();
 
         if ($user === null) {
             return false;
@@ -156,7 +162,7 @@ final class AuthorizationService
     public function hasAllPermissions(array $permissions, ?AuthenticatableInterface $user = null): bool
     {
         foreach ($permissions as $permission) {
-            if (!$this->hasPermission($permission, $user)) {
+            if (! $this->hasPermission($permission, $user)) {
                 return false;
             }
         }
@@ -189,7 +195,7 @@ final class AuthorizationService
      */
     public function can(string $ability, mixed $resource = null, ?AuthenticatableInterface $user = null): bool
     {
-        $user = $user ?? $this->getUser();
+        $user ??= $this->getUser();
 
         if ($user === null) {
             return false;
@@ -214,7 +220,7 @@ final class AuthorizationService
         }
 
         // Call the ability method on the policy
-        if (!method_exists($policy, $ability)) {
+        if (! method_exists($policy, $ability)) {
             return false;
         }
 
@@ -228,7 +234,7 @@ final class AuthorizationService
      */
     public function cannot(string $ability, mixed $resource = null, ?AuthenticatableInterface $user = null): bool
     {
-        return !$this->can($ability, $resource, $user);
+        return ! $this->can($ability, $resource, $user);
     }
 
     /**
@@ -250,10 +256,11 @@ final class AuthorizationService
      */
     public function requirePermission(string|PermissionInterface $permission, ?AuthenticatableInterface $user = null): void
     {
-        if (!$this->hasPermission($permission, $user)) {
+        if (! $this->hasPermission($permission, $user)) {
             $permissionName = $permission instanceof PermissionInterface
                 ? $permission->getName()
                 : $permission;
+
             throw AuthorizationException::missingPermission($permissionName);
         }
     }
@@ -265,10 +272,11 @@ final class AuthorizationService
      */
     public function requireRole(string|RoleInterface $role, ?AuthenticatableInterface $user = null): void
     {
-        if (!$this->hasRole($role, $user)) {
+        if (! $this->hasRole($role, $user)) {
             $roleName = $role instanceof RoleInterface
                 ? $role->getName()
                 : $role;
+
             throw AuthorizationException::missingRole($roleName);
         }
     }
@@ -284,7 +292,7 @@ final class AuthorizationService
 
         $class = is_object($resource) ? get_class($resource) : $resource;
 
-        if (!is_string($class)) {
+        if (! is_string($class)) {
             return null;
         }
 

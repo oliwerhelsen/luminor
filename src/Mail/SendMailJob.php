@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Mail;
 
 use Luminor\DDD\Queue\Job;
+use RuntimeException;
 
 /**
  * Queue job for sending mail asynchronously.
@@ -46,8 +47,6 @@ final class SendMailJob extends Job
 
     /**
      * Get the mailer instance.
-     *
-     * @return Mailer
      */
     private function getMailer(): Mailer
     {
@@ -56,7 +55,7 @@ final class SendMailJob extends Job
             return app(Mailer::class);
         }
 
-        throw new \RuntimeException('Mailer not available. Ensure the container is configured.');
+        throw new RuntimeException('Mailer not available. Ensure the container is configured.');
     }
 
     /**

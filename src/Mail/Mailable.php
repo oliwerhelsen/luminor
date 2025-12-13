@@ -13,9 +13,13 @@ namespace Luminor\DDD\Mail;
 abstract class Mailable
 {
     protected ?string $fromAddress = null;
+
     protected ?string $fromName = null;
+
     protected ?string $replyToAddress = null;
+
     protected ?string $replyToName = null;
+
     protected string $subject = '';
 
     /** @var array<string, string> */
@@ -39,8 +43,6 @@ abstract class Mailable
      * Build the message.
      *
      * Override this method to configure the mailable.
-     *
-     * @return Message
      */
     abstract public function build(): Message;
 
@@ -51,6 +53,7 @@ abstract class Mailable
     {
         $this->fromAddress = $address;
         $this->fromName = $name;
+
         return $this;
     }
 
@@ -61,6 +64,7 @@ abstract class Mailable
     {
         $this->replyToAddress = $address;
         $this->replyToName = $name;
+
         return $this;
     }
 
@@ -70,6 +74,7 @@ abstract class Mailable
     public function subject(string $subject): static
     {
         $this->subject = $subject;
+
         return $this;
     }
 
@@ -79,6 +84,7 @@ abstract class Mailable
     public function to(string $address, ?string $name = null): static
     {
         $this->to[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -88,6 +94,7 @@ abstract class Mailable
     public function cc(string $address, ?string $name = null): static
     {
         $this->cc[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -97,6 +104,7 @@ abstract class Mailable
     public function bcc(string $address, ?string $name = null): static
     {
         $this->bcc[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -110,6 +118,7 @@ abstract class Mailable
             'name' => $name,
             'mime' => $mime,
         ];
+
         return $this;
     }
 
@@ -119,6 +128,7 @@ abstract class Mailable
     public function header(string $name, string $value): static
     {
         $this->headers[$name] = $value;
+
         return $this;
     }
 
@@ -128,6 +138,7 @@ abstract class Mailable
     public function priority(int $priority): static
     {
         $this->priority = max(1, min(5, $priority));
+
         return $this;
     }
 
@@ -166,7 +177,7 @@ abstract class Mailable
             $message->attach(
                 $attachment['path'],
                 $attachment['name'],
-                $attachment['mime']
+                $attachment['mime'],
             );
         }
 
@@ -188,7 +199,6 @@ abstract class Mailable
      *
      * @param string $template Template path or content
      * @param array<string, mixed> $data Data to pass to the template
-     * @return string
      */
     protected function render(string $template, array $data = []): string
     {
@@ -271,7 +281,7 @@ abstract class Mailable
             $mailable->attach(
                 $attachment['path'],
                 $attachment['name'] ?? null,
-                $attachment['mime'] ?? null
+                $attachment['mime'] ?? null,
             );
         }
 

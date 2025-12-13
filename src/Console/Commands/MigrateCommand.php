@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Console\Commands;
 
+use Exception;
 use Luminor\DDD\Console\Input;
 use Luminor\DDD\Console\Output;
-use Luminor\DDD\Database\Migrations\Migrator;
-use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
-use Luminor\DDD\Database\Schema\Schema;
 use Luminor\DDD\Database\Connection;
+use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
+use Luminor\DDD\Database\Migrations\Migrator;
+use Luminor\DDD\Database\Schema\Schema;
 use PDO;
+use RuntimeException;
 
 /**
  * Migrate Command
@@ -38,7 +40,7 @@ final class MigrateCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    public function execute(Input $input, Output $output): int
     {
         $output->info('Running migrations...');
 
@@ -48,6 +50,7 @@ final class MigrateCommand extends AbstractCommand
 
             if (empty($executed)) {
                 $output->info('Nothing to migrate.');
+
                 return 0;
             }
 
@@ -58,8 +61,9 @@ final class MigrateCommand extends AbstractCommand
             }
 
             return 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->error('Migration failed: ' . $e->getMessage());
+
             return 1;
         }
     }
@@ -100,7 +104,7 @@ final class MigrateCommand extends AbstractCommand
             'mysql' => "mysql:host={$host};port={$port};dbname={$database}",
             'pgsql' => "pgsql:host={$host};port={$port};dbname={$database}",
             'sqlite' => "sqlite:{$database}",
-            default => throw new \RuntimeException("Unsupported database driver: {$driver}"),
+            default => throw new RuntimeException("Unsupported database driver: {$driver}"),
         };
 
         return Connection::create($dsn, $username, $password, [

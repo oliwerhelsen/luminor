@@ -22,13 +22,11 @@ abstract class EntityFactory
     /** @var array<string, mixed> */
     protected array $defaultAttributes = [];
 
-    /** @var int */
+    /**  */
     private static int $sequence = 0;
 
     /**
      * Create a new factory instance.
-     *
-     * @return static
      */
     public static function new(): static
     {
@@ -53,6 +51,7 @@ abstract class EntityFactory
      * Create the entity instance from attributes.
      *
      * @param array<string, mixed> $attributes
+     *
      * @return T
      */
     abstract protected function make(array $attributes): Entity;
@@ -65,13 +64,12 @@ abstract class EntityFactory
 
     /**
      * Set a single attribute.
-     *
-     * @return static
      */
     public function with(string $key, mixed $value): static
     {
         $clone = clone $this;
         $clone->attributes[$key] = $value;
+
         return $clone;
     }
 
@@ -79,19 +77,17 @@ abstract class EntityFactory
      * Set multiple attributes.
      *
      * @param array<string, mixed> $attributes
-     * @return static
      */
     public function withAttributes(array $attributes): static
     {
         $clone = clone $this;
         $clone->attributes = array_merge($clone->attributes, $attributes);
+
         return $clone;
     }
 
     /**
      * Set the ID attribute.
-     *
-     * @return static
      */
     public function withId(string $id): static
     {
@@ -106,13 +102,13 @@ abstract class EntityFactory
     public function create(): Entity
     {
         $attributes = array_merge($this->defaultAttributes, $this->attributes);
+
         return $this->make($attributes);
     }
 
     /**
      * Create multiple entities.
      *
-     * @param int $count
      * @return array<T>
      */
     public function createMany(int $count): array
@@ -121,6 +117,7 @@ abstract class EntityFactory
         for ($i = 0; $i < $count; $i++) {
             $entities[] = $this->create();
         }
+
         return $entities;
     }
 
@@ -128,7 +125,6 @@ abstract class EntityFactory
      * Create entities using a state modifier.
      *
      * @param callable(static): static $callback
-     * @return static
      */
     public function state(callable $callback): static
     {
@@ -193,5 +189,6 @@ abstract class EntityFactory
 function class_basename(string $class): string
 {
     $parts = explode('\\', $class);
+
     return end($parts);
 }

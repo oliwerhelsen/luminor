@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Multitenancy;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Multitenancy\TenantAware;
 use Luminor\DDD\Multitenancy\TenantContext;
 use Luminor\DDD\Multitenancy\TenantInterface;
 use Luminor\DDD\Multitenancy\TenantNotResolvedException;
+use PHPUnit\Framework\TestCase;
 
 final class TenantAwareTest extends TestCase
 {
@@ -111,7 +111,7 @@ final class TenantAwareTest extends TestCase
 
     private function createTenant(string $id): TenantInterface
     {
-        return new class($id) implements TenantInterface {
+        return new class ($id) implements TenantInterface {
             public function __construct(private readonly string $id)
             {
             }

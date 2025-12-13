@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Auth;
 
-use PHPUnit\Framework\TestCase;
+use Attribute;
 use Luminor\DDD\Auth\Attributes\RequireAuth;
 use Luminor\DDD\Auth\Attributes\RequirePermission;
 use Luminor\DDD\Auth\Attributes\RequireRole;
+use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 final class AttributesTest extends TestCase
 {
@@ -94,25 +96,25 @@ final class AttributesTest extends TestCase
 
     public function testRequirePermissionIsRepeatable(): void
     {
-        $reflection = new \ReflectionClass(RequirePermission::class);
+        $reflection = new ReflectionClass(RequirePermission::class);
         $attributes = $reflection->getAttributes();
 
         $this->assertCount(1, $attributes);
-        $this->assertSame(\Attribute::class, $attributes[0]->getName());
+        $this->assertSame(Attribute::class, $attributes[0]->getName());
 
         $attrInstance = $attributes[0]->newInstance();
-        $this->assertTrue(($attrInstance->flags & \Attribute::IS_REPEATABLE) !== 0);
+        $this->assertTrue(($attrInstance->flags & Attribute::IS_REPEATABLE) !== 0);
     }
 
     public function testRequireRoleIsRepeatable(): void
     {
-        $reflection = new \ReflectionClass(RequireRole::class);
+        $reflection = new ReflectionClass(RequireRole::class);
         $attributes = $reflection->getAttributes();
 
         $this->assertCount(1, $attributes);
-        $this->assertSame(\Attribute::class, $attributes[0]->getName());
+        $this->assertSame(Attribute::class, $attributes[0]->getName());
 
         $attrInstance = $attributes[0]->newInstance();
-        $this->assertTrue(($attrInstance->flags & \Attribute::IS_REPEATABLE) !== 0);
+        $this->assertTrue(($attrInstance->flags & Attribute::IS_REPEATABLE) !== 0);
     }
 }

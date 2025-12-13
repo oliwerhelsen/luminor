@@ -21,7 +21,7 @@ final class SubdomainStrategy implements TenantResolverInterface
      */
     public function __construct(
         private readonly string $baseDomain,
-        private readonly array $excludedSubdomains = ['www', 'api', 'admin', 'mail']
+        private readonly array $excludedSubdomains = ['www', 'api', 'admin', 'mail'],
     ) {
     }
 
@@ -39,7 +39,7 @@ final class SubdomainStrategy implements TenantResolverInterface
         // Check if the host ends with the base domain
         $baseDomainWithDot = '.' . ltrim($this->baseDomain, '.');
 
-        if (!str_ends_with($host, $baseDomainWithDot) && $host !== $this->baseDomain) {
+        if (! str_ends_with($host, $baseDomainWithDot) && $host !== $this->baseDomain) {
             return null;
         }
 

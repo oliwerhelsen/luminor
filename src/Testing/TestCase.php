@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Testing;
 
-use PHPUnit\Framework\TestCase as PHPUnitTestCase;
 use Luminor\DDD\Container\Container;
 use Luminor\DDD\Container\ContainerInterface;
+use PHPUnit\Framework\TestCase as PHPUnitTestCase;
+use RuntimeException;
 
 /**
  * Base test case for framework testing.
@@ -45,6 +46,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $container = new Container();
         Container::setInstance($container);
+
         return $container;
     }
 
@@ -67,7 +69,7 @@ abstract class TestCase extends PHPUnitTestCase
     protected function getContainer(): ContainerInterface
     {
         if ($this->container === null) {
-            throw new \RuntimeException('Container not initialized. Make sure setUp() was called.');
+            throw new RuntimeException('Container not initialized. Make sure setUp() was called.');
         }
 
         return $this->container;
@@ -77,7 +79,9 @@ abstract class TestCase extends PHPUnitTestCase
      * Resolve a service from the container.
      *
      * @template T of object
+     *
      * @param class-string<T> $abstract
+     *
      * @return T
      */
     protected function resolve(string $abstract): object
@@ -89,6 +93,7 @@ abstract class TestCase extends PHPUnitTestCase
      * Bind a mock to the container.
      *
      * @template T of object
+     *
      * @param class-string<T> $abstract
      * @param T $mock
      */
@@ -130,7 +135,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $this->assertTrue(
             $this->getCommandBus()->hasDispatched($commandClass),
-            sprintf('Failed asserting that command [%s] was dispatched.', $commandClass)
+            sprintf('Failed asserting that command [%s] was dispatched.', $commandClass),
         );
     }
 
@@ -143,7 +148,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $this->assertFalse(
             $this->getCommandBus()->hasDispatched($commandClass),
-            sprintf('Failed asserting that command [%s] was not dispatched.', $commandClass)
+            sprintf('Failed asserting that command [%s] was not dispatched.', $commandClass),
         );
     }
 
@@ -156,7 +161,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $this->assertTrue(
             $this->getQueryBus()->hasDispatched($queryClass),
-            sprintf('Failed asserting that query [%s] was dispatched.', $queryClass)
+            sprintf('Failed asserting that query [%s] was dispatched.', $queryClass),
         );
     }
 
@@ -169,7 +174,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $this->assertTrue(
             $this->getEventDispatcher()->hasDispatched($eventClass),
-            sprintf('Failed asserting that event [%s] was dispatched.', $eventClass)
+            sprintf('Failed asserting that event [%s] was dispatched.', $eventClass),
         );
     }
 
@@ -182,7 +187,7 @@ abstract class TestCase extends PHPUnitTestCase
     {
         $this->assertFalse(
             $this->getEventDispatcher()->hasDispatched($eventClass),
-            sprintf('Failed asserting that event [%s] was not dispatched.', $eventClass)
+            sprintf('Failed asserting that event [%s] was not dispatched.', $eventClass),
         );
     }
 
@@ -195,7 +200,7 @@ abstract class TestCase extends PHPUnitTestCase
         $this->assertSame(
             $times,
             $count,
-            sprintf('Expected event [%s] to be dispatched %d times, but was dispatched %d times.', $eventClass, $times, $count)
+            sprintf('Expected event [%s] to be dispatched %d times, but was dispatched %d times.', $eventClass, $times, $count),
         );
     }
 }

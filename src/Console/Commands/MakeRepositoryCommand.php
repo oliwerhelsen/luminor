@@ -118,7 +118,7 @@ final class MakeRepositoryCommand extends AbstractMakeCommand
                     $entityClass,
                     'InMemory' . $entityClass . 'Repository',
                     'repository.stub',
-                    'src/Infrastructure/Persistence/InMemory'
+                    'src/Infrastructure/Persistence/InMemory',
                 );
             }
 
@@ -129,7 +129,7 @@ final class MakeRepositoryCommand extends AbstractMakeCommand
                     $entityClass,
                     $entityClass . 'Repository',
                     'repository.stub',
-                    'src/Infrastructure/Persistence'
+                    'src/Infrastructure/Persistence',
                 );
             }
         }
@@ -146,14 +146,15 @@ final class MakeRepositoryCommand extends AbstractMakeCommand
         string $entityClass,
         string $implementationName,
         string $stubName,
-        string $directory
+        string $directory,
     ): void {
         $basePath = $this->getBasePath();
         $fullDirectory = $basePath . DIRECTORY_SEPARATOR . $directory;
         $filePath = $fullDirectory . DIRECTORY_SEPARATOR . $implementationName . '.php';
 
-        if (file_exists($filePath) && !$input->hasOption('force')) {
+        if (file_exists($filePath) && ! $input->hasOption('force')) {
             $output->warning(sprintf('File already exists: %s', $filePath));
+
             return;
         }
 
@@ -161,6 +162,7 @@ final class MakeRepositoryCommand extends AbstractMakeCommand
         $stubContent = $this->loadStubByName($stubName);
         if ($stubContent === null) {
             $output->warning(sprintf('Stub file not found: %s', $stubName));
+
             return;
         }
 
@@ -189,12 +191,12 @@ final class MakeRepositoryCommand extends AbstractMakeCommand
         $content = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            $stubContent
+            $stubContent,
         );
 
         // Ensure directory exists
-        if (!is_dir($fullDirectory)) {
-            mkdir($fullDirectory, 0755, true);
+        if (! is_dir($fullDirectory)) {
+            mkdir($fullDirectory, 0o755, true);
         }
 
         file_put_contents($filePath, $content);
@@ -215,6 +217,7 @@ final class MakeRepositoryCommand extends AbstractMakeCommand
         foreach ($stubPaths as $path) {
             if (file_exists($path)) {
                 $content = file_get_contents($path);
+
                 return $content !== false ? $content : null;
             }
         }

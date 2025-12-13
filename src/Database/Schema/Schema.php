@@ -4,8 +4,9 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Database\Schema;
 
-use Luminor\DDD\Database\ConnectionInterface;
 use Closure;
+use Luminor\DDD\Database\ConnectionInterface;
+use RuntimeException;
 
 /**
  * Schema Builder
@@ -15,6 +16,7 @@ use Closure;
 final class Schema
 {
     private ConnectionInterface $connection;
+
     private SchemaGrammar $grammar;
 
     public function __construct(ConnectionInterface $connection)
@@ -51,6 +53,7 @@ final class Schema
     {
         $sql = $this->grammar->compileTableExists($table);
         $stmt = $this->connection->query($sql);
+
         return $stmt->rowCount() > 0;
     }
 
@@ -80,7 +83,7 @@ final class Schema
             'mysql' => new MySqlGrammar(),
             'pgsql' => new PostgresGrammar(),
             'sqlite' => new SqliteGrammar(),
-            default => throw new \RuntimeException("Unsupported database driver: {$driver}"),
+            default => throw new RuntimeException("Unsupported database driver: {$driver}"),
         };
     }
 }

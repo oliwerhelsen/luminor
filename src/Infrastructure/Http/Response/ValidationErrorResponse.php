@@ -17,7 +17,7 @@ final class ValidationErrorResponse
      */
     public function __construct(
         private readonly array $errors,
-        private readonly string $message = 'Validation failed'
+        private readonly string $message = 'Validation failed',
     ) {
     }
 
@@ -28,7 +28,7 @@ final class ValidationErrorResponse
     {
         return new self(
             $result->getErrors(),
-            $result->getFirstError() ?? 'Validation failed'
+            $result->getFirstError() ?? 'Validation failed',
         );
     }
 

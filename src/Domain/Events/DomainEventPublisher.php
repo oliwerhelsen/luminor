@@ -21,7 +21,7 @@ final class DomainEventPublisher
 
     public function __construct(
         private readonly EventDispatcherInterface $dispatcher,
-        private readonly ?EventStoreInterface $eventStore = null
+        private readonly ?EventStoreInterface $eventStore = null,
     ) {
     }
 

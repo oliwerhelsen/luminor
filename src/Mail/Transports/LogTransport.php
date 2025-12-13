@@ -17,6 +17,7 @@ use Psr\Log\LoggerInterface;
 final class LogTransport implements TransportInterface
 {
     private ?LoggerInterface $logger;
+
     private string $channel;
 
     /**
@@ -44,7 +45,7 @@ final class LogTransport implements TransportInterface
         $logMessage = sprintf(
             'Email would be sent: To: %s, Subject: %s',
             implode(', ', array_keys($message->getTo())),
-            $message->getSubject()
+            $message->getSubject(),
         );
 
         $context = [

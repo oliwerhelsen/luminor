@@ -10,12 +10,11 @@ namespace Luminor\DDD\Domain\Repository\Filter;
 final class InFilter extends Filter
 {
     /**
-     * @param string $field
      * @param array<int, mixed> $values
      */
     public function __construct(
         private readonly string $field,
-        private readonly array $values
+        private readonly array $values,
     ) {
     }
 

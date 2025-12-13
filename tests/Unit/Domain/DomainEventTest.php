@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Luminor\DDD\Tests\Unit\Domain;
 
 use DateTimeImmutable;
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use PHPUnit\Framework\TestCase;
 
 final class DomainEventTest extends TestCase
 {
@@ -83,7 +83,7 @@ final class UserCreated extends DomainEvent
 {
     public function __construct(
         string $aggregateId,
-        private readonly string $email
+        private readonly string $email,
     ) {
         parent::__construct($aggregateId);
     }

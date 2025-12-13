@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\Entity;
+use PHPUnit\Framework\TestCase;
 
 final class EntityTest extends TestCase
 {

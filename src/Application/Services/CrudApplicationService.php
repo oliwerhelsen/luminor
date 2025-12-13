@@ -31,14 +31,13 @@ abstract class CrudApplicationService extends ApplicationService
      */
     public function __construct(
         protected readonly RepositoryInterface $repository,
-        protected readonly Mapper $mapper
+        protected readonly Mapper $mapper,
     ) {
     }
 
     /**
      * Get an entity by its ID.
      *
-     * @param mixed $id
      * @return TDto|null
      */
     public function getById(mixed $id): ?DataTransferObject
@@ -55,12 +54,12 @@ abstract class CrudApplicationService extends ApplicationService
     /**
      * Get an entity by its ID or throw an exception.
      *
-     * @param mixed $id
      * @return TDto
      */
     public function getByIdOrFail(mixed $id): DataTransferObject
     {
         $entity = $this->repository->findByIdOrFail($id);
+
         return $this->mapper->toDto($entity);
     }
 
@@ -72,6 +71,7 @@ abstract class CrudApplicationService extends ApplicationService
     public function getAll(): array
     {
         $entities = $this->repository->findAll();
+
         return $this->mapper->toDtoList($entities);
     }
 
@@ -83,6 +83,7 @@ abstract class CrudApplicationService extends ApplicationService
     public function getByCriteria(Criteria $criteria): array
     {
         $entities = $this->repository->findByCriteria($criteria);
+
         return $this->mapper->toDtoList($entities);
     }
 
@@ -100,6 +101,7 @@ abstract class CrudApplicationService extends ApplicationService
         $totalCount = $this->repository->count();
 
         $pagedEntities = PagedResult::fromItems($entities, $totalCount, $page, $perPage);
+
         return $this->mapper->toPagedDto($pagedEntities);
     }
 
@@ -111,7 +113,7 @@ abstract class CrudApplicationService extends ApplicationService
     public function getPaginatedByCriteria(
         Criteria $criteria,
         int $page = 1,
-        int $perPage = Pagination::DEFAULT_PER_PAGE
+        int $perPage = Pagination::DEFAULT_PER_PAGE,
     ): PagedResult {
         $pagination = Pagination::create($page, $perPage);
         $paginatedCriteria = $criteria->paginate($pagination);
@@ -120,6 +122,7 @@ abstract class CrudApplicationService extends ApplicationService
         $totalCount = $this->repository->countByCriteria($criteria);
 
         $pagedEntities = PagedResult::fromItems($entities, $totalCount, $page, $perPage);
+
         return $this->mapper->toPagedDto($pagedEntities);
     }
 
@@ -129,6 +132,7 @@ abstract class CrudApplicationService extends ApplicationService
      * Override this method to implement creation logic.
      *
      * @param TCreateDto $dto
+     *
      * @return TDto
      */
     public function create(DataTransferObject $dto): DataTransferObject
@@ -147,8 +151,8 @@ abstract class CrudApplicationService extends ApplicationService
      *
      * Override this method to implement update logic.
      *
-     * @param mixed $id
      * @param TUpdateDto $dto
+     *
      * @return TDto
      */
     public function update(mixed $id, DataTransferObject $dto): DataTransferObject
@@ -165,8 +169,6 @@ abstract class CrudApplicationService extends ApplicationService
 
     /**
      * Delete an entity by its ID.
-     *
-     * @param mixed $id
      */
     public function delete(mixed $id): void
     {
@@ -180,8 +182,6 @@ abstract class CrudApplicationService extends ApplicationService
 
     /**
      * Check if an entity exists.
-     *
-     * @param mixed $id
      */
     public function exists(mixed $id): bool
     {
@@ -210,6 +210,7 @@ abstract class CrudApplicationService extends ApplicationService
      * Override this method to implement entity creation logic.
      *
      * @param TCreateDto $dto
+     *
      * @return TEntity
      */
     abstract protected function createEntity(DataTransferObject $dto): AggregateRoot;
@@ -221,6 +222,7 @@ abstract class CrudApplicationService extends ApplicationService
      *
      * @param TEntity $entity
      * @param TUpdateDto $dto
+     *
      * @return TEntity
      */
     abstract protected function updateEntity(AggregateRoot $entity, DataTransferObject $dto): AggregateRoot;

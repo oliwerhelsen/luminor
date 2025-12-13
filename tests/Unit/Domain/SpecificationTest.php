@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\Specification;
+use PHPUnit\Framework\TestCase;
 
 final class SpecificationTest extends TestCase
 {
@@ -98,7 +98,7 @@ final class Person
 {
     public function __construct(
         public readonly string $name,
-        public readonly int $age
+        public readonly int $age,
     ) {
     }
 }

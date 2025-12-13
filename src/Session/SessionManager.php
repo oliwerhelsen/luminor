@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Session;
 
-use Luminor\DDD\Session\Drivers\FileSessionDriver;
+use Luminor\DDD\Database\ConnectionInterface;
 use Luminor\DDD\Session\Drivers\ArraySessionDriver;
 use Luminor\DDD\Session\Drivers\DatabaseSessionDriver;
-use Luminor\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Session\Drivers\FileSessionDriver;
 
 /**
  * Session Manager
@@ -17,13 +17,15 @@ use Luminor\DDD\Database\ConnectionInterface;
 final class SessionManager
 {
     private Session $session;
+
     /** @var array<string, SessionDriver> */
     private array $drivers = [];
+
     private string $defaultDriver = 'file';
 
     public function __construct(?SessionDriver $driver = null, string $sessionName = 'luminor_session')
     {
-        $driver = $driver ?? new FileSessionDriver(sys_get_temp_dir() . '/luminor_sessions');
+        $driver ??= new FileSessionDriver(sys_get_temp_dir() . '/luminor_sessions');
         $this->session = new Session($driver, $sessionName);
     }
 
@@ -49,7 +51,7 @@ final class SessionManager
     public static function database(
         ConnectionInterface $connection,
         string $table = 'sessions',
-        string $sessionName = 'luminor_session'
+        string $sessionName = 'luminor_session',
     ): self {
         return new self(new DatabaseSessionDriver($connection, $table), $sessionName);
     }

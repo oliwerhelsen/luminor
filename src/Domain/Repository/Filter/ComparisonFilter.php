@@ -12,8 +12,11 @@ use InvalidArgumentException;
 final class ComparisonFilter extends Filter
 {
     public const GREATER_THAN = 'GT';
+
     public const GREATER_THAN_OR_EQUAL = 'GTE';
+
     public const LESS_THAN = 'LT';
+
     public const LESS_THAN_OR_EQUAL = 'LTE';
 
     private const VALID_OPERATORS = [
@@ -26,11 +29,11 @@ final class ComparisonFilter extends Filter
     public function __construct(
         private readonly string $field,
         private readonly string $operator,
-        private readonly mixed $value
+        private readonly mixed $value,
     ) {
-        if (!in_array($operator, self::VALID_OPERATORS, true)) {
+        if (! in_array($operator, self::VALID_OPERATORS, true)) {
             throw new InvalidArgumentException(
-                sprintf('Invalid operator "%s". Valid operators: %s', $operator, implode(', ', self::VALID_OPERATORS))
+                sprintf('Invalid operator "%s". Valid operators: %s', $operator, implode(', ', self::VALID_OPERATORS)),
             );
         }
     }

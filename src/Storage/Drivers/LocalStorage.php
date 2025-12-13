@@ -14,6 +14,7 @@ use Luminor\DDD\Storage\StorageInterface;
 final class LocalStorage implements StorageInterface
 {
     private string $root;
+
     private string $urlBase;
 
     public function __construct(string $root, string $urlBase = '/storage')
@@ -21,8 +22,8 @@ final class LocalStorage implements StorageInterface
         $this->root = rtrim($root, '/');
         $this->urlBase = rtrim($urlBase, '/');
 
-        if (!is_dir($this->root)) {
-            mkdir($this->root, 0755, true);
+        if (! is_dir($this->root)) {
+            mkdir($this->root, 0o755, true);
         }
     }
 
@@ -34,8 +35,8 @@ final class LocalStorage implements StorageInterface
         $fullPath = $this->getFullPath($path);
         $directory = dirname($fullPath);
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         if (is_resource($contents)) {
@@ -46,6 +47,7 @@ final class LocalStorage implements StorageInterface
 
             stream_copy_to_stream($contents, $file);
             fclose($file);
+
             return true;
         }
 
@@ -59,7 +61,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($path);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             return false;
         }
 
@@ -81,7 +83,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($path);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             return false;
         }
 
@@ -96,13 +98,13 @@ final class LocalStorage implements StorageInterface
         $fromPath = $this->getFullPath($from);
         $toPath = $this->getFullPath($to);
 
-        if (!file_exists($fromPath)) {
+        if (! file_exists($fromPath)) {
             return false;
         }
 
         $directory = dirname($toPath);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         return copy($fromPath, $toPath);
@@ -116,13 +118,13 @@ final class LocalStorage implements StorageInterface
         $fromPath = $this->getFullPath($from);
         $toPath = $this->getFullPath($to);
 
-        if (!file_exists($fromPath)) {
+        if (! file_exists($fromPath)) {
             return false;
         }
 
         $directory = dirname($toPath);
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         return rename($fromPath, $toPath);
@@ -135,7 +137,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($path);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             return false;
         }
 
@@ -149,7 +151,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($path);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             return false;
         }
 
@@ -163,7 +165,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($directory);
 
-        if (!is_dir($fullPath)) {
+        if (! is_dir($fullPath)) {
             return [];
         }
 
@@ -196,7 +198,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($directory);
 
-        if (!is_dir($fullPath)) {
+        if (! is_dir($fullPath)) {
             return [];
         }
 
@@ -233,7 +235,7 @@ final class LocalStorage implements StorageInterface
             return true;
         }
 
-        return mkdir($fullPath, 0755, true);
+        return mkdir($fullPath, 0o755, true);
     }
 
     /**
@@ -243,7 +245,7 @@ final class LocalStorage implements StorageInterface
     {
         $fullPath = $this->getFullPath($directory);
 
-        if (!is_dir($fullPath)) {
+        if (! is_dir($fullPath)) {
             return false;
         }
 

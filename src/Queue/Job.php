@@ -4,6 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Queue;
 
+use ReflectionClass;
+use ReflectionProperty;
+use Throwable;
+
 /**
  * Abstract base class for queueable jobs.
  *
@@ -47,7 +51,7 @@ abstract class Job implements JobInterface
     /**
      * @inheritDoc
      */
-    public function failed(\Throwable $exception): void
+    public function failed(Throwable $exception): void
     {
         // Override in subclass to handle failure
     }
@@ -142,12 +146,12 @@ abstract class Job implements JobInterface
     {
         // Get all public properties
         $data = [];
-        $reflection = new \ReflectionClass($this);
+        $reflection = new ReflectionClass($this);
         $excludeProperties = ['tries', 'backoff', 'queue', 'timeout', 'unique'];
 
-        foreach ($reflection->getProperties(\ReflectionProperty::IS_PUBLIC) as $property) {
+        foreach ($reflection->getProperties(ReflectionProperty::IS_PUBLIC) as $property) {
             $name = $property->getName();
-            if (!in_array($name, $excludeProperties, true)) {
+            if (! in_array($name, $excludeProperties, true)) {
                 $data[$name] = $property->getValue($this);
             }
         }
@@ -161,16 +165,15 @@ abstract class Job implements JobInterface
      * Override this method to restore job properties.
      *
      * @param array<string, mixed> $data
-     * @return static
      */
     protected static function unserialize(array $data): static
     {
         /** @var static $job */
-        $job = (new \ReflectionClass(static::class))->newInstanceWithoutConstructor();
+        $job = (new ReflectionClass(static::class))->newInstanceWithoutConstructor();
 
         foreach ($data as $key => $value) {
             if (property_exists($job, $key)) {
-                $reflection = new \ReflectionProperty($job, $key);
+                $reflection = new ReflectionProperty($job, $key);
                 $reflection->setValue($job, $value);
             }
         }
@@ -184,6 +187,7 @@ abstract class Job implements JobInterface
     public function setTries(int $tries): static
     {
         $this->tries = $tries;
+
         return $this;
     }
 
@@ -195,6 +199,7 @@ abstract class Job implements JobInterface
     public function setBackoff(int|array $backoff): static
     {
         $this->backoff = $backoff;
+
         return $this;
     }
 
@@ -204,6 +209,7 @@ abstract class Job implements JobInterface
     public function onQueue(?string $queue): static
     {
         $this->queue = $queue;
+
         return $this;
     }
 
@@ -213,6 +219,7 @@ abstract class Job implements JobInterface
     public function setTimeout(?int $timeout): static
     {
         $this->timeout = $timeout;
+
         return $this;
     }
 
@@ -222,6 +229,7 @@ abstract class Job implements JobInterface
     public function unique(bool $unique = true): static
     {
         $this->unique = $unique;
+
         return $this;
     }
 }

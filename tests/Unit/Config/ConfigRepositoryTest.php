@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Config;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Config\ConfigRepository;
+use PHPUnit\Framework\TestCase;
 
 final class ConfigRepositoryTest extends TestCase
 {

@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use PHPUnit\Framework\TestCase;
 
 final class CorsMiddlewareTest extends TestCase
 {

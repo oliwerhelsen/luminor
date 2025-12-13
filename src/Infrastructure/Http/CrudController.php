@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Luminor\DDD\Infrastructure\Http;
 
 use Luminor\DDD\Application\DTO\DataTransferObject;
-use Luminor\DDD\Application\DTO\PagedResult;
 use Luminor\DDD\Application\Services\CrudApplicationService;
 use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
 use Luminor\DDD\Domain\Repository\Criteria;
@@ -31,7 +30,7 @@ abstract class CrudController extends ApiController
      * @param CrudApplicationService<mixed, TDto, TCreateDto, TUpdateDto> $service
      */
     public function __construct(
-        protected readonly CrudApplicationService $service
+        protected readonly CrudApplicationService $service,
     ) {
     }
 
@@ -102,13 +101,13 @@ abstract class CrudController extends ApiController
         $paginationParams = $this->getPaginationParams(
             $request,
             $this->getDefaultPerPage(),
-            $this->getMaxPerPage()
+            $this->getMaxPerPage(),
         );
 
         $sortingParams = $this->getSortingParams(
             $request,
             $this->getAllowedSortFields(),
-            $this->getDefaultSortField()
+            $this->getDefaultSortField(),
         );
 
         $criteria = $this->buildCriteriaFromRequest($request);
@@ -116,7 +115,7 @@ abstract class CrudController extends ApiController
         if ($sortingParams['field'] !== null) {
             $sorting = Sorting::create(
                 $sortingParams['field'],
-                $sortingParams['direction'] === 'DESC' ? Sorting::DESC : Sorting::ASC
+                $sortingParams['direction'] === 'DESC' ? Sorting::DESC : Sorting::ASC,
             );
             $criteria = $criteria->sortBy($sorting);
         }
@@ -124,7 +123,7 @@ abstract class CrudController extends ApiController
         $result = $this->service->getPaginatedByCriteria(
             $criteria,
             $paginationParams['page'],
-            $paginationParams['perPage']
+            $paginationParams['perPage'],
         );
 
         $this->respondPaginated($response, $result);
@@ -229,6 +228,7 @@ abstract class CrudController extends ApiController
      * Override this method to customize DTO creation.
      *
      * @param array<string, mixed> $data
+     *
      * @return TCreateDto
      */
     abstract protected function mapToCreateDto(array $data): DataTransferObject;
@@ -239,6 +239,7 @@ abstract class CrudController extends ApiController
      * Override this method to customize DTO creation.
      *
      * @param array<string, mixed> $data
+     *
      * @return TUpdateDto
      */
     abstract protected function mapToUpdateDto(array $data): DataTransferObject;

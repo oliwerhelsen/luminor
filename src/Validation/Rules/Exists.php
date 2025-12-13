@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Validation\Rules;
 
-use Luminor\DDD\Validation\Rule;
 use Luminor\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Validation\Rule;
 
 /**
  * Exists Rule
@@ -15,13 +15,15 @@ use Luminor\DDD\Database\ConnectionInterface;
 final class Exists implements Rule
 {
     private ConnectionInterface $connection;
+
     private string $table;
+
     private string $column;
 
     public function __construct(
         ConnectionInterface $connection,
         string $table,
-        string $column = 'id'
+        string $column = 'id',
     ) {
         $this->connection = $connection;
         $this->table = $table;
@@ -45,6 +47,6 @@ final class Exists implements Rule
      */
     public function message(): string
     {
-        return "The selected value is invalid.";
+        return 'The selected value is invalid.';
     }
 }

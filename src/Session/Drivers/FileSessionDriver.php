@@ -19,8 +19,8 @@ final class FileSessionDriver implements SessionDriver
     {
         $this->path = rtrim($path, '/');
 
-        if (!is_dir($this->path)) {
-            mkdir($this->path, 0755, true);
+        if (! is_dir($this->path)) {
+            mkdir($this->path, 0o755, true);
         }
     }
 
@@ -31,7 +31,7 @@ final class FileSessionDriver implements SessionDriver
     {
         $file = $this->getFilePath($sessionId);
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return [];
         }
 

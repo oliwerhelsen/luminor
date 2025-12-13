@@ -11,7 +11,7 @@ final class IsNullFilter extends Filter
 {
     public function __construct(
         private readonly string $field,
-        private readonly bool $isNull = true
+        private readonly bool $isNull = true,
     ) {
     }
 

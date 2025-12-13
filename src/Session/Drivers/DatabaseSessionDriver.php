@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Session\Drivers;
 
-use Luminor\DDD\Session\SessionDriver;
 use Luminor\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Session\SessionDriver;
 use PDO;
+use PDOException;
 
 /**
  * Database Session Driver
@@ -16,11 +17,12 @@ use PDO;
 final class DatabaseSessionDriver implements SessionDriver
 {
     private ConnectionInterface $connection;
+
     private string $table;
 
     public function __construct(
         ConnectionInterface $connection,
-        string $table = 'sessions'
+        string $table = 'sessions',
     ) {
         $this->connection = $connection;
         $this->table = $table;
@@ -33,7 +35,7 @@ final class DatabaseSessionDriver implements SessionDriver
     {
         $stmt = $this->connection->query(
             "SELECT data FROM {$this->table} WHERE id = ? AND expires_at > ?",
-            [$sessionId, time()]
+            [$sessionId, time()],
         );
 
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -58,7 +60,7 @@ final class DatabaseSessionDriver implements SessionDriver
         // Try to update first
         $updated = $this->connection->statement(
             "UPDATE {$this->table} SET data = ?, expires_at = ? WHERE id = ?",
-            [$serialized, $expiresAt, $sessionId]
+            [$serialized, $expiresAt, $sessionId],
         );
 
         if ($updated > 0) {
@@ -69,10 +71,11 @@ final class DatabaseSessionDriver implements SessionDriver
         try {
             $this->connection->statement(
                 "INSERT INTO {$this->table} (id, data, expires_at) VALUES (?, ?, ?)",
-                [$sessionId, $serialized, $expiresAt]
+                [$sessionId, $serialized, $expiresAt],
             );
+
             return true;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
     }
@@ -84,7 +87,7 @@ final class DatabaseSessionDriver implements SessionDriver
     {
         $this->connection->statement(
             "DELETE FROM {$this->table} WHERE id = ?",
-            [$sessionId]
+            [$sessionId],
         );
 
         return true;
@@ -97,7 +100,7 @@ final class DatabaseSessionDriver implements SessionDriver
     {
         return $this->connection->statement(
             "DELETE FROM {$this->table} WHERE expires_at < ?",
-            [time()]
+            [time()],
         );
     }
 }

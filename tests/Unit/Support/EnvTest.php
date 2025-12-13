@@ -4,12 +4,14 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Support;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Support\Env;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class EnvTest extends TestCase
 {
     private array $originalEnv;
+
     private array $originalServer;
 
     protected function setUp(): void
@@ -52,7 +54,7 @@ final class EnvTest extends TestCase
 
     public function testGetResolvesCallableDefault(): void
     {
-        $result = Env::get('NONEXISTENT_VAR', fn() => 'callable_default');
+        $result = Env::get('NONEXISTENT_VAR', fn () => 'callable_default');
 
         $this->assertSame('callable_default', $result);
     }
@@ -132,7 +134,7 @@ final class EnvTest extends TestCase
 
     public function testGetOrFailThrowsWhenNotFound(): void
     {
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Environment variable [MISSING_REQUIRED] is not set.');
 
         Env::getOrFail('MISSING_REQUIRED');
@@ -140,7 +142,7 @@ final class EnvTest extends TestCase
 
     public function testSetAndGetRepository(): void
     {
-        $repository = new class {
+        $repository = new class () {
             public function get(string $key): ?string
             {
                 return $key === 'REPO_VAR' ? 'repo_value' : null;

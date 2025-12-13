@@ -19,7 +19,7 @@ final class HeaderStrategy implements TenantResolverInterface
      * @param string $headerName The name of the header containing the tenant identifier
      */
     public function __construct(
-        private readonly string $headerName = 'X-Tenant-ID'
+        private readonly string $headerName = 'X-Tenant-ID',
     ) {
     }
 

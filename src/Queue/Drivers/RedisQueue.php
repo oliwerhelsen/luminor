@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use Luminor\DDD\Queue\JobInterface;
 use Luminor\DDD\Queue\QueuedJob;
 use Luminor\DDD\Queue\QueueInterface;
+use Redis;
 use RuntimeException;
 
 /**
@@ -19,9 +20,13 @@ use RuntimeException;
 class RedisQueue implements QueueInterface
 {
     protected mixed $redis = null;
+
     protected string $prefix;
+
     protected string $defaultQueue;
+
     protected int $retryAfter;
+
     protected string $connectionName;
 
     /** @var array<string, mixed> */
@@ -29,13 +34,13 @@ class RedisQueue implements QueueInterface
 
     /**
      * @param array<string, mixed> $config Configuration options:
-     *                                      - host: Redis host (default: 127.0.0.1)
-     *                                      - port: Redis port (default: 6379)
-     *                                      - password: Redis password (optional)
-     *                                      - database: Redis database number (default: 0)
-     *                                      - prefix: Key prefix (default: luminor_queue:)
-     *                                      - queue: Default queue name (default: default)
-     *                                      - retry_after: Seconds before a reserved job is released (default: 90)
+     *                                     - host: Redis host (default: 127.0.0.1)
+     *                                     - port: Redis port (default: 6379)
+     *                                     - password: Redis password (optional)
+     *                                     - database: Redis database number (default: 0)
+     *                                     - prefix: Key prefix (default: luminor_queue:)
+     *                                     - queue: Default queue name (default: default)
+     *                                     - retry_after: Seconds before a reserved job is released (default: 90)
      */
     public function __construct(array $config = [])
     {
@@ -62,17 +67,19 @@ class RedisQueue implements QueueInterface
         // Try Predis first
         if (class_exists(\Predis\Client::class)) {
             $this->redis = $this->createPredisClient();
+
             return $this->redis;
         }
 
         // Try phpredis extension
         if (extension_loaded('redis')) {
             $this->redis = $this->createPhpRedisClient();
+
             return $this->redis;
         }
 
         throw new RuntimeException(
-            'Redis queue requires either predis/predis package or the phpredis extension.'
+            'Redis queue requires either predis/predis package or the phpredis extension.',
         );
     }
 
@@ -100,9 +107,9 @@ class RedisQueue implements QueueInterface
     /**
      * Create a phpredis client.
      */
-    protected function createPhpRedisClient(): \Redis
+    protected function createPhpRedisClient(): Redis
     {
-        $redis = new \Redis();
+        $redis = new Redis();
 
         $host = $this->config['host'] ?? '127.0.0.1';
         $port = $this->config['port'] ?? 6379;
@@ -133,14 +140,14 @@ class RedisQueue implements QueueInterface
      */
     public function later(JobInterface $job, int $delay, ?string $queue = null): string|int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
         $payload = $this->createPayload($job);
         $id = $this->generateJobId();
 
         // Store in delayed sorted set with score as availability time
         $this->getRedis()->zadd(
             $this->prefix . $queue . ':delayed',
-            [json_encode(['id' => $id, 'payload' => $payload]) => time() + $delay]
+            [json_encode(['id' => $id, 'payload' => $payload]) => time() + $delay],
         );
 
         return $id;
@@ -151,12 +158,12 @@ class RedisQueue implements QueueInterface
      */
     protected function pushRaw(string $payload, ?string $queue = null): string|int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
         $id = $this->generateJobId();
 
         $this->getRedis()->rpush(
             $this->prefix . $queue,
-            json_encode(['id' => $id, 'payload' => $payload, 'attempts' => 0])
+            json_encode(['id' => $id, 'payload' => $payload, 'attempts' => 0]),
         );
 
         return $id;
@@ -167,7 +174,7 @@ class RedisQueue implements QueueInterface
      */
     public function pop(?string $queue = null): ?QueuedJob
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
 
         // First, migrate delayed jobs that are now ready
         $this->migrateDelayedJobs($queue);
@@ -185,7 +192,7 @@ class RedisQueue implements QueueInterface
         // Store in reserved set
         $this->getRedis()->zadd(
             $this->prefix . $queue . ':reserved',
-            [json_encode($data) => time() + $this->retryAfter]
+            [json_encode($data) => time() + $this->retryAfter],
         );
 
         return $this->createQueuedJob($data, $queue);
@@ -196,7 +203,7 @@ class RedisQueue implements QueueInterface
      */
     public function delete(string|int $jobId, ?string $queue = null): void
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
 
         // Remove from reserved set by scanning for matching job ID
         $reserved = $this->getRedis()->zrange($this->prefix . $queue . ':reserved', 0, -1);
@@ -226,12 +233,12 @@ class RedisQueue implements QueueInterface
         if ($delay > 0) {
             $this->getRedis()->zadd(
                 $this->prefix . $queue . ':delayed',
-                [json_encode(['id' => $job->getId(), 'payload' => $payload, 'attempts' => $job->getAttempts()]) => time() + $delay]
+                [json_encode(['id' => $job->getId(), 'payload' => $payload, 'attempts' => $job->getAttempts()]) => time() + $delay],
             );
         } else {
             $this->getRedis()->rpush(
                 $this->prefix . $queue,
-                json_encode(['id' => $job->getId(), 'payload' => $payload, 'attempts' => $job->getAttempts()])
+                json_encode(['id' => $job->getId(), 'payload' => $payload, 'attempts' => $job->getAttempts()]),
             );
         }
     }
@@ -241,7 +248,7 @@ class RedisQueue implements QueueInterface
      */
     public function size(?string $queue = null): int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
 
         return (int) $this->getRedis()->llen($this->prefix . $queue);
     }
@@ -251,7 +258,7 @@ class RedisQueue implements QueueInterface
      */
     public function clear(?string $queue = null): int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
         $size = $this->size($queue);
 
         $this->getRedis()->del([
@@ -340,11 +347,11 @@ class RedisQueue implements QueueInterface
 
         $jobClass = $payload['class'];
 
-        if (!class_exists($jobClass)) {
+        if (! class_exists($jobClass)) {
             throw new RuntimeException(sprintf('Job class [%s] not found.', $jobClass));
         }
 
-        if (!is_subclass_of($jobClass, JobInterface::class)) {
+        if (! is_subclass_of($jobClass, JobInterface::class)) {
             throw new RuntimeException(sprintf('Job class [%s] must implement JobInterface.', $jobClass));
         }
 

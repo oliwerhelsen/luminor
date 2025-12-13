@@ -60,6 +60,7 @@ final class ServeCommand extends AbstractCommand
         $portNumber = (int) $port;
         if ($portNumber < 1 || $portNumber > 65535) {
             $output->error('Port must be between 1 and 65535');
+
             return 1;
         }
 
@@ -67,9 +68,10 @@ final class ServeCommand extends AbstractCommand
         $projectRoot = $this->findProjectRoot();
         $documentRoot = $projectRoot . DIRECTORY_SEPARATOR . $docroot;
 
-        if (!is_dir($documentRoot)) {
+        if (! is_dir($documentRoot)) {
             $output->error(sprintf('Document root "%s" does not exist', $documentRoot));
             $output->comment('You can specify a different document root with --docroot option');
+
             return 1;
         }
 
@@ -77,6 +79,7 @@ final class ServeCommand extends AbstractCommand
         if ($this->isPortInUse($host, $portNumber)) {
             $output->error(sprintf('Port %d is already in use', $portNumber));
             $output->comment('Try using a different port with --port option');
+
             return 1;
         }
 
@@ -97,7 +100,7 @@ final class ServeCommand extends AbstractCommand
             'php -S %s:%s -t %s',
             escapeshellarg($host),
             escapeshellarg($port),
-            escapeshellarg($documentRoot)
+            escapeshellarg($documentRoot),
         );
 
         // Check for a router file
@@ -146,6 +149,7 @@ final class ServeCommand extends AbstractCommand
 
         if ($connection !== false) {
             fclose($connection);
+
             return true;
         }
 

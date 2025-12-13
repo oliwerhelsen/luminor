@@ -31,7 +31,7 @@ final class CorsMiddleware implements MiddlewareInterface
         private array $allowedHeaders = ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept'],
         private array $exposedHeaders = [],
         private bool $allowCredentials = false,
-        private int $maxAge = self::DEFAULT_MAX_AGE
+        private int $maxAge = self::DEFAULT_MAX_AGE,
     ) {
     }
 
@@ -66,6 +66,7 @@ final class CorsMiddleware implements MiddlewareInterface
         // Handle preflight OPTIONS request
         if ($request->getMethod() === 'OPTIONS') {
             $this->handlePreflight($response);
+
             return;
         }
 
@@ -148,6 +149,7 @@ final class CorsMiddleware implements MiddlewareInterface
     public function setAllowedOrigins(array $origins): self
     {
         $this->allowedOrigins = $origins;
+
         return $this;
     }
 
@@ -159,6 +161,7 @@ final class CorsMiddleware implements MiddlewareInterface
     public function setAllowedMethods(array $methods): self
     {
         $this->allowedMethods = $methods;
+
         return $this;
     }
 
@@ -170,6 +173,7 @@ final class CorsMiddleware implements MiddlewareInterface
     public function setAllowedHeaders(array $headers): self
     {
         $this->allowedHeaders = $headers;
+
         return $this;
     }
 
@@ -181,6 +185,7 @@ final class CorsMiddleware implements MiddlewareInterface
     public function setExposedHeaders(array $headers): self
     {
         $this->exposedHeaders = $headers;
+
         return $this;
     }
 
@@ -190,6 +195,7 @@ final class CorsMiddleware implements MiddlewareInterface
     public function setAllowCredentials(bool $allow): self
     {
         $this->allowCredentials = $allow;
+
         return $this;
     }
 
@@ -199,6 +205,7 @@ final class CorsMiddleware implements MiddlewareInterface
     public function setMaxAge(int $seconds): self
     {
         $this->maxAge = $seconds;
+
         return $this;
     }
 }

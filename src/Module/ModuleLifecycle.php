@@ -36,7 +36,7 @@ final class ModuleLifecycle
     {
         $key = $event->value;
 
-        if (!isset($this->hooks[$key])) {
+        if (! isset($this->hooks[$key])) {
             $this->hooks[$key] = [];
         }
 
@@ -110,7 +110,7 @@ final class ModuleLifecycle
     {
         $key = $event->value;
 
-        if (!isset($this->hooks[$key])) {
+        if (! isset($this->hooks[$key])) {
             return;
         }
 
@@ -125,6 +125,7 @@ final class ModuleLifecycle
     public function hasHooks(ModuleLifecycleEvent $event): bool
     {
         $key = $event->value;
+
         return isset($this->hooks[$key]) && count($this->hooks[$key]) > 0;
     }
 

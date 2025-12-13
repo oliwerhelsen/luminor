@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Container;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Container\Container;
 use Luminor\DDD\Container\ContainerException;
+use PHPUnit\Framework\TestCase;
 
 final class ContainerTest extends TestCase
 {

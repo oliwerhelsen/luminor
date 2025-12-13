@@ -25,13 +25,13 @@ final class SessionServiceProvider extends AbstractServiceProvider
             return match ($driver) {
                 'file' => SessionManager::file(
                     getenv('SESSION_PATH') ?: sys_get_temp_dir() . '/luminor_sessions',
-                    $sessionName
+                    $sessionName,
                 ),
                 'array' => SessionManager::array($sessionName),
                 'database' => SessionManager::database(
                     $container->make(\Luminor\DDD\Database\ConnectionInterface::class),
                     getenv('SESSION_TABLE') ?: 'sessions',
-                    $sessionName
+                    $sessionName,
                 ),
                 default => SessionManager::file(sys_get_temp_dir() . '/luminor_sessions', $sessionName),
             };

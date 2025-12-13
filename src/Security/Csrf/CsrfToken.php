@@ -56,6 +56,7 @@ final class CsrfToken
     {
         $token = self::generate();
         self::storeInSession($session, $token);
+
         return $token;
     }
 }

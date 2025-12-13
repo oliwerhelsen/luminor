@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Validation\Rules;
 
-use Luminor\DDD\Validation\Rule;
 use Luminor\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Validation\Rule;
 
 /**
  * Unique Rule
@@ -15,15 +15,18 @@ use Luminor\DDD\Database\ConnectionInterface;
 final class Unique implements Rule
 {
     private ConnectionInterface $connection;
+
     private string $table;
+
     private string $column;
+
     private ?int $except;
 
     public function __construct(
         ConnectionInterface $connection,
         string $table,
         string $column = 'id',
-        ?int $except = null
+        ?int $except = null,
     ) {
         $this->connection = $connection;
         $this->table = $table;
@@ -40,7 +43,7 @@ final class Unique implements Rule
         $bindings = [$value];
 
         if ($this->except !== null) {
-            $query .= " AND id != ?";
+            $query .= ' AND id != ?';
             $bindings[] = $this->except;
         }
 
@@ -55,6 +58,6 @@ final class Unique implements Rule
      */
     public function message(): string
     {
-        return "The value has already been taken.";
+        return 'The value has already been taken.';
     }
 }

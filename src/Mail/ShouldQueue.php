@@ -21,8 +21,6 @@ interface ShouldQueue
 
     /**
      * Get the delay in seconds before sending.
-     *
-     * @return int
      */
     public function delay(): int;
 

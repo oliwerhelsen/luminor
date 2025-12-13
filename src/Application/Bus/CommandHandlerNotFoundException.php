@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Application\Bus;
 
-use RuntimeException;
 use Luminor\DDD\Application\CQRS\Command;
+use RuntimeException;
 
 /**
  * Exception thrown when no handler is found for a command.
@@ -20,7 +20,7 @@ final class CommandHandlerNotFoundException extends RuntimeException
     public static function forCommand(string $commandClass): self
     {
         return new self(
-            sprintf('No handler registered for command "%s"', $commandClass)
+            sprintf('No handler registered for command "%s"', $commandClass),
         );
     }
 }

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http;
 
+use InvalidArgumentException;
+use JsonException;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Application\Bus\QueryBusInterface;
 use Luminor\DDD\Application\CQRS\Command;
@@ -12,6 +14,7 @@ use Luminor\DDD\Application\DTO\PagedResult;
 use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
+use RuntimeException;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 
@@ -24,6 +27,7 @@ use Utopia\Http\Response;
 abstract class ApiController
 {
     protected ?CommandBusInterface $commandBus = null;
+
     protected ?QueryBusInterface $queryBus = null;
 
     /**
@@ -48,7 +52,7 @@ abstract class ApiController
     protected function dispatchCommand(Command $command): mixed
     {
         if ($this->commandBus === null) {
-            throw new \RuntimeException('Command bus not configured');
+            throw new RuntimeException('Command bus not configured');
         }
 
         return $this->commandBus->dispatch($command);
@@ -60,7 +64,7 @@ abstract class ApiController
     protected function dispatchQuery(Query $query): mixed
     {
         if ($this->queryBus === null) {
-            throw new \RuntimeException('Query bus not configured');
+            throw new RuntimeException('Query bus not configured');
         }
 
         return $this->queryBus->dispatch($query);
@@ -69,14 +73,14 @@ abstract class ApiController
     /**
      * Get a required parameter from the request.
      *
-     * @throws \InvalidArgumentException If the parameter is missing
+     * @throws InvalidArgumentException If the parameter is missing
      */
     protected function getRequiredParam(Request $request, string $name): mixed
     {
         $value = $request->getParam($name);
 
         if ($value === null || $value === '') {
-            throw new \InvalidArgumentException("Missing required parameter: {$name}");
+            throw new InvalidArgumentException("Missing required parameter: {$name}");
         }
 
         return $value;
@@ -88,6 +92,7 @@ abstract class ApiController
     protected function getOptionalParam(Request $request, string $name, mixed $default = null): mixed
     {
         $value = $request->getParam($name);
+
         return $value !== null && $value !== '' ? $value : $default;
     }
 
@@ -111,6 +116,7 @@ abstract class ApiController
      * Get sorting parameters from the request.
      *
      * @param array<int, string> $allowedFields Fields that can be sorted
+     *
      * @return array{field: string|null, direction: string}
      */
     protected function getSortingParams(Request $request, array $allowedFields = [], string $defaultField = null): array
@@ -119,12 +125,12 @@ abstract class ApiController
         $direction = strtoupper($this->getOptionalParam($request, 'sortDir', 'ASC'));
 
         // Validate field
-        if ($field !== null && count($allowedFields) > 0 && !in_array($field, $allowedFields, true)) {
+        if ($field !== null && count($allowedFields) > 0 && ! in_array($field, $allowedFields, true)) {
             $field = $defaultField;
         }
 
         // Validate direction
-        if (!in_array($direction, ['ASC', 'DESC'], true)) {
+        if (! in_array($direction, ['ASC', 'DESC'], true)) {
             $direction = 'ASC';
         }
 
@@ -149,9 +155,10 @@ abstract class ApiController
 
         try {
             $decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+
             return is_array($decoded) ? $decoded : [];
-        } catch (\JsonException $e) {
-            throw new \InvalidArgumentException('Invalid JSON body: ' . $e->getMessage());
+        } catch (JsonException $e) {
+            throw new InvalidArgumentException('Invalid JSON body: ' . $e->getMessage());
         }
     }
 
@@ -201,7 +208,7 @@ abstract class ApiController
         string $message,
         string $code = 'ERROR',
         int $statusCode = 400,
-        ?array $details = null
+        ?array $details = null,
     ): void {
         $response->setStatusCode($statusCode);
         $response->json(ApiResponse::error($message, $code, $statusCode, $details));

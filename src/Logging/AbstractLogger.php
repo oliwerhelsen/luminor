@@ -6,6 +6,7 @@ namespace Luminor\DDD\Logging;
 
 use Psr\Log\AbstractLogger;
 use Stringable;
+use Throwable;
 
 /**
  * Abstract base class for log drivers.
@@ -16,6 +17,7 @@ use Stringable;
 abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
 {
     protected string $channel = 'app';
+
     protected LogLevel $minimumLevel = LogLevel::DEBUG;
 
     /** @var array<string, mixed> */
@@ -44,6 +46,7 @@ abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
     {
         $clone = clone $this;
         $clone->channel = $channel;
+
         return $clone;
     }
 
@@ -71,7 +74,7 @@ abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
         $logLevel = LogLevel::fromString((string) $level);
 
         // Check if this level should be logged
-        if (!$logLevel->meetsMinimum($this->minimumLevel)) {
+        if (! $logLevel->meetsMinimum($this->minimumLevel)) {
             return;
         }
 
@@ -92,6 +95,7 @@ abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
      *
      * @param string|Stringable $message The message with placeholders
      * @param array<string, mixed> $context The context values
+     *
      * @return string The interpolated message
      */
     protected function interpolate(string|Stringable $message, array $context): string
@@ -124,6 +128,7 @@ abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
      * @param LogLevel $level The log level
      * @param string $message The message
      * @param array<string, mixed> $context Additional context
+     *
      * @return string The formatted log line
      */
     protected function formatLogLine(LogLevel $level, string $message, array $context): string
@@ -136,17 +141,17 @@ abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
             $timestamp,
             $this->channel,
             $levelName,
-            $message
+            $message,
         );
 
         // Add context (excluding exception which is handled separately)
-        $contextData = array_filter($context, fn($key) => $key !== 'exception', ARRAY_FILTER_USE_KEY);
-        if (!empty($contextData)) {
+        $contextData = array_filter($context, fn ($key) => $key !== 'exception', ARRAY_FILTER_USE_KEY);
+        if (! empty($contextData)) {
             $line .= ' ' . json_encode($contextData, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
         }
 
         // Add exception trace if present
-        if (isset($context['exception']) && $context['exception'] instanceof \Throwable) {
+        if (isset($context['exception']) && $context['exception'] instanceof Throwable) {
             $exception = $context['exception'];
             $line .= sprintf(
                 "\n[Exception] %s: %s in %s:%d\n%s",
@@ -154,7 +159,7 @@ abstract class AbstractLogger extends AbstractLogger implements LoggerInterface
                 $exception->getMessage(),
                 $exception->getFile(),
                 $exception->getLine(),
-                $exception->getTraceAsString()
+                $exception->getTraceAsString(),
             );
         }
 

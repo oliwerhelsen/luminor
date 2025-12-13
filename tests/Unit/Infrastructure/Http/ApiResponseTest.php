@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
-use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
 use Luminor\DDD\Application\DTO\DataTransferObject;
 use Luminor\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
+use PHPUnit\Framework\TestCase;
 
 final class ApiResponseTest extends TestCase
 {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Queue;
 
+use Throwable;
+
 /**
  * Interface for queueable jobs.
  *
@@ -25,14 +27,12 @@ interface JobInterface
      *
      * Called when the job has failed all retry attempts.
      *
-     * @param \Throwable $exception The exception that caused the failure
+     * @param Throwable $exception The exception that caused the failure
      */
-    public function failed(\Throwable $exception): void;
+    public function failed(Throwable $exception): void;
 
     /**
      * Get the number of times the job may be attempted.
-     *
-     * @return int
      */
     public function tries(): int;
 
@@ -59,15 +59,11 @@ interface JobInterface
 
     /**
      * Determine if the job should be unique.
-     *
-     * @return bool
      */
     public function isUnique(): bool;
 
     /**
      * Get the unique ID for the job.
-     *
-     * @return string|null
      */
     public function uniqueId(): ?string;
 
@@ -82,7 +78,6 @@ interface JobInterface
      * Create a job instance from serialized data.
      *
      * @param array<string, mixed> $data The serialized job data
-     * @return static
      */
     public static function fromArray(array $data): static;
 }

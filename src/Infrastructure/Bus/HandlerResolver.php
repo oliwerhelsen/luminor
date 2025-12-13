@@ -5,8 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Infrastructure\Bus;
 
 use Psr\Container\ContainerInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use RuntimeException;
 
 /**
  * Resolves handlers from a dependency injection container or factory.
@@ -22,7 +21,7 @@ final class HandlerResolver
     private array $factories = [];
 
     public function __construct(
-        private readonly ?ContainerInterface $container = null
+        private readonly ?ContainerInterface $container = null,
     ) {
     }
 
@@ -45,6 +44,7 @@ final class HandlerResolver
         foreach ($factories as $class => $factory) {
             $resolver->registerFactory($class, $factory);
         }
+
         return $resolver;
     }
 
@@ -52,7 +52,9 @@ final class HandlerResolver
      * Resolve a handler by class name.
      *
      * @template T of object
+     *
      * @param class-string<T> $handlerClass
+     *
      * @return T
      */
     public function resolve(string $handlerClass): object
@@ -66,6 +68,7 @@ final class HandlerResolver
         if (isset($this->factories[$handlerClass])) {
             $handler = ($this->factories[$handlerClass])();
             $this->instances[$handlerClass] = $handler;
+
             return $handler;
         }
 
@@ -73,6 +76,7 @@ final class HandlerResolver
         if ($this->container !== null && $this->container->has($handlerClass)) {
             $handler = $this->container->get($handlerClass);
             $this->instances[$handlerClass] = $handler;
+
             return $handler;
         }
 
@@ -80,11 +84,12 @@ final class HandlerResolver
         if (class_exists($handlerClass)) {
             $handler = new $handlerClass();
             $this->instances[$handlerClass] = $handler;
+
             return $handler;
         }
 
-        throw new \RuntimeException(
-            sprintf('Unable to resolve handler "%s"', $handlerClass)
+        throw new RuntimeException(
+            sprintf('Unable to resolve handler "%s"', $handlerClass),
         );
     }
 

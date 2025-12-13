@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Luminor\DDD\Infrastructure\Http\Middleware;
 
 use Utopia\Http\Request;
-use Utopia\Http\Response;
 
 /**
  * Interface for authentication middleware.

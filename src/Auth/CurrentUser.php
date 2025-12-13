@@ -82,8 +82,10 @@ final class CurrentUser
      * Execute a callback as a specific user.
      *
      * @template T
+     *
      * @param AuthenticatableInterface $user The user to act as
      * @param callable(): T $callback The callback to execute
+     *
      * @return T The result of the callback
      */
     public static function actingAs(AuthenticatableInterface $user, callable $callback): mixed
@@ -102,7 +104,9 @@ final class CurrentUser
      * Execute a callback as a guest (no authenticated user).
      *
      * @template T
+     *
      * @param callable(): T $callback The callback to execute
+     *
      * @return T The result of the callback
      */
     public static function actingAsGuest(callable $callback): mixed
@@ -128,7 +132,7 @@ final class CurrentUser
             return false;
         }
 
-        if (!self::$user instanceof HasPermissionsInterface) {
+        if (! self::$user instanceof HasPermissionsInterface) {
             return false;
         }
 
@@ -146,7 +150,7 @@ final class CurrentUser
             return false;
         }
 
-        if (!self::$user instanceof HasRolesInterface) {
+        if (! self::$user instanceof HasRolesInterface) {
             return false;
         }
 

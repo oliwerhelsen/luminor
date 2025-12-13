@@ -18,7 +18,6 @@ class DomainException extends Exception
 {
     /**
      * @param string $message The exception message
-     * @param string $code A domain-specific error code
      * @param array<string, mixed> $context Additional context for the exception
      * @param Throwable|null $previous The previous exception
      */
@@ -26,7 +25,7 @@ class DomainException extends Exception
         string $message,
         private readonly string $errorCode = 'DOMAIN_ERROR',
         private readonly array $context = [],
-        ?Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         parent::__construct($message, 0, $previous);
     }

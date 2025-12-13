@@ -29,11 +29,13 @@ trait TenantAware
      * Set the tenant ID this entity belongs to.
      *
      * @param string|int|null $tenantId The tenant ID
+     *
      * @return $this
      */
     public function setTenantId(string|int|null $tenantId): static
     {
         $this->tenantId = $tenantId;
+
         return $this;
     }
 
@@ -59,12 +61,14 @@ trait TenantAware
      * Assign this entity to the current tenant from context.
      *
      * @throws TenantNotResolvedException If no tenant is in context
+     *
      * @return $this
      */
     public function assignToCurrentTenant(): static
     {
         $tenant = TenantContext::getTenantOrFail();
         $this->tenantId = $tenant->getId();
+
         return $this;
     }
 }

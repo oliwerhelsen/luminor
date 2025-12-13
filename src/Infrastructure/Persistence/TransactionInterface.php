@@ -33,7 +33,9 @@ interface TransactionInterface
      * Execute a callback within a transaction.
      *
      * @template T
+     *
      * @param callable(): T $callback
+     *
      * @return T
      */
     public function transactional(callable $callback): mixed;

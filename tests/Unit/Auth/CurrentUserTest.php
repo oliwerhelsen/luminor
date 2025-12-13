@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Auth;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Auth\AuthenticatableInterface;
 use Luminor\DDD\Auth\AuthenticationException;
 use Luminor\DDD\Auth\CurrentUser;
@@ -12,6 +11,8 @@ use Luminor\DDD\Auth\HasPermissionsInterface;
 use Luminor\DDD\Auth\HasRolesInterface;
 use Luminor\DDD\Auth\PermissionInterface;
 use Luminor\DDD\Auth\RoleInterface;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class CurrentUserTest extends TestCase
 {
@@ -114,9 +115,9 @@ final class CurrentUserTest extends TestCase
 
         try {
             CurrentUser::actingAs($actingUser, function () {
-                throw new \RuntimeException('Test');
+                throw new RuntimeException('Test');
             });
-        } catch (\RuntimeException) {
+        } catch (RuntimeException) {
             // Expected
         }
 
@@ -143,9 +144,9 @@ final class CurrentUserTest extends TestCase
 
         try {
             CurrentUser::actingAsGuest(function () {
-                throw new \RuntimeException('Test');
+                throw new RuntimeException('Test');
             });
-        } catch (\RuntimeException) {
+        } catch (RuntimeException) {
             // Expected
         }
 
@@ -198,7 +199,7 @@ final class CurrentUserTest extends TestCase
 
     private function createUser(string $id): AuthenticatableInterface
     {
-        return new class($id) implements AuthenticatableInterface {
+        return new class ($id) implements AuthenticatableInterface {
             public function __construct(private readonly string $id)
             {
             }
@@ -239,13 +240,13 @@ final class CurrentUserTest extends TestCase
      */
     private function createUserWithPermissions(string $id, array $permissions): AuthenticatableInterface
     {
-        return new class($id, $permissions) implements AuthenticatableInterface, HasPermissionsInterface {
+        return new class ($id, $permissions) implements AuthenticatableInterface, HasPermissionsInterface {
             /**
              * @param array<string> $permissions
              */
             public function __construct(
                 private readonly string $id,
-                private readonly array $permissions
+                private readonly array $permissions,
             ) {
             }
 
@@ -286,6 +287,7 @@ final class CurrentUserTest extends TestCase
             public function hasPermission(string|PermissionInterface $permission): bool
             {
                 $name = $permission instanceof PermissionInterface ? $permission->getName() : $permission;
+
                 return in_array($name, $this->permissions, true);
             }
 
@@ -301,13 +303,13 @@ final class CurrentUserTest extends TestCase
      */
     private function createUserWithRoles(string $id, array $roles): AuthenticatableInterface
     {
-        return new class($id, $roles) implements AuthenticatableInterface, HasRolesInterface {
+        return new class ($id, $roles) implements AuthenticatableInterface, HasRolesInterface {
             /**
              * @param array<string> $roles
              */
             public function __construct(
                 private readonly string $id,
-                private readonly array $roles
+                private readonly array $roles,
             ) {
             }
 
@@ -348,6 +350,7 @@ final class CurrentUserTest extends TestCase
             public function hasRole(string|RoleInterface $role): bool
             {
                 $name = $role instanceof RoleInterface ? $role->getName() : $role;
+
                 return in_array($name, $this->roles, true);
             }
 

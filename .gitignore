@@ -12,6 +12,9 @@ coverage/
 # PHPStan
 .phpstan.cache/
 
+# PHP-CS-Fixer
+.php-cs-fixer.cache
+
 # IDE
 .idea/
 .vscode/

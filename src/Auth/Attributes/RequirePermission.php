@@ -15,7 +15,6 @@ use Attribute;
  * @example
  * #[RequirePermission('users.view')]
  * class UserController { }
- *
  * @example
  * #[RequirePermission(['posts.create', 'posts.update'], RequirePermission::MODE_ANY)]
  * public function store() { }
@@ -44,7 +43,7 @@ final class RequirePermission
     public function __construct(
         string|array $permissions,
         public readonly string $mode = self::MODE_ALL,
-        public readonly ?string $message = null
+        public readonly ?string $message = null,
     ) {
         $this->permissions = is_array($permissions) ? $permissions : [$permissions];
     }

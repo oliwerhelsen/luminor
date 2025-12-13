@@ -41,7 +41,9 @@ interface ContainerInterface extends PsrContainerInterface
      * Resolve a type from the container.
      *
      * @template T
+     *
      * @param class-string<T> $abstract
+     *
      * @return T
      */
     public function make(string $abstract): object;

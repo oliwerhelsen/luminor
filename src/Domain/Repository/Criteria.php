@@ -16,7 +16,7 @@ final class Criteria
     private function __construct(
         private readonly ?Filter $filter,
         private readonly Sorting $sorting,
-        private readonly ?Pagination $pagination
+        private readonly ?Pagination $pagination,
     ) {
     }
 

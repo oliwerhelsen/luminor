@@ -15,7 +15,7 @@ final class ConfigLoader
      * @param string $configPath Base path for configuration files
      */
     public function __construct(
-        private readonly string $configPath
+        private readonly string $configPath,
     ) {
     }
 
@@ -28,7 +28,7 @@ final class ConfigLoader
     {
         $config = [];
 
-        if (!is_dir($this->configPath)) {
+        if (! is_dir($this->configPath)) {
             return $config;
         }
 
@@ -50,13 +50,14 @@ final class ConfigLoader
      * Load a specific configuration file.
      *
      * @param string $name The configuration file name (without .php extension)
+     *
      * @return array<string, mixed>
      */
     public function load(string $name): array
     {
         $file = $this->configPath . '/' . $name . '.php';
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return [];
         }
 
@@ -70,13 +71,13 @@ final class ConfigLoader
      */
     private function loadFile(string $file): array
     {
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return [];
         }
 
         $config = require $file;
 
-        if (!is_array($config)) {
+        if (! is_array($config)) {
             return [];
         }
 
@@ -116,7 +117,7 @@ final class ConfigLoader
      */
     public function getAvailableConfigs(): array
     {
-        if (!is_dir($this->configPath)) {
+        if (! is_dir($this->configPath)) {
             return [];
         }
 
@@ -126,6 +127,6 @@ final class ConfigLoader
             return [];
         }
 
-        return array_map(fn($file) => basename($file, '.php'), $files);
+        return array_map(fn ($file) => basename($file, '.php'), $files);
     }
 }

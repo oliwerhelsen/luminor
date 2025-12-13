@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Bus\Middleware;
 
-use Psr\Log\LoggerInterface;
 use Luminor\DDD\Application\CQRS\Command;
 use Luminor\DDD\Application\CQRS\Query;
 use Luminor\DDD\Infrastructure\Bus\MiddlewareInterface;
+use Psr\Log\LoggerInterface;
+use ReflectionClass;
+use Throwable;
 
 /**
  * Middleware that logs command/query execution.
@@ -15,7 +17,7 @@ use Luminor\DDD\Infrastructure\Bus\MiddlewareInterface;
 final class LoggingMiddleware implements MiddlewareInterface
 {
     public function __construct(
-        private readonly LoggerInterface $logger
+        private readonly LoggerInterface $logger,
     ) {
     }
 
@@ -39,7 +41,7 @@ final class LoggingMiddleware implements MiddlewareInterface
             ]);
 
             return $result;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $duration = microtime(true) - $startTime;
             $this->logger->error(sprintf('%s failed: %s', $messageType, $messageClass), [
                 'duration_ms' => round($duration * 1000, 2),
@@ -58,7 +60,7 @@ final class LoggingMiddleware implements MiddlewareInterface
      */
     private function serializeMessage(Command|Query $message): array
     {
-        $reflection = new \ReflectionClass($message);
+        $reflection = new ReflectionClass($message);
         $properties = $reflection->getProperties();
         $data = [];
 

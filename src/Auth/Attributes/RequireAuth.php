@@ -15,7 +15,6 @@ use Attribute;
  * @example
  * #[RequireAuth]
  * class ProfileController { }
- *
  * @example
  * #[RequireAuth(message: 'Please log in to access your profile')]
  * public function show() { }
@@ -27,7 +26,7 @@ final class RequireAuth
      * @param string|null $message Custom error message when authentication is required
      */
     public function __construct(
-        public readonly ?string $message = null
+        public readonly ?string $message = null,
     ) {
     }
 }

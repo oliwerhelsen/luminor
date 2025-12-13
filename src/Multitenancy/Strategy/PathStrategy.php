@@ -22,7 +22,7 @@ final class PathStrategy implements TenantResolverInterface
      */
     public function __construct(
         private readonly int $position = 0,
-        private readonly ?string $prefix = null
+        private readonly ?string $prefix = null,
     ) {
     }
 
@@ -44,7 +44,7 @@ final class PathStrategy implements TenantResolverInterface
             return null;
         }
 
-        $segments = array_values(array_filter(explode('/', $path), fn($s) => $s !== ''));
+        $segments = array_values(array_filter(explode('/', $path), fn ($s) => $s !== ''));
 
         if (empty($segments)) {
             return null;
@@ -63,14 +63,14 @@ final class PathStrategy implements TenantResolverInterface
             $tenantPosition = $this->position;
         }
 
-        if (!isset($segments[$tenantPosition])) {
+        if (! isset($segments[$tenantPosition])) {
             return null;
         }
 
         $tenantIdentifier = $segments[$tenantPosition];
 
         // Validate tenant identifier (alphanumeric and hyphens only)
-        if (!preg_match('/^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/', $tenantIdentifier)) {
+        if (! preg_match('/^[a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]$|^[a-zA-Z0-9]$/', $tenantIdentifier)) {
             return null;
         }
 

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Database\Schema;
 
+use RuntimeException;
+
 /**
  * Schema Grammar
  *
@@ -35,14 +37,23 @@ abstract class SchemaGrammar
      * Compile column type.
      */
     abstract protected function typeString(Column $column): string;
+
     abstract protected function typeText(Column $column): string;
+
     abstract protected function typeInteger(Column $column): string;
+
     abstract protected function typeBigInteger(Column $column): string;
+
     abstract protected function typeBoolean(Column $column): string;
+
     abstract protected function typeDecimal(Column $column): string;
+
     abstract protected function typeDate(Column $column): string;
+
     abstract protected function typeDatetime(Column $column): string;
+
     abstract protected function typeTimestamp(Column $column): string;
+
     abstract protected function typeJson(Column $column): string;
 
     /**
@@ -53,14 +64,14 @@ abstract class SchemaGrammar
         $type = $column->getType();
         $method = 'type' . ucfirst($type);
 
-        if (!method_exists($this, $method)) {
-            throw new \RuntimeException("Unknown column type: {$type}");
+        if (! method_exists($this, $method)) {
+            throw new RuntimeException("Unknown column type: {$type}");
         }
 
         $sql = $this->$method($column);
 
         // Add modifiers
-        if (!$column->isNullable()) {
+        if (! $column->isNullable()) {
             $sql .= ' NOT NULL';
         }
 

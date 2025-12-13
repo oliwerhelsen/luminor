@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Testing\Assertions;
 
-use PHPUnit\Framework\Assert;
+use DateTimeImmutable;
 use Luminor\DDD\Domain\Abstractions\AggregateRoot;
 use Luminor\DDD\Domain\Abstractions\DomainEvent;
 use Luminor\DDD\Domain\Abstractions\Entity;
 use Luminor\DDD\Domain\Abstractions\ValueObject;
+use PHPUnit\Framework\Assert;
 
 /**
  * Domain-specific assertions for testing.
@@ -28,8 +29,8 @@ trait DomainAssertions
             $message ?: sprintf(
                 'Failed asserting that entity with ID [%s] equals entity with ID [%s].',
                 $actual->getId() ?? 'null',
-                $expected->getId() ?? 'null'
-            )
+                $expected->getId() ?? 'null',
+            ),
         );
     }
 
@@ -40,7 +41,7 @@ trait DomainAssertions
     {
         Assert::assertFalse(
             $expected->equals($actual),
-            $message ?: 'Failed asserting that entities are not equal.'
+            $message ?: 'Failed asserting that entities are not equal.',
         );
     }
 
@@ -51,7 +52,7 @@ trait DomainAssertions
     {
         Assert::assertTrue(
             $expected->equals($actual),
-            $message ?: 'Failed asserting that value objects are equal.'
+            $message ?: 'Failed asserting that value objects are equal.',
         );
     }
 
@@ -62,7 +63,7 @@ trait DomainAssertions
     {
         Assert::assertFalse(
             $expected->equals($actual),
-            $message ?: 'Failed asserting that value objects are not equal.'
+            $message ?: 'Failed asserting that value objects are not equal.',
         );
     }
 
@@ -85,7 +86,7 @@ trait DomainAssertions
 
         Assert::assertTrue(
             $hasEvent,
-            $message ?: sprintf('Failed asserting that aggregate has event [%s].', $eventClass)
+            $message ?: sprintf('Failed asserting that aggregate has event [%s].', $eventClass),
         );
     }
 
@@ -108,7 +109,7 @@ trait DomainAssertions
 
         Assert::assertFalse(
             $hasEvent,
-            $message ?: sprintf('Failed asserting that aggregate does not have event [%s].', $eventClass)
+            $message ?: sprintf('Failed asserting that aggregate does not have event [%s].', $eventClass),
         );
     }
 
@@ -122,7 +123,7 @@ trait DomainAssertions
         Assert::assertCount(
             $expectedCount,
             $events,
-            $message ?: sprintf('Failed asserting that aggregate has %d events.', $expectedCount)
+            $message ?: sprintf('Failed asserting that aggregate has %d events.', $expectedCount),
         );
     }
 
@@ -135,7 +136,7 @@ trait DomainAssertions
 
         Assert::assertEmpty(
             $events,
-            $message ?: 'Failed asserting that aggregate has no recorded events.'
+            $message ?: 'Failed asserting that aggregate has no recorded events.',
         );
     }
 
@@ -146,7 +147,7 @@ trait DomainAssertions
     {
         Assert::assertFalse(
             $entity->isTransient(),
-            $message ?: 'Failed asserting that entity is not transient.'
+            $message ?: 'Failed asserting that entity is not transient.',
         );
     }
 
@@ -157,7 +158,7 @@ trait DomainAssertions
     {
         Assert::assertTrue(
             $entity->isTransient(),
-            $message ?: 'Failed asserting that entity is transient.'
+            $message ?: 'Failed asserting that entity is transient.',
         );
     }
 
@@ -169,7 +170,7 @@ trait DomainAssertions
         Assert::assertSame(
             $expectedId,
             $entity->getId(),
-            $message ?: sprintf('Failed asserting that entity has ID [%s].', $expectedId)
+            $message ?: sprintf('Failed asserting that entity has ID [%s].', $expectedId),
         );
     }
 
@@ -181,7 +182,7 @@ trait DomainAssertions
         Assert::assertSame(
             $expectedAggregateId,
             $event->getAggregateId(),
-            $message ?: sprintf('Failed asserting that event has aggregate ID [%s].', $expectedAggregateId)
+            $message ?: sprintf('Failed asserting that event has aggregate ID [%s].', $expectedAggregateId),
         );
     }
 
@@ -190,9 +191,9 @@ trait DomainAssertions
      */
     public static function assertEventOccurredAt(
         DomainEvent $event,
-        \DateTimeImmutable $expectedTime,
+        DateTimeImmutable $expectedTime,
         int $toleranceSeconds = 1,
-        string $message = ''
+        string $message = '',
     ): void {
         $diff = abs($event->getOccurredAt()->getTimestamp() - $expectedTime->getTimestamp());
 
@@ -201,8 +202,8 @@ trait DomainAssertions
             $diff,
             $message ?: sprintf(
                 'Failed asserting that event occurred within %d seconds of expected time.',
-                $toleranceSeconds
-            )
+                $toleranceSeconds,
+            ),
         );
     }
 }

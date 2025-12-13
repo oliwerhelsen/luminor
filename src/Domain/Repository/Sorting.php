@@ -10,6 +10,7 @@ namespace Luminor\DDD\Domain\Repository;
 final class Sorting
 {
     public const ASC = 'ASC';
+
     public const DESC = 'DESC';
 
     /** @var array<int, array{field: string, direction: string}> */
@@ -34,6 +35,7 @@ final class Sorting
     {
         $sorting = new self();
         $sorting->orders[] = ['field' => $field, 'direction' => self::ASC];
+
         return $sorting;
     }
 
@@ -44,6 +46,7 @@ final class Sorting
     {
         $sorting = new self();
         $sorting->orders[] = ['field' => $field, 'direction' => self::DESC];
+
         return $sorting;
     }
 
@@ -54,6 +57,7 @@ final class Sorting
     {
         $clone = clone $this;
         $clone->orders[] = ['field' => $field, 'direction' => self::ASC];
+
         return $clone;
     }
 
@@ -64,6 +68,7 @@ final class Sorting
     {
         $clone = clone $this;
         $clone->orders[] = ['field' => $field, 'direction' => self::DESC];
+
         return $clone;
     }
 

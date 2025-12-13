@@ -29,6 +29,7 @@ final class PendingMail
      * Set the recipients.
      *
      * @param string|array<string>|array<string, string> $to
+     *
      * @return $this
      */
     public function to(string|array $to): self
@@ -52,6 +53,7 @@ final class PendingMail
      * Set the CC recipients.
      *
      * @param string|array<string>|array<string, string> $cc
+     *
      * @return $this
      */
     public function cc(string|array $cc): self
@@ -75,6 +77,7 @@ final class PendingMail
      * Set the BCC recipients.
      *
      * @param string|array<string>|array<string, string> $bcc
+     *
      * @return $this
      */
     public function bcc(string|array $bcc): self
@@ -98,7 +101,6 @@ final class PendingMail
      * Send a mailable.
      *
      * @param Mailable $mailable The mailable to send
-     * @return bool
      */
     public function send(Mailable $mailable): bool
     {
@@ -122,7 +124,6 @@ final class PendingMail
      * Queue a mailable for later sending.
      *
      * @param Mailable $mailable The mailable to queue
-     * @return bool
      */
     public function queue(Mailable $mailable): bool
     {

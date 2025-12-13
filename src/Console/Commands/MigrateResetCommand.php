@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Console\Commands;
 
+use Exception;
 use Luminor\DDD\Console\Input;
 use Luminor\DDD\Console\Output;
-use Luminor\DDD\Database\Migrations\Migrator;
-use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
-use Luminor\DDD\Database\Schema\Schema;
 use Luminor\DDD\Database\Connection;
+use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
+use Luminor\DDD\Database\Migrations\Migrator;
+use Luminor\DDD\Database\Schema\Schema;
 use PDO;
+use RuntimeException;
 
 /**
  * Migrate Reset Command
@@ -35,7 +37,7 @@ final class MigrateResetCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    public function execute(Input $input, Output $output): int
     {
         $output->warning('This will rollback all migrations. Are you sure? (yes/no)');
         // For now, proceed without confirmation in CLI
@@ -49,6 +51,7 @@ final class MigrateResetCommand extends AbstractCommand
 
             if (empty($rolledBack)) {
                 $output->info('No migrations to reset.');
+
                 return 0;
             }
 
@@ -56,8 +59,9 @@ final class MigrateResetCommand extends AbstractCommand
             $output->info('Rolled back ' . count($rolledBack) . ' migrations.');
 
             return 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->error('Reset failed: ' . $e->getMessage());
+
             return 1;
         }
     }
@@ -72,6 +76,7 @@ final class MigrateResetCommand extends AbstractCommand
         $repository = new DatabaseMigrationRepository($connection);
 
         $path = getcwd() . '/' . $input->getOption('path');
+
         return new Migrator($repository, $schema, $this->container, [$path]);
     }
 
@@ -91,7 +96,7 @@ final class MigrateResetCommand extends AbstractCommand
             'mysql' => "mysql:host={$host};port={$port};dbname={$database}",
             'pgsql' => "pgsql:host={$host};port={$port};dbname={$database}",
             'sqlite' => "sqlite:{$database}",
-            default => throw new \RuntimeException("Unsupported database driver: {$driver}"),
+            default => throw new RuntimeException("Unsupported database driver: {$driver}"),
         };
 
         return Connection::create($dsn, $username, $password, [

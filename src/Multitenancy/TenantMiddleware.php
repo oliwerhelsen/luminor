@@ -27,7 +27,7 @@ final class TenantMiddleware implements MiddlewareInterface
         private readonly TenantResolverInterface $resolver,
         private readonly TenantProviderInterface $provider,
         private readonly bool $required = true,
-        private readonly array $excludedPaths = []
+        private readonly array $excludedPaths = [],
     ) {
     }
 
@@ -39,6 +39,7 @@ final class TenantMiddleware implements MiddlewareInterface
         // Check if this path is excluded from tenant resolution
         if ($this->isExcludedPath($request)) {
             $next($request, $response);
+
             return;
         }
 
@@ -48,10 +49,12 @@ final class TenantMiddleware implements MiddlewareInterface
         if ($tenantIdentifier === null) {
             if ($this->required) {
                 $this->sendTenantNotFoundResponse($response, 'Tenant identifier not provided.');
+
                 return;
             }
 
             $next($request, $response);
+
             return;
         }
 
@@ -61,16 +64,19 @@ final class TenantMiddleware implements MiddlewareInterface
         if ($tenant === null) {
             if ($this->required) {
                 $this->sendTenantNotFoundResponse($response, sprintf('Tenant "%s" not found.', $tenantIdentifier));
+
                 return;
             }
 
             $next($request, $response);
+
             return;
         }
 
         // Check if tenant is active
-        if (!$tenant->isActive()) {
+        if (! $tenant->isActive()) {
             $this->sendTenantInactiveResponse($response, $tenant);
+
             return;
         }
 

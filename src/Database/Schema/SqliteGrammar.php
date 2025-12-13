@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Database\Schema;
 
+use RuntimeException;
+
 /**
  * SQLite Schema Grammar
  */
@@ -127,14 +129,14 @@ final class SqliteGrammar extends SchemaGrammar
         $type = $column->getType();
         $method = 'type' . ucfirst($type);
 
-        if (!method_exists($this, $method)) {
-            throw new \RuntimeException("Unknown column type: {$type}");
+        if (! method_exists($this, $method)) {
+            throw new RuntimeException("Unknown column type: {$type}");
         }
 
         $sql = $this->$method($column);
 
         // Add modifiers
-        if (!$column->isNullable()) {
+        if (! $column->isNullable()) {
             $sql .= ' NOT NULL';
         }
 

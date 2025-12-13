@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Auth;
 
 use RuntimeException;
+use Throwable;
 
 /**
  * Exception thrown when authentication fails or is required but missing.
@@ -14,7 +15,7 @@ final class AuthenticationException extends RuntimeException
     public function __construct(
         string $message = 'Unauthenticated.',
         int $code = 401,
-        ?\Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
     }

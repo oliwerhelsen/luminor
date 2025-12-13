@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Application\Bus;
 
-use RuntimeException;
 use Luminor\DDD\Application\CQRS\Query;
+use RuntimeException;
 
 /**
  * Exception thrown when no handler is found for a query.
@@ -20,7 +20,7 @@ final class QueryHandlerNotFoundException extends RuntimeException
     public static function forQuery(string $queryClass): self
     {
         return new self(
-            sprintf('No handler registered for query "%s"', $queryClass)
+            sprintf('No handler registered for query "%s"', $queryClass),
         );
     }
 }

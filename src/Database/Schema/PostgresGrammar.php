@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Database\Schema;
 
+use RuntimeException;
+
 /**
  * PostgreSQL Schema Grammar
  */
@@ -69,6 +71,7 @@ final class PostgresGrammar extends SchemaGrammar
     protected function typeString(Column $column): string
     {
         $length = $column->getAttributes()['length'] ?? 255;
+
         return "VARCHAR({$length})";
     }
 
@@ -96,6 +99,7 @@ final class PostgresGrammar extends SchemaGrammar
     {
         $precision = $column->getAttributes()['precision'] ?? 8;
         $scale = $column->getAttributes()['scale'] ?? 2;
+
         return "DECIMAL({$precision}, {$scale})";
     }
 
@@ -129,8 +133,8 @@ final class PostgresGrammar extends SchemaGrammar
         $type = $column->getType();
         $method = 'type' . ucfirst($type);
 
-        if (!method_exists($this, $method)) {
-            throw new \RuntimeException("Unknown column type: {$type}");
+        if (! method_exists($this, $method)) {
+            throw new RuntimeException("Unknown column type: {$type}");
         }
 
         $sql = $this->$method($column);
@@ -140,11 +144,12 @@ final class PostgresGrammar extends SchemaGrammar
             if ($type === 'bigInteger') {
                 return 'BIGSERIAL';
             }
+
             return 'SERIAL';
         }
 
         // Add modifiers
-        if (!$column->isNullable()) {
+        if (! $column->isNullable()) {
             $sql .= ' NOT NULL';
         }
 

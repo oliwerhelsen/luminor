@@ -19,8 +19,11 @@ interface QueryBusInterface
      * Dispatch a query to its handler.
      *
      * @template TResult
+     *
      * @param Query $query The query to dispatch
+     *
      * @return TResult The result from the query handler
+     *
      * @throws QueryHandlerNotFoundException If no handler is registered for the query
      */
     public function dispatch(Query $query): mixed;

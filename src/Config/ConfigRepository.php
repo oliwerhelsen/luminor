@@ -34,14 +34,14 @@ final class ConfigRepository
             return $this->items[$key];
         }
 
-        if (!str_contains($key, '.')) {
+        if (! str_contains($key, '.')) {
             return $default;
         }
 
         $value = $this->items;
 
         foreach (explode('.', $key) as $segment) {
-            if (!is_array($value) || !array_key_exists($segment, $value)) {
+            if (! is_array($value) || ! array_key_exists($segment, $value)) {
                 return $default;
             }
 
@@ -59,8 +59,9 @@ final class ConfigRepository
      */
     public function set(string $key, mixed $value): void
     {
-        if (!str_contains($key, '.')) {
+        if (! str_contains($key, '.')) {
             $this->items[$key] = $value;
+
             return;
         }
 
@@ -71,7 +72,7 @@ final class ConfigRepository
             if ($i === count($keys) - 1) {
                 $current[$segment] = $value;
             } else {
-                if (!isset($current[$segment]) || !is_array($current[$segment])) {
+                if (! isset($current[$segment]) || ! is_array($current[$segment])) {
                     $current[$segment] = [];
                 }
                 $current = &$current[$segment];
@@ -90,14 +91,14 @@ final class ConfigRepository
             return true;
         }
 
-        if (!str_contains($key, '.')) {
+        if (! str_contains($key, '.')) {
             return false;
         }
 
         $value = $this->items;
 
         foreach (explode('.', $key) as $segment) {
-            if (!is_array($value) || !array_key_exists($segment, $value)) {
+            if (! is_array($value) || ! array_key_exists($segment, $value)) {
                 return false;
             }
 
@@ -146,8 +147,9 @@ final class ConfigRepository
      */
     public function forget(string $key): void
     {
-        if (!str_contains($key, '.')) {
+        if (! str_contains($key, '.')) {
             unset($this->items[$key]);
+
             return;
         }
 
@@ -158,7 +160,7 @@ final class ConfigRepository
             if ($i === count($keys) - 1) {
                 unset($current[$segment]);
             } else {
-                if (!isset($current[$segment]) || !is_array($current[$segment])) {
+                if (! isset($current[$segment]) || ! is_array($current[$segment])) {
                     return;
                 }
                 $current = &$current[$segment];
@@ -176,7 +178,7 @@ final class ConfigRepository
     {
         $array = $this->get($key, []);
 
-        if (!is_array($array)) {
+        if (! is_array($array)) {
             $array = [];
         }
 
@@ -189,6 +191,7 @@ final class ConfigRepository
      * Get the configuration as a nested array section.
      *
      * @param string $key The section key
+     *
      * @return array<string, mixed>
      */
     public function getSection(string $key): array

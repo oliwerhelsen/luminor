@@ -4,13 +4,15 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Console\Commands;
 
+use Exception;
 use Luminor\DDD\Console\Input;
 use Luminor\DDD\Console\Output;
-use Luminor\DDD\Database\Migrations\Migrator;
-use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
-use Luminor\DDD\Database\Schema\Schema;
 use Luminor\DDD\Database\Connection;
+use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
+use Luminor\DDD\Database\Migrations\Migrator;
+use Luminor\DDD\Database\Schema\Schema;
 use PDO;
+use RuntimeException;
 
 /**
  * Migrate Status Command
@@ -35,15 +37,16 @@ final class MigrateStatusCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    public function execute(Input $input, Output $output): int
     {
         try {
             $migrator = $this->getMigrator($input);
             $connection = $this->getDatabaseConnection();
             $repository = new DatabaseMigrationRepository($connection);
 
-            if (!$repository->repositoryExists()) {
+            if (! $repository->repositoryExists()) {
                 $output->warning('Migration table does not exist. Run migrations first.');
+
                 return 0;
             }
 
@@ -52,6 +55,7 @@ final class MigrateStatusCommand extends AbstractCommand
 
             if (empty($allMigrations)) {
                 $output->info('No migrations found.');
+
                 return 0;
             }
 
@@ -73,11 +77,12 @@ final class MigrateStatusCommand extends AbstractCommand
             }));
             $pendingCount = count($allMigrations) - $runCount;
 
-            $output->info("Total: " . count($allMigrations) . " | Ran: {$runCount} | Pending: {$pendingCount}");
+            $output->info('Total: ' . count($allMigrations) . " | Ran: {$runCount} | Pending: {$pendingCount}");
 
             return 0;
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->error('Failed to get status: ' . $e->getMessage());
+
             return 1;
         }
     }
@@ -92,6 +97,7 @@ final class MigrateStatusCommand extends AbstractCommand
         $repository = new DatabaseMigrationRepository($connection);
 
         $path = getcwd() . '/' . $input->getOption('path');
+
         return new Migrator($repository, $schema, $this->container, [$path]);
     }
 
@@ -111,7 +117,7 @@ final class MigrateStatusCommand extends AbstractCommand
             'mysql' => "mysql:host={$host};port={$port};dbname={$database}",
             'pgsql' => "pgsql:host={$host};port={$port};dbname={$database}",
             'sqlite' => "sqlite:{$database}",
-            default => throw new \RuntimeException("Unsupported database driver: {$driver}"),
+            default => throw new RuntimeException("Unsupported database driver: {$driver}"),
         };
 
         return Connection::create($dsn, $username, $password, [
@@ -129,6 +135,7 @@ final class MigrateStatusCommand extends AbstractCommand
         $className = preg_replace('/^\d{4}_\d{2}_\d{2}_\d{6}_/', '', $filename);
         $className = str_replace('_', ' ', $className);
         $className = ucwords($className);
+
         return str_replace(' ', '', $className);
     }
 }

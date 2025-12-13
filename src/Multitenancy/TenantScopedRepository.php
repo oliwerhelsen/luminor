@@ -9,6 +9,7 @@ use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
 use Luminor\DDD\Domain\Repository\Criteria;
 use Luminor\DDD\Domain\Repository\Filter\EqualsFilter;
 use Luminor\DDD\Domain\Repository\RepositoryInterface;
+use ReflectionClass;
 
 /**
  * Repository decorator that automatically scopes all operations to the current tenant.
@@ -19,6 +20,7 @@ use Luminor\DDD\Domain\Repository\RepositoryInterface;
  * - Access to entities from other tenants is prevented
  *
  * @template T of AggregateRoot
+ *
  * @implements RepositoryInterface<T>
  */
 final class TenantScopedRepository implements RepositoryInterface
@@ -29,7 +31,7 @@ final class TenantScopedRepository implements RepositoryInterface
      */
     public function __construct(
         private readonly RepositoryInterface $innerRepository,
-        private readonly string $tenantIdField = 'tenantId'
+        private readonly string $tenantIdField = 'tenantId',
     ) {
     }
 
@@ -45,7 +47,7 @@ final class TenantScopedRepository implements RepositoryInterface
         }
 
         // Verify entity belongs to current tenant
-        if (!$this->belongsToCurrentTenant($entity)) {
+        if (! $this->belongsToCurrentTenant($entity)) {
             return null;
         }
 
@@ -61,7 +63,7 @@ final class TenantScopedRepository implements RepositoryInterface
 
         if ($entity === null) {
             throw new AggregateNotFoundException(
-                sprintf('Aggregate with ID "%s" not found in current tenant context.', $id)
+                sprintf('Aggregate with ID "%s" not found in current tenant context.', $id),
             );
         }
 
@@ -82,6 +84,7 @@ final class TenantScopedRepository implements RepositoryInterface
     public function findByCriteria(Criteria $criteria): array
     {
         $tenantCriteria = $this->applyTenantFilter($criteria);
+
         return $this->innerRepository->findByCriteria($tenantCriteria);
     }
 
@@ -99,6 +102,7 @@ final class TenantScopedRepository implements RepositoryInterface
     public function countByCriteria(Criteria $criteria): int
     {
         $tenantCriteria = $this->applyTenantFilter($criteria);
+
         return $this->innerRepository->countByCriteria($tenantCriteria);
     }
 
@@ -125,9 +129,9 @@ final class TenantScopedRepository implements RepositoryInterface
     public function update(AggregateRoot $aggregate): void
     {
         // Verify entity belongs to current tenant
-        if (!$this->belongsToCurrentTenant($aggregate)) {
+        if (! $this->belongsToCurrentTenant($aggregate)) {
             throw new TenantAccessDeniedException(
-                'Cannot update an entity that belongs to a different tenant.'
+                'Cannot update an entity that belongs to a different tenant.',
             );
         }
 
@@ -140,9 +144,9 @@ final class TenantScopedRepository implements RepositoryInterface
     public function remove(AggregateRoot $aggregate): void
     {
         // Verify entity belongs to current tenant
-        if (!$this->belongsToCurrentTenant($aggregate)) {
+        if (! $this->belongsToCurrentTenant($aggregate)) {
             throw new TenantAccessDeniedException(
-                'Cannot remove an entity that belongs to a different tenant.'
+                'Cannot remove an entity that belongs to a different tenant.',
             );
         }
 
@@ -207,10 +211,11 @@ final class TenantScopedRepository implements RepositoryInterface
         }
 
         // Try reflection for tenantId property
-        $reflection = new \ReflectionClass($entity);
+        $reflection = new ReflectionClass($entity);
 
         if ($reflection->hasProperty($this->tenantIdField)) {
             $property = $reflection->getProperty($this->tenantIdField);
+
             return $property->getValue($entity) === $tenantId;
         }
 
@@ -223,7 +228,7 @@ final class TenantScopedRepository implements RepositoryInterface
      */
     private function assignTenantIfNeeded(AggregateRoot $aggregate): void
     {
-        if (!method_exists($aggregate, 'setTenantId')) {
+        if (! method_exists($aggregate, 'setTenantId')) {
             return;
         }
 
@@ -234,7 +239,7 @@ final class TenantScopedRepository implements RepositoryInterface
 
             if ($tenantId !== null && $aggregate->getTenantId() !== $tenantId) {
                 throw new TenantAccessDeniedException(
-                    'Cannot add an entity that belongs to a different tenant.'
+                    'Cannot add an entity that belongs to a different tenant.',
                 );
             }
 

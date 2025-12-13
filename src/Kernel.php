@@ -31,7 +31,9 @@ class Kernel
     protected static ?Kernel $instance = null;
 
     protected ContainerInterface $container;
+
     protected ConfigRepository $config;
+
     protected bool $booted = false;
 
     /** @var array<ServiceProviderInterface> */
@@ -52,7 +54,7 @@ class Kernel
      */
     public function __construct(
         protected readonly string $basePath,
-        ?ContainerInterface $container = null
+        ?ContainerInterface $container = null,
     ) {
         $this->container = $container ?? new Container();
         $this->config = new ConfigRepository();
@@ -109,7 +111,7 @@ class Kernel
         $envFile = $this->basePath . '/.env';
 
         // Only load if phpdotenv is available and .env exists
-        if (!class_exists(\Dotenv\Dotenv::class) || !file_exists($envFile)) {
+        if (! class_exists(\Dotenv\Dotenv::class) || ! file_exists($envFile)) {
             return;
         }
 
@@ -159,7 +161,7 @@ class Kernel
     {
         $providers = $this->config->get('app.providers', []);
 
-        if (!is_array($providers)) {
+        if (! is_array($providers)) {
             return;
         }
 
@@ -172,7 +174,6 @@ class Kernel
      * Register a service provider.
      *
      * @param ServiceProviderInterface|class-string<ServiceProviderInterface> $provider
-     * @return ServiceProviderInterface
      */
     public function register(ServiceProviderInterface|string $provider): ServiceProviderInterface
     {
@@ -192,6 +193,7 @@ class Kernel
             foreach ($provider->provides() as $service) {
                 $this->deferredProviders[$service] = $provider;
             }
+
             return $provider;
         }
 
@@ -239,7 +241,7 @@ class Kernel
     {
         $modulePath = $this->config->get('app.module_path', $this->basePath . '/src/Modules');
 
-        if (!is_dir($modulePath)) {
+        if (! is_dir($modulePath)) {
             return;
         }
 
@@ -260,7 +262,7 @@ class Kernel
      */
     public function resolveDeferredProvider(string $service): void
     {
-        if (!isset($this->deferredProviders[$service])) {
+        if (! isset($this->deferredProviders[$service])) {
             return;
         }
 
@@ -364,7 +366,9 @@ class Kernel
      * Make a service from the container.
      *
      * @template T of object
+     *
      * @param class-string<T> $abstract
+     *
      * @return T
      */
     public function make(string $abstract): object

@@ -8,6 +8,7 @@ use Luminor\DDD\Application\Bus\QueryBusInterface;
 use Luminor\DDD\Application\Bus\QueryHandlerInterface;
 use Luminor\DDD\Application\Bus\QueryHandlerNotFoundException;
 use Luminor\DDD\Application\CQRS\Query;
+use RuntimeException;
 
 /**
  * Simple in-memory query bus implementation.
@@ -26,7 +27,7 @@ final class SimpleQueryBus implements QueryBusInterface
     private array $middlewares = [];
 
     public function __construct(
-        private readonly ?HandlerResolver $resolver = null
+        private readonly ?HandlerResolver $resolver = null,
     ) {
     }
 
@@ -41,7 +42,7 @@ final class SimpleQueryBus implements QueryBusInterface
         $handler = $this->resolveHandler($queryClass);
 
         // Execute through middleware pipeline
-        $execute = fn(Query $q) => $handler->handle($q);
+        $execute = fn (Query $q) => $handler->handle($q);
 
         return $this->executeWithMiddleware($query, $execute);
     }
@@ -70,8 +71,8 @@ final class SimpleQueryBus implements QueryBusInterface
      */
     public function registerHandler(string $queryClass, string $handlerClass): void
     {
-        $this->lazyHandlers[$queryClass] = fn() => $this->resolver?->resolve($handlerClass)
-            ?? throw new \RuntimeException('HandlerResolver is required for class-based registration');
+        $this->lazyHandlers[$queryClass] = fn () => $this->resolver?->resolve($handlerClass)
+            ?? throw new RuntimeException('HandlerResolver is required for class-based registration');
     }
 
     /**
@@ -107,6 +108,7 @@ final class SimpleQueryBus implements QueryBusInterface
             $handler = ($this->lazyHandlers[$queryClass])();
             $this->handlers[$queryClass] = $handler;
             unset($this->lazyHandlers[$queryClass]);
+
             return $handler;
         }
 
@@ -126,8 +128,8 @@ final class SimpleQueryBus implements QueryBusInterface
 
         $pipeline = array_reduce(
             array_reverse($this->middlewares),
-            fn(callable $next, MiddlewareInterface $middleware) => fn(Query $q) => $middleware->handle($q, $next),
-            $finalHandler
+            fn (callable $next, MiddlewareInterface $middleware) => fn (Query $q) => $middleware->handle($q, $next),
+            $finalHandler,
         );
 
         return $pipeline($query);

@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Luminor\DDD\Tests\Unit\Domain;
 
 use InvalidArgumentException;
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\Enumeration;
+use PHPUnit\Framework\TestCase;
 
 final class EnumerationTest extends TestCase
 {
@@ -153,8 +153,11 @@ final class EnumerationTest extends TestCase
 final class OrderStatus extends Enumeration
 {
     public const PENDING = 'pending';
+
     public const PROCESSING = 'processing';
+
     public const SHIPPED = 'shipped';
+
     public const DELIVERED = 'delivered';
 }
 
@@ -164,6 +167,8 @@ final class OrderStatus extends Enumeration
 final class Priority extends Enumeration
 {
     public const LOW = 1;
+
     public const MEDIUM = 2;
+
     public const HIGH = 3;
 }

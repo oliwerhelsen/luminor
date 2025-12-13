@@ -16,6 +16,7 @@ use Luminor\DDD\Console\Output;
 abstract class AbstractCommand implements CommandInterface
 {
     protected string $name = '';
+
     protected string $description = '';
 
     /** @var array<string, array{description?: string, required?: bool, default?: string|null}> */
@@ -36,6 +37,7 @@ abstract class AbstractCommand implements CommandInterface
      *
      * @param Input $input The command input
      * @param Output $output The console output
+     *
      * @return int Exit code (0 for success, non-zero for failure)
      */
     abstract protected function handle(Input $input, Output $output): int;
@@ -89,8 +91,9 @@ abstract class AbstractCommand implements CommandInterface
     {
         // Validate required arguments
         foreach ($this->arguments as $name => $definition) {
-            if (($definition['required'] ?? false) && !$input->hasArgument($name)) {
+            if (($definition['required'] ?? false) && ! $input->hasArgument($name)) {
                 $output->error(sprintf('Missing required argument: %s', $name));
+
                 return 1;
             }
         }
@@ -104,6 +107,7 @@ abstract class AbstractCommand implements CommandInterface
     protected function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -113,6 +117,7 @@ abstract class AbstractCommand implements CommandInterface
     protected function setDescription(string $description): self
     {
         $this->description = $description;
+
         return $this;
     }
 
@@ -124,6 +129,7 @@ abstract class AbstractCommand implements CommandInterface
     protected function addArgument(string $name, array $definition = []): self
     {
         $this->arguments[$name] = $definition;
+
         return $this;
     }
 
@@ -135,6 +141,7 @@ abstract class AbstractCommand implements CommandInterface
     protected function addOption(string $name, array $definition = []): self
     {
         $this->options[$name] = $definition;
+
         return $this;
     }
 }

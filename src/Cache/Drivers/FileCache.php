@@ -19,8 +19,8 @@ final class FileCache implements CacheInterface
     {
         $this->path = rtrim($path, '/');
 
-        if (!is_dir($this->path)) {
-            mkdir($this->path, 0755, true);
+        if (! is_dir($this->path)) {
+            mkdir($this->path, 0o755, true);
         }
     }
 
@@ -31,7 +31,7 @@ final class FileCache implements CacheInterface
     {
         $file = $this->getFilePath($key);
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return $default;
         }
 
@@ -43,12 +43,13 @@ final class FileCache implements CacheInterface
 
         $data = unserialize($content);
 
-        if (!is_array($data) || !isset($data['expires'], $data['value'])) {
+        if (! is_array($data) || ! isset($data['expires'], $data['value'])) {
             return $default;
         }
 
         if ($data['expires'] !== 0 && $data['expires'] < time()) {
             $this->forget($key);
+
             return $default;
         }
 
@@ -131,7 +132,7 @@ final class FileCache implements CacheInterface
     public function putMany(array $values, ?int $ttl = null): bool
     {
         foreach ($values as $key => $value) {
-            if (!$this->put($key, $value, $ttl)) {
+            if (! $this->put($key, $value, $ttl)) {
                 return false;
             }
         }
@@ -146,7 +147,7 @@ final class FileCache implements CacheInterface
     {
         $current = $this->get($key, 0);
 
-        if (!is_numeric($current)) {
+        if (! is_numeric($current)) {
             return false;
         }
 

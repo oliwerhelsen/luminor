@@ -16,7 +16,7 @@ final class ValidationResult
      */
     private function __construct(
         private readonly bool $valid,
-        private readonly array $errors
+        private readonly array $errors,
     ) {
     }
 
@@ -59,7 +59,7 @@ final class ValidationResult
      */
     public function isInvalid(): bool
     {
-        return !$this->valid;
+        return ! $this->valid;
     }
 
     /**
@@ -103,6 +103,7 @@ final class ValidationResult
                 $messages[] = $message;
             }
         }
+
         return $messages;
     }
 
@@ -116,6 +117,7 @@ final class ValidationResult
                 return $fieldErrors[0];
             }
         }
+
         return null;
     }
 
@@ -130,7 +132,7 @@ final class ValidationResult
 
         $mergedErrors = $this->errors;
         foreach ($other->errors as $field => $messages) {
-            if (!isset($mergedErrors[$field])) {
+            if (! isset($mergedErrors[$field])) {
                 $mergedErrors[$field] = [];
             }
             $mergedErrors[$field] = array_merge($mergedErrors[$field], $messages);
@@ -145,7 +147,7 @@ final class ValidationResult
     public function addError(string $field, string $message): self
     {
         $errors = $this->errors;
-        if (!isset($errors[$field])) {
+        if (! isset($errors[$field])) {
             $errors[$field] = [];
         }
         $errors[$field][] = $message;

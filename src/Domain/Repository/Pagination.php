@@ -12,12 +12,14 @@ use InvalidArgumentException;
 final class Pagination
 {
     public const DEFAULT_PAGE = 1;
+
     public const DEFAULT_PER_PAGE = 25;
+
     public const MAX_PER_PAGE = 100;
 
     private function __construct(
         private readonly int $page,
-        private readonly int $perPage
+        private readonly int $perPage,
     ) {
     }
 
@@ -38,7 +40,7 @@ final class Pagination
 
         if ($perPage > self::MAX_PER_PAGE) {
             throw new InvalidArgumentException(
-                sprintf('Per page cannot exceed %d', self::MAX_PER_PAGE)
+                sprintf('Per page cannot exceed %d', self::MAX_PER_PAGE),
             );
         }
 
@@ -62,11 +64,12 @@ final class Pagination
 
         if ($limit > self::MAX_PER_PAGE) {
             throw new InvalidArgumentException(
-                sprintf('Limit cannot exceed %d', self::MAX_PER_PAGE)
+                sprintf('Limit cannot exceed %d', self::MAX_PER_PAGE),
             );
         }
 
         $page = (int) floor($offset / $limit) + 1;
+
         return new self($page, $limit);
     }
 

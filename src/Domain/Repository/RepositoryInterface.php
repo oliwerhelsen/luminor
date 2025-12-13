@@ -40,8 +40,6 @@ interface RepositoryInterface extends ReadRepositoryInterface
 
     /**
      * Remove an aggregate by its identifier.
-     *
-     * @param mixed $id
      */
     public function removeById(mixed $id): void;
 }

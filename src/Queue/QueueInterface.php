@@ -16,6 +16,7 @@ interface QueueInterface
      *
      * @param JobInterface $job The job to queue
      * @param string|null $queue The queue name (null for default)
+     *
      * @return string|int The job ID
      */
     public function push(JobInterface $job, ?string $queue = null): string|int;
@@ -26,6 +27,7 @@ interface QueueInterface
      * @param JobInterface $job The job to queue
      * @param int $delay Delay in seconds
      * @param string|null $queue The queue name (null for default)
+     *
      * @return string|int The job ID
      */
     public function later(JobInterface $job, int $delay, ?string $queue = null): string|int;
@@ -34,6 +36,7 @@ interface QueueInterface
      * Pop the next job from the queue.
      *
      * @param string|null $queue The queue name (null for default)
+     *
      * @return QueuedJob|null The next job or null if empty
      */
     public function pop(?string $queue = null): ?QueuedJob;
@@ -58,7 +61,6 @@ interface QueueInterface
      * Get the number of jobs in the queue.
      *
      * @param string|null $queue The queue name (null for default)
-     * @return int
      */
     public function size(?string $queue = null): int;
 
@@ -66,14 +68,13 @@ interface QueueInterface
      * Clear all jobs from a queue.
      *
      * @param string|null $queue The queue name (null for default)
+     *
      * @return int Number of jobs cleared
      */
     public function clear(?string $queue = null): int;
 
     /**
      * Get the connection name.
-     *
-     * @return string
      */
     public function getConnectionName(): string;
 }

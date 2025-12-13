@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http\Middleware;
 
-use Luminor\DDD\Session\SessionInterface;
-use Luminor\DDD\Security\Csrf\CsrfToken;
 use Luminor\DDD\Security\Csrf\CsrfException;
+use Luminor\DDD\Security\Csrf\CsrfToken;
+use Luminor\DDD\Session\SessionInterface;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 
@@ -38,6 +38,7 @@ final class CsrfMiddleware implements MiddlewareInterface
     public function except(array $uris): self
     {
         $this->except = array_merge($this->except, $uris);
+
         return $this;
     }
 
@@ -47,12 +48,12 @@ final class CsrfMiddleware implements MiddlewareInterface
     public function handle(Request $request, Response $response, callable $next): mixed
     {
         // Ensure session is started
-        if (!$this->session->isStarted()) {
+        if (! $this->session->isStarted()) {
             $this->session->start();
         }
 
         // Generate token if not exists
-        if (!$this->session->has('_csrf_token')) {
+        if (! $this->session->has('_csrf_token')) {
             CsrfToken::regenerate($this->session);
         }
 
@@ -72,7 +73,7 @@ final class CsrfMiddleware implements MiddlewareInterface
         $method = $request->getMethod();
 
         // Only protect specific HTTP methods
-        if (!in_array(strtoupper($method), $this->protectedMethods, true)) {
+        if (! in_array(strtoupper($method), $this->protectedMethods, true)) {
             return false;
         }
 
@@ -97,7 +98,7 @@ final class CsrfMiddleware implements MiddlewareInterface
         $token = $this->getTokenFromRequest($request);
         $sessionToken = CsrfToken::getFromSession($this->session);
 
-        if ($sessionToken === null || !CsrfToken::verify($token, $sessionToken)) {
+        if ($sessionToken === null || ! CsrfToken::verify($token, $sessionToken)) {
             throw new CsrfException();
         }
     }

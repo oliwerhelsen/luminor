@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Module;
 
 use Luminor\DDD\Container\ContainerInterface;
+use ReflectionClass;
 
 /**
  * Abstract base class for modules.
@@ -33,7 +34,7 @@ abstract class AbstractModule implements ModuleInterface
             version: $this->getVersion(),
             description: $this->getDescription(),
             namespace: $this->getNamespace(),
-            path: $this->getPath()
+            path: $this->getPath(),
         );
     }
 
@@ -71,7 +72,8 @@ abstract class AbstractModule implements ModuleInterface
      */
     public function getPath(): string
     {
-        $reflection = new \ReflectionClass($this);
+        $reflection = new ReflectionClass($this);
+
         return dirname($reflection->getFileName());
     }
 

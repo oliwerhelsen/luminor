@@ -11,7 +11,7 @@ final class OrFilter extends Filter
 {
     public function __construct(
         private readonly Filter $left,
-        private readonly Filter $right
+        private readonly Filter $right,
     ) {
     }
 

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Logging;
 
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
+use Stringable;
 
 /**
  * Extended logger interface for Luminor applications.
@@ -18,14 +19,11 @@ interface LoggerInterface extends PsrLoggerInterface
      * Get a logger instance for a specific channel.
      *
      * @param string $channel The channel name
-     * @return LoggerInterface
      */
     public function channel(string $channel): LoggerInterface;
 
     /**
      * Get the current channel name.
-     *
-     * @return string
      */
     public function getChannel(): string;
 
@@ -33,9 +31,8 @@ interface LoggerInterface extends PsrLoggerInterface
      * Log a message with context and return $this for chaining.
      *
      * @param string $level The log level
-     * @param string|\Stringable $message The log message
+     * @param string|Stringable $message The log message
      * @param array<string, mixed> $context Additional context data
-     * @return void
      */
-    public function write(string $level, string|\Stringable $message, array $context = []): void;
+    public function write(string $level, string|Stringable $message, array $context = []): void;
 }

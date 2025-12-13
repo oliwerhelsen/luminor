@@ -20,6 +20,7 @@ interface ValidatorInterface
      * Validate a command.
      *
      * @param TCommand $command The command to validate
+     *
      * @return ValidationResult The validation result
      */
     public function validate(Command $command): ValidationResult;

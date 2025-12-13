@@ -10,6 +10,7 @@ use Luminor\DDD\Queue\QueuedJob;
 use Luminor\DDD\Queue\QueueInterface;
 use PDO;
 use RuntimeException;
+use Throwable;
 
 /**
  * Database-backed queue driver.
@@ -33,9 +34,13 @@ use RuntimeException;
 final class DatabaseQueue implements QueueInterface
 {
     private ?PDO $pdo = null;
+
     private string $table;
+
     private string $defaultQueue;
+
     private int $retryAfter;
+
     private string $connectionName;
 
     /** @var array<string, mixed> */
@@ -43,10 +48,10 @@ final class DatabaseQueue implements QueueInterface
 
     /**
      * @param array<string, mixed> $config Configuration options:
-     *                                      - connection: PDO connection or DSN
-     *                                      - table: Jobs table name (default: jobs)
-     *                                      - queue: Default queue name (default: default)
-     *                                      - retry_after: Seconds before a reserved job is released (default: 90)
+     *                                     - connection: PDO connection or DSN
+     *                                     - table: Jobs table name (default: jobs)
+     *                                     - queue: Default queue name (default: default)
+     *                                     - retry_after: Seconds before a reserved job is released (default: 90)
      */
     public function __construct(array $config = [])
     {
@@ -75,7 +80,7 @@ final class DatabaseQueue implements QueueInterface
         if ($dsn === null) {
             throw new RuntimeException(
                 'Database queue requires a PDO instance or DSN. ' .
-                'Set "pdo" or "dsn" in the queue configuration.'
+                'Set "pdo" or "dsn" in the queue configuration.',
             );
         }
 
@@ -112,13 +117,13 @@ final class DatabaseQueue implements QueueInterface
      */
     private function pushToDatabase(JobInterface $job, ?string $queue, int $delay): string|int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
         $payload = $this->createPayload($job);
         $availableAt = time() + $delay;
 
         $sql = sprintf(
             'INSERT INTO %s (queue, payload, attempts, available_at, created_at) VALUES (?, ?, 0, ?, ?)',
-            $this->table
+            $this->table,
         );
 
         $pdo = $this->getPdo();
@@ -133,7 +138,7 @@ final class DatabaseQueue implements QueueInterface
      */
     public function pop(?string $queue = null): ?QueuedJob
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
         $pdo = $this->getPdo();
 
         // Start transaction for atomic pop
@@ -143,22 +148,23 @@ final class DatabaseQueue implements QueueInterface
             // Find the next available job
             $sql = sprintf(
                 'SELECT * FROM %s WHERE queue = ? AND available_at <= ? AND (reserved_at IS NULL OR reserved_at <= ?) ORDER BY id ASC LIMIT 1 FOR UPDATE',
-                $this->table
+                $this->table,
             );
 
             $stmt = $pdo->prepare($sql);
             $stmt->execute([$queue, time(), time() - $this->retryAfter]);
             $row = $stmt->fetch();
 
-            if (!$row) {
+            if (! $row) {
                 $pdo->rollBack();
+
                 return null;
             }
 
             // Reserve the job
             $updateSql = sprintf(
                 'UPDATE %s SET reserved_at = ?, attempts = attempts + 1 WHERE id = ?',
-                $this->table
+                $this->table,
             );
             $updateStmt = $pdo->prepare($updateSql);
             $updateStmt->execute([time(), $row['id']]);
@@ -166,8 +172,9 @@ final class DatabaseQueue implements QueueInterface
             $pdo->commit();
 
             return $this->createQueuedJob($row);
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $pdo->rollBack();
+
             throw $e;
         }
     }
@@ -189,7 +196,7 @@ final class DatabaseQueue implements QueueInterface
     {
         $sql = sprintf(
             'UPDATE %s SET reserved_at = NULL, available_at = ? WHERE id = ?',
-            $this->table
+            $this->table,
         );
 
         $stmt = $this->getPdo()->prepare($sql);
@@ -201,7 +208,7 @@ final class DatabaseQueue implements QueueInterface
      */
     public function size(?string $queue = null): int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
 
         $sql = sprintf('SELECT COUNT(*) FROM %s WHERE queue = ?', $this->table);
         $stmt = $this->getPdo()->prepare($sql);
@@ -215,7 +222,7 @@ final class DatabaseQueue implements QueueInterface
      */
     public function clear(?string $queue = null): int
     {
-        $queue = $queue ?? $this->defaultQueue;
+        $queue ??= $this->defaultQueue;
 
         $sql = sprintf('DELETE FROM %s WHERE queue = ?', $this->table);
         $stmt = $this->getPdo()->prepare($sql);
@@ -250,11 +257,11 @@ final class DatabaseQueue implements QueueInterface
         $payload = json_decode($row['payload'], true, 512, JSON_THROW_ON_ERROR);
         $jobClass = $payload['class'];
 
-        if (!class_exists($jobClass)) {
+        if (! class_exists($jobClass)) {
             throw new RuntimeException(sprintf('Job class [%s] not found.', $jobClass));
         }
 
-        if (!is_subclass_of($jobClass, JobInterface::class)) {
+        if (! is_subclass_of($jobClass, JobInterface::class)) {
             throw new RuntimeException(sprintf('Job class [%s] must implement JobInterface.', $jobClass));
         }
 

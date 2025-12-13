@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Queue;
 
+use DateTimeImmutable;
+
 /**
  * Represents a job that has been pulled from the queue.
  *
@@ -17,7 +19,7 @@ final class QueuedJob
      * @param JobInterface $job The actual job instance
      * @param string $queue The queue name
      * @param int $attempts Number of times this job has been attempted
-     * @param \DateTimeImmutable $reservedAt When the job was reserved
+     * @param DateTimeImmutable $reservedAt When the job was reserved
      * @param array<string, mixed> $rawPayload The original payload data
      */
     public function __construct(
@@ -25,7 +27,7 @@ final class QueuedJob
         public readonly JobInterface $job,
         public readonly string $queue,
         public readonly int $attempts,
-        public readonly \DateTimeImmutable $reservedAt,
+        public readonly DateTimeImmutable $reservedAt,
         public readonly array $rawPayload = [],
     ) {
     }
@@ -85,6 +87,7 @@ final class QueuedJob
 
         // Exponential backoff - get the appropriate delay for this attempt
         $index = min($this->attempts - 1, count($backoff) - 1);
+
         return $backoff[$index] ?? 0;
     }
 
@@ -100,6 +103,7 @@ final class QueuedJob
         }
 
         $elapsed = time() - $this->reservedAt->getTimestamp();
+
         return $elapsed >= $timeout;
     }
 }

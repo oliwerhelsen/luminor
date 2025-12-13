@@ -16,7 +16,9 @@ use Utopia\Http\Response;
 abstract class AbstractAuthMiddleware implements AuthMiddlewareInterface
 {
     protected bool $isAuthenticated = false;
+
     protected mixed $authenticatedUserId = null;
+
     protected mixed $authenticatedUser = null;
 
     /**
@@ -34,6 +36,7 @@ abstract class AbstractAuthMiddleware implements AuthMiddlewareInterface
     public function excludeRoutes(array $routes): self
     {
         $this->excludedRoutes = $routes;
+
         return $this;
     }
 
@@ -47,12 +50,14 @@ abstract class AbstractAuthMiddleware implements AuthMiddlewareInterface
         // Skip authentication for excluded routes
         if ($this->isExcludedRoute($currentRoute)) {
             $next($request, $response);
+
             return;
         }
 
         // Attempt authentication
-        if (!$this->authenticate($request)) {
+        if (! $this->authenticate($request)) {
             $this->respondUnauthorized($response);
+
             return;
         }
 

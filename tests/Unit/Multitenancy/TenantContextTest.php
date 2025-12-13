@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Multitenancy;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Multitenancy\TenantContext;
 use Luminor\DDD\Multitenancy\TenantInterface;
 use Luminor\DDD\Multitenancy\TenantNotResolvedException;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class TenantContextTest extends TestCase
 {
@@ -114,9 +115,9 @@ final class TenantContextTest extends TestCase
 
         try {
             TenantContext::runAs($tenant2, function () {
-                throw new \RuntimeException('Test exception');
+                throw new RuntimeException('Test exception');
             });
-        } catch (\RuntimeException) {
+        } catch (RuntimeException) {
             // Expected
         }
 
@@ -144,9 +145,9 @@ final class TenantContextTest extends TestCase
 
         try {
             TenantContext::runWithoutTenant(function () {
-                throw new \RuntimeException('Test exception');
+                throw new RuntimeException('Test exception');
             });
-        } catch (\RuntimeException) {
+        } catch (RuntimeException) {
             // Expected
         }
 
@@ -155,10 +156,10 @@ final class TenantContextTest extends TestCase
 
     private function createTenant(string $id, string $slug): TenantInterface
     {
-        return new class($id, $slug) implements TenantInterface {
+        return new class ($id, $slug) implements TenantInterface {
             public function __construct(
                 private readonly string $id,
-                private readonly string $slug
+                private readonly string $slug,
             ) {
             }
 

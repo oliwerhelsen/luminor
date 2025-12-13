@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Storage;
 
+use InvalidArgumentException;
 use Luminor\DDD\Storage\Drivers\LocalStorage;
 
 /**
@@ -14,8 +15,10 @@ use Luminor\DDD\Storage\Drivers\LocalStorage;
 final class StorageManager implements StorageInterface
 {
     private StorageInterface $driver;
+
     /** @var array<string, StorageInterface> */
     private array $disks = [];
+
     private string $defaultDisk = 'local';
 
     public function __construct(?StorageInterface $driver = null)
@@ -36,8 +39,8 @@ final class StorageManager implements StorageInterface
      */
     public function disk(string $name): StorageInterface
     {
-        if (!isset($this->disks[$name])) {
-            throw new \InvalidArgumentException("Storage disk [{$name}] not found.");
+        if (! isset($this->disks[$name])) {
+            throw new InvalidArgumentException("Storage disk [{$name}] not found.");
         }
 
         return $this->disks[$name];
@@ -49,6 +52,7 @@ final class StorageManager implements StorageInterface
     public function extend(string $name, StorageInterface $disk): self
     {
         $this->disks[$name] = $disk;
+
         return $this;
     }
 
@@ -57,12 +61,13 @@ final class StorageManager implements StorageInterface
      */
     public function setDefaultDisk(string $disk): self
     {
-        if (!isset($this->disks[$disk])) {
-            throw new \InvalidArgumentException("Storage disk [{$disk}] not found.");
+        if (! isset($this->disks[$disk])) {
+            throw new InvalidArgumentException("Storage disk [{$disk}] not found.");
         }
 
         $this->defaultDisk = $disk;
         $this->driver = $this->disks[$disk];
+
         return $this;
     }
 

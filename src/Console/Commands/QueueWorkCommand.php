@@ -9,6 +9,7 @@ use Luminor\DDD\Console\Output;
 use Luminor\DDD\Container\ContainerInterface;
 use Luminor\DDD\Queue\QueueManager;
 use Luminor\DDD\Queue\Worker;
+use Throwable;
 
 /**
  * Command to process queued jobs.
@@ -72,6 +73,7 @@ final class QueueWorkCommand extends AbstractCommand
     {
         if ($this->container === null) {
             $output->error('Container not set. This command requires dependency injection.');
+
             return 1;
         }
 
@@ -86,7 +88,7 @@ final class QueueWorkCommand extends AbstractCommand
 
         $output->info('Starting queue worker...');
         $output->newLine();
-        $output->writeln("  Connection: <comment>" . ($connection ?? 'default') . "</comment>");
+        $output->writeln('  Connection: <comment>' . ($connection ?? 'default') . '</comment>');
         $output->writeln("  Queue: <comment>{$queue}</comment>");
         $output->writeln("  Sleep: <comment>{$sleep}s</comment>");
         $output->writeln("  Tries: <comment>{$tries}</comment>");
@@ -96,9 +98,9 @@ final class QueueWorkCommand extends AbstractCommand
 
         /** @var QueueManager $manager */
         $manager = $this->container->get(QueueManager::class);
-        
+
         $queueInstance = $connection !== null && $connection !== false
-            ? $manager->connection((string) $connection) 
+            ? $manager->connection((string) $connection)
             : $manager->connection();
 
         $worker = new Worker($queueInstance, $this->container);
@@ -106,13 +108,13 @@ final class QueueWorkCommand extends AbstractCommand
         // Register signal handlers for graceful shutdown
         if (extension_loaded('pcntl')) {
             pcntl_async_signals(true);
-            
+
             pcntl_signal(SIGTERM, function () use ($worker, $output) {
                 $output->newLine();
                 $output->comment('Received SIGTERM, shutting down gracefully...');
                 $worker->stop();
             });
-            
+
             pcntl_signal(SIGINT, function () use ($worker, $output) {
                 $output->newLine();
                 $output->comment('Received SIGINT, shutting down gracefully...');
@@ -144,6 +146,7 @@ final class QueueWorkCommand extends AbstractCommand
 
         if ($job === null) {
             $output->comment('No jobs available.');
+
             return;
         }
 
@@ -152,7 +155,7 @@ final class QueueWorkCommand extends AbstractCommand
         try {
             $worker->process($job, $tries, $timeout);
             $output->writeln("<info>Processed:</info> {$job->getName()} [{$job->getId()}]");
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             $output->error("Failed: {$job->getName()} [{$job->getId()}]");
             $output->writeln("  <error>{$e->getMessage()}</error>");
         }
@@ -177,6 +180,7 @@ final class QueueWorkCommand extends AbstractCommand
             // Check for restart signal
             if ($this->shouldRestart($lastRestart)) {
                 $output->comment('Worker restart signal received, exiting...');
+
                 return;
             }
 
@@ -185,6 +189,7 @@ final class QueueWorkCommand extends AbstractCommand
             if ($job === null) {
                 if ($stopWhenEmpty) {
                     $output->comment('Queue is empty, stopping...');
+
                     return;
                 }
 
@@ -197,7 +202,7 @@ final class QueueWorkCommand extends AbstractCommand
             try {
                 $worker->process($job, $tries, $timeout);
                 $output->writeln("<info>Processed:</info> {$job->getName()} [{$job->getId()}]");
-            } catch (\Throwable $e) {
+            } catch (Throwable $e) {
                 $output->error("Failed: {$job->getName()} [{$job->getId()}]");
                 $output->writeln("  <error>{$e->getMessage()}</error>");
             }
@@ -205,6 +210,7 @@ final class QueueWorkCommand extends AbstractCommand
             // Memory check
             if ($this->memoryExceeded($memory)) {
                 $output->comment('Memory limit exceeded, exiting...');
+
                 return;
             }
 
@@ -229,7 +235,7 @@ final class QueueWorkCommand extends AbstractCommand
     private function getLastRestartTime(): ?int
     {
         $file = sys_get_temp_dir() . '/luminor_queue_restart';
-        
+
         if (file_exists($file)) {
             return (int) file_get_contents($file);
         }
@@ -244,7 +250,7 @@ final class QueueWorkCommand extends AbstractCommand
     {
         $file = sys_get_temp_dir() . '/luminor_queue_restart';
 
-        if (!file_exists($file)) {
+        if (! file_exists($file)) {
             return false;
         }
 

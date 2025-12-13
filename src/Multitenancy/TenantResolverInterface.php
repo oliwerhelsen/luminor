@@ -17,6 +17,7 @@ interface TenantResolverInterface
      * Resolve the tenant identifier from the request.
      *
      * @param Request $request The incoming HTTP request
+     *
      * @return string|null The tenant identifier or null if not resolvable
      */
     public function resolve(Request $request): ?string;

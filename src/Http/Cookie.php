@@ -12,12 +12,19 @@ namespace Luminor\DDD\Http;
 final class Cookie
 {
     private string $name;
+
     private string $value;
+
     private int $expire;
+
     private string $path;
+
     private string $domain;
+
     private bool $secure;
+
     private bool $httpOnly;
+
     private string $sameSite;
 
     public function __construct(
@@ -28,7 +35,7 @@ final class Cookie
         string $domain = '',
         bool $secure = false,
         bool $httpOnly = true,
-        string $sameSite = 'Lax'
+        string $sameSite = 'Lax',
     ) {
         $this->name = $name;
         $this->value = $value;
@@ -51,7 +58,7 @@ final class Cookie
         ?string $domain = null,
         ?bool $secure = null,
         bool $httpOnly = true,
-        string $sameSite = 'Lax'
+        string $sameSite = 'Lax',
     ): self {
         $expire = $minutes > 0 ? time() + ($minutes * 60) : 0;
 
@@ -63,7 +70,7 @@ final class Cookie
             $domain ?? '',
             $secure ?? (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
             $httpOnly,
-            $sameSite
+            $sameSite,
         );
     }
 
@@ -77,7 +84,7 @@ final class Cookie
         ?string $domain = null,
         ?bool $secure = null,
         bool $httpOnly = true,
-        string $sameSite = 'Lax'
+        string $sameSite = 'Lax',
     ): self {
         return self::make($name, $value, 2628000, $path, $domain, $secure, $httpOnly, $sameSite);
     }
@@ -145,7 +152,7 @@ final class Cookie
                 'secure' => $this->secure,
                 'httponly' => $this->httpOnly,
                 'samesite' => $this->sameSite,
-            ]
+            ],
         );
     }
 

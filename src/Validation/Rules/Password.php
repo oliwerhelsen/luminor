@@ -14,38 +14,47 @@ use Luminor\DDD\Validation\Rule;
 final class Password implements Rule
 {
     private int $minLength = 8;
+
     private bool $requireUppercase = true;
+
     private bool $requireLowercase = true;
+
     private bool $requireNumbers = true;
+
     private bool $requireSpecialChars = false;
 
     public function minLength(int $length): self
     {
         $this->minLength = $length;
+
         return $this;
     }
 
     public function requireUppercase(bool $require = true): self
     {
         $this->requireUppercase = $require;
+
         return $this;
     }
 
     public function requireLowercase(bool $require = true): self
     {
         $this->requireLowercase = $require;
+
         return $this;
     }
 
     public function requireNumbers(bool $require = true): self
     {
         $this->requireNumbers = $require;
+
         return $this;
     }
 
     public function requireSpecialChars(bool $require = true): self
     {
         $this->requireSpecialChars = $require;
+
         return $this;
     }
 
@@ -54,7 +63,7 @@ final class Password implements Rule
      */
     public function passes(string $attribute, mixed $value): bool
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return false;
         }
 
@@ -62,19 +71,19 @@ final class Password implements Rule
             return false;
         }
 
-        if ($this->requireUppercase && !preg_match('/[A-Z]/', $value)) {
+        if ($this->requireUppercase && ! preg_match('/[A-Z]/', $value)) {
             return false;
         }
 
-        if ($this->requireLowercase && !preg_match('/[a-z]/', $value)) {
+        if ($this->requireLowercase && ! preg_match('/[a-z]/', $value)) {
             return false;
         }
 
-        if ($this->requireNumbers && !preg_match('/[0-9]/', $value)) {
+        if ($this->requireNumbers && ! preg_match('/[0-9]/', $value)) {
             return false;
         }
 
-        if ($this->requireSpecialChars && !preg_match('/[^a-zA-Z0-9]/', $value)) {
+        if ($this->requireSpecialChars && ! preg_match('/[^a-zA-Z0-9]/', $value)) {
             return false;
         }
 
@@ -91,21 +100,21 @@ final class Password implements Rule
         $requirements[] = "at least {$this->minLength} characters";
 
         if ($this->requireUppercase) {
-            $requirements[] = "one uppercase letter";
+            $requirements[] = 'one uppercase letter';
         }
 
         if ($this->requireLowercase) {
-            $requirements[] = "one lowercase letter";
+            $requirements[] = 'one lowercase letter';
         }
 
         if ($this->requireNumbers) {
-            $requirements[] = "one number";
+            $requirements[] = 'one number';
         }
 
         if ($this->requireSpecialChars) {
-            $requirements[] = "one special character";
+            $requirements[] = 'one special character';
         }
 
-        return "The password must contain " . implode(', ', $requirements) . ".";
+        return 'The password must contain ' . implode(', ', $requirements) . '.';
     }
 }

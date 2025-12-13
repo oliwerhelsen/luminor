@@ -20,8 +20,10 @@ final class EntityMapper
      * Hydrate an entity from an array of data.
      *
      * @template T of Entity
+     *
      * @param class-string<T> $entityClass
      * @param array<string, mixed> $data
+     *
      * @return T
      */
     public static function hydrate(string $entityClass, array $data): Entity
@@ -45,6 +47,7 @@ final class EntityMapper
      * Extract data from an entity as an array.
      *
      * @param array<int, string>|null $fields Specific fields to extract (null for all)
+     *
      * @return array<string, mixed>
      */
     public static function extract(Entity $entity, ?array $fields = null): array
@@ -56,7 +59,7 @@ final class EntityMapper
         foreach ($properties as $property) {
             $name = $property->getName();
 
-            if ($fields !== null && !in_array($name, $fields, true)) {
+            if ($fields !== null && ! in_array($name, $fields, true)) {
                 continue;
             }
 
@@ -77,6 +80,7 @@ final class EntityMapper
      * Map database columns to entity properties.
      *
      * @param array<string, mixed> $row Database row with snake_case keys
+     *
      * @return array<string, mixed> Array with camelCase keys
      */
     public static function mapColumnsToProperties(array $row): array
@@ -94,6 +98,7 @@ final class EntityMapper
      * Map entity properties to database columns.
      *
      * @param array<string, mixed> $properties Array with camelCase keys
+     *
      * @return array<string, mixed> Array with snake_case keys
      */
     public static function mapPropertiesToColumns(array $properties): array
@@ -126,6 +131,7 @@ final class EntityMapper
      * Get property names for an entity class.
      *
      * @param class-string<Entity> $entityClass
+     *
      * @return array<int, string>
      */
     public static function getPropertyNames(string $entityClass): array
@@ -134,8 +140,8 @@ final class EntityMapper
         $properties = $reflection->getProperties();
 
         return array_map(
-            fn(ReflectionProperty $prop) => $prop->getName(),
-            $properties
+            fn (ReflectionProperty $prop) => $prop->getName(),
+            $properties,
         );
     }
 
@@ -143,13 +149,14 @@ final class EntityMapper
      * Get column names for an entity class.
      *
      * @param class-string<Entity> $entityClass
+     *
      * @return array<int, string>
      */
     public static function getColumnNames(string $entityClass): array
     {
         return array_map(
-            fn(string $prop) => self::toSnakeCase($prop),
-            self::getPropertyNames($entityClass)
+            fn (string $prop) => self::toSnakeCase($prop),
+            self::getPropertyNames($entityClass),
         );
     }
 
@@ -179,13 +186,14 @@ final class EntityMapper
      * Create a prepared statement placeholder string.
      *
      * @param array<string, mixed> $data
+     *
      * @return string e.g., ":id, :name, :email"
      */
     public static function createPlaceholders(array $data): string
     {
         $placeholders = array_map(
-            fn(string $key) => ':' . $key,
-            array_keys($data)
+            fn (string $key) => ':' . $key,
+            array_keys($data),
         );
 
         return implode(', ', $placeholders);

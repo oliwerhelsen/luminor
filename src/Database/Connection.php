@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Database;
 
 use PDO;
-use PDOException;
+use PDOStatement;
 
 /**
  * Database Connection
@@ -29,15 +29,15 @@ final class Connection implements ConnectionInterface
      * @param string|null $username The username
      * @param string|null $password The password
      * @param array<int, mixed> $options PDO options
-     * @return self
      */
     public static function create(
         string $dsn,
         ?string $username = null,
         ?string $password = null,
-        array $options = []
+        array $options = [],
     ): self {
         $pdo = new PDO($dsn, $username, $password, $options);
+
         return new self($pdo);
     }
 
@@ -52,10 +52,11 @@ final class Connection implements ConnectionInterface
     /**
      * @inheritDoc
      */
-    public function query(string $query, array $bindings = []): \PDOStatement
+    public function query(string $query, array $bindings = []): PDOStatement
     {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($bindings);
+
         return $stmt;
     }
 
@@ -66,6 +67,7 @@ final class Connection implements ConnectionInterface
     {
         $stmt = $this->pdo->prepare($query);
         $stmt->execute($bindings);
+
         return $stmt->rowCount();
     }
 

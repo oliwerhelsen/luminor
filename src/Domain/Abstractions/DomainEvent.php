@@ -15,13 +15,14 @@ use DateTimeImmutable;
 abstract class DomainEvent
 {
     private readonly string $eventId;
+
     private readonly DateTimeImmutable $occurredOn;
 
     /**
      * @param string|null $aggregateId The ID of the aggregate that raised this event
      */
     public function __construct(
-        private readonly ?string $aggregateId = null
+        private readonly ?string $aggregateId = null,
     ) {
         $this->eventId = $this->generateEventId();
         $this->occurredOn = new DateTimeImmutable();
@@ -57,6 +58,7 @@ abstract class DomainEvent
     public function getEventName(): string
     {
         $parts = explode('\\', static::class);
+
         return end($parts);
     }
 
@@ -111,7 +113,7 @@ abstract class DomainEvent
             random_int(0, 0x3fff) | 0x8000,
             random_int(0, 0xffff),
             random_int(0, 0xffff),
-            random_int(0, 0xffff)
+            random_int(0, 0xffff),
         );
     }
 }

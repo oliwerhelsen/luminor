@@ -105,7 +105,7 @@ final class MakeQueryCommand extends AbstractMakeCommand
         }
 
         // Create handler if not disabled
-        if (!$input->hasOption('no-handler')) {
+        if (! $input->hasOption('no-handler')) {
             $this->createHandler($input, $output);
         }
 
@@ -131,8 +131,9 @@ final class MakeQueryCommand extends AbstractMakeCommand
         $directory = $basePath . DIRECTORY_SEPARATOR . 'src/Application/Handlers';
         $filePath = $directory . DIRECTORY_SEPARATOR . $handlerName . '.php';
 
-        if (file_exists($filePath) && !$input->hasOption('force')) {
+        if (file_exists($filePath) && ! $input->hasOption('force')) {
             $output->warning(sprintf('File already exists: %s', $filePath));
+
             return;
         }
 
@@ -140,6 +141,7 @@ final class MakeQueryCommand extends AbstractMakeCommand
         $stubContent = $this->loadHandlerStub();
         if ($stubContent === null) {
             $output->warning('Handler stub file not found: query-handler.stub');
+
             return;
         }
 
@@ -162,11 +164,11 @@ final class MakeQueryCommand extends AbstractMakeCommand
         $content = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            $stubContent
+            $stubContent,
         );
 
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         file_put_contents($filePath, $content);
@@ -187,6 +189,7 @@ final class MakeQueryCommand extends AbstractMakeCommand
         foreach ($stubPaths as $path) {
             if (file_exists($path)) {
                 $content = file_get_contents($path);
+
                 return $content !== false ? $content : null;
             }
         }

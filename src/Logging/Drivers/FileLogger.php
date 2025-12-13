@@ -16,15 +16,17 @@ use Luminor\DDD\Logging\LogLevel;
 final class FileLogger extends AbstractLogger
 {
     private string $path;
+
     private int $maxFiles;
+
     private ?string $dateFormat;
 
     /**
      * @param array<string, mixed> $config Configuration options:
-     *                                      - path: Log file path (required)
-     *                                      - level: Minimum log level (default: debug)
-     *                                      - max_files: Number of files to keep (default: 7)
-     *                                      - date_format: Date format for rotation (default: Y-m-d)
+     *                                     - path: Log file path (required)
+     *                                     - level: Minimum log level (default: debug)
+     *                                     - max_files: Number of files to keep (default: 7)
+     *                                     - date_format: Date format for rotation (default: Y-m-d)
      */
     public function __construct(array $config = [])
     {
@@ -44,8 +46,8 @@ final class FileLogger extends AbstractLogger
         $directory = dirname($path);
 
         // Ensure directory exists
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         $line = $this->formatLogLine($level, $message, $context) . PHP_EOL;
@@ -106,7 +108,7 @@ final class FileLogger extends AbstractLogger
         }
 
         // Sort by modification time (oldest first)
-        usort($files, fn($a, $b) => filemtime($a) <=> filemtime($b));
+        usort($files, fn ($a, $b) => filemtime($a) <=> filemtime($b));
 
         // Remove oldest files
         $filesToRemove = array_slice($files, 0, count($files) - $this->maxFiles);

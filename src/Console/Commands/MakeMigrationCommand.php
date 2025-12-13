@@ -37,7 +37,7 @@ final class MakeMigrationCommand extends AbstractMakeCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    public function execute(Input $input, Output $output): int
     {
         $name = $input->getArgument('name');
         $table = $input->getOption('table') ?? $input->getOption('create');
@@ -48,8 +48,8 @@ final class MakeMigrationCommand extends AbstractMakeCommand
 
         // Determine migration path
         $migrationsPath = getcwd() . '/database/migrations';
-        if (!is_dir($migrationsPath)) {
-            mkdir($migrationsPath, 0755, true);
+        if (! is_dir($migrationsPath)) {
+            mkdir($migrationsPath, 0o755, true);
         }
 
         $filepath = $migrationsPath . '/' . $filename;
@@ -57,11 +57,12 @@ final class MakeMigrationCommand extends AbstractMakeCommand
         // Check if file exists
         if (file_exists($filepath)) {
             $output->error("Migration already exists: {$filename}");
+
             return 1;
         }
 
         // Extract table name from migration name if not provided
-        if (!$table) {
+        if (! $table) {
             if (preg_match('/create_(\w+)_table/', $name, $matches)) {
                 $table = $matches[1];
             } elseif (preg_match('/(?:add|update|modify)_.*_to_(\w+)_table/', $name, $matches)) {
@@ -81,7 +82,7 @@ final class MakeMigrationCommand extends AbstractMakeCommand
         $content = str_replace(
             ['{{className}}', '{{table}}', '{{description}}'],
             [$className, $table, ucfirst(str_replace('_', ' ', $name))],
-            $stub
+            $stub,
         );
 
         // Write file
@@ -91,5 +92,21 @@ final class MakeMigrationCommand extends AbstractMakeCommand
         $output->info("Location: {$filepath}");
 
         return 0;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getStubName(): string
+    {
+        return 'migration';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getDefaultDirectory(): string
+    {
+        return 'database/migrations';
     }
 }

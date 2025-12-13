@@ -79,8 +79,10 @@ final class TenantContext
      * and then restores the previous tenant (if any).
      *
      * @template T
+     *
      * @param TenantInterface $tenant The tenant to use for the callback
      * @param callable(): T $callback The callback to execute
+     *
      * @return T The result of the callback
      */
     public static function runAs(TenantInterface $tenant, callable $callback): mixed
@@ -102,7 +104,9 @@ final class TenantContext
      * and then restores the previous tenant (if any).
      *
      * @template T
+     *
      * @param callable(): T $callback The callback to execute
+     *
      * @return T The result of the callback
      */
     public static function runWithoutTenant(callable $callback): mixed

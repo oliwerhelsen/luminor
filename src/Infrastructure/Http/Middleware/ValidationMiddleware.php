@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http\Middleware;
 
+use JsonException;
 use Luminor\DDD\Application\Validation\Rules;
-use Luminor\DDD\Application\Validation\ValidationException;
 use Luminor\DDD\Application\Validation\ValidationResult;
 use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
 use Utopia\Http\Request;
@@ -23,7 +23,7 @@ final class ValidationMiddleware implements MiddlewareInterface
      * @param array<string, Rules> $rules Validation rules keyed by parameter name
      */
     public function __construct(
-        private readonly array $rules = []
+        private readonly array $rules = [],
     ) {
     }
 
@@ -44,13 +44,15 @@ final class ValidationMiddleware implements MiddlewareInterface
     {
         if (count($this->rules) === 0) {
             $next($request, $response);
+
             return;
         }
 
         $result = $this->validate($request);
 
-        if (!$result->isValid()) {
+        if (! $result->isValid()) {
             $this->respondValidationError($response, $result);
+
             return;
         }
 
@@ -68,7 +70,7 @@ final class ValidationMiddleware implements MiddlewareInterface
             $value = $this->getFieldValue($request, $field);
             $fieldResult = $rules->validate($value);
 
-            if (!$fieldResult->isValid()) {
+            if (! $fieldResult->isValid()) {
                 foreach ($fieldResult->getErrorsFor($field) as $error) {
                     $result = $result->addError($field, $error);
                 }
@@ -94,6 +96,7 @@ final class ValidationMiddleware implements MiddlewareInterface
 
         // Try to get from JSON body
         $body = $this->parseJsonBody($request);
+
         return $body[$field] ?? null;
     }
 
@@ -112,8 +115,9 @@ final class ValidationMiddleware implements MiddlewareInterface
 
         try {
             $decoded = json_decode($body, true, 512, JSON_THROW_ON_ERROR);
+
             return is_array($decoded) ? $decoded : [];
-        } catch (\JsonException) {
+        } catch (JsonException) {
             return [];
         }
     }

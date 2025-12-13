@@ -4,13 +4,14 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http;
 
-use Throwable;
+use InvalidArgumentException;
 use Luminor\DDD\Application\Validation\ValidationException;
 use Luminor\DDD\Domain\Abstractions\DomainException;
 use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
-use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
+use RuntimeException;
+use Throwable;
 use Utopia\Http\Response;
 
 /**
@@ -66,6 +67,7 @@ final class ExceptionHandler
     public function setDebug(bool $debug): self
     {
         $this->debug = $debug;
+
         return $this;
     }
 
@@ -77,6 +79,7 @@ final class ExceptionHandler
     public function setErrorLogger(callable $logger): self
     {
         $this->errorLogger = $logger;
+
         return $this;
     }
 
@@ -89,6 +92,7 @@ final class ExceptionHandler
     public function registerHandler(string $exceptionClass, callable $handler): self
     {
         $this->customHandlers[$exceptionClass] = $handler;
+
         return $this;
     }
 
@@ -106,6 +110,7 @@ final class ExceptionHandler
         foreach ($this->customHandlers as $exceptionClass => $handler) {
             if ($exception instanceof $exceptionClass) {
                 $handler($exception, $response);
+
                 return;
             }
         }
@@ -115,8 +120,8 @@ final class ExceptionHandler
             $exception instanceof ValidationException => $this->handleValidationException($exception, $response),
             $exception instanceof AggregateNotFoundException => $this->handleNotFoundException($exception, $response),
             $exception instanceof DomainException => $this->handleDomainException($exception, $response),
-            $exception instanceof \InvalidArgumentException => $this->handleBadRequest($exception, $response),
-            $exception instanceof \RuntimeException => $this->handleRuntimeException($exception, $response),
+            $exception instanceof InvalidArgumentException => $this->handleBadRequest($exception, $response),
+            $exception instanceof RuntimeException => $this->handleRuntimeException($exception, $response),
             default => $this->handleGenericException($exception, $response),
         };
     }
@@ -148,7 +153,7 @@ final class ExceptionHandler
     {
         $error = ErrorResponse::unprocessableEntity(
             $exception->getMessage(),
-            $this->debug ? $this->getExceptionDetails($exception) : null
+            $this->debug ? $this->getExceptionDetails($exception) : null,
         );
         $response->setStatusCode(422);
         $response->json($error->toArray());
@@ -157,11 +162,11 @@ final class ExceptionHandler
     /**
      * Handle bad request exceptions.
      */
-    private function handleBadRequest(\InvalidArgumentException $exception, Response $response): void
+    private function handleBadRequest(InvalidArgumentException $exception, Response $response): void
     {
         $error = ErrorResponse::badRequest(
             $exception->getMessage(),
-            $this->debug ? $this->getExceptionDetails($exception) : null
+            $this->debug ? $this->getExceptionDetails($exception) : null,
         );
         $response->setStatusCode(400);
         $response->json($error->toArray());
@@ -170,7 +175,7 @@ final class ExceptionHandler
     /**
      * Handle runtime exceptions.
      */
-    private function handleRuntimeException(\RuntimeException $exception, Response $response): void
+    private function handleRuntimeException(RuntimeException $exception, Response $response): void
     {
         // Check if it's a "safe" runtime exception that can show its message
         $message = $this->debug
@@ -214,11 +219,12 @@ final class ExceptionHandler
      * Add debug information to error response.
      *
      * @param array<string, mixed> $response
+     *
      * @return array<string, mixed>
      */
     private function addDebugInfo(array $response, Throwable $exception): array
     {
-        if (!$this->debug) {
+        if (! $this->debug) {
             return $response;
         }
 
@@ -263,24 +269,24 @@ final class ExceptionHandler
     {
         return match (true) {
             $exception instanceof ValidationException => ValidationErrorResponse::fromValidationResult(
-                $exception->getValidationResult()
+                $exception->getValidationResult(),
             )->toArray(),
             $exception instanceof AggregateNotFoundException => ErrorResponse::notFound(
-                $exception->getMessage()
+                $exception->getMessage(),
             )->toArray(),
             $exception instanceof DomainException => ErrorResponse::unprocessableEntity(
                 $exception->getMessage(),
-                $this->debug ? $this->getExceptionDetails($exception) : null
+                $this->debug ? $this->getExceptionDetails($exception) : null,
             )->toArray(),
-            $exception instanceof \InvalidArgumentException => ErrorResponse::badRequest(
+            $exception instanceof InvalidArgumentException => ErrorResponse::badRequest(
                 $exception->getMessage(),
-                $this->debug ? $this->getExceptionDetails($exception) : null
+                $this->debug ? $this->getExceptionDetails($exception) : null,
             )->toArray(),
             default => $this->addDebugInfo(
                 ErrorResponse::serverError(
-                    $this->debug ? $exception->getMessage() : 'An unexpected error occurred'
+                    $this->debug ? $exception->getMessage() : 'An unexpected error occurred',
                 )->toArray(),
-                $exception
+                $exception,
             ),
         };
     }
@@ -294,7 +300,7 @@ final class ExceptionHandler
             $exception instanceof ValidationException => 422,
             $exception instanceof AggregateNotFoundException => 404,
             $exception instanceof DomainException => 422,
-            $exception instanceof \InvalidArgumentException => 400,
+            $exception instanceof InvalidArgumentException => 400,
             default => 500,
         };
     }

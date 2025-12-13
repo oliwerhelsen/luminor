@@ -32,6 +32,7 @@ interface EventStoreInterface
      * Get all events for a specific aggregate.
      *
      * @param string $aggregateId The aggregate identifier
+     *
      * @return array<int, DomainEvent>
      */
     public function getEventsForAggregate(string $aggregateId): array;
@@ -41,6 +42,7 @@ interface EventStoreInterface
      *
      * @param string $aggregateId The aggregate identifier
      * @param int $fromVersion The starting version (exclusive)
+     *
      * @return array<int, DomainEvent>
      */
     public function getEventsForAggregateFromVersion(string $aggregateId, int $fromVersion): array;
@@ -49,6 +51,7 @@ interface EventStoreInterface
      * Get all events of a specific type.
      *
      * @param class-string<DomainEvent> $eventClass The event class
+     *
      * @return array<int, DomainEvent>
      */
     public function getEventsByType(string $eventClass): array;

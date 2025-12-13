@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Auth;
 
 use RuntimeException;
+use Throwable;
 
 /**
  * Exception thrown when authorization fails.
@@ -16,7 +17,7 @@ final class AuthorizationException extends RuntimeException
         private readonly ?string $ability = null,
         private readonly mixed $resource = null,
         int $code = 403,
-        ?\Throwable $previous = null
+        ?Throwable $previous = null,
     ) {
         parent::__construct($message, $code, $previous);
     }
@@ -41,7 +42,7 @@ final class AuthorizationException extends RuntimeException
     {
         return new self(
             sprintf('You do not have the required permission: %s.', $permission),
-            $permission
+            $permission,
         );
     }
 
@@ -52,7 +53,7 @@ final class AuthorizationException extends RuntimeException
     {
         return new self(
             sprintf('You do not have the required role: %s.', $role),
-            $role
+            $role,
         );
     }
 

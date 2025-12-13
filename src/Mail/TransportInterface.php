@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Mail;
 
+use RuntimeException;
+
 /**
  * Interface for mail transport implementations.
  *
@@ -16,15 +18,15 @@ interface TransportInterface
      * Send an email message.
      *
      * @param Message $message The message to send
+     *
      * @return bool Whether the message was sent successfully
-     * @throws \RuntimeException If sending fails
+     *
+     * @throws RuntimeException If sending fails
      */
     public function send(Message $message): bool;
 
     /**
      * Get the transport name.
-     *
-     * @return string
      */
     public function getName(): string;
 }

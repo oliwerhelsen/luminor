@@ -40,12 +40,14 @@ final class QueueFlushCommand extends AbstractCommand
     {
         if ($this->container === null) {
             $output->error('Container not set. This command requires dependency injection.');
+
             return 1;
         }
 
-        if (!$this->container->has(FailedJobProviderInterface::class)) {
+        if (! $this->container->has(FailedJobProviderInterface::class)) {
             $output->error('Failed job provider is not configured.');
             $output->writeln('Add a FailedJobProviderInterface binding to your container.');
+
             return 1;
         }
 
@@ -53,7 +55,7 @@ final class QueueFlushCommand extends AbstractCommand
         $provider = $this->container->get(FailedJobProviderInterface::class);
 
         $hours = $input->getOption('hours');
-        
+
         if ($hours !== null && $hours !== false) {
             $provider->flush((int) $hours);
             $output->success("All failed jobs older than {$hours} hour(s) have been deleted.");

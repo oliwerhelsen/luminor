@@ -37,6 +37,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
      * Build additional placeholder replacements.
      *
      * @param Input $input The command input
+     *
      * @return array<string, string> Placeholder => Value pairs
      */
     protected function buildReplacements(Input $input): array
@@ -60,6 +61,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
         $name = $input->getArgument('name');
         if ($name === null) {
             $output->error('Name argument is required.');
+
             return 1;
         }
 
@@ -74,9 +76,10 @@ abstract class AbstractMakeCommand extends AbstractCommand
         $filePath = $directory . DIRECTORY_SEPARATOR . $className . $this->getFileSuffix();
 
         // Check if file already exists
-        if (file_exists($filePath) && !$input->hasOption('force')) {
+        if (file_exists($filePath) && ! $input->hasOption('force')) {
             $output->error(sprintf('File already exists: %s', $filePath));
             $output->line('Use --force to overwrite.');
+
             return 1;
         }
 
@@ -84,6 +87,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
         $stubContent = $this->loadStub();
         if ($stubContent === null) {
             $output->error(sprintf('Stub file not found: %s', $this->getStubName()));
+
             return 1;
         }
 
@@ -95,20 +99,21 @@ abstract class AbstractMakeCommand extends AbstractCommand
                 '{{namespace}}' => $namespace,
                 '{{class}}' => $className,
             ],
-            $this->buildReplacements($input)
+            $this->buildReplacements($input),
         );
 
         // Process the stub
         $content = str_replace(
             array_keys($replacements),
             array_values($replacements),
-            $stubContent
+            $stubContent,
         );
 
         // Ensure directory exists
-        if (!is_dir($directory)) {
-            if (!mkdir($directory, 0755, true)) {
+        if (! is_dir($directory)) {
+            if (! mkdir($directory, 0o755, true)) {
                 $output->error(sprintf('Failed to create directory: %s', $directory));
+
                 return 1;
             }
         }
@@ -116,10 +121,12 @@ abstract class AbstractMakeCommand extends AbstractCommand
         // Write file
         if (file_put_contents($filePath, $content) === false) {
             $output->error(sprintf('Failed to write file: %s', $filePath));
+
             return 1;
         }
 
         $output->success(sprintf('Created: %s', $filePath));
+
         return 0;
     }
 
@@ -210,6 +217,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
         foreach ($stubPaths as $path) {
             if (file_exists($path)) {
                 $content = file_get_contents($path);
+
                 return $content !== false ? $content : null;
             }
         }
@@ -223,6 +231,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
     protected function studly(string $value): string
     {
         $value = ucwords(str_replace(['-', '_'], ' ', $value));
+
         return str_replace(' ', '', $value);
     }
 
@@ -240,6 +249,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
     protected function snake(string $value): string
     {
         $value = preg_replace('/(?<!^)[A-Z]/', '_$0', $value);
+
         return strtolower($value ?? $value);
     }
 
@@ -256,6 +266,7 @@ abstract class AbstractMakeCommand extends AbstractCommand
             str_ends_with($value, 'ch') || str_ends_with($value, 'sh')) {
             return $value . 'es';
         }
+
         return $value . 's';
     }
 }

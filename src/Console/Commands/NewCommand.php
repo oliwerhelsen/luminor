@@ -92,19 +92,21 @@ final class NewCommand extends AbstractCommand
         $name = $input->getArgument('name');
         if ($name === null || $name === '') {
             $output->error('Project name is required.');
+
             return 1;
         }
 
         $projectPath = getcwd() . DIRECTORY_SEPARATOR . $name;
 
         // Check if directory exists
-        if (is_dir($projectPath) && !$input->hasOption('force')) {
+        if (is_dir($projectPath) && ! $input->hasOption('force')) {
             $output->error(sprintf('Directory "%s" already exists.', $name));
             $output->line('Use --force to overwrite.');
+
             return 1;
         }
 
-        $interactive = !$input->hasOption('no-interaction');
+        $interactive = ! $input->hasOption('no-interaction');
 
         // Display welcome message
         $output->newLine();
@@ -118,6 +120,7 @@ final class NewCommand extends AbstractCommand
 
         if ($config === null) {
             $output->error('Configuration cancelled.');
+
             return 1;
         }
 
@@ -126,7 +129,7 @@ final class NewCommand extends AbstractCommand
         $output->newLine();
 
         // Create project directory
-        if (!$this->createDirectory($projectPath, $output)) {
+        if (! $this->createDirectory($projectPath, $output)) {
             return 1;
         }
 
@@ -140,12 +143,12 @@ final class NewCommand extends AbstractCommand
         $this->createGitKeepFiles($projectPath, $config);
 
         // Initialize git repository
-        if ($config['git'] && !$input->hasOption('no-git')) {
+        if ($config['git'] && ! $input->hasOption('no-git')) {
             $this->initializeGit($projectPath, $output);
         }
 
         // Run composer install
-        if (!$input->hasOption('no-install')) {
+        if (! $input->hasOption('no-install')) {
             $this->runComposerInstall($projectPath, $output);
         }
 
@@ -164,7 +167,7 @@ final class NewCommand extends AbstractCommand
         Input $input,
         Output $output,
         string $name,
-        bool $interactive
+        bool $interactive,
     ): ?array {
         $config = [
             'name' => $name,
@@ -173,7 +176,7 @@ final class NewCommand extends AbstractCommand
             'type' => $input->getOption('type'),
             'database' => $input->getOption('database'),
             'multitenancy' => $input->getOption('multitenancy'),
-            'git' => !$input->hasOption('no-git'),
+            'git' => ! $input->hasOption('no-git'),
         ];
 
         if ($interactive) {
@@ -195,7 +198,7 @@ final class NewCommand extends AbstractCommand
                 $config['type'] = $output->choice(
                     'What type of project do you want to create?',
                     self::PROJECT_TYPES,
-                    'basic'
+                    'basic',
                 );
             }
 
@@ -205,7 +208,7 @@ final class NewCommand extends AbstractCommand
                 $config['database'] = $output->choice(
                     'Which database would you like to use?',
                     self::DATABASE_OPTIONS,
-                    'none'
+                    'none',
                 );
             }
 
@@ -215,37 +218,40 @@ final class NewCommand extends AbstractCommand
                 $config['multitenancy'] = $output->choice(
                     'Do you need multi-tenancy support?',
                     self::MULTITENANCY_OPTIONS,
-                    'none'
+                    'none',
                 );
             }
 
             // Git initialization
-            if (!$input->hasOption('no-git') && $input->getOption('git') === null) {
+            if (! $input->hasOption('no-git') && $input->getOption('git') === null) {
                 $output->newLine();
                 $config['git'] = $output->confirm('Initialize a git repository?', true);
             }
         } else {
             // Set defaults for non-interactive mode
-            $config['vendor'] = $config['vendor'] ?? $this->toKebabCase($name);
-            $config['namespace'] = $config['namespace'] ?? 'App';
-            $config['type'] = $config['type'] ?? 'basic';
-            $config['database'] = $config['database'] ?? 'none';
-            $config['multitenancy'] = $config['multitenancy'] ?? 'none';
+            $config['vendor'] ??= $this->toKebabCase($name);
+            $config['namespace'] ??= 'App';
+            $config['type'] ??= 'basic';
+            $config['database'] ??= 'none';
+            $config['multitenancy'] ??= 'none';
         }
 
         // Validate options
-        if (!isset(self::PROJECT_TYPES[$config['type']])) {
+        if (! isset(self::PROJECT_TYPES[$config['type']])) {
             $output->error(sprintf('Invalid project type: %s', $config['type']));
+
             return null;
         }
 
-        if (!isset(self::DATABASE_OPTIONS[$config['database']])) {
+        if (! isset(self::DATABASE_OPTIONS[$config['database']])) {
             $output->error(sprintf('Invalid database type: %s', $config['database']));
+
             return null;
         }
 
-        if (!isset(self::MULTITENANCY_OPTIONS[$config['multitenancy']])) {
+        if (! isset(self::MULTITENANCY_OPTIONS[$config['multitenancy']])) {
             $output->error(sprintf('Invalid multitenancy option: %s', $config['multitenancy']));
+
             return null;
         }
 
@@ -262,8 +268,9 @@ final class NewCommand extends AbstractCommand
             $this->removeDirectory($path);
         }
 
-        if (!mkdir($path, 0755, true)) {
+        if (! mkdir($path, 0o755, true)) {
             $output->error(sprintf('Failed to create directory: %s', $path));
+
             return false;
         }
 
@@ -275,7 +282,7 @@ final class NewCommand extends AbstractCommand
      */
     private function removeDirectory(string $path): void
     {
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             return;
         }
 
@@ -347,8 +354,8 @@ final class NewCommand extends AbstractCommand
 
         foreach ($directories as $dir) {
             $fullPath = $projectPath . DIRECTORY_SEPARATOR . $dir;
-            if (!is_dir($fullPath)) {
-                mkdir($fullPath, 0755, true);
+            if (! is_dir($fullPath)) {
+                mkdir($fullPath, 0o755, true);
                 $output->line(sprintf('  <comment>Created:</comment> %s/', $dir));
             }
         }
@@ -429,7 +436,7 @@ final class NewCommand extends AbstractCommand
             ],
             'autoload-dev' => [
                 'psr-4' => [
-                    "Tests\\" => 'tests/',
+                    'Tests\\' => 'tests/',
                 ],
             ],
             'scripts' => [
@@ -455,13 +462,13 @@ final class NewCommand extends AbstractCommand
         $appName = $this->toPascalCase($config['name']);
 
         $content = <<<ENV
-# Application
-APP_NAME={$appName}
-APP_ENV=local
-APP_DEBUG=true
-APP_URL=http://localhost:8000
+            # Application
+            APP_NAME={$appName}
+            APP_ENV=local
+            APP_DEBUG=true
+            APP_URL=http://localhost:8000
 
-ENV;
+            ENV;
 
         if ($config['database'] !== 'none') {
             $dbDriver = $config['database'];
@@ -474,15 +481,15 @@ ENV;
             $dbDatabase = $dbDriver === 'sqlite' ? 'database/database.sqlite' : $this->toSnakeCase($config['name']);
 
             $content .= <<<ENV
-# Database
-DB_CONNECTION={$dbDriver}
-DB_HOST={$dbHost}
-DB_PORT={$dbPort}
-DB_DATABASE={$dbDatabase}
-DB_USERNAME=root
-DB_PASSWORD=
+                # Database
+                DB_CONNECTION={$dbDriver}
+                DB_HOST={$dbHost}
+                DB_PORT={$dbPort}
+                DB_DATABASE={$dbDatabase}
+                DB_USERNAME=root
+                DB_PASSWORD=
 
-ENV;
+                ENV;
         }
 
         if ($config['multitenancy'] !== 'none') {
@@ -490,21 +497,21 @@ ENV;
             $headerName = $strategy === 'header' ? 'X-Tenant-ID' : '';
 
             $content .= <<<ENV
-# Multi-tenancy
-TENANT_ENABLED=true
-TENANT_STRATEGY={$strategy}
-TENANT_HEADER_NAME={$headerName}
-TENANT_DEFAULT=
+                # Multi-tenancy
+                TENANT_ENABLED=true
+                TENANT_STRATEGY={$strategy}
+                TENANT_HEADER_NAME={$headerName}
+                TENANT_DEFAULT=
 
-ENV;
+                ENV;
         }
 
         $content .= <<<ENV
-# Logging
-LOG_CHANNEL=file
-LOG_LEVEL=debug
+            # Logging
+            LOG_CHANNEL=file
+            LOG_LEVEL=debug
 
-ENV;
+            ENV;
 
         file_put_contents($projectPath . '/.env.example', $content);
         // Also create .env from example
@@ -519,41 +526,41 @@ ENV;
     private function createGitignore(string $projectPath, Output $output): void
     {
         $content = <<<'GITIGNORE'
-# Dependencies
-/vendor/
+            # Dependencies
+            /vendor/
 
-# Environment
-.env
-.env.local
-.env.*.local
+            # Environment
+            .env
+            .env.local
+            .env.*.local
 
-# IDE
-/.idea/
-/.vscode/
-*.swp
-*.swo
-.DS_Store
+            # IDE
+            /.idea/
+            /.vscode/
+            *.swp
+            *.swo
+            .DS_Store
 
-# Logs
-*.log
-/storage/logs/
+            # Logs
+            *.log
+            /storage/logs/
 
-# Cache
-/storage/cache/
-/bootstrap/cache/
+            # Cache
+            /storage/cache/
+            /bootstrap/cache/
 
-# Testing
-.phpunit.result.cache
-/coverage/
+            # Testing
+            .phpunit.result.cache
+            /coverage/
 
-# Database
-*.sqlite
-*.sqlite3
+            # Database
+            *.sqlite
+            *.sqlite3
 
-# Build artifacts
-/build/
+            # Build artifacts
+            /build/
 
-GITIGNORE;
+            GITIGNORE;
 
         file_put_contents($projectPath . '/.gitignore', $content);
         $output->line('  <comment>Created:</comment> .gitignore');
@@ -572,82 +579,82 @@ GITIGNORE;
         $multitenancy = self::MULTITENANCY_OPTIONS[$config['multitenancy']];
 
         $content = <<<README
-# {$name}
+            # {$name}
 
-A Luminor DDD Framework application.
+            A Luminor DDD Framework application.
 
-## Project Configuration
+            ## Project Configuration
 
-- **Type:** {$type}
-- **Database:** {$database}
-- **Multi-tenancy:** {$multitenancy}
+            - **Type:** {$type}
+            - **Database:** {$database}
+            - **Multi-tenancy:** {$multitenancy}
 
-## Getting Started
+            ## Getting Started
 
-### Prerequisites
+            ### Prerequisites
 
-- PHP 8.2 or higher
-- Composer
+            - PHP 8.2 or higher
+            - Composer
 
-### Installation
+            ### Installation
 
-1. Install dependencies:
-   ```bash
-   composer install
-   ```
+            1. Install dependencies:
+               ```bash
+               composer install
+               ```
 
-2. Configure your environment:
-   ```bash
-   cp .env.example .env
-   # Edit .env with your settings
-   ```
+            2. Configure your environment:
+               ```bash
+               cp .env.example .env
+               # Edit .env with your settings
+               ```
 
-3. Start the development server:
-   ```bash
-   composer serve
-   # or
-   php -S localhost:8000 -t public
-   ```
+            3. Start the development server:
+               ```bash
+               composer serve
+               # or
+               php -S localhost:8000 -t public
+               ```
 
-## Directory Structure
+            ## Directory Structure
 
-```
-{$config['name']}/
-├── config/           # Configuration files
-├── public/           # Web entry point
-├── src/              # Application source code
-│   ├── Domain/       # Domain layer (entities, value objects, events)
-│   ├── Application/  # Application layer (commands, queries, handlers)
-│   └── Infrastructure/  # Infrastructure layer (persistence, HTTP)
-├── tests/            # Test files
-└── stubs/            # Custom code generation stubs
-```
+            ```
+            {$config['name']}/
+            ├── config/           # Configuration files
+            ├── public/           # Web entry point
+            ├── src/              # Application source code
+            │   ├── Domain/       # Domain layer (entities, value objects, events)
+            │   ├── Application/  # Application layer (commands, queries, handlers)
+            │   └── Infrastructure/  # Infrastructure layer (persistence, HTTP)
+            ├── tests/            # Test files
+            └── stubs/            # Custom code generation stubs
+            ```
 
-## Available Commands
+            ## Available Commands
 
-```bash
-# Start development server
-composer serve
+            ```bash
+            # Start development server
+            composer serve
 
-# Run tests
-composer test
+            # Run tests
+            composer test
 
-# Generate code
-vendor/bin/luminor make:entity MyEntity
-vendor/bin/luminor make:command CreateMyEntity
-vendor/bin/luminor make:query GetMyEntity
-vendor/bin/luminor make:controller MyEntityController
-```
+            # Generate code
+            vendor/bin/luminor make:entity MyEntity
+            vendor/bin/luminor make:command CreateMyEntity
+            vendor/bin/luminor make:query GetMyEntity
+            vendor/bin/luminor make:controller MyEntityController
+            ```
 
-## Documentation
+            ## Documentation
 
-For full documentation, visit the [Luminor DDD Framework documentation](https://github.com/luminor/luminor).
+            For full documentation, visit the [Luminor DDD Framework documentation](https://github.com/luminor/luminor).
 
-## License
+            ## License
 
-Proprietary
+            Proprietary
 
-README;
+            README;
 
         file_put_contents($projectPath . '/README.md', $content);
         $output->line('  <comment>Created:</comment> README.md');
@@ -668,100 +675,100 @@ README;
             $strategy = $config['multitenancy'];
             $multitenancyConfig = <<<PHP
 
-    /*
-    |--------------------------------------------------------------------------
-    | Multi-tenancy Configuration
-    |--------------------------------------------------------------------------
-    */
-    'multitenancy' => [
-        'enabled' => env('TENANT_ENABLED', true),
-        'strategy' => env('TENANT_STRATEGY', '{$strategy}'),
-        'header_name' => env('TENANT_HEADER_NAME', 'X-Tenant-ID'),
-        'default_tenant' => env('TENANT_DEFAULT'),
-    ],
-PHP;
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Multi-tenancy Configuration
+                    |--------------------------------------------------------------------------
+                    */
+                    'multitenancy' => [
+                        'enabled' => env('TENANT_ENABLED', true),
+                        'strategy' => env('TENANT_STRATEGY', '{$strategy}'),
+                        'header_name' => env('TENANT_HEADER_NAME', 'X-Tenant-ID'),
+                        'default_tenant' => env('TENANT_DEFAULT'),
+                    ],
+                PHP;
         }
 
         $modulesConfig = '';
         if ($config['type'] === 'modular') {
             $modulesConfig = <<<PHP
 
-    /*
-    |--------------------------------------------------------------------------
-    | Modules Configuration
-    |--------------------------------------------------------------------------
-    */
-    'modules' => [
-        'path' => base_path('src/Modules'),
-        'namespace' => '{$namespace}\\Modules',
-        'enabled' => [
-            // List your enabled modules here
-            // {$namespace}\\Modules\\Example\\ExampleModule::class,
-        ],
-    ],
-PHP;
+                    /*
+                    |--------------------------------------------------------------------------
+                    | Modules Configuration
+                    |--------------------------------------------------------------------------
+                    */
+                    'modules' => [
+                        'path' => base_path('src/Modules'),
+                        'namespace' => '{$namespace}\\Modules',
+                        'enabled' => [
+                            // List your enabled modules here
+                            // {$namespace}\\Modules\\Example\\ExampleModule::class,
+                        ],
+                    ],
+                PHP;
         }
 
         $content = <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-return [
-    /*
-    |--------------------------------------------------------------------------
-    | Application Name
-    |--------------------------------------------------------------------------
-    */
-    'name' => env('APP_NAME', '{$appName}'),
+            return [
+                /*
+                |--------------------------------------------------------------------------
+                | Application Name
+                |--------------------------------------------------------------------------
+                */
+                'name' => env('APP_NAME', '{$appName}'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Environment
-    |--------------------------------------------------------------------------
-    */
-    'env' => env('APP_ENV', 'production'),
+                /*
+                |--------------------------------------------------------------------------
+                | Application Environment
+                |--------------------------------------------------------------------------
+                */
+                'env' => env('APP_ENV', 'production'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Debug Mode
-    |--------------------------------------------------------------------------
-    */
-    'debug' => env('APP_DEBUG', false),
+                /*
+                |--------------------------------------------------------------------------
+                | Application Debug Mode
+                |--------------------------------------------------------------------------
+                */
+                'debug' => env('APP_DEBUG', false),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application URL
-    |--------------------------------------------------------------------------
-    */
-    'url' => env('APP_URL', 'http://localhost'),
+                /*
+                |--------------------------------------------------------------------------
+                | Application URL
+                |--------------------------------------------------------------------------
+                */
+                'url' => env('APP_URL', 'http://localhost'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Timezone
-    |--------------------------------------------------------------------------
-    */
-    'timezone' => 'UTC',
+                /*
+                |--------------------------------------------------------------------------
+                | Application Timezone
+                |--------------------------------------------------------------------------
+                */
+                'timezone' => 'UTC',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Locale
-    |--------------------------------------------------------------------------
-    */
-    'locale' => 'en',
+                /*
+                |--------------------------------------------------------------------------
+                | Application Locale
+                |--------------------------------------------------------------------------
+                */
+                'locale' => 'en',
 
-    /*
-    |--------------------------------------------------------------------------
-    | Service Providers
-    |--------------------------------------------------------------------------
-    */
-    'providers' => [
-        // {$namespace}\\Infrastructure\\Providers\\AppServiceProvider::class,
-    ],
-{$multitenancyConfig}{$modulesConfig}
-];
+                /*
+                |--------------------------------------------------------------------------
+                | Service Providers
+                |--------------------------------------------------------------------------
+                */
+                'providers' => [
+                    // {$namespace}\\Infrastructure\\Providers\\AppServiceProvider::class,
+                ],
+            {$multitenancyConfig}{$modulesConfig}
+            ];
 
-PHP;
+            PHP;
 
         file_put_contents($projectPath . '/config/framework.php', $content);
         $output->line('  <comment>Created:</comment> config/framework.php');
@@ -773,44 +780,44 @@ PHP;
     private function createLoggingConfig(string $projectPath, Output $output): void
     {
         $content = <<<'PHP'
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-return [
-    /*
-    |--------------------------------------------------------------------------
-    | Default Log Channel
-    |--------------------------------------------------------------------------
-    */
-    'default' => env('LOG_CHANNEL', 'file'),
+            return [
+                /*
+                |--------------------------------------------------------------------------
+                | Default Log Channel
+                |--------------------------------------------------------------------------
+                */
+                'default' => env('LOG_CHANNEL', 'file'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Log Channels
-    |--------------------------------------------------------------------------
-    */
-    'channels' => [
-        'file' => [
-            'driver' => 'file',
-            'path' => base_path('storage/logs/app.log'),
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
+                /*
+                |--------------------------------------------------------------------------
+                | Log Channels
+                |--------------------------------------------------------------------------
+                */
+                'channels' => [
+                    'file' => [
+                        'driver' => 'file',
+                        'path' => base_path('storage/logs/app.log'),
+                        'level' => env('LOG_LEVEL', 'debug'),
+                    ],
 
-        'stdout' => [
-            'driver' => 'stdout',
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
+                    'stdout' => [
+                        'driver' => 'stdout',
+                        'level' => env('LOG_LEVEL', 'debug'),
+                    ],
 
-        'stack' => [
-            'driver' => 'stack',
-            'channels' => ['file', 'stdout'],
-            'level' => env('LOG_LEVEL', 'debug'),
-        ],
-    ],
-];
+                    'stack' => [
+                        'driver' => 'stack',
+                        'channels' => ['file', 'stdout'],
+                        'level' => env('LOG_LEVEL', 'debug'),
+                    ],
+                ],
+            ];
 
-PHP;
+            PHP;
 
         file_put_contents($projectPath . '/config/logging.php', $content);
         $output->line('  <comment>Created:</comment> config/logging.php');
@@ -826,69 +833,69 @@ PHP;
         $defaultDb = $config['database'];
 
         $content = <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-return [
-    /*
-    |--------------------------------------------------------------------------
-    | Default Database Connection
-    |--------------------------------------------------------------------------
-    */
-    'default' => env('DB_CONNECTION', '{$defaultDb}'),
+            return [
+                /*
+                |--------------------------------------------------------------------------
+                | Default Database Connection
+                |--------------------------------------------------------------------------
+                */
+                'default' => env('DB_CONNECTION', '{$defaultDb}'),
 
-    /*
-    |--------------------------------------------------------------------------
-    | Database Connections
-    |--------------------------------------------------------------------------
-    */
-    'connections' => [
-        'sqlite' => [
-            'driver' => 'sqlite',
-            'database' => env('DB_DATABASE', base_path('database/database.sqlite')),
-            'prefix' => '',
-            'foreign_key_constraints' => true,
-        ],
+                /*
+                |--------------------------------------------------------------------------
+                | Database Connections
+                |--------------------------------------------------------------------------
+                */
+                'connections' => [
+                    'sqlite' => [
+                        'driver' => 'sqlite',
+                        'database' => env('DB_DATABASE', base_path('database/database.sqlite')),
+                        'prefix' => '',
+                        'foreign_key_constraints' => true,
+                    ],
 
-        'mysql' => [
-            'driver' => 'mysql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'luminor'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8mb4',
-            'collation' => 'utf8mb4_unicode_ci',
-            'prefix' => '',
-            'strict' => true,
-        ],
+                    'mysql' => [
+                        'driver' => 'mysql',
+                        'host' => env('DB_HOST', '127.0.0.1'),
+                        'port' => env('DB_PORT', '3306'),
+                        'database' => env('DB_DATABASE', 'luminor'),
+                        'username' => env('DB_USERNAME', 'root'),
+                        'password' => env('DB_PASSWORD', ''),
+                        'charset' => 'utf8mb4',
+                        'collation' => 'utf8mb4_unicode_ci',
+                        'prefix' => '',
+                        'strict' => true,
+                    ],
 
-        'postgres' => [
-            'driver' => 'pgsql',
-            'host' => env('DB_HOST', '127.0.0.1'),
-            'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'luminor'),
-            'username' => env('DB_USERNAME', 'root'),
-            'password' => env('DB_PASSWORD', ''),
-            'charset' => 'utf8',
-            'prefix' => '',
-            'schema' => 'public',
-        ],
-    ],
+                    'postgres' => [
+                        'driver' => 'pgsql',
+                        'host' => env('DB_HOST', '127.0.0.1'),
+                        'port' => env('DB_PORT', '5432'),
+                        'database' => env('DB_DATABASE', 'luminor'),
+                        'username' => env('DB_USERNAME', 'root'),
+                        'password' => env('DB_PASSWORD', ''),
+                        'charset' => 'utf8',
+                        'prefix' => '',
+                        'schema' => 'public',
+                    ],
+                ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Migration Settings
-    |--------------------------------------------------------------------------
-    */
-    'migrations' => [
-        'table' => 'migrations',
-        'path' => base_path('database/migrations'),
-    ],
-];
+                /*
+                |--------------------------------------------------------------------------
+                | Migration Settings
+                |--------------------------------------------------------------------------
+                */
+                'migrations' => [
+                    'table' => 'migrations',
+                    'path' => base_path('database/migrations'),
+                ],
+            ];
 
-PHP;
+            PHP;
 
         file_put_contents($projectPath . '/config/database.php', $content);
         $output->line('  <comment>Created:</comment> config/database.php');
@@ -908,80 +915,80 @@ PHP;
         if ($isModular) {
             $moduleLoader = <<<'PHP'
 
-// Load modules
-$modules = $config['modules']['enabled'] ?? [];
-foreach ($modules as $moduleClass) {
-    if (class_exists($moduleClass)) {
-        $module = new $moduleClass();
-        $module->register($kernel);
-    }
-}
+                // Load modules
+                $modules = $config['modules']['enabled'] ?? [];
+                foreach ($modules as $moduleClass) {
+                    if (class_exists($moduleClass)) {
+                        $module = new $moduleClass();
+                        $module->register($kernel);
+                    }
+                }
 
-PHP;
+                PHP;
         }
 
         $content = <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-use Luminor\DDD\Kernel;
+            use Luminor\DDD\Kernel;
 
-/*
-|--------------------------------------------------------------------------
-| Bootstrap Application
-|--------------------------------------------------------------------------
-*/
+            /*
+            |--------------------------------------------------------------------------
+            | Bootstrap Application
+            |--------------------------------------------------------------------------
+            */
 
-require __DIR__ . '/../vendor/autoload.php';
+            require __DIR__ . '/../vendor/autoload.php';
 
-// Load environment variables
-if (file_exists(__DIR__ . '/../.env')) {
-    \$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
-    \$dotenv->load();
-}
+            // Load environment variables
+            if (file_exists(__DIR__ . '/../.env')) {
+                \$dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/..');
+                \$dotenv->load();
+            }
 
-// Load configuration
-\$config = require __DIR__ . '/../config/framework.php';
+            // Load configuration
+            \$config = require __DIR__ . '/../config/framework.php';
 
-// Create the kernel
-\$kernel = new Kernel([
-    'base_path' => dirname(__DIR__),
-    'config_path' => dirname(__DIR__) . '/config',
-]);
-{$moduleLoader}
-/*
-|--------------------------------------------------------------------------
-| Handle Request
-|--------------------------------------------------------------------------
-*/
+            // Create the kernel
+            \$kernel = new Kernel([
+                'base_path' => dirname(__DIR__),
+                'config_path' => dirname(__DIR__) . '/config',
+            ]);
+            {$moduleLoader}
+            /*
+            |--------------------------------------------------------------------------
+            | Handle Request
+            |--------------------------------------------------------------------------
+            */
 
-\$router = \$kernel->getRouter();
+            \$router = \$kernel->getRouter();
 
-// Define your routes here
-\$router->get('/', function () {
-    return [
-        'name' => env('APP_NAME', 'Luminor'),
-        'status' => 'running',
-        'timestamp' => date('c'),
-    ];
-});
+            // Define your routes here
+            \$router->get('/', function () {
+                return [
+                    'name' => env('APP_NAME', 'Luminor'),
+                    'status' => 'running',
+                    'timestamp' => date('c'),
+                ];
+            });
 
-\$router->get('/health', function () {
-    return ['status' => 'ok'];
-});
+            \$router->get('/health', function () {
+                return ['status' => 'ok'];
+            });
 
-// Example resource routes (uncomment and modify as needed)
-// \$router->get('/api/v1/resources', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'index']);
-// \$router->get('/api/v1/resources/{id}', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'show']);
-// \$router->post('/api/v1/resources', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'store']);
-// \$router->put('/api/v1/resources/{id}', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'update']);
-// \$router->delete('/api/v1/resources/{id}', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'destroy']);
+            // Example resource routes (uncomment and modify as needed)
+            // \$router->get('/api/v1/resources', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'index']);
+            // \$router->get('/api/v1/resources/{id}', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'show']);
+            // \$router->post('/api/v1/resources', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'store']);
+            // \$router->put('/api/v1/resources/{id}', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'update']);
+            // \$router->delete('/api/v1/resources/{id}', [{$namespace}\\Infrastructure\\Http\\Controllers\\ResourceController::class, 'destroy']);
 
-// Run the application
-\$kernel->run();
+            // Run the application
+            \$kernel->run();
 
-PHP;
+            PHP;
 
         file_put_contents($projectPath . '/public/index.php', $content);
         $output->line('  <comment>Created:</comment> public/index.php');
@@ -997,32 +1004,32 @@ PHP;
         $namespace = $config['namespace'];
 
         $content = <<<XML
-<?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
-         bootstrap="vendor/autoload.php"
-         colors="true"
-         cacheDirectory=".phpunit.cache"
-         executionOrder="depends,defects"
-         failOnRisky="true"
-         failOnWarning="true">
-    <testsuites>
-        <testsuite name="Unit">
-            <directory>tests/Unit</directory>
-        </testsuite>
-        <testsuite name="Integration">
-            <directory>tests/Integration</directory>
-        </testsuite>
-    </testsuites>
+            <?xml version="1.0" encoding="UTF-8"?>
+            <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                     xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+                     bootstrap="vendor/autoload.php"
+                     colors="true"
+                     cacheDirectory=".phpunit.cache"
+                     executionOrder="depends,defects"
+                     failOnRisky="true"
+                     failOnWarning="true">
+                <testsuites>
+                    <testsuite name="Unit">
+                        <directory>tests/Unit</directory>
+                    </testsuite>
+                    <testsuite name="Integration">
+                        <directory>tests/Integration</directory>
+                    </testsuite>
+                </testsuites>
 
-    <source>
-        <include>
-            <directory suffix=".php">src</directory>
-        </include>
-    </source>
-</phpunit>
+                <source>
+                    <include>
+                        <directory suffix=".php">src</directory>
+                    </include>
+                </source>
+            </phpunit>
 
-XML;
+            XML;
 
         file_put_contents($projectPath . '/phpunit.xml', $content);
         $output->line('  <comment>Created:</comment> phpunit.xml');
@@ -1072,7 +1079,7 @@ XML;
 
         foreach ($directories as $dir) {
             $gitkeep = $projectPath . DIRECTORY_SEPARATOR . $dir . DIRECTORY_SEPARATOR . '.gitkeep';
-            if (!file_exists($gitkeep)) {
+            if (! file_exists($gitkeep)) {
                 file_put_contents($gitkeep, '');
             }
         }
@@ -1186,6 +1193,7 @@ XML;
         $value = preg_replace('/[^a-zA-Z0-9]/', '-', $value) ?? $value;
         $value = preg_replace('/([a-z])([A-Z])/', '$1-$2', $value) ?? $value;
         $value = preg_replace('/-+/', '-', $value) ?? $value;
+
         return strtolower(trim($value, '-'));
     }
 
@@ -1196,6 +1204,7 @@ XML;
     {
         $value = preg_replace('/[^a-zA-Z0-9]/', ' ', $value) ?? $value;
         $value = ucwords($value);
+
         return str_replace(' ', '', $value);
     }
 
@@ -1207,6 +1216,7 @@ XML;
         $value = preg_replace('/[^a-zA-Z0-9]/', '_', $value) ?? $value;
         $value = preg_replace('/([a-z])([A-Z])/', '$1_$2', $value) ?? $value;
         $value = preg_replace('/_+/', '_', $value) ?? $value;
+
         return strtolower(trim($value, '_'));
     }
 }

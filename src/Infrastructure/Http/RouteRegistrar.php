@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http;
 
+use InvalidArgumentException;
 use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
 use Utopia\Http\Http;
 use Utopia\Http\Request;
@@ -34,7 +35,7 @@ final class RouteRegistrar
      * Create a new registrar instance.
      */
     public function __construct(
-        private readonly Http $http
+        private readonly Http $http,
     ) {
     }
 
@@ -53,6 +54,7 @@ final class RouteRegistrar
     {
         $instance = clone $this;
         $instance->prefix = rtrim($prefix, '/');
+
         return $instance;
     }
 
@@ -66,6 +68,7 @@ final class RouteRegistrar
         $instance = clone $this;
         $middlewares = is_array($middleware) ? $middleware : [$middleware];
         $instance->middleware = array_merge($this->middleware, $middlewares);
+
         return $instance;
     }
 
@@ -132,6 +135,7 @@ final class RouteRegistrar
      * @param class-string<CrudController> $controllerClass
      * @param array<int, string> $only Only register these methods
      * @param array<int, string> $except Exclude these methods
+     *
      * @return array<string, Route>
      */
     public function resource(
@@ -139,7 +143,7 @@ final class RouteRegistrar
         string $controllerClass,
         array $only = [],
         array $except = [],
-        string $idParam = 'id'
+        string $idParam = 'id',
     ): array {
         $path = rtrim($path, '/');
         $routes = [];
@@ -202,7 +206,7 @@ final class RouteRegistrar
             'PUT' => $this->http->put($fullPath),
             'PATCH' => $this->http->patch($fullPath),
             'DELETE' => $this->http->delete($fullPath),
-            default => throw new \InvalidArgumentException("Unsupported HTTP method: {$method}"),
+            default => throw new InvalidArgumentException("Unsupported HTTP method: {$method}"),
         };
 
         // Set the action
@@ -215,7 +219,6 @@ final class RouteRegistrar
      * Wrap a handler with middleware.
      *
      * @param callable|array{0: class-string, 1: string} $handler
-     * @return callable
      */
     private function wrapWithMiddleware(callable|array $handler): callable
     {
@@ -235,7 +238,7 @@ final class RouteRegistrar
 
             // Apply middleware in reverse order
             foreach (array_reverse($middleware) as $m) {
-                $pipeline = fn(Request $req, Response $res) => $m->handle($req, $res, $pipeline);
+                $pipeline = fn (Request $req, Response $res) => $m->handle($req, $res, $pipeline);
             }
 
             $pipeline($request, $response);

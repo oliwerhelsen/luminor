@@ -19,6 +19,7 @@ final class ListCommand extends AbstractCommand
     private array $commands = [];
 
     private string $applicationName = 'Luminor DDD Framework';
+
     private string $applicationVersion = '1.0.0';
 
     /**
@@ -42,6 +43,7 @@ final class ListCommand extends AbstractCommand
     public function setCommands(array $commands): self
     {
         $this->commands = $commands;
+
         return $this;
     }
 
@@ -52,6 +54,7 @@ final class ListCommand extends AbstractCommand
     {
         $this->applicationName = $name;
         $this->applicationVersion = $version;
+
         return $this;
     }
 
@@ -76,6 +79,7 @@ final class ListCommand extends AbstractCommand
             } else {
                 $output->warning('No commands available');
             }
+
             return 0;
         }
 
@@ -108,7 +112,7 @@ final class ListCommand extends AbstractCommand
                     '  <info>%s</info>%s%s',
                     $name,
                     $padding,
-                    $command->getDescription()
+                    $command->getDescription(),
                 ));
             }
         }
@@ -122,6 +126,7 @@ final class ListCommand extends AbstractCommand
      * Group commands by their namespace.
      *
      * @param string|null $filterNamespace Optional namespace to filter by
+     *
      * @return array<string, array<CommandInterface>>
      */
     private function groupCommands(?string $filterNamespace): array
@@ -147,7 +152,7 @@ final class ListCommand extends AbstractCommand
                 continue;
             }
 
-            if (!isset($grouped[$namespace])) {
+            if (! isset($grouped[$namespace])) {
                 $grouped[$namespace] = [];
             }
 
@@ -162,12 +167,13 @@ final class ListCommand extends AbstractCommand
             if ($b === '') {
                 return 1;
             }
+
             return strcmp($a, $b);
         });
 
         // Sort commands within each namespace
         foreach ($grouped as &$commands) {
-            usort($commands, fn(CommandInterface $a, CommandInterface $b) => strcmp($a->getName(), $b->getName()));
+            usort($commands, fn (CommandInterface $a, CommandInterface $b) => strcmp($a->getName(), $b->getName()));
         }
 
         return $grouped;

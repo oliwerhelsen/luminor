@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Support;
 
+use RuntimeException;
+
 /**
  * Environment variable helper for retrieving and type-casting environment values.
  *
@@ -27,7 +29,6 @@ final class Env
      *
      * @param string $key The environment variable name
      * @param mixed $default Default value if not found
-     * @return mixed
      */
     public static function get(string $key, mixed $default = null): mixed
     {
@@ -38,16 +39,15 @@ final class Env
      * Get the value of a required environment variable.
      *
      * @param string $key The environment variable name
-     * @return mixed
      *
-     * @throws \RuntimeException If the environment variable is not set
+     * @throws RuntimeException If the environment variable is not set
      */
     public static function getOrFail(string $key): mixed
     {
         $value = self::getEnvironmentVariable($key, null);
 
         if ($value === null) {
-            throw new \RuntimeException("Environment variable [{$key}] is not set.");
+            throw new RuntimeException("Environment variable [{$key}] is not set.");
         }
 
         return $value;
@@ -58,7 +58,6 @@ final class Env
      *
      * @param string $key The environment variable name
      * @param mixed $default Default value if not found
-     * @return mixed
      */
     protected static function getEnvironmentVariable(string $key, mixed $default): mixed
     {
@@ -96,11 +95,12 @@ final class Env
      * Transform the value based on common conventions.
      *
      * @param mixed $value The raw value
+     *
      * @return mixed The transformed value
      */
     protected static function transformValue(mixed $value): mixed
     {
-        if (!is_string($value)) {
+        if (! is_string($value)) {
             return $value;
         }
 
@@ -118,6 +118,7 @@ final class Env
      * Strip quotes from a string value.
      *
      * @param string $value The value to strip
+     *
      * @return string The unquoted value
      */
     protected static function stripQuotes(string $value): string
@@ -148,8 +149,6 @@ final class Env
 
     /**
      * Get the environment repository instance.
-     *
-     * @return object|null
      */
     public static function getRepository(): ?object
     {

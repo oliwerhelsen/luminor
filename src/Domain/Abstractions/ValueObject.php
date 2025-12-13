@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Domain\Abstractions;
 
+use ReflectionClass;
+
 /**
  * Base class for value objects.
  *
@@ -30,7 +32,7 @@ abstract class ValueObject
             return true;
         }
 
-        if (!$other instanceof static) {
+        if (! $other instanceof static) {
             return false;
         }
 
@@ -54,7 +56,7 @@ abstract class ValueObject
      */
     public function toArray(): array
     {
-        $reflection = new \ReflectionClass($this);
+        $reflection = new ReflectionClass($this);
         $properties = $reflection->getProperties();
         $result = [];
 

@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Kernel;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Config\ConfigRepository;
 use Luminor\DDD\Container\AbstractServiceProvider;
 use Luminor\DDD\Container\Container;
 use Luminor\DDD\Container\ContainerInterface;
 use Luminor\DDD\Kernel;
+use PHPUnit\Framework\TestCase;
 
 final class KernelTest extends TestCase
 {
@@ -78,7 +78,7 @@ final class KernelTest extends TestCase
         mkdir($this->basePath . '/config');
         file_put_contents(
             $this->basePath . '/config/app.php',
-            '<?php return ["name" => "Test App", "debug" => true];'
+            '<?php return ["name" => "Test App", "debug" => true];',
         );
 
         $kernel = new Kernel($this->basePath);
@@ -173,7 +173,7 @@ final class KernelTest extends TestCase
         mkdir($this->basePath . '/config');
         file_put_contents(
             $this->basePath . '/config/app.php',
-            '<?php return ["storage_path" => "/custom/storage"];'
+            '<?php return ["storage_path" => "/custom/storage"];',
         );
 
         $kernel = new Kernel($this->basePath);
@@ -187,7 +187,7 @@ final class KernelTest extends TestCase
         mkdir($this->basePath . '/config');
         file_put_contents(
             $this->basePath . '/config/app.php',
-            '<?php return ["env" => "testing"];'
+            '<?php return ["env" => "testing"];',
         );
 
         $kernel = new Kernel($this->basePath);
@@ -209,7 +209,7 @@ final class KernelTest extends TestCase
         mkdir($this->basePath . '/config');
         file_put_contents(
             $this->basePath . '/config/app.php',
-            '<?php return ["debug" => true];'
+            '<?php return ["debug" => true];',
         );
 
         $kernel = new Kernel($this->basePath);
@@ -231,7 +231,7 @@ final class KernelTest extends TestCase
         mkdir($this->basePath . '/config');
         file_put_contents(
             $this->basePath . '/config/app.php',
-            '<?php return ["env" => "local"];'
+            '<?php return ["env" => "local"];',
         );
 
         $kernel = new Kernel($this->basePath);
@@ -264,7 +264,7 @@ final class KernelTest extends TestCase
 
     private function removeDirectory(string $path): void
     {
-        if (!is_dir($path)) {
+        if (! is_dir($path)) {
             return;
         }
 

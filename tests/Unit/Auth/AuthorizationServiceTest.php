@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Auth;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Auth\AbstractPolicy;
 use Luminor\DDD\Auth\AuthenticatableInterface;
 use Luminor\DDD\Auth\AuthorizationException;
@@ -14,6 +13,7 @@ use Luminor\DDD\Auth\HasPermissionsInterface;
 use Luminor\DDD\Auth\HasRolesInterface;
 use Luminor\DDD\Auth\PermissionInterface;
 use Luminor\DDD\Auth\RoleInterface;
+use PHPUnit\Framework\TestCase;
 
 final class AuthorizationServiceTest extends TestCase
 {
@@ -49,7 +49,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUserWithPermissions([]);
         CurrentUser::set($user);
 
-        $this->service->setSuperAdminChecker(fn($u) => true);
+        $this->service->setSuperAdminChecker(fn ($u) => true);
 
         $this->assertTrue($this->service->hasPermission('any.permission'));
     }
@@ -122,7 +122,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function view(AuthenticatableInterface $user, mixed $resource): bool
             {
                 return true;
@@ -152,7 +152,7 @@ final class AuthorizationServiceTest extends TestCase
 
     public function testCanReturnsFalseWhenNoUser(): void
     {
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function view(AuthenticatableInterface $user, mixed $resource): bool
             {
                 return true;
@@ -169,7 +169,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $this->service->setSuperAdminChecker(fn($u) => true);
+        $this->service->setSuperAdminChecker(fn ($u) => true);
 
         // Even without a policy, super admin should have access
         $this->assertTrue($this->service->can('anything', new TestResource()));
@@ -180,7 +180,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function view(AuthenticatableInterface $user, mixed $resource): bool
             {
                 return true;
@@ -200,7 +200,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function view(AuthenticatableInterface $user, mixed $resource): bool
             {
                 return false;
@@ -218,7 +218,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function view(AuthenticatableInterface $user, mixed $resource): bool
             {
                 return true;
@@ -272,7 +272,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function before(AuthenticatableInterface $user, string $ability): ?bool
             {
                 return true; // Grant all access
@@ -294,7 +294,7 @@ final class AuthorizationServiceTest extends TestCase
         $user = $this->createUser();
         CurrentUser::set($user);
 
-        $policy = new class extends AbstractPolicy {
+        $policy = new class () extends AbstractPolicy {
             public function before(AuthenticatableInterface $user, string $ability): ?bool
             {
                 return false; // Deny all access
@@ -315,14 +315,14 @@ final class AuthorizationServiceTest extends TestCase
     {
         $user = $this->createUserWithPermissions(['posts.create']);
 
-        $this->service->setUserResolver(fn() => $user);
+        $this->service->setUserResolver(fn () => $user);
 
         $this->assertTrue($this->service->hasPermission('posts.create'));
     }
 
     private function createUser(): AuthenticatableInterface
     {
-        return new class implements AuthenticatableInterface {
+        return new class () implements AuthenticatableInterface {
             public function getAuthIdentifier(): string
             {
                 return 'user-1';
@@ -359,7 +359,7 @@ final class AuthorizationServiceTest extends TestCase
      */
     private function createUserWithPermissions(array $permissions): AuthenticatableInterface
     {
-        return new class($permissions) implements AuthenticatableInterface, HasPermissionsInterface {
+        return new class ($permissions) implements AuthenticatableInterface, HasPermissionsInterface {
             /**
              * @param array<string> $permissions
              */
@@ -404,6 +404,7 @@ final class AuthorizationServiceTest extends TestCase
             public function hasPermission(string|PermissionInterface $permission): bool
             {
                 $name = $permission instanceof PermissionInterface ? $permission->getName() : $permission;
+
                 return in_array($name, $this->permissions, true);
             }
 
@@ -419,7 +420,7 @@ final class AuthorizationServiceTest extends TestCase
      */
     private function createUserWithRoles(array $roles): AuthenticatableInterface
     {
-        return new class($roles) implements AuthenticatableInterface, HasRolesInterface {
+        return new class ($roles) implements AuthenticatableInterface, HasRolesInterface {
             /**
              * @param array<string> $roles
              */
@@ -464,6 +465,7 @@ final class AuthorizationServiceTest extends TestCase
             public function hasRole(string|RoleInterface $role): bool
             {
                 $name = $role instanceof RoleInterface ? $role->getName() : $role;
+
                 return in_array($name, $this->roles, true);
             }
 

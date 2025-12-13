@@ -16,6 +16,7 @@ interface TenantProviderInterface
      * Find a tenant by its identifier (ID or slug).
      *
      * @param string $identifier The tenant ID or slug
+     *
      * @return TenantInterface|null The tenant or null if not found
      */
     public function findByIdentifier(string $identifier): ?TenantInterface;
@@ -24,6 +25,7 @@ interface TenantProviderInterface
      * Find a tenant by its ID.
      *
      * @param string|int $id The tenant ID
+     *
      * @return TenantInterface|null The tenant or null if not found
      */
     public function findById(string|int $id): ?TenantInterface;
@@ -32,6 +34,7 @@ interface TenantProviderInterface
      * Find a tenant by its slug.
      *
      * @param string $slug The tenant slug
+     *
      * @return TenantInterface|null The tenant or null if not found
      */
     public function findBySlug(string $slug): ?TenantInterface;

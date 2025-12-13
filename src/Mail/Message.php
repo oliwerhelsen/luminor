@@ -25,10 +25,13 @@ final class Message
     private array $replyTo = [];
 
     private ?string $fromAddress = null;
+
     private ?string $fromName = null;
 
     private string $subject = '';
+
     private ?string $html = null;
+
     private ?string $text = null;
 
     /** @var array<int, array{path: string, name: string|null, mime: string|null}> */
@@ -45,6 +48,7 @@ final class Message
     public function to(string $address, ?string $name = null): self
     {
         $this->to[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -54,6 +58,7 @@ final class Message
     public function cc(string $address, ?string $name = null): self
     {
         $this->cc[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -63,6 +68,7 @@ final class Message
     public function bcc(string $address, ?string $name = null): self
     {
         $this->bcc[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -72,6 +78,7 @@ final class Message
     public function replyTo(string $address, ?string $name = null): self
     {
         $this->replyTo[$address] = $name ?? '';
+
         return $this;
     }
 
@@ -82,6 +89,7 @@ final class Message
     {
         $this->fromAddress = $address;
         $this->fromName = $name;
+
         return $this;
     }
 
@@ -91,6 +99,7 @@ final class Message
     public function subject(string $subject): self
     {
         $this->subject = $subject;
+
         return $this;
     }
 
@@ -100,6 +109,7 @@ final class Message
     public function html(string $html): self
     {
         $this->html = $html;
+
         return $this;
     }
 
@@ -109,6 +119,7 @@ final class Message
     public function text(string $text): self
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -122,6 +133,7 @@ final class Message
             'name' => $name,
             'mime' => $mime,
         ];
+
         return $this;
     }
 
@@ -131,6 +143,7 @@ final class Message
     public function header(string $name, string $value): self
     {
         $this->headers[$name] = $value;
+
         return $this;
     }
 
@@ -140,6 +153,7 @@ final class Message
     public function priority(int $priority): self
     {
         $this->priority = max(1, min(5, $priority));
+
         return $this;
     }
 
@@ -228,7 +242,7 @@ final class Message
      */
     public function hasRecipients(): bool
     {
-        return !empty($this->to) || !empty($this->cc) || !empty($this->bcc);
+        return ! empty($this->to) || ! empty($this->cc) || ! empty($this->bcc);
     }
 
     /**
@@ -301,7 +315,7 @@ final class Message
             $message->attach(
                 $attachment['path'],
                 $attachment['name'] ?? null,
-                $attachment['mime'] ?? null
+                $attachment['mime'] ?? null,
             );
         }
 

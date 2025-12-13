@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Testing;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\DomainEvent;
 use Luminor\DDD\Testing\InMemoryEventDispatcher;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class InMemoryEventDispatcherTest extends TestCase
 {
@@ -107,7 +108,7 @@ final class InMemoryEventDispatcherTest extends TestCase
     public function testResetClearsAllState(): void
     {
         $this->dispatcher->dispatch(new TestEvent('test'));
-        $this->dispatcher->listen(TestEvent::class, fn() => null);
+        $this->dispatcher->listen(TestEvent::class, fn () => null);
 
         $this->dispatcher->reset();
 
@@ -125,7 +126,7 @@ final class InMemoryEventDispatcherTest extends TestCase
     {
         $this->dispatcher->dispatch(new TestEvent('test'));
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->dispatcher->assertNothingDispatched();
     }
@@ -137,7 +138,7 @@ final class InMemoryEventDispatcherTest extends TestCase
         // Should not throw
         $this->dispatcher->assertDispatchedWith(
             TestEvent::class,
-            fn(DomainEvent $e) => $e->getAggregateId() === 'aggregate-123'
+            fn (DomainEvent $e) => $e->getAggregateId() === 'aggregate-123',
         );
 
         $this->assertTrue(true);
@@ -147,11 +148,11 @@ final class InMemoryEventDispatcherTest extends TestCase
     {
         $this->dispatcher->dispatch(new TestEvent('aggregate-123'));
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->dispatcher->assertDispatchedWith(
             TestEvent::class,
-            fn(DomainEvent $e) => $e->getAggregateId() === 'different-id'
+            fn (DomainEvent $e) => $e->getAggregateId() === 'different-id',
         );
     }
 }

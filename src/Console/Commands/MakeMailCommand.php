@@ -40,34 +40,37 @@ final class MakeMailCommand extends AbstractCommand
         if ($name === null) {
             $output->error('Please provide a mail name.');
             $output->writeln('Usage: make:mail <name> [--queued]');
+
             return 1;
         }
 
         $kernel = Kernel::getInstance();
         if ($kernel === null) {
             $output->error('Kernel not initialized.');
+
             return 1;
         }
 
         $queued = $input->hasOption('queued') && $input->getOption('queued') !== false;
-        
+
         // Parse namespace and class name
         $parts = explode('/', str_replace('\\', '/', (string) $name));
         $className = array_pop($parts);
-        $subNamespace = !empty($parts) ? '\\' . implode('\\', $parts) : '';
+        $subNamespace = ! empty($parts) ? '\\' . implode('\\', $parts) : '';
 
         // Determine output path
         $basePath = $kernel->getBasePath();
-        $directory = $basePath . '/src/Mail' . (!empty($parts) ? '/' . implode('/', $parts) : '');
+        $directory = $basePath . '/src/Mail' . (! empty($parts) ? '/' . implode('/', $parts) : '');
         $filePath = $directory . '/' . $className . '.php';
 
         // Create directory if needed
-        if (!is_dir($directory)) {
-            mkdir($directory, 0755, true);
+        if (! is_dir($directory)) {
+            mkdir($directory, 0o755, true);
         }
 
         if (file_exists($filePath)) {
             $output->error("Mail already exists: {$filePath}");
+
             return 1;
         }
 
@@ -85,69 +88,69 @@ final class MakeMailCommand extends AbstractCommand
     private function getStub(string $className, string $subNamespace, bool $queued): string
     {
         $namespace = 'App\\Mail' . $subNamespace;
-        
+
         $useStatements = "use Luminor\\DDD\\Mail\\Mailable;\nuse Luminor\\DDD\\Mail\\Message;";
         $implements = '';
-        
+
         if ($queued) {
             $useStatements .= "\nuse Luminor\\DDD\\Mail\\ShouldQueue;";
             $implements = ' implements ShouldQueue';
         }
 
         return <<<PHP
-<?php
+            <?php
 
-declare(strict_types=1);
+            declare(strict_types=1);
 
-namespace {$namespace};
+            namespace {$namespace};
 
-{$useStatements}
+            {$useStatements}
 
-final class {$className} extends Mailable{$implements}
-{
-    public function __construct(
-        // Add your mailable data here
-    ) {}
+            final class {$className} extends Mailable{$implements}
+            {
+                public function __construct(
+                    // Add your mailable data here
+                ) {}
 
-    /**
-     * Build the message.
-     */
-    public function build(): Message
-    {
-        return \$this->subject('Your Subject')
-            ->html(\$this->renderHtml())
-            ->text(\$this->renderText());
-    }
+                /**
+                 * Build the message.
+                 */
+                public function build(): Message
+                {
+                    return \$this->subject('Your Subject')
+                        ->html(\$this->renderHtml())
+                        ->text(\$this->renderText());
+                }
 
-    /**
-     * Render the HTML content.
-     */
-    private function renderHtml(): string
-    {
-        return <<<HTML
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Email</title>
-</head>
-<body>
-    <h1>Hello!</h1>
-    <p>This is your email content.</p>
-</body>
-</html>
-HTML;
-    }
+                /**
+                 * Render the HTML content.
+                 */
+                private function renderHtml(): string
+                {
+                    return <<<HTML
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <meta charset="utf-8">
+                <title>Email</title>
+            </head>
+            <body>
+                <h1>Hello!</h1>
+                <p>This is your email content.</p>
+            </body>
+            </html>
+            HTML;
+                }
 
-    /**
-     * Render the plain text content.
-     */
-    private function renderText(): string
-    {
-        return "Hello!\n\nThis is your email content.";
-    }
-}
+                /**
+                 * Render the plain text content.
+                 */
+                private function renderText(): string
+                {
+                    return "Hello!\n\nThis is your email content.";
+                }
+            }
 
-PHP;
+            PHP;
     }
 }

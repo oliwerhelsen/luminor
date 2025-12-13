@@ -15,6 +15,7 @@ namespace Luminor\DDD\Domain\Abstractions;
  * Aggregate roots can record domain events that represent changes within the aggregate.
  *
  * @template TId of mixed
+ *
  * @extends Entity<TId>
  */
 abstract class AggregateRoot extends Entity
@@ -62,6 +63,7 @@ abstract class AggregateRoot extends Entity
     {
         $events = $this->domainEvents;
         $this->domainEvents = [];
+
         return $events;
     }
 

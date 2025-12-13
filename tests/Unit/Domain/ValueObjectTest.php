@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Domain;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Domain\Abstractions\ValueObject;
+use PHPUnit\Framework\TestCase;
 
 final class ValueObjectTest extends TestCase
 {
@@ -77,7 +77,7 @@ final class ValueObjectTest extends TestCase
     {
         $vo = new Address(
             '123 Main St',
-            new City('New York', 'NY')
+            new City('New York', 'NY'),
         );
 
         $array = $vo->toArray();
@@ -93,7 +93,7 @@ final class Money extends ValueObject
 {
     public function __construct(
         private readonly int $amount,
-        private readonly string $currency
+        private readonly string $currency,
     ) {
     }
 
@@ -106,7 +106,7 @@ final class Money extends ValueObject
 final class Email extends ValueObject
 {
     public function __construct(
-        private readonly string $value
+        private readonly string $value,
     ) {
     }
 
@@ -120,7 +120,7 @@ final class City extends ValueObject
 {
     public function __construct(
         private readonly string $name,
-        private readonly string $state
+        private readonly string $state,
     ) {
     }
 
@@ -134,7 +134,7 @@ final class Address extends ValueObject
 {
     public function __construct(
         private readonly string $street,
-        private readonly City $city
+        private readonly City $city,
     ) {
     }
 

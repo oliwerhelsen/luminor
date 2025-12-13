@@ -33,6 +33,7 @@ final class SyncQueue implements QueueInterface
     {
         // Execute immediately
         $job->handle();
+
         return 0;
     }
 

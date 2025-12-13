@@ -6,6 +6,7 @@ namespace Luminor\DDD\Database\Migrations;
 
 use Luminor\DDD\Database\ConnectionInterface;
 use PDO;
+use PDOException;
 
 /**
  * Database Migration Repository
@@ -15,11 +16,12 @@ use PDO;
 final class DatabaseMigrationRepository implements MigrationRepositoryInterface
 {
     private ConnectionInterface $connection;
+
     private string $table;
 
     public function __construct(
         ConnectionInterface $connection,
-        string $table = 'migrations'
+        string $table = 'migrations',
     ) {
         $this->connection = $connection;
         $this->table = $table;
@@ -33,7 +35,7 @@ final class DatabaseMigrationRepository implements MigrationRepositoryInterface
         $pdo = $this->connection->getPdo();
 
         $stmt = $pdo->query(
-            "SELECT migration FROM {$this->table} ORDER BY id ASC"
+            "SELECT migration FROM {$this->table} ORDER BY id ASC",
         );
 
         return $stmt->fetchAll(PDO::FETCH_COLUMN);
@@ -47,7 +49,7 @@ final class DatabaseMigrationRepository implements MigrationRepositoryInterface
         $pdo = $this->connection->getPdo();
 
         $stmt = $pdo->prepare(
-            "INSERT INTO {$this->table} (migration, batch) VALUES (?, ?)"
+            "INSERT INTO {$this->table} (migration, batch) VALUES (?, ?)",
         );
 
         $stmt->execute([$name, $batch]);
@@ -61,7 +63,7 @@ final class DatabaseMigrationRepository implements MigrationRepositoryInterface
         $pdo = $this->connection->getPdo();
 
         $stmt = $pdo->prepare(
-            "DELETE FROM {$this->table} WHERE migration = ?"
+            "DELETE FROM {$this->table} WHERE migration = ?",
         );
 
         $stmt->execute([$name]);
@@ -75,7 +77,7 @@ final class DatabaseMigrationRepository implements MigrationRepositoryInterface
         $pdo = $this->connection->getPdo();
 
         $stmt = $pdo->query(
-            "SELECT MAX(batch) FROM {$this->table}"
+            "SELECT MAX(batch) FROM {$this->table}",
         );
 
         return (int) $stmt->fetchColumn();
@@ -89,7 +91,7 @@ final class DatabaseMigrationRepository implements MigrationRepositoryInterface
         $pdo = $this->connection->getPdo();
 
         $stmt = $pdo->prepare(
-            "SELECT migration FROM {$this->table} WHERE batch = ? ORDER BY id DESC"
+            "SELECT migration FROM {$this->table} WHERE batch = ? ORDER BY id DESC",
         );
 
         $stmt->execute([$batch]);
@@ -121,8 +123,9 @@ final class DatabaseMigrationRepository implements MigrationRepositoryInterface
         try {
             $pdo = $this->connection->getPdo();
             $pdo->query("SELECT 1 FROM {$this->table} LIMIT 1");
+
             return true;
-        } catch (\PDOException $e) {
+        } catch (PDOException $e) {
             return false;
         }
     }

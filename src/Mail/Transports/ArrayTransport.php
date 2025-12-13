@@ -23,6 +23,7 @@ final class ArrayTransport implements TransportInterface
     public function send(Message $message): bool
     {
         $this->messages[] = $message;
+
         return true;
     }
 

@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Tests\Unit\Testing;
 
-use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Application\CQRS\Query;
 use Luminor\DDD\Testing\InMemoryQueryBus;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
 
 final class InMemoryQueryBusTest extends TestCase
 {
@@ -53,10 +54,10 @@ final class InMemoryQueryBusTest extends TestCase
 
     public function testThrowsExceptionWhenConfigured(): void
     {
-        $exception = new \RuntimeException('Query failed');
+        $exception = new RuntimeException('Query failed');
         $this->bus->throwWhen(TestQuery::class, $exception);
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Query failed');
 
         $this->bus->dispatch(new TestQuery('test'));
@@ -102,7 +103,7 @@ final class InMemoryQueryBusTest extends TestCase
     {
         $this->bus->dispatch(new TestQuery('test'));
 
-        $this->expectException(\RuntimeException::class);
+        $this->expectException(RuntimeException::class);
 
         $this->bus->assertNothingDispatched();
     }
