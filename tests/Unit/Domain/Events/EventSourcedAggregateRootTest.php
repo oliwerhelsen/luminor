@@ -62,14 +62,25 @@ final class TestAggregate extends EventSourcedAggregateRoot
 {
     private string $name;
 
-    private function __construct(string $id)
+    protected function __construct(string $id)
     {
         parent::__construct($id);
     }
 
     public static function create(string $name): self
     {
-        $aggregate = new self(self::generateId());
+        $id = sprintf(
+            '%04x%04x-%04x-%04x-%04x-%04x%04x%04x',
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0x0fff) | 0x4000,
+            random_int(0, 0x3fff) | 0x8000,
+            random_int(0, 0xffff),
+            random_int(0, 0xffff),
+            random_int(0, 0xffff)
+        );
+        $aggregate = new self($id);
         $aggregate->recordEvent(new TestCreatedEvent($aggregate->getId(), $name));
         return $aggregate;
     }
