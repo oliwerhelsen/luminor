@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http\Response;
+namespace Luminor\DDD\Infrastructure\Http\Response;
 
-use Lumina\DDD\Application\Validation\ValidationResult;
+use Luminor\DDD\Application\Validation\ValidationResult;
 
 /**
  * Specialized error response for validation errors.

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Cache;
+namespace Luminor\DDD\Cache;
 
-use Lumina\DDD\Cache\Drivers\FileCache;
-use Lumina\DDD\Cache\Drivers\ArrayCache;
+use Luminor\DDD\Cache\Drivers\FileCache;
+use Luminor\DDD\Cache\Drivers\ArrayCache;
 
 /**
  * Cache Manager
@@ -21,7 +21,7 @@ final class CacheManager implements CacheInterface
 
     public function __construct(?CacheInterface $driver = null)
     {
-        $this->driver = $driver ?? new FileCache(sys_get_temp_dir() . '/lumina_cache');
+        $this->driver = $driver ?? new FileCache(sys_get_temp_dir() . '/luminor_cache');
     }
 
     /**

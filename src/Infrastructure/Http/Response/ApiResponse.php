@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http\Response;
+namespace Luminor\DDD\Infrastructure\Http\Response;
 
-use Lumina\DDD\Application\DTO\DataTransferObject;
-use Lumina\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Application\DTO\DataTransferObject;
+use Luminor\DDD\Application\DTO\PagedResult;
 use Utopia\Http\Response;
 
 /**

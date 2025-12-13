@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use Lumina\DDD\Infrastructure\Http\ApiController;
+use Luminor\DDD\Infrastructure\Http\ApiController;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 
@@ -156,7 +156,7 @@ Use the RouteRegistrar for cleaner route definitions:
 ```php
 <?php
 
-use Lumina\DDD\Infrastructure\Http\RouteRegistrar;
+use Luminor\DDD\Infrastructure\Http\RouteRegistrar;
 
 $registrar = new RouteRegistrar($http);
 
@@ -181,7 +181,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Middleware;
 
-use Lumina\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
+use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 
@@ -220,7 +220,7 @@ final class RateLimitMiddleware implements MiddlewareInterface
 ```php
 <?php
 
-use Lumina\DDD\Infrastructure\Http\Middleware\AbstractAuthMiddleware;
+use Luminor\DDD\Infrastructure\Http\Middleware\AbstractAuthMiddleware;
 
 final class JwtAuthMiddleware extends AbstractAuthMiddleware
 {
@@ -265,7 +265,7 @@ final class JwtAuthMiddleware extends AbstractAuthMiddleware
 ```php
 <?php
 
-use Lumina\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
+use Luminor\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
 
 $cors = new CorsMiddleware(
     allowedOrigins: ['https://example.com', 'https://app.example.com'],
@@ -282,7 +282,7 @@ $cors = new CorsMiddleware(
 ```php
 <?php
 
-use Lumina\DDD\Infrastructure\Http\ExceptionHandler;
+use Luminor\DDD\Infrastructure\Http\ExceptionHandler;
 
 $handler = new ExceptionHandler(debug: $config['app']['debug']);
 
@@ -321,7 +321,7 @@ $http->error()
 ```php
 <?php
 
-use Lumina\DDD\Infrastructure\Http\Middleware\ValidationMiddleware;
+use Luminor\DDD\Infrastructure\Http\Middleware\ValidationMiddleware;
 
 $validation = new ValidationMiddleware([
     'name' => ['required', 'string', 'max:255'],

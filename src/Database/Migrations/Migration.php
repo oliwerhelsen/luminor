@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Database\Migrations;
+namespace Luminor\DDD\Database\Migrations;
 
-use Lumina\DDD\Database\Schema\Schema;
+use Luminor\DDD\Database\Schema\Schema;
 
 /**
  * Abstract Migration Base Class

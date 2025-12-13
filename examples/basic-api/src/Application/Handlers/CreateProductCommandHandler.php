@@ -8,7 +8,7 @@ use Example\BasicApi\Application\Commands\CreateProductCommand;
 use Example\BasicApi\Domain\Entities\Product;
 use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
 use Example\BasicApi\Domain\ValueObjects\Money;
-use Lumina\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\DDD\Application\Bus\CommandHandlerInterface;
 
 /**
  * Handler for CreateProductCommand.

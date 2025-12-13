@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Database\Migrations;
+namespace Luminor\DDD\Database\Migrations;
 
-use Lumina\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Database\ConnectionInterface;
 use PDO;
 
 /**

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Storage;
+namespace Luminor\DDD\Storage;
 
-use Lumina\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\AbstractServiceProvider;
 
 /**
  * Storage Service Provider

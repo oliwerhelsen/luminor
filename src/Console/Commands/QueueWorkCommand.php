@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
-use Lumina\DDD\Container\ContainerInterface;
-use Lumina\DDD\Queue\QueueManager;
-use Lumina\DDD\Queue\Worker;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
+use Luminor\DDD\Container\ContainerInterface;
+use Luminor\DDD\Queue\QueueManager;
+use Luminor\DDD\Queue\Worker;
 
 /**
  * Command to process queued jobs.
@@ -228,7 +228,7 @@ final class QueueWorkCommand extends AbstractCommand
      */
     private function getLastRestartTime(): ?int
     {
-        $file = sys_get_temp_dir() . '/lumina_queue_restart';
+        $file = sys_get_temp_dir() . '/luminor_queue_restart';
         
         if (file_exists($file)) {
             return (int) file_get_contents($file);
@@ -242,7 +242,7 @@ final class QueueWorkCommand extends AbstractCommand
      */
     private function shouldRestart(?int $lastRestart): bool
     {
-        $file = sys_get_temp_dir() . '/lumina_queue_restart';
+        $file = sys_get_temp_dir() . '/luminor_queue_restart';
 
         if (!file_exists($file)) {
             return false;

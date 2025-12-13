@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Console\Commands;
+namespace Luminor\DDD\Tests\Unit\Console\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Console\Commands\MakeModuleCommand;
+use Luminor\DDD\Console\Commands\MakeModuleCommand;
 
 final class MakeModuleCommandTest extends TestCase
 {

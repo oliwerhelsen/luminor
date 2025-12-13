@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Cache;
+namespace Luminor\DDD\Cache;
 
-use Lumina\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\AbstractServiceProvider;
 
 /**
  * Cache Service Provider
@@ -23,10 +23,10 @@ final class CacheServiceProvider extends AbstractServiceProvider
 
             return match ($driver) {
                 'file' => CacheManager::file(
-                    getenv('CACHE_PATH') ?: sys_get_temp_dir() . '/lumina_cache'
+                    getenv('CACHE_PATH') ?: sys_get_temp_dir() . '/luminor_cache'
                 ),
                 'array' => CacheManager::array(),
-                default => CacheManager::file(sys_get_temp_dir() . '/lumina_cache'),
+                default => CacheManager::file(sys_get_temp_dir() . '/luminor_cache'),
             };
         });
 

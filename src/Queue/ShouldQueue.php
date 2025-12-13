@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Queue;
+namespace Luminor\DDD\Queue;
 
 /**
  * Marker interface indicating that a job should be queued.

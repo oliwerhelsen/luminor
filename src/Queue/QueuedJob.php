@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Queue;
+namespace Luminor\DDD\Queue;
 
 /**
  * Represents a job that has been pulled from the queue.

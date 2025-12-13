@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Queue\Drivers;
+namespace Luminor\DDD\Queue\Drivers;
 
-use Lumina\DDD\Queue\JobInterface;
-use Lumina\DDD\Queue\QueuedJob;
-use Lumina\DDD\Queue\QueueInterface;
+use Luminor\DDD\Queue\JobInterface;
+use Luminor\DDD\Queue\QueuedJob;
+use Luminor\DDD\Queue\QueueInterface;
 
 /**
  * Synchronous queue driver.

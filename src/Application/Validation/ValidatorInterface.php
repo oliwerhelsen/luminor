@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Application\Validation;
+namespace Luminor\DDD\Application\Validation;
 
-use Lumina\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Command;
 
 /**
  * Interface for command validators.

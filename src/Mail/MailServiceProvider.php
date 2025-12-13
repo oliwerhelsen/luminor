@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Mail;
+namespace Luminor\DDD\Mail;
 
-use Lumina\DDD\Container\AbstractServiceProvider;
-use Lumina\DDD\Container\ContainerInterface;
-use Lumina\DDD\Queue\QueueManager;
+use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\ContainerInterface;
+use Luminor\DDD\Queue\QueueManager;
 
 /**
  * Service provider for mail services.
@@ -77,7 +77,7 @@ final class MailServiceProvider extends AbstractServiceProvider
             'default' => 'log',
             'from' => [
                 'address' => 'hello@example.com',
-                'name' => 'Lumina App',
+                'name' => 'Luminor App',
             ],
             'mailers' => [
                 'smtp' => [

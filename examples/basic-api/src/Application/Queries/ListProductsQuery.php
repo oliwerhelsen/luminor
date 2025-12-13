@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\BasicApi\Application\Queries;
 
-use Lumina\DDD\Application\CQRS\Query;
+use Luminor\DDD\Application\CQRS\Query;
 
 /**
  * Query to list products with pagination.

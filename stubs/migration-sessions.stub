@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Lumina\DDD\Database\Migrations\Migration;
-use Lumina\DDD\Database\Schema\Blueprint;
+use Luminor\DDD\Database\Migrations\Migration;
+use Luminor\DDD\Database\Schema\Blueprint;
 
 /**
  * Migration: Create Sessions Table

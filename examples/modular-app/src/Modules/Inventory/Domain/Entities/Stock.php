@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Inventory\Domain\Entities;
 
-use Lumina\DDD\Domain\Abstractions\Entity;
+use Luminor\DDD\Domain\Abstractions\Entity;
 use Example\ModularApp\Modules\Inventory\Domain\Events\StockAdjustedEvent;
 use Example\ModularApp\Modules\Inventory\Domain\Events\StockReservedEvent;
 

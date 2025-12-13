@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http\Response;
+namespace Luminor\DDD\Infrastructure\Http\Response;
 
 /**
  * Error response with structured error information.

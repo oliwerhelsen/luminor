@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Application\CQRS;
+namespace Luminor\DDD\Application\CQRS;
 
 /**
  * Marker interface for commands.

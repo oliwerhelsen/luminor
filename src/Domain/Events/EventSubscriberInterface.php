@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Domain\Events;
+namespace Luminor\DDD\Domain\Events;
 
-use Lumina\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\DDD\Domain\Abstractions\DomainEvent;
 
 /**
  * Interface for event subscribers that handle multiple event types.

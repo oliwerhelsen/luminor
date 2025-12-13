@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Lumina\DDD\Config\ConfigRepository;
-use Lumina\DDD\Kernel;
-use Lumina\DDD\Support\Env;
+use Luminor\DDD\Config\ConfigRepository;
+use Luminor\DDD\Kernel;
+use Luminor\DDD\Support\Env;
 
 if (!function_exists('env')) {
     /**
@@ -461,7 +461,7 @@ if (!function_exists('logger')) {
      * @param string|null $message Message to log (optional)
      * @param array<string, mixed> $context Context data
      * @param string|null $channel Channel to use (optional)
-     * @return \Lumina\DDD\Logging\LoggerInterface|\Lumina\DDD\Logging\LogManager
+     * @return \Luminor\DDD\Logging\LoggerInterface|\Luminor\DDD\Logging\LogManager
      */
     function logger(?string $message = null, array $context = [], ?string $channel = null): mixed
     {
@@ -471,8 +471,8 @@ if (!function_exists('logger')) {
             throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
         }
 
-        /** @var \Lumina\DDD\Logging\LogManager $manager */
-        $manager = $kernel->make(\Lumina\DDD\Logging\LogManager::class);
+        /** @var \Luminor\DDD\Logging\LogManager $manager */
+        $manager = $kernel->make(\Luminor\DDD\Logging\LogManager::class);
 
         if ($message === null) {
             return $channel !== null ? $manager->channel($channel) : $manager;
@@ -504,7 +504,7 @@ if (!function_exists('mail')) {
      * Get a pending mail instance for fluent mail building.
      *
      * @param string|array<string>|null $to Recipients (optional)
-     * @return \Lumina\DDD\Mail\PendingMail|\Lumina\DDD\Mail\Mailer
+     * @return \Luminor\DDD\Mail\PendingMail|\Luminor\DDD\Mail\Mailer
      */
     function mail(string|array|null $to = null): mixed
     {
@@ -514,8 +514,8 @@ if (!function_exists('mail')) {
             throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
         }
 
-        /** @var \Lumina\DDD\Mail\Mailer $mailer */
-        $mailer = $kernel->make(\Lumina\DDD\Mail\Mailer::class);
+        /** @var \Luminor\DDD\Mail\Mailer $mailer */
+        $mailer = $kernel->make(\Luminor\DDD\Mail\Mailer::class);
 
         if ($to === null) {
             return $mailer;
@@ -529,11 +529,11 @@ if (!function_exists('dispatch')) {
     /**
      * Dispatch a job to the queue.
      *
-     * @param \Lumina\DDD\Queue\JobInterface $job Job to dispatch
+     * @param \Luminor\DDD\Queue\JobInterface $job Job to dispatch
      * @param string|null $queue Queue name (optional)
      * @return string Job ID
      */
-    function dispatch(\Lumina\DDD\Queue\JobInterface $job, ?string $queue = null): string
+    function dispatch(\Luminor\DDD\Queue\JobInterface $job, ?string $queue = null): string
     {
         $kernel = Kernel::getInstance();
 
@@ -541,8 +541,8 @@ if (!function_exists('dispatch')) {
             throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
         }
 
-        /** @var \Lumina\DDD\Queue\QueueManager $manager */
-        $manager = $kernel->make(\Lumina\DDD\Queue\QueueManager::class);
+        /** @var \Luminor\DDD\Queue\QueueManager $manager */
+        $manager = $kernel->make(\Luminor\DDD\Queue\QueueManager::class);
 
         return $manager->push($job, $queue);
     }
@@ -552,10 +552,10 @@ if (!function_exists('dispatch_sync')) {
     /**
      * Dispatch a job synchronously (immediate execution).
      *
-     * @param \Lumina\DDD\Queue\JobInterface $job Job to execute
+     * @param \Luminor\DDD\Queue\JobInterface $job Job to execute
      * @return void
      */
-    function dispatch_sync(\Lumina\DDD\Queue\JobInterface $job): void
+    function dispatch_sync(\Luminor\DDD\Queue\JobInterface $job): void
     {
         $kernel = Kernel::getInstance();
 
@@ -563,8 +563,8 @@ if (!function_exists('dispatch_sync')) {
             throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
         }
 
-        /** @var \Lumina\DDD\Queue\Drivers\SyncQueue $sync */
-        $sync = new \Lumina\DDD\Queue\Drivers\SyncQueue($kernel->getContainer());
+        /** @var \Luminor\DDD\Queue\Drivers\SyncQueue $sync */
+        $sync = new \Luminor\DDD\Queue\Drivers\SyncQueue($kernel->getContainer());
         $sync->push($job);
     }
 }
@@ -574,13 +574,13 @@ if (!function_exists('validator')) {
      * Create a new validator instance.
      *
      * @param array<string, mixed> $data Data to validate
-     * @param array<string, array<string|\Lumina\DDD\Validation\Rule>> $rules Validation rules
+     * @param array<string, array<string|\Luminor\DDD\Validation\Rule>> $rules Validation rules
      * @param array<string, string> $messages Custom error messages
-     * @return \Lumina\DDD\Validation\Validator
+     * @return \Luminor\DDD\Validation\Validator
      */
-    function validator(array $data, array $rules, array $messages = []): \Lumina\DDD\Validation\Validator
+    function validator(array $data, array $rules, array $messages = []): \Luminor\DDD\Validation\Validator
     {
-        return new \Lumina\DDD\Validation\Validator($data, $rules, $messages);
+        return new \Luminor\DDD\Validation\Validator($data, $rules, $messages);
     }
 }
 
@@ -589,10 +589,10 @@ if (!function_exists('validate')) {
      * Validate data and return validated data or throw exception.
      *
      * @param array<string, mixed> $data Data to validate
-     * @param array<string, array<string|\Lumina\DDD\Validation\Rule>> $rules Validation rules
+     * @param array<string, array<string|\Luminor\DDD\Validation\Rule>> $rules Validation rules
      * @param array<string, string> $messages Custom error messages
      * @return array<string, mixed> Validated data
-     * @throws \Lumina\DDD\Application\Validation\ValidationException
+     * @throws \Luminor\DDD\Application\Validation\ValidationException
      */
     function validate(array $data, array $rules, array $messages = []): array
     {
@@ -616,8 +616,8 @@ if (!function_exists('hash_make')) {
             throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
         }
 
-        /** @var \Lumina\DDD\Security\HashManager $hash */
-        $hash = $kernel->make(\Lumina\DDD\Security\HashManager::class);
+        /** @var \Luminor\DDD\Security\HashManager $hash */
+        $hash = $kernel->make(\Luminor\DDD\Security\HashManager::class);
 
         if ($driver !== null) {
             return $hash->driver($driver)->make($value);
@@ -643,8 +643,8 @@ if (!function_exists('hash_check')) {
             throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
         }
 
-        /** @var \Lumina\DDD\Security\HashManager $hash */
-        $hash = $kernel->make(\Lumina\DDD\Security\HashManager::class);
+        /** @var \Luminor\DDD\Security\HashManager $hash */
+        $hash = $kernel->make(\Luminor\DDD\Security\HashManager::class);
 
         return $hash->check($value, $hashedValue);
     }
@@ -660,7 +660,7 @@ if (!function_exists('bcrypt')) {
      */
     function bcrypt(string $value, int $rounds = 10): string
     {
-        $hasher = new \Lumina\DDD\Security\BcryptHasher($rounds);
+        $hasher = new \Luminor\DDD\Security\BcryptHasher($rounds);
         return $hasher->make($value);
     }
 }

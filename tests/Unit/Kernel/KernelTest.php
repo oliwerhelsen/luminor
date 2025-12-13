@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Kernel;
+namespace Luminor\DDD\Tests\Unit\Kernel;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Config\ConfigRepository;
-use Lumina\DDD\Container\AbstractServiceProvider;
-use Lumina\DDD\Container\Container;
-use Lumina\DDD\Container\ContainerInterface;
-use Lumina\DDD\Kernel;
+use Luminor\DDD\Config\ConfigRepository;
+use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\Container;
+use Luminor\DDD\Container\ContainerInterface;
+use Luminor\DDD\Kernel;
 
 final class KernelTest extends TestCase
 {
@@ -17,7 +17,7 @@ final class KernelTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->basePath = sys_get_temp_dir() . '/lumina-ddd-test-' . uniqid();
+        $this->basePath = sys_get_temp_dir() . '/luminor-ddd-test-' . uniqid();
         mkdir($this->basePath);
     }
 

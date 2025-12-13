@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Container;
+namespace Luminor\DDD\Container;
 
 /**
  * Abstract base class for service providers.

@@ -1,6 +1,6 @@
 # Security
 
-Lumina provides robust security features to protect your application from common vulnerabilities. This includes password hashing, CSRF protection, and secure authentication mechanisms.
+Luminor provides robust security features to protect your application from common vulnerabilities. This includes password hashing, CSRF protection, and secure authentication mechanisms.
 
 ## Table of Contents
 
@@ -12,7 +12,7 @@ Lumina provides robust security features to protect your application from common
 
 ## Introduction
 
-Security features in Lumina:
+Security features in Luminor:
 
 - **Password Hashing** - Bcrypt and Argon2id support
 - **CSRF Protection** - Token-based request verification
@@ -21,14 +21,14 @@ Security features in Lumina:
 
 ## Password Hashing
 
-Lumina provides a secure password hashing system with support for multiple algorithms.
+Luminor provides a secure password hashing system with support for multiple algorithms.
 
 ### Configuration
 
 Register the security service provider:
 
 ```php
-use Lumina\Security\SecurityServiceProvider;
+use Luminor\Security\SecurityServiceProvider;
 
 $kernel->registerServiceProvider(new SecurityServiceProvider());
 ```
@@ -56,7 +56,7 @@ return [
 Hash and verify passwords:
 
 ```php
-use Lumina\Security\HashManager;
+use Luminor\Security\HashManager;
 
 $hashManager = $container->get(HashManager::class);
 
@@ -82,7 +82,7 @@ if ($hashManager->needsRehash($hashed)) {
 Industry standard, widely supported:
 
 ```php
-use Lumina\Security\BcryptHasher;
+use Luminor\Security\BcryptHasher;
 
 $hasher = new BcryptHasher(12); // 12 rounds
 
@@ -108,7 +108,7 @@ $valid = $hasher->verify('password', $hash);
 Modern algorithm, recommended for new applications:
 
 ```php
-use Lumina\Security\Argon2IdHasher;
+use Luminor\Security\Argon2IdHasher;
 
 $hasher = new Argon2IdHasher(
     memory: 65536,    // 64 MB
@@ -138,7 +138,7 @@ $valid = $hasher->verify('password', $hash);
 ### User Authentication Example
 
 ```php
-use Lumina\Security\HashManager;
+use Luminor\Security\HashManager;
 
 class UserService
 {
@@ -230,7 +230,7 @@ The CSRF middleware uses session tokens to verify requests.
 ### Using CSRF Middleware
 
 ```php
-use Lumina\Infrastructure\Http\Middleware\CsrfMiddleware;
+use Luminor\Infrastructure\Http\Middleware\CsrfMiddleware;
 
 class Kernel
 {
@@ -288,7 +288,7 @@ HTML meta tag:
 Exclude certain routes from CSRF protection:
 
 ```php
-use Lumina\Infrastructure\Http\Middleware\CsrfMiddleware;
+use Luminor\Infrastructure\Http\Middleware\CsrfMiddleware;
 
 class CustomCsrfMiddleware extends CsrfMiddleware
 {
@@ -302,7 +302,7 @@ class CustomCsrfMiddleware extends CsrfMiddleware
 ### CSRF Token API
 
 ```php
-use Lumina\Security\Csrf\CsrfToken;
+use Luminor\Security\Csrf\CsrfToken;
 
 // Generate new token
 $token = CsrfToken::generate();
@@ -322,7 +322,7 @@ if ($token->verify($request->input('_token'))) {
 ### Custom CSRF Validation
 
 ```php
-use Lumina\Security\Csrf\CsrfException;
+use Luminor\Security\Csrf\CsrfException;
 
 class OrderController extends ApiController
 {
@@ -432,7 +432,7 @@ class LoginController extends ApiController
 Always validate user input:
 
 ```php
-use Lumina\Validation\Validator;
+use Luminor\Validation\Validator;
 
 class CreateUserCommand
 {
@@ -530,7 +530,7 @@ API_KEY=
 Check permissions before actions:
 
 ```php
-use Lumina\Auth\AuthorizationService;
+use Luminor\Auth\AuthorizationService;
 
 class PostController extends ApiController
 {

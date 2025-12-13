@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Application\Validation;
+namespace Luminor\DDD\Application\Validation;
 
 /**
  * Result of a validation operation.

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Multitenancy;
+namespace Luminor\DDD\Multitenancy;
 
 /**
  * Trait for entities that belong to a specific tenant.

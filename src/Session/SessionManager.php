@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Session;
+namespace Luminor\DDD\Session;
 
-use Lumina\DDD\Session\Drivers\FileSessionDriver;
-use Lumina\DDD\Session\Drivers\ArraySessionDriver;
-use Lumina\DDD\Session\Drivers\DatabaseSessionDriver;
-use Lumina\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Session\Drivers\FileSessionDriver;
+use Luminor\DDD\Session\Drivers\ArraySessionDriver;
+use Luminor\DDD\Session\Drivers\DatabaseSessionDriver;
+use Luminor\DDD\Database\ConnectionInterface;
 
 /**
  * Session Manager
@@ -21,16 +21,16 @@ final class SessionManager
     private array $drivers = [];
     private string $defaultDriver = 'file';
 
-    public function __construct(?SessionDriver $driver = null, string $sessionName = 'lumina_session')
+    public function __construct(?SessionDriver $driver = null, string $sessionName = 'luminor_session')
     {
-        $driver = $driver ?? new FileSessionDriver(sys_get_temp_dir() . '/lumina_sessions');
+        $driver = $driver ?? new FileSessionDriver(sys_get_temp_dir() . '/luminor_sessions');
         $this->session = new Session($driver, $sessionName);
     }
 
     /**
      * Create a file-based session.
      */
-    public static function file(string $path, string $sessionName = 'lumina_session'): self
+    public static function file(string $path, string $sessionName = 'luminor_session'): self
     {
         return new self(new FileSessionDriver($path), $sessionName);
     }
@@ -38,7 +38,7 @@ final class SessionManager
     /**
      * Create an array-based session (for testing).
      */
-    public static function array(string $sessionName = 'lumina_session'): self
+    public static function array(string $sessionName = 'luminor_session'): self
     {
         return new self(new ArraySessionDriver(), $sessionName);
     }
@@ -49,7 +49,7 @@ final class SessionManager
     public static function database(
         ConnectionInterface $connection,
         string $table = 'sessions',
-        string $sessionName = 'lumina_session'
+        string $sessionName = 'luminor_session'
     ): self {
         return new self(new DatabaseSessionDriver($connection, $table), $sessionName);
     }

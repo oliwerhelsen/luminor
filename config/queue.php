@@ -84,7 +84,7 @@ return [
             'port' => (int) env('REDIS_PORT', 6379),
             'password' => env('REDIS_PASSWORD'),
             'database' => (int) env('REDIS_QUEUE_DB', 0),
-            'prefix' => env('QUEUE_PREFIX', 'lumina_queue:'),
+            'prefix' => env('QUEUE_PREFIX', 'luminor_queue:'),
             'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => (int) env('QUEUE_RETRY_AFTER', 90),
         ],
@@ -104,7 +104,7 @@ return [
             'port' => (int) env('VALKEY_PORT', 6379),
             'password' => env('VALKEY_PASSWORD'),
             'database' => (int) env('VALKEY_QUEUE_DB', 0),
-            'prefix' => env('QUEUE_PREFIX', 'lumina_queue:'),
+            'prefix' => env('QUEUE_PREFIX', 'luminor_queue:'),
             'queue' => env('QUEUE_NAME', 'default'),
             'retry_after' => (int) env('QUEUE_RETRY_AFTER', 90),
             // 'tls' => true, // Enable TLS

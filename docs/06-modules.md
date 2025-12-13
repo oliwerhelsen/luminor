@@ -7,7 +7,7 @@ The module system allows you to organize your application into self-contained, r
 Use the CLI to scaffold a new module:
 
 ```bash
-./vendor/bin/lumina make:module Inventory
+./vendor/bin/luminor make:module Inventory
 ```
 
 This creates the following structure:
@@ -46,8 +46,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Inventory;
 
-use Lumina\DDD\Module\AbstractModule;
-use Lumina\DDD\Module\ModuleDefinition;
+use Luminor\DDD\Module\AbstractModule;
+use Luminor\DDD\Module\ModuleDefinition;
 
 final class InventoryModule extends AbstractModule
 {
@@ -100,8 +100,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Inventory;
 
-use Lumina\DDD\Container\AbstractServiceProvider;
-use Lumina\DDD\Container\ContainerInterface;
+use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\ContainerInterface;
 
 final class InventoryServiceProvider extends AbstractServiceProvider
 {
@@ -291,7 +291,7 @@ declare(strict_types=1);
 
 namespace Tests\Modules\Inventory;
 
-use Lumina\DDD\Testing\TestCase;
+use Luminor\DDD\Testing\TestCase;
 use App\Modules\Inventory\InventoryModule;
 
 final class InventoryModuleTest extends TestCase

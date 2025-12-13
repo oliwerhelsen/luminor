@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
-use Lumina\DDD\Container\ContainerInterface;
-use Lumina\DDD\Queue\FailedJobProviderInterface;
-use Lumina\DDD\Queue\QueueManager;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
+use Luminor\DDD\Container\ContainerInterface;
+use Luminor\DDD\Queue\FailedJobProviderInterface;
+use Luminor\DDD\Queue\QueueManager;
 
 /**
  * Command to retry failed jobs.

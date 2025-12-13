@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Bus\Middleware;
+namespace Luminor\DDD\Infrastructure\Bus\Middleware;
 
 use Psr\Log\LoggerInterface;
-use Lumina\DDD\Application\CQRS\Command;
-use Lumina\DDD\Application\CQRS\Query;
-use Lumina\DDD\Infrastructure\Bus\MiddlewareInterface;
+use Luminor\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Query;
+use Luminor\DDD\Infrastructure\Bus\MiddlewareInterface;
 
 /**
  * Middleware that logs command/query execution.

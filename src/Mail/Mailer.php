@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Mail;
+namespace Luminor\DDD\Mail;
 
-use Lumina\DDD\Mail\Transports\ArrayTransport;
-use Lumina\DDD\Mail\Transports\LogTransport;
-use Lumina\DDD\Mail\Transports\SmtpTransport;
-use Lumina\DDD\Queue\QueueManager;
+use Luminor\DDD\Mail\Transports\ArrayTransport;
+use Luminor\DDD\Mail\Transports\LogTransport;
+use Luminor\DDD\Mail\Transports\SmtpTransport;
+use Luminor\DDD\Queue\QueueManager;
 use Psr\Log\LoggerInterface;
 use RuntimeException;
 

@@ -13,7 +13,7 @@ declare(strict_types=1);
 
 namespace Tests\Unit\Application\Handlers;
 
-use Lumina\DDD\Testing\TestCase;
+use Luminor\DDD\Testing\TestCase;
 
 final class CreateOrderCommandHandlerTest extends TestCase
 {
@@ -71,7 +71,7 @@ Use in-memory implementations for isolated testing:
 ```php
 <?php
 
-use Lumina\DDD\Testing\InMemoryCommandBus;
+use Luminor\DDD\Testing\InMemoryCommandBus;
 
 $commandBus = new InMemoryCommandBus();
 
@@ -100,7 +100,7 @@ $commandBus->assertNothingDispatched();
 ```php
 <?php
 
-use Lumina\DDD\Testing\InMemoryQueryBus;
+use Luminor\DDD\Testing\InMemoryQueryBus;
 
 $queryBus = new InMemoryQueryBus();
 
@@ -128,7 +128,7 @@ $this->assertTrue($queryBus->hasDispatched(GetUserQuery::class));
 ```php
 <?php
 
-use Lumina\DDD\Testing\InMemoryEventDispatcher;
+use Luminor\DDD\Testing\InMemoryEventDispatcher;
 
 $dispatcher = new InMemoryEventDispatcher();
 
@@ -158,7 +158,7 @@ Use the `DomainAssertions` trait for domain-specific assertions:
 ```php
 <?php
 
-use Lumina\DDD\Testing\Assertions\DomainAssertions;
+use Luminor\DDD\Testing\Assertions\DomainAssertions;
 
 final class OrderTest extends TestCase
 {
@@ -201,7 +201,7 @@ declare(strict_types=1);
 
 namespace Tests\Factories;
 
-use Lumina\DDD\Testing\Factory\EntityFactory;
+use Luminor\DDD\Testing\Factory\EntityFactory;
 use App\Domain\Entities\User;
 
 final class UserFactory extends EntityFactory

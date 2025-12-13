@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Session;
+namespace Luminor\DDD\Session;
 
 /**
  * Session
@@ -19,7 +19,7 @@ final class Session implements SessionInterface
 
     public function __construct(
         SessionDriver $driver,
-        string $name = 'lumina_session'
+        string $name = 'luminor_session'
     ) {
         $this->driver = $driver;
         $this->name = $name;

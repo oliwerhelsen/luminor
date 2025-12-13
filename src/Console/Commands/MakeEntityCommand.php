@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
+use Luminor\DDD\Console\Input;
 
 /**
  * Command to generate a new Entity class.
@@ -73,12 +73,12 @@ final class MakeEntityCommand extends AbstractMakeCommand
         return [
             '{{ baseClass }}' => $isAggregate ? 'AggregateRoot' : 'Entity',
             '{{ baseClassImport }}' => $isAggregate
-                ? 'Lumina\\DDD\\Domain\\Abstractions\\AggregateRoot'
-                : 'Lumina\\DDD\\Domain\\Abstractions\\Entity',
+                ? 'Luminor\\DDD\\Domain\\Abstractions\\AggregateRoot'
+                : 'Luminor\\DDD\\Domain\\Abstractions\\Entity',
             '{{baseClass}}' => $isAggregate ? 'AggregateRoot' : 'Entity',
             '{{baseClassImport}}' => $isAggregate
-                ? 'Lumina\\DDD\\Domain\\Abstractions\\AggregateRoot'
-                : 'Lumina\\DDD\\Domain\\Abstractions\\Entity',
+                ? 'Luminor\\DDD\\Domain\\Abstractions\\AggregateRoot'
+                : 'Luminor\\DDD\\Domain\\Abstractions\\Entity',
         ];
     }
 }

@@ -1,6 +1,6 @@
 # Cache
 
-Lumina provides a powerful and flexible caching system that supports multiple drivers. The cache system follows a clean interface-based design, making it easy to swap between different cache backends.
+Luminor provides a powerful and flexible caching system that supports multiple drivers. The cache system follows a clean interface-based design, making it easy to swap between different cache backends.
 
 ## Table of Contents
 
@@ -13,14 +13,14 @@ Lumina provides a powerful and flexible caching system that supports multiple dr
 
 ## Introduction
 
-The cache system in Lumina provides a unified API for storing and retrieving data from various cache stores. This helps improve application performance by reducing database queries and expensive computations.
+The cache system in Luminor provides a unified API for storing and retrieving data from various cache stores. This helps improve application performance by reducing database queries and expensive computations.
 
 ## Configuration
 
 First, register the cache service provider in your application:
 
 ```php
-use Lumina\Cache\CacheServiceProvider;
+use Luminor\Cache\CacheServiceProvider;
 
 $kernel->registerServiceProvider(new CacheServiceProvider());
 ```
@@ -51,7 +51,7 @@ return [
 Store an item in the cache for a specified duration:
 
 ```php
-use Lumina\Cache\CacheManager;
+use Luminor\Cache\CacheManager;
 
 $cache = $container->get(CacheManager::class);
 
@@ -272,7 +272,7 @@ $cache->listen('miss', function($key) {
 Create a custom cache driver by implementing `CacheInterface`:
 
 ```php
-use Lumina\Cache\CacheInterface;
+use Luminor\Cache\CacheInterface;
 
 class RedisCache implements CacheInterface
 {
@@ -396,7 +396,7 @@ try {
 Use the array driver for testing:
 
 ```php
-use Lumina\Cache\Drivers\ArrayCache;
+use Luminor\Cache\Drivers\ArrayCache;
 
 class UserServiceTest extends TestCase
 {

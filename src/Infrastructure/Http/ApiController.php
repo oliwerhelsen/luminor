@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http;
+namespace Luminor\DDD\Infrastructure\Http;
 
-use Lumina\DDD\Application\Bus\CommandBusInterface;
-use Lumina\DDD\Application\Bus\QueryBusInterface;
-use Lumina\DDD\Application\CQRS\Command;
-use Lumina\DDD\Application\CQRS\Query;
-use Lumina\DDD\Application\DTO\PagedResult;
-use Lumina\DDD\Infrastructure\Http\Response\ApiResponse;
-use Lumina\DDD\Infrastructure\Http\Response\ErrorResponse;
-use Lumina\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\DDD\Application\Bus\CommandBusInterface;
+use Luminor\DDD\Application\Bus\QueryBusInterface;
+use Luminor\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Query;
+use Luminor\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
+use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
+use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

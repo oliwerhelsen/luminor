@@ -1,6 +1,6 @@
 # Session Management
 
-Lumina provides a flexible session management system with multiple storage drivers. Sessions allow you to persist user data across HTTP requests, essential for maintaining state in web applications.
+Luminor provides a flexible session management system with multiple storage drivers. Sessions allow you to persist user data across HTTP requests, essential for maintaining state in web applications.
 
 ## Table of Contents
 
@@ -26,7 +26,7 @@ The session system provides:
 Register the session service provider:
 
 ```php
-use Lumina\Session\SessionServiceProvider;
+use Luminor\Session\SessionServiceProvider;
 
 $kernel->registerServiceProvider(new SessionServiceProvider());
 ```
@@ -51,7 +51,7 @@ return [
 
     'lottery' => [2, 100], // Garbage collection probability
 
-    'cookie' => env('SESSION_COOKIE', 'lumina_session'),
+    'cookie' => env('SESSION_COOKIE', 'luminor_session'),
 
     'path' => '/',
 
@@ -72,7 +72,7 @@ return [
 Store data in the session:
 
 ```php
-use Lumina\Session\SessionInterface;
+use Luminor\Session\SessionInterface;
 
 $session = $container->get(SessionInterface::class);
 
@@ -152,7 +152,7 @@ Stores session data in memory for the current request. Perfect for testing:
 **Example:**
 
 ```php
-use Lumina\Session\Drivers\ArraySessionDriver;
+use Luminor\Session\Drivers\ArraySessionDriver;
 
 $driver = new ArraySessionDriver();
 $session = new Session($driver, 'test_session_id');
@@ -215,13 +215,13 @@ Stores session data in a database table:
 Create the sessions table:
 
 ```bash
-php bin/lumina make:migration CreateSessionsTable
+php bin/luminor make:migration CreateSessionsTable
 ```
 
 Or use the built-in stub:
 
 ```php
-use Lumina\Database\Schema\Schema;
+use Luminor\Database\Schema\Schema;
 
 $schema->create('sessions', function($table) {
     $table->string('id')->primary();
@@ -389,7 +389,7 @@ $session->migrate();
 Use session middleware in your HTTP pipeline:
 
 ```php
-use Lumina\Session\SessionMiddleware;
+use Luminor\Session\SessionMiddleware;
 
 class Kernel
 {
@@ -608,8 +608,8 @@ Or use automatic garbage collection:
 Use the array driver for testing:
 
 ```php
-use Lumina\Session\Drivers\ArraySessionDriver;
-use Lumina\Session\Session;
+use Luminor\Session\Drivers\ArraySessionDriver;
+use Luminor\Session\Session;
 
 class UserServiceTest extends TestCase
 {

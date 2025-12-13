@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Cache;
+namespace Luminor\DDD\Cache;
 
 /**
  * Cache Interface

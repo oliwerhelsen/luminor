@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\BasicApi\Application\DTOs;
 
-use Lumina\DDD\Application\DTO\DataTransferObject;
+use Luminor\DDD\Application\DTO\DataTransferObject;
 use Example\BasicApi\Domain\Entities\Product;
 
 /**

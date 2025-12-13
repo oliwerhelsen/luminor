@@ -1,6 +1,6 @@
 # Installation
 
-This guide covers the installation and initial setup of the Lumina DDD Framework.
+This guide covers the installation and initial setup of the Luminor DDD Framework.
 
 ## Requirements
 
@@ -10,12 +10,12 @@ This guide covers the installation and initial setup of the Lumina DDD Framework
 
 ## Quick Installation (Recommended)
 
-The easiest way to create a new Lumina project is using the global installer:
+The easiest way to create a new Luminor project is using the global installer:
 
-### 1. Install Lumina Globally
+### 1. Install Luminor Globally
 
 ```bash
-composer global require lumina/ddd-framework
+composer global require luminor/ddd-framework
 ```
 
 Make sure the Composer global bin directory is in your PATH:
@@ -28,7 +28,7 @@ export PATH="$HOME/.composer/vendor/bin:$PATH"
 ### 2. Create a New Project
 
 ```bash
-lumina new my-app
+luminor new my-app
 ```
 
 The installer will interactively guide you through configuration:
@@ -41,7 +41,7 @@ The installer will interactively guide you through configuration:
 You can also use flags for non-interactive installation:
 
 ```bash
-lumina new my-app --type=basic --database=mysql --multitenancy=none --no-interaction
+luminor new my-app --type=basic --database=mysql --multitenancy=none --no-interaction
 ```
 
 ### 3. Start Development
@@ -58,7 +58,7 @@ Visit `http://localhost:8000` to see your application running.
 If you prefer to set up the framework manually:
 
 ```bash
-composer require lumina/ddd-framework
+composer require luminor/ddd-framework
 ```
 
 ## Project Structure
@@ -127,7 +127,7 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Lumina\DDD\Kernel;
+use Luminor\DDD\Kernel;
 use Utopia\Http\Http;
 
 // Bootstrap the framework
@@ -149,33 +149,33 @@ $http->start();
 Make the CLI tool executable:
 
 ```bash
-chmod +x vendor/bin/lumina
+chmod +x vendor/bin/luminor
 ```
 
 Verify installation:
 
 ```bash
-./vendor/bin/lumina --version
+./vendor/bin/luminor --version
 ```
 
 ## Available CLI Commands
 
 ```bash
 # List all available commands
-vendor/bin/lumina list
+vendor/bin/luminor list
 
 # Create a new project (when installed globally)
-lumina new my-project
+luminor new my-project
 
 # Start development server
-vendor/bin/lumina serve
+vendor/bin/luminor serve
 
 # Generate code
-vendor/bin/lumina make:entity User
-vendor/bin/lumina make:command CreateUser
-vendor/bin/lumina make:query GetUser
-vendor/bin/lumina make:controller UserController
-vendor/bin/lumina make:module Billing
+vendor/bin/luminor make:entity User
+vendor/bin/luminor make:command CreateUser
+vendor/bin/luminor make:query GetUser
+vendor/bin/luminor make:controller UserController
+vendor/bin/luminor make:module Billing
 ```
 
 ## Next Steps

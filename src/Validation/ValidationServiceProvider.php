@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Validation;
+namespace Luminor\DDD\Validation;
 
-use Lumina\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\AbstractServiceProvider;
 
 /**
  * Validation Service Provider

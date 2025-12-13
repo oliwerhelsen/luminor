@@ -6,8 +6,8 @@ namespace Example\ModularApp\Modules\Orders;
 
 use Example\ModularApp\Modules\Orders\Domain\Repository\OrderRepositoryInterface;
 use Example\ModularApp\Modules\Orders\Infrastructure\Persistence\InMemoryOrderRepository;
-use Lumina\DDD\Container\AbstractServiceProvider;
-use Lumina\DDD\Container\ContainerInterface;
+use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\ContainerInterface;
 
 /**
  * Orders module service provider.

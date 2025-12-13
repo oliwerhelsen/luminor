@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http;
+namespace Luminor\DDD\Infrastructure\Http;
 
 use Throwable;
-use Lumina\DDD\Application\Validation\ValidationException;
-use Lumina\DDD\Domain\Abstractions\DomainException;
-use Lumina\DDD\Domain\Repository\AggregateNotFoundException;
-use Lumina\DDD\Infrastructure\Http\Response\ApiResponse;
-use Lumina\DDD\Infrastructure\Http\Response\ErrorResponse;
-use Lumina\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\DDD\Application\Validation\ValidationException;
+use Luminor\DDD\Domain\Abstractions\DomainException;
+use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
+use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
+use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
+use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
 use Utopia\Http\Response;
 
 /**

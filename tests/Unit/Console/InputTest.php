@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Console;
+namespace Luminor\DDD\Tests\Unit\Console;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Console\Input;
+use Luminor\DDD\Console\Input;
 
 final class InputTest extends TestCase
 {

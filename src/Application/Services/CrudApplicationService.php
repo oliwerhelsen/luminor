@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Application\Services;
+namespace Luminor\DDD\Application\Services;
 
-use Lumina\DDD\Application\DTO\DataTransferObject;
-use Lumina\DDD\Application\DTO\Mapper;
-use Lumina\DDD\Application\DTO\PagedResult;
-use Lumina\DDD\Domain\Abstractions\AggregateRoot;
-use Lumina\DDD\Domain\Repository\Criteria;
-use Lumina\DDD\Domain\Repository\Pagination;
-use Lumina\DDD\Domain\Repository\RepositoryInterface;
+use Luminor\DDD\Application\DTO\DataTransferObject;
+use Luminor\DDD\Application\DTO\Mapper;
+use Luminor\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\DDD\Domain\Repository\Criteria;
+use Luminor\DDD\Domain\Repository\Pagination;
+use Luminor\DDD\Domain\Repository\RepositoryInterface;
 
 /**
  * Base class for CRUD application services.

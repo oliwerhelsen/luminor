@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Queue;
+namespace Luminor\DDD\Queue;
 
 /**
  * Interface for failed job storage.

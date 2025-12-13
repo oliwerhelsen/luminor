@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
-use Lumina\DDD\Kernel;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
+use Luminor\DDD\Kernel;
 
 /**
  * Command to generate a new test class.
@@ -136,7 +136,7 @@ declare(strict_types=1);
 
 namespace {$namespace};
 
-use Lumina\DDD\Testing\TestCase;
+use Luminor\DDD\Testing\TestCase;
 use PHPUnit\Framework\Attributes\Test;
 
 final class {$className} extends TestCase

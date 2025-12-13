@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Infrastructure\Http\Response\ErrorResponse;
+use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
 
 final class ErrorResponseTest extends TestCase
 {

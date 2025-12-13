@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Console;
+namespace Luminor\DDD\Tests\Unit\Console;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Console\Application;
+use Luminor\DDD\Console\Application;
 
 final class ApplicationTest extends TestCase
 {
@@ -32,7 +32,7 @@ final class ApplicationTest extends TestCase
 
     public function testHasDefaultName(): void
     {
-        $this->assertSame('Lumina DDD Framework', $this->app->getName());
+        $this->assertSame('Luminor DDD Framework', $this->app->getName());
     }
 
     public function testHasDefaultVersion(): void

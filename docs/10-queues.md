@@ -1,6 +1,6 @@
 # Queues
 
-Lumina's queue system allows you to defer time-consuming tasks to be processed in the background, improving response times for your users.
+Luminor's queue system allows you to defer time-consuming tasks to be processed in the background, improving response times for your users.
 
 ## Configuration
 
@@ -55,8 +55,8 @@ return [
 ### Using the Generator
 
 ```bash
-vendor/bin/lumina make:job ProcessPayment
-vendor/bin/lumina make:job SendReport --sync
+vendor/bin/luminor make:job ProcessPayment
+vendor/bin/luminor make:job SendReport --sync
 ```
 
 ### Manual Creation
@@ -68,8 +68,8 @@ Create a job class that extends `Job` and implements `ShouldQueue`:
 
 namespace App\Jobs;
 
-use Lumina\DDD\Queue\Job;
-use Lumina\DDD\Queue\ShouldQueue;
+use Luminor\DDD\Queue\Job;
+use Luminor\DDD\Queue\ShouldQueue;
 
 final class ProcessPayment extends Job implements ShouldQueue
 {
@@ -118,7 +118,7 @@ dispatch_sync(new ProcessPayment($orderId, $amount));
 ### Using the Queue Manager
 
 ```php
-use Lumina\DDD\Queue\QueueManager;
+use Luminor\DDD\Queue\QueueManager;
 
 $queue = app(QueueManager::class);
 
@@ -163,19 +163,19 @@ class ProcessPayment extends Job implements ShouldQueue
 
 ```bash
 # Process jobs from the default queue
-vendor/bin/lumina queue:work
+vendor/bin/luminor queue:work
 
 # Process jobs from a specific connection
-vendor/bin/lumina queue:work --connection=redis
+vendor/bin/luminor queue:work --connection=redis
 
 # Process jobs from a specific queue
-vendor/bin/lumina queue:work --queue=payments
+vendor/bin/luminor queue:work --queue=payments
 
 # Process a single job
-vendor/bin/lumina queue:work --once
+vendor/bin/luminor queue:work --once
 
 # Stop when queue is empty
-vendor/bin/lumina queue:work --stop-when-empty
+vendor/bin/luminor queue:work --stop-when-empty
 ```
 
 ### Worker Options
@@ -196,27 +196,27 @@ vendor/bin/lumina queue:work --stop-when-empty
 ### Listing Failed Jobs
 
 ```bash
-vendor/bin/lumina queue:failed
+vendor/bin/luminor queue:failed
 ```
 
 ### Retrying Failed Jobs
 
 ```bash
 # Retry a specific job
-vendor/bin/lumina queue:retry abc-123
+vendor/bin/luminor queue:retry abc-123
 
 # Retry all failed jobs
-vendor/bin/lumina queue:retry --all
+vendor/bin/luminor queue:retry --all
 ```
 
 ### Clearing Failed Jobs
 
 ```bash
 # Clear all failed jobs
-vendor/bin/lumina queue:flush
+vendor/bin/luminor queue:flush
 
 # Clear jobs older than 24 hours
-vendor/bin/lumina queue:flush --hours=24
+vendor/bin/luminor queue:flush --hours=24
 ```
 
 ## Database Queue Setup
@@ -312,9 +312,9 @@ Uses Valkey (Redis-compatible) with additional features:
 For production, use Supervisor to keep workers running:
 
 ```ini
-[program:lumina-worker]
+[program:luminor-worker]
 process_name=%(program_name)s_%(process_num)02d
-command=php /path/to/project/vendor/bin/lumina queue:work --sleep=3 --tries=3
+command=php /path/to/project/vendor/bin/luminor queue:work --sleep=3 --tries=3
 autostart=true
 autorestart=true
 stopasgroup=true

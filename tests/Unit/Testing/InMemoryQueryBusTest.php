@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Testing;
+namespace Luminor\DDD\Tests\Unit\Testing;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Application\CQRS\Query;
-use Lumina\DDD\Testing\InMemoryQueryBus;
+use Luminor\DDD\Application\CQRS\Query;
+use Luminor\DDD\Testing\InMemoryQueryBus;
 
 final class InMemoryQueryBusTest extends TestCase
 {

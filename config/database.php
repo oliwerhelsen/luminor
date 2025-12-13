@@ -19,7 +19,7 @@ return [
     | Database Connections
     |--------------------------------------------------------------------------
     |
-    | Configure your database connections here. Lumina supports MySQL,
+    | Configure your database connections here. Luminor supports MySQL,
     | PostgreSQL, and SQLite out of the box. Each connection can have
     | its own configuration options.
     |
@@ -36,7 +36,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'lumina'),
+            'database' => env('DB_DATABASE', 'luminor'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'unix_socket' => env('DB_SOCKET', ''),
@@ -55,7 +55,7 @@ return [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'lumina'),
+            'database' => env('DB_DATABASE', 'luminor'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',

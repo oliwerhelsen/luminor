@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Validation\Rules;
+namespace Luminor\DDD\Validation\Rules;
 
-use Lumina\DDD\Validation\Rule;
+use Luminor\DDD\Validation\Rule;
 
 /**
  * Password Rule

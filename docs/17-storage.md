@@ -1,6 +1,6 @@
 # Storage & Filesystem
 
-Lumina provides a powerful filesystem abstraction layer for working with local and cloud storage. The storage system offers a unified API for file operations across different storage backends.
+Luminor provides a powerful filesystem abstraction layer for working with local and cloud storage. The storage system offers a unified API for file operations across different storage backends.
 
 ## Table of Contents
 
@@ -29,7 +29,7 @@ The storage system provides:
 Register the storage service provider:
 
 ```php
-use Lumina\Storage\StorageServiceProvider;
+use Luminor\Storage\StorageServiceProvider;
 
 $kernel->registerServiceProvider(new StorageServiceProvider());
 ```
@@ -86,7 +86,7 @@ storage/
 ### Getting Storage Instance
 
 ```php
-use Lumina\Storage\StorageManager;
+use Luminor\Storage\StorageManager;
 
 $storage = $container->get(StorageManager::class);
 

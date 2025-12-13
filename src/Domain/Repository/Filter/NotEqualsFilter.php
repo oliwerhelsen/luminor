@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Domain\Repository\Filter;
+namespace Luminor\DDD\Domain\Repository\Filter;
 
 /**
  * Filter that matches when a field does not equal a specific value.

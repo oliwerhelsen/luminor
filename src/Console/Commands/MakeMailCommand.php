@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
-use Lumina\DDD\Kernel;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
+use Luminor\DDD\Kernel;
 
 /**
  * Command to generate a new mailable class.
@@ -86,11 +86,11 @@ final class MakeMailCommand extends AbstractCommand
     {
         $namespace = 'App\\Mail' . $subNamespace;
         
-        $useStatements = "use Lumina\\DDD\\Mail\\Mailable;\nuse Lumina\\DDD\\Mail\\Message;";
+        $useStatements = "use Luminor\\DDD\\Mail\\Mailable;\nuse Luminor\\DDD\\Mail\\Message;";
         $implements = '';
         
         if ($queued) {
-            $useStatements .= "\nuse Lumina\\DDD\\Mail\\ShouldQueue;";
+            $useStatements .= "\nuse Luminor\\DDD\\Mail\\ShouldQueue;";
             $implements = ' implements ShouldQueue';
         }
 

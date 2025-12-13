@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Application\Bus;
+namespace Luminor\DDD\Application\Bus;
 
-use Lumina\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Command;
 
 /**
  * Interface for command handlers.

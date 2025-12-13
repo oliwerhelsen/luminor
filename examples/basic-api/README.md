@@ -1,6 +1,6 @@
 # Basic API Example
 
-A simple REST API demonstrating the Lumina DDD Framework fundamentals.
+A simple REST API demonstrating the Luminor DDD Framework fundamentals.
 
 ## Structure
 

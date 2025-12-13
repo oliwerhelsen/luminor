@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Module;
+namespace Luminor\DDD\Module;
 
-use Lumina\DDD\Container\ContainerInterface;
+use Luminor\DDD\Container\ContainerInterface;
 
 /**
  * Interface for application modules.

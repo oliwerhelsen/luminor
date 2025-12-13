@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Console\Commands;
+namespace Luminor\DDD\Tests\Unit\Console\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Console\Commands\MakeQueryCommand;
+use Luminor\DDD\Console\Commands\MakeQueryCommand;
 
 final class MakeQueryCommandTest extends TestCase
 {

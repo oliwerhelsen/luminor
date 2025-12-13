@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Domain;
+namespace Luminor\DDD\Tests\Unit\Domain;
 
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Domain\Abstractions\Enumeration;
+use Luminor\DDD\Domain\Abstractions\Enumeration;
 
 final class EnumerationTest extends TestCase
 {

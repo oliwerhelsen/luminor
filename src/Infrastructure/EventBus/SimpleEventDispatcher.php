@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\EventBus;
+namespace Luminor\DDD\Infrastructure\EventBus;
 
-use Lumina\DDD\Domain\Abstractions\DomainEvent;
-use Lumina\DDD\Domain\Events\EventDispatcherInterface;
-use Lumina\DDD\Domain\Events\EventHandlerInterface;
-use Lumina\DDD\Domain\Events\EventSubscriberInterface;
+use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\DDD\Domain\Events\EventDispatcherInterface;
+use Luminor\DDD\Domain\Events\EventHandlerInterface;
+use Luminor\DDD\Domain\Events\EventSubscriberInterface;
 
 /**
  * Simple in-memory event dispatcher implementation.

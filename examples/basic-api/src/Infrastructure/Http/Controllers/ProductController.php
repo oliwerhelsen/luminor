@@ -9,9 +9,9 @@ use Example\BasicApi\Application\Commands\DeleteProductCommand;
 use Example\BasicApi\Application\Commands\UpdateProductCommand;
 use Example\BasicApi\Application\Queries\GetProductQuery;
 use Example\BasicApi\Application\Queries\ListProductsQuery;
-use Lumina\DDD\Application\Bus\CommandBusInterface;
-use Lumina\DDD\Application\Bus\QueryBusInterface;
-use Lumina\DDD\Infrastructure\Http\ApiController;
+use Luminor\DDD\Application\Bus\CommandBusInterface;
+use Luminor\DDD\Application\Bus\QueryBusInterface;
+use Luminor\DDD\Infrastructure\Http\ApiController;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

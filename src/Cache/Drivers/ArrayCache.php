@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Cache\Drivers;
+namespace Luminor\DDD\Cache\Drivers;
 
-use Lumina\DDD\Cache\CacheInterface;
+use Luminor\DDD\Cache\CacheInterface;
 
 /**
  * Array Cache Driver

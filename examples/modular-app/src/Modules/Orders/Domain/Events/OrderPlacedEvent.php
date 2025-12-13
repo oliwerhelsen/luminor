@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Orders\Domain\Events;
 
-use Lumina\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\DDD\Domain\Abstractions\DomainEvent;
 
 /**
  * Event raised when an order is placed.

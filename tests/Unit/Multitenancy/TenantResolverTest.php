@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Multitenancy;
+namespace Luminor\DDD\Tests\Unit\Multitenancy;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Multitenancy\TenantResolver;
-use Lumina\DDD\Multitenancy\TenantResolverInterface;
+use Luminor\DDD\Multitenancy\TenantResolver;
+use Luminor\DDD\Multitenancy\TenantResolverInterface;
 use Utopia\Http\Request;
 
 final class TenantResolverTest extends TestCase

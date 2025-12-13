@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Database\Schema;
+namespace Luminor\DDD\Database\Schema;
 
-use Lumina\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Database\ConnectionInterface;
 use Closure;
 
 /**

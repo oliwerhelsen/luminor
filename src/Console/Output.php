@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console;
+namespace Luminor\DDD\Console;
 
 /**
  * Handles console output with formatting support.

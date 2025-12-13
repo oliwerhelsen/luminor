@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\DDD\Infrastructure\Http\Middleware;
 
 use Utopia\Http\Request;
 use Utopia\Http\Response;
