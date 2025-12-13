@@ -19,7 +19,7 @@ declare(strict_types=1);
 $autoloadPaths = [
     // Local vendor (development within the framework itself)
     __DIR__ . '/../vendor/autoload.php',
-    // Installed as a dependency (vendor/luminor/ddd-framework/bin/luminor)
+    // Installed as a dependency (vendor/luminor/luminor/bin/luminor)
     __DIR__ . '/../../../autoload.php',
     // Global installation via Composer (Linux/macOS)
     getenv('HOME') . '/.composer/vendor/autoload.php',
@@ -44,7 +44,7 @@ if ($autoloader === null) {
     fwrite(STDERR, "  Run 'composer install' first.\n");
     fwrite(STDERR, "\n");
     fwrite(STDERR, "If you want to install Luminor globally:\n");
-    fwrite(STDERR, "  Run 'composer global require luminor/ddd-framework'\n");
+    fwrite(STDERR, "  Run 'composer global require luminor/luminor'\n");
     fwrite(STDERR, "  Make sure ~/.composer/vendor/bin is in your PATH.\n");
     exit(1);
 }

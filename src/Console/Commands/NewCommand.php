@@ -401,7 +401,7 @@ final class NewCommand extends AbstractCommand
 
         $require = [
             'php' => '^8.2',
-            'luminor/ddd-framework' => '^1.0',
+            'luminor/luminor' => '^1.0',
             'vlucas/phpdotenv' => '^5.5',
         ];
 
@@ -641,7 +641,7 @@ vendor/bin/luminor make:controller MyEntityController
 
 ## Documentation
 
-For full documentation, visit the [Luminor DDD Framework documentation](https://github.com/luminor/ddd-framework).
+For full documentation, visit the [Luminor DDD Framework documentation](https://github.com/luminor/luminor).
 
 ## License
 
