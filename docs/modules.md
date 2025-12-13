@@ -1,3 +1,11 @@
+---
+title: Modules
+layout: default
+parent: Features
+nav_order: 1
+description: "Self-contained bounded contexts with module service providers"
+---
+
 # Modules
 
 The module system allows you to organize your application into self-contained, reusable units. Each module encapsulates its own domain, application, and infrastructure layers.

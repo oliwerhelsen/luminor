@@ -1,3 +1,11 @@
+---
+title: Security
+layout: default
+parent: Features
+nav_order: 11
+description: "Password hashing, CSRF protection, and secure authentication"
+---
+
 # Security
 
 Luminor provides robust security features to protect your application from common vulnerabilities. This includes password hashing, CSRF protection, and secure authentication mechanisms.
@@ -91,11 +99,13 @@ $valid = $hasher->verify('password', $hash);
 ```
 
 **Advantages:**
+
 - Battle-tested
 - Widely supported
 - Good security
 
 **Configuration:**
+
 ```php
 'driver' => 'bcrypt',
 'bcrypt' => [
@@ -121,11 +131,13 @@ $valid = $hasher->verify('password', $hash);
 ```
 
 **Advantages:**
+
 - More secure than bcrypt
 - Resistant to GPU attacks
 - Configurable memory usage
 
 **Configuration:**
+
 ```php
 'driver' => 'argon2id',
 'argon2id' => [
@@ -265,13 +277,13 @@ Include token in AJAX requests:
 const token = document.querySelector('meta[name="csrf-token"]').content;
 
 // Include in fetch request
-fetch('/api/users', {
-    method: 'POST',
-    headers: {
-        'Content-Type': 'application/json',
-        'X-CSRF-TOKEN': token
-    },
-    body: JSON.stringify({ email: 'user@example.com' })
+fetch("/api/users", {
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "X-CSRF-TOKEN": token,
+  },
+  body: JSON.stringify({ email: "user@example.com" }),
 });
 ```
 
@@ -279,7 +291,7 @@ HTML meta tag:
 
 ```html
 <head>
-    <meta name="csrf-token" content="<?= csrf_token() ?>">
+  <meta name="csrf-token" content="<?= csrf_token() ?>" />
 </head>
 ```
 
@@ -581,12 +593,14 @@ class SecurityLogger
 ### SQL Injection
 
 **Vulnerable:**
+
 ```php
 $sql = "SELECT * FROM users WHERE email = '{$_POST['email']}'";
 $result = $connection->query($sql);
 ```
 
 **Secure:**
+
 ```php
 $result = $connection->select(
     'SELECT * FROM users WHERE email = ?',
@@ -597,11 +611,13 @@ $result = $connection->select(
 ### Cross-Site Scripting (XSS)
 
 **Vulnerable:**
+
 ```php
 echo "<div>" . $_POST['comment'] . "</div>";
 ```
 
 **Secure:**
+
 ```php
 echo "<div>" . htmlspecialchars($_POST['comment'], ENT_QUOTES, 'UTF-8') . "</div>";
 ```
@@ -609,23 +625,26 @@ echo "<div>" . htmlspecialchars($_POST['comment'], ENT_QUOTES, 'UTF-8') . "</div
 ### Cross-Site Request Forgery (CSRF)
 
 **Vulnerable:**
+
 ```html
 <form method="POST" action="/delete-account">
-    <button>Delete Account</button>
+  <button>Delete Account</button>
 </form>
 ```
 
 **Secure:**
+
 ```html
 <form method="POST" action="/delete-account">
-    <input type="hidden" name="_token" value="<?= csrf_token() ?>">
-    <button>Delete Account</button>
+  <input type="hidden" name="_token" value="<?= csrf_token() ?>" />
+  <button>Delete Account</button>
 </form>
 ```
 
 ### Session Fixation
 
 **Vulnerable:**
+
 ```php
 public function login(string $email, string $password): void
 {
@@ -636,6 +655,7 @@ public function login(string $email, string $password): void
 ```
 
 **Secure:**
+
 ```php
 public function login(string $email, string $password): void
 {
@@ -649,6 +669,7 @@ public function login(string $email, string $password): void
 ### Insecure Direct Object Reference (IDOR)
 
 **Vulnerable:**
+
 ```php
 public function show(int $id): Response
 {
@@ -658,6 +679,7 @@ public function show(int $id): Response
 ```
 
 **Secure:**
+
 ```php
 public function show(int $id): Response
 {
@@ -674,6 +696,7 @@ public function show(int $id): Response
 ### Mass Assignment
 
 **Vulnerable:**
+
 ```php
 public function update(Request $request, int $id): Response
 {
@@ -684,6 +707,7 @@ public function update(Request $request, int $id): Response
 ```
 
 **Secure:**
+
 ```php
 public function update(Request $request, int $id): Response
 {

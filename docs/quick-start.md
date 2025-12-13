@@ -1,3 +1,11 @@
+---
+title: Quick Start
+layout: default
+parent: Getting Started
+nav_order: 2
+description: "Create your first CRUD API with Luminor"
+---
+
 # Quick Start Guide
 
 This guide will help you create a simple CRUD API using the Luminor DDD Framework.

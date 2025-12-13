@@ -1,3 +1,11 @@
+---
+title: Testing
+layout: default
+parent: Features
+nav_order: 3
+description: "In-memory buses, domain assertions, and testing utilities"
+---
+
 # Testing
 
 The framework provides testing utilities to help you write effective unit and integration tests.
@@ -23,7 +31,7 @@ final class CreateOrderCommandHandlerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        
+
         $this->orderRepository = new InMemoryOrderRepository();
         $this->handler = new CreateOrderCommandHandler(
             $this->orderRepository,
@@ -266,7 +274,7 @@ final class CreateProductCommandHandlerTest extends TestCase
         // Arrange
         $repository = new InMemoryProductRepository();
         $handler = new CreateProductCommandHandler($repository);
-        
+
         $command = new CreateProductCommand(
             name: 'Widget',
             price: 1999,
@@ -287,7 +295,7 @@ final class CreateProductCommandHandlerTest extends TestCase
     {
         $repository = new InMemoryProductRepository();
         $repository->save(Product::create('Existing', Money::fromCents(999), 'WDG-001'));
-        
+
         $handler = new CreateProductCommandHandler($repository);
         $command = new CreateProductCommand(
             name: 'Widget',
@@ -296,7 +304,7 @@ final class CreateProductCommandHandlerTest extends TestCase
         );
 
         $this->expectException(DuplicateSkuException::class);
-        
+
         $handler($command);
     }
 }
@@ -315,7 +323,7 @@ final class GetProductQueryHandlerTest extends TestCase
         $product = Product::create('Widget', Money::fromCents(1999), 'WDG-001');
         $repository = new InMemoryProductRepository();
         $repository->save($product);
-        
+
         $handler = new GetProductQueryHandler($repository);
         $query = new GetProductQuery($product->getId());
 
@@ -331,7 +339,7 @@ final class GetProductQueryHandlerTest extends TestCase
     {
         $repository = new InMemoryProductRepository();
         $handler = new GetProductQueryHandler($repository);
-        
+
         $result = $handler(new GetProductQuery('non-existent'));
 
         $this->assertNull($result);

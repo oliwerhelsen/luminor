@@ -1,3 +1,11 @@
+---
+title: Session Management
+layout: default
+parent: Features
+nav_order: 10
+description: "Session handling with multiple storage drivers"
+---
+
 # Session Management
 
 Luminor provides a flexible session management system with multiple storage drivers. Sessions allow you to persist user data across HTTP requests, essential for maintaining state in web applications.
@@ -145,6 +153,7 @@ Stores session data in memory for the current request. Perfect for testing:
 ```
 
 **Use cases:**
+
 - Testing
 - Stateless APIs
 - Development
@@ -171,17 +180,20 @@ Stores session data in the filesystem:
 ```
 
 **Features:**
+
 - Simple and reliable
 - No external dependencies
 - Automatic garbage collection
 - File locking for concurrency
 
 **Use cases:**
+
 - Small to medium applications
 - Shared hosting environments
 - Development and staging
 
 **Storage location:**
+
 ```
 storage/sessions/
 ├── sess_abc123def456...
@@ -200,12 +212,14 @@ Stores session data in a database table:
 ```
 
 **Features:**
+
 - Centralized storage
 - Easier to scale
 - Query session data
 - Better for load-balanced environments
 
 **Use cases:**
+
 - Production applications
 - Multiple web servers
 - Session analytics
@@ -401,6 +415,7 @@ class Kernel
 ```
 
 The middleware handles:
+
 - Starting the session
 - Loading session data
 - Saving session data

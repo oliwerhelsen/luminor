@@ -1,0 +1,87 @@
+# Luminor Documentation Site
+# Using Just the Docs Jekyll theme for GitHub Pages
+
+title: Luminor Framework
+description: A modern Domain-Driven Design (DDD) framework for PHP
+url: "https://luminor-php.github.io"
+baseurl: "/luminor"
+
+# Theme
+remote_theme: just-the-docs/just-the-docs
+color_scheme: light
+
+# Logo (optional - uncomment and add logo file if desired)
+# logo: "/assets/images/logo.svg"
+
+# Search
+search_enabled: true
+search:
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  tokenizer_separator: /[\s/]+/
+  rel_url: true
+  button: false
+
+# Aux links (top-right navigation)
+aux_links:
+  "GitHub":
+    - "https://github.com/luminor-php/luminor"
+  "Packagist":
+    - "https://packagist.org/packages/luminor/luminor"
+
+aux_links_new_tab: true
+
+# Footer
+footer_content: 'Copyright &copy; 2024-2025 Luminor PHP. Distributed under the <a href="https://opensource.org/licenses/MIT">MIT license</a>.'
+
+# Back to top link
+back_to_top: true
+back_to_top_text: "Back to top"
+
+# Code
+enable_copy_code_button: true
+
+# Heading anchor links
+heading_anchors: true
+
+# Navigation
+nav_sort: case_insensitive
+
+# Callouts for notes, warnings, etc.
+callouts_level: quiet
+callouts:
+  highlight:
+    color: yellow
+  important:
+    title: Important
+    color: blue
+  new:
+    title: New
+    color: green
+  note:
+    title: Note
+    color: purple
+  warning:
+    title: Warning
+    color: red
+  tip:
+    title: Tip
+    color: green
+
+# Mermaid diagrams support
+mermaid:
+  version: "10.6.0"
+
+# Build settings
+plugins:
+  - jekyll-seo-tag
+
+# Exclude from build
+exclude:
+  - node_modules/
+  - vendor/
+  - Gemfile
+  - Gemfile.lock
+  - "*.gemspec"

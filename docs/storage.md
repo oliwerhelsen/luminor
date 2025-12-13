@@ -1,3 +1,11 @@
+---
+title: Storage & Filesystem
+layout: default
+parent: Features
+nav_order: 12
+description: "Filesystem abstraction for local and cloud storage"
+---
+
 # Storage & Filesystem
 
 Luminor provides a powerful filesystem abstraction layer for working with local and cloud storage. The storage system offers a unified API for file operations across different storage backends.
@@ -463,11 +471,13 @@ $visibility = $storage->getVisibility('file.txt');
 ### Public vs Private
 
 **Public files:**
+
 - Accessible via URL
 - Can be served directly by web server
 - Example: avatars, product images
 
 **Private files:**
+
 - Not directly accessible
 - Must be served through application
 - Example: user documents, invoices
