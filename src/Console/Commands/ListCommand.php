@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
 
 /**
  * Command to list all available commands.
@@ -18,7 +18,7 @@ final class ListCommand extends AbstractCommand
     /** @var array<string, CommandInterface> */
     private array $commands = [];
 
-    private string $applicationName = 'Lumina DDD Framework';
+    private string $applicationName = 'Luminor DDD Framework';
     private string $applicationVersion = '1.0.0';
 
     /**

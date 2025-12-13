@@ -1,6 +1,6 @@
 # Mail
 
-Lumina provides a clean, fluent API for sending emails with support for multiple transports and queue integration.
+Luminor provides a clean, fluent API for sending emails with support for multiple transports and queue integration.
 
 ## Configuration
 
@@ -33,7 +33,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Lumina App'),
+        'name' => env('MAIL_FROM_NAME', 'Luminor App'),
     ],
 ];
 ```
@@ -56,7 +56,7 @@ mail('user@example.com')
 ### Using the Mailer
 
 ```php
-use Lumina\DDD\Mail\Mailer;
+use Luminor\DDD\Mail\Mailer;
 
 $mailer = app(Mailer::class);
 
@@ -70,8 +70,8 @@ $mailer->to('user@example.com')
 ### Using the Generator
 
 ```bash
-vendor/bin/lumina make:mail WelcomeEmail
-vendor/bin/lumina make:mail OrderConfirmation --queued
+vendor/bin/luminor make:mail WelcomeEmail
+vendor/bin/luminor make:mail OrderConfirmation --queued
 ```
 
 ### Manual Creation
@@ -81,8 +81,8 @@ vendor/bin/lumina make:mail OrderConfirmation --queued
 
 namespace App\Mail;
 
-use Lumina\DDD\Mail\Mailable;
-use Lumina\DDD\Mail\Message;
+use Luminor\DDD\Mail\Mailable;
+use Luminor\DDD\Mail\Message;
 
 final class WelcomeEmail extends Mailable
 {
@@ -180,8 +180,8 @@ For time-consuming email operations, queue your mailables:
 ### Implement ShouldQueue
 
 ```php
-use Lumina\DDD\Mail\Mailable;
-use Lumina\DDD\Mail\ShouldQueue;
+use Luminor\DDD\Mail\Mailable;
+use Luminor\DDD\Mail\ShouldQueue;
 
 final class MonthlyReport extends Mailable implements ShouldQueue
 {
@@ -260,7 +260,7 @@ Stores emails in memory (useful for testing):
 Use the array transport to capture sent emails:
 
 ```php
-use Lumina\DDD\Mail\Transports\ArrayTransport;
+use Luminor\DDD\Mail\Transports\ArrayTransport;
 
 // Get the transport
 $transport = app(ArrayTransport::class);

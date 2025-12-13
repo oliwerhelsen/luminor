@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Queue\Drivers;
+namespace Luminor\DDD\Queue\Drivers;
 
 /**
  * Valkey-backed queue driver.
@@ -20,7 +20,7 @@ final class ValkeyQueue extends RedisQueue
      *                                      - port: Valkey port (default: 6379)
      *                                      - password: Valkey password (optional)
      *                                      - database: Valkey database number (default: 0)
-     *                                      - prefix: Key prefix (default: lumina_queue:)
+     *                                      - prefix: Key prefix (default: luminor_queue:)
      *                                      - queue: Default queue name (default: default)
      *                                      - retry_after: Seconds before a reserved job is released (default: 90)
      *                                      - tls: TLS configuration (optional)
@@ -113,7 +113,7 @@ final class ValkeyQueue extends RedisQueue
         }
 
         // Set Valkey-specific client name
-        $redis->client('SETNAME', 'lumina-queue');
+        $redis->client('SETNAME', 'luminor-queue');
 
         return $redis;
     }

@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console;
+namespace Luminor\DDD\Console;
 
-use Lumina\DDD\Console\Commands\CommandInterface;
-use Lumina\DDD\Container\ContainerInterface;
+use Luminor\DDD\Console\Commands\CommandInterface;
+use Luminor\DDD\Container\ContainerInterface;
 
 /**
  * Console application for CLI commands.
@@ -19,7 +19,7 @@ final class Application
 
     private ?ContainerInterface $container = null;
 
-    private string $name = 'Lumina DDD Framework';
+    private string $name = 'Luminor DDD Framework';
     private string $version = '1.0.0';
 
     /**

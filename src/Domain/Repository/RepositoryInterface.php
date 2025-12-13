@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Domain\Repository;
+namespace Luminor\DDD\Domain\Repository;
 
-use Lumina\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\DDD\Domain\Abstractions\AggregateRoot;
 
 /**
  * Interface for repositories that handle aggregate roots.

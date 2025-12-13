@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Storage;
+namespace Luminor\DDD\Storage;
 
-use Lumina\DDD\Storage\Drivers\LocalStorage;
+use Luminor\DDD\Storage\Drivers\LocalStorage;
 
 /**
  * Storage Manager
@@ -68,7 +68,7 @@ final class StorageManager implements StorageInterface
 
     // Forward all calls to the active driver
 
-    public function put(string $path, string|$contents): bool
+    public function put(string $path, string|resource $contents): bool
     {
         return $this->driver->put($path, $contents);
     }

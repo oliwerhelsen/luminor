@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Session\Drivers;
+namespace Luminor\DDD\Session\Drivers;
 
-use Lumina\DDD\Session\SessionDriver;
-use Lumina\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Session\SessionDriver;
+use Luminor\DDD\Database\ConnectionInterface;
 use PDO;
 
 /**

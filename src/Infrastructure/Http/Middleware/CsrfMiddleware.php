@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\DDD\Infrastructure\Http\Middleware;
 
-use Lumina\DDD\Session\SessionInterface;
-use Lumina\DDD\Security\Csrf\CsrfToken;
-use Lumina\DDD\Security\Csrf\CsrfException;
+use Luminor\DDD\Session\SessionInterface;
+use Luminor\DDD\Security\Csrf\CsrfToken;
+use Luminor\DDD\Security\Csrf\CsrfException;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

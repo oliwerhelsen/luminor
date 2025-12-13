@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
 
 /**
  * Command to start the built-in PHP development server.
@@ -83,7 +83,7 @@ final class ServeCommand extends AbstractCommand
         $serverUrl = sprintf('http://%s:%s', $host, $port);
 
         $output->newLine();
-        $output->info('Lumina Development Server');
+        $output->info('Luminor Development Server');
         $output->writeln(str_repeat('─', 40));
         $output->newLine();
         $output->writeln(sprintf('  <comment>Server running on:</comment> <info>%s</info>', $serverUrl));

@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Basic API Example - Entry Point
  * 
- * This demonstrates a simple REST API using the Lumina DDD Framework.
+ * This demonstrates a simple REST API using the Luminor DDD Framework.
  */
 
 require __DIR__ . '/../../../vendor/autoload.php';
@@ -23,8 +23,8 @@ use Example\BasicApi\Application\Queries\ListProductsQuery;
 use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
 use Example\BasicApi\Infrastructure\Http\Controllers\ProductController;
 use Example\BasicApi\Infrastructure\Persistence\InMemoryProductRepository;
-use Lumina\DDD\Infrastructure\Bus\SimpleCommandBus;
-use Lumina\DDD\Infrastructure\Bus\SimpleQueryBus;
+use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
+use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
 use Utopia\Http\Http;
 use Utopia\Http\Response;
 

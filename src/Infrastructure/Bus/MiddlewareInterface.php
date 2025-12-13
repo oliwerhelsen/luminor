@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Bus;
+namespace Luminor\DDD\Infrastructure\Bus;
 
-use Lumina\DDD\Application\CQRS\Command;
-use Lumina\DDD\Application\CQRS\Query;
+use Luminor\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Query;
 
 /**
  * Interface for bus middleware.

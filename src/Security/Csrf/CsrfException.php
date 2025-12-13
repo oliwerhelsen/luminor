@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Security\Csrf;
+namespace Luminor\DDD\Security\Csrf;
 
 use Exception;
 

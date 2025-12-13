@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
 
 /**
- * Command to create a new Lumina project.
+ * Command to create a new Luminor project.
  *
  * Scaffolds a complete DDD project structure with configurable options
  * for project type, database, multi-tenancy, and more.
@@ -40,7 +40,7 @@ final class NewCommand extends AbstractCommand
     protected function configure(): void
     {
         $this->setName('new')
-            ->setDescription('Create a new Lumina project')
+            ->setDescription('Create a new Luminor project')
             ->addArgument('name', [
                 'description' => 'The name of the project (directory name)',
                 'required' => true,
@@ -109,7 +109,7 @@ final class NewCommand extends AbstractCommand
         // Display welcome message
         $output->newLine();
         $output->writeln('<info>╔═══════════════════════════════════════════════════════════╗</info>');
-        $output->writeln('<info>║</info>         <comment>Welcome to the Lumina Project Creator</comment>          <info>║</info>');
+        $output->writeln('<info>║</info>         <comment>Welcome to the Luminor Project Creator</comment>          <info>║</info>');
         $output->writeln('<info>╚═══════════════════════════════════════════════════════════╝</info>');
         $output->newLine();
 
@@ -401,7 +401,7 @@ final class NewCommand extends AbstractCommand
 
         $require = [
             'php' => '^8.2',
-            'lumina/ddd-framework' => '^1.0',
+            'luminor/ddd-framework' => '^1.0',
             'vlucas/phpdotenv' => '^5.5',
         ];
 
@@ -417,7 +417,7 @@ final class NewCommand extends AbstractCommand
 
         $composer = [
             'name' => "$vendor/$name",
-            'description' => 'A Lumina DDD application',
+            'description' => 'A Luminor DDD application',
             'type' => 'project',
             'license' => 'proprietary',
             'require' => $require,
@@ -574,7 +574,7 @@ GITIGNORE;
         $content = <<<README
 # {$name}
 
-A Lumina DDD Framework application.
+A Luminor DDD Framework application.
 
 ## Project Configuration
 
@@ -633,15 +633,15 @@ composer serve
 composer test
 
 # Generate code
-vendor/bin/lumina make:entity MyEntity
-vendor/bin/lumina make:command CreateMyEntity
-vendor/bin/lumina make:query GetMyEntity
-vendor/bin/lumina make:controller MyEntityController
+vendor/bin/luminor make:entity MyEntity
+vendor/bin/luminor make:command CreateMyEntity
+vendor/bin/luminor make:query GetMyEntity
+vendor/bin/luminor make:controller MyEntityController
 ```
 
 ## Documentation
 
-For full documentation, visit the [Lumina DDD Framework documentation](https://github.com/lumina/ddd-framework).
+For full documentation, visit the [Luminor DDD Framework documentation](https://github.com/luminor/ddd-framework).
 
 ## License
 
@@ -855,7 +855,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'lumina'),
+            'database' => env('DB_DATABASE', 'luminor'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8mb4',
@@ -868,7 +868,7 @@ return [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'lumina'),
+            'database' => env('DB_DATABASE', 'luminor'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
@@ -925,7 +925,7 @@ PHP;
 
 declare(strict_types=1);
 
-use Lumina\DDD\Kernel;
+use Luminor\DDD\Kernel;
 
 /*
 |--------------------------------------------------------------------------
@@ -961,7 +961,7 @@ if (file_exists(__DIR__ . '/../.env')) {
 // Define your routes here
 \$router->get('/', function () {
     return [
-        'name' => env('APP_NAME', 'Lumina'),
+        'name' => env('APP_NAME', 'Luminor'),
         'status' => 'running',
         'timestamp' => date('c'),
     ];
@@ -1164,17 +1164,17 @@ XML;
 
         $output->comment('Useful commands:');
         $output->newLine();
-        $output->line('  <info>vendor/bin/lumina make:entity</info>      Create a new entity');
-        $output->line('  <info>vendor/bin/lumina make:command</info>     Create a new command');
-        $output->line('  <info>vendor/bin/lumina make:query</info>       Create a new query');
-        $output->line('  <info>vendor/bin/lumina make:controller</info>  Create a new controller');
+        $output->line('  <info>vendor/bin/luminor make:entity</info>      Create a new entity');
+        $output->line('  <info>vendor/bin/luminor make:command</info>     Create a new command');
+        $output->line('  <info>vendor/bin/luminor make:query</info>       Create a new query');
+        $output->line('  <info>vendor/bin/luminor make:controller</info>  Create a new controller');
 
         if ($config['type'] === 'modular') {
-            $output->line('  <info>vendor/bin/lumina make:module</info>     Create a new module');
+            $output->line('  <info>vendor/bin/luminor make:module</info>     Create a new module');
         }
 
         $output->newLine();
-        $output->info('Happy coding with Lumina! 🚀');
+        $output->info('Happy coding with Luminor! 🚀');
         $output->newLine();
     }
 

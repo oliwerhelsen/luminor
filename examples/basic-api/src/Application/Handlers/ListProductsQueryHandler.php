@@ -7,8 +7,8 @@ namespace Example\BasicApi\Application\Handlers;
 use Example\BasicApi\Application\DTOs\ProductDto;
 use Example\BasicApi\Application\Queries\ListProductsQuery;
 use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
-use Lumina\DDD\Application\Bus\QueryHandlerInterface;
-use Lumina\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\DDD\Application\DTO\PagedResult;
 
 /**
  * Handler for ListProductsQuery.

@@ -1,6 +1,6 @@
 # Validation
 
-Lumina provides a comprehensive validation system to ensure data integrity and security. The validator supports a wide range of validation rules and custom rule creation.
+Luminor provides a comprehensive validation system to ensure data integrity and security. The validator supports a wide range of validation rules and custom rule creation.
 
 ## Table of Contents
 
@@ -27,7 +27,7 @@ The validation system provides:
 ### Creating a Validator
 
 ```php
-use Lumina\Validation\Validator;
+use Luminor\Validation\Validator;
 
 $validator = new Validator(
     [
@@ -51,7 +51,7 @@ if ($validator->fails()) {
 ### Validation with Factory
 
 ```php
-use Lumina\Validation\ValidatorFactory;
+use Luminor\Validation\ValidatorFactory;
 
 $factory = $container->get(ValidatorFactory::class);
 
@@ -342,7 +342,7 @@ Maximum file size in kilobytes:
 Value must be unique in database table:
 
 ```php
-use Lumina\Validation\Rules\Unique;
+use Luminor\Validation\Rules\Unique;
 
 'email' => ['required', 'email', new Unique('users', 'email')]
 
@@ -362,7 +362,7 @@ use Lumina\Validation\Rules\Unique;
 Value must exist in database table:
 
 ```php
-use Lumina\Validation\Rules\Exists;
+use Luminor\Validation\Rules\Exists;
 
 'user_id' => ['required', 'integer', new Exists('users', 'id')]
 
@@ -381,7 +381,7 @@ use Lumina\Validation\Rules\Exists;
 Advanced password validation:
 
 ```php
-use Lumina\Validation\Rules\Password;
+use Luminor\Validation\Rules\Password;
 
 // Basic password
 'password' => ['required', new Password()]
@@ -451,7 +451,7 @@ Must have matching confirmation field:
 Extend the `Rule` class:
 
 ```php
-use Lumina\Validation\Rule;
+use Luminor\Validation\Rule;
 
 class Uppercase extends Rule
 {
@@ -545,8 +545,8 @@ Usage:
 ### Command Validation
 
 ```php
-use Lumina\Application\CQRS\Command;
-use Lumina\Validation\Validator;
+use Luminor\Application\CQRS\Command;
+use Luminor\Validation\Validator;
 
 class CreateUserCommand implements Command
 {

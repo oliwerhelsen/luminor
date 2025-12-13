@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Domain;
+namespace Luminor\DDD\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Domain\Abstractions\ValueObject;
+use Luminor\DDD\Domain\Abstractions\ValueObject;
 
 final class ValueObjectTest extends TestCase
 {

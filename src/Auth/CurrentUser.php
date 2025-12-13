@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Auth;
+namespace Luminor\DDD\Auth;
 
 /**
  * Static context holder for the currently authenticated user.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Multitenancy\Strategy;
+namespace Luminor\DDD\Multitenancy\Strategy;
 
-use Lumina\DDD\Multitenancy\TenantResolverInterface;
+use Luminor\DDD\Multitenancy\TenantResolverInterface;
 use Utopia\Http\Request;
 
 /**

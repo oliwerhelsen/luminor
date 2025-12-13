@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Testing\Factory;
+namespace Luminor\DDD\Testing\Factory;
 
-use Lumina\DDD\Domain\Abstractions\Entity;
+use Luminor\DDD\Domain\Abstractions\Entity;
 
 /**
  * Factory for creating test entities.

@@ -1,6 +1,6 @@
 # Modular Application Example
 
-A modular e-commerce application demonstrating the Lumina DDD Framework's module system.
+A modular e-commerce application demonstrating the Luminor DDD Framework's module system.
 
 ## Structure
 

@@ -1,38 +1,38 @@
 # Console Commands
 
-Lumina provides a powerful CLI interface for running commands, managing queues, and scaffolding code.
+Luminor provides a powerful CLI interface for running commands, managing queues, and scaffolding code.
 
 ## Running Commands
 
 ```bash
 # List all available commands
-vendor/bin/lumina list
+vendor/bin/luminor list
 
 # Run a specific command
-vendor/bin/lumina serve
+vendor/bin/luminor serve
 
 # Get help for a command
-vendor/bin/lumina serve --help
+vendor/bin/luminor serve --help
 ```
 
 ## Built-in Commands
 
 ### Project Scaffolding
 
-Create a new Lumina project with interactive configuration:
+Create a new Luminor project with interactive configuration:
 
 ```bash
 # Interactive mode (recommended)
-lumina new my-app
+luminor new my-app
 
 # Non-interactive with options
-lumina new my-app --type=basic --database=mysql --multitenancy=none
+luminor new my-app --type=basic --database=mysql --multitenancy=none
 
 # Skip composer install
-lumina new my-app --no-install
+luminor new my-app --no-install
 
 # Overwrite existing directory
-lumina new my-app --force
+luminor new my-app --force
 ```
 
 | Option             | Description                                | Default |
@@ -53,9 +53,9 @@ lumina new my-app --force
 Start the built-in PHP development server:
 
 ```bash
-vendor/bin/lumina serve
-vendor/bin/lumina serve --host=0.0.0.0 --port=8080
-vendor/bin/lumina serve --docroot=public
+vendor/bin/luminor serve
+vendor/bin/luminor serve --host=0.0.0.0 --port=8080
+vendor/bin/luminor serve --docroot=public
 ```
 
 | Option            | Description   | Default   |
@@ -70,77 +70,77 @@ vendor/bin/lumina serve --docroot=public
 
 ```bash
 # Create an entity
-vendor/bin/lumina make:entity User
+vendor/bin/luminor make:entity User
 
 # Create a repository interface and implementation
-vendor/bin/lumina make:repository User
+vendor/bin/luminor make:repository User
 
 # Create a value object
-vendor/bin/lumina make:value-object Email
+vendor/bin/luminor make:value-object Email
 ```
 
 #### Application Layer
 
 ```bash
 # Create a command and handler
-vendor/bin/lumina make:command CreateUser
+vendor/bin/luminor make:command CreateUser
 
 # Create a query and handler
-vendor/bin/lumina make:query GetUserById
+vendor/bin/luminor make:query GetUserById
 ```
 
 #### HTTP Layer
 
 ```bash
 # Create a controller
-vendor/bin/lumina make:controller UserController
+vendor/bin/luminor make:controller UserController
 
 # Create a CRUD controller
-vendor/bin/lumina make:controller UserController --crud
+vendor/bin/luminor make:controller UserController --crud
 
 # Create middleware
-vendor/bin/lumina make:middleware RateLimiter
+vendor/bin/luminor make:middleware RateLimiter
 ```
 
 #### Infrastructure
 
 ```bash
 # Create a job class
-vendor/bin/lumina make:job ProcessPayment
-vendor/bin/lumina make:job SyncData --sync
+vendor/bin/luminor make:job ProcessPayment
+vendor/bin/luminor make:job SyncData --sync
 
 # Create a mailable class
-vendor/bin/lumina make:mail WelcomeEmail
-vendor/bin/lumina make:mail Newsletter --queued
+vendor/bin/luminor make:mail WelcomeEmail
+vendor/bin/luminor make:mail Newsletter --queued
 
 # Create a service provider
-vendor/bin/lumina make:provider PaymentServiceProvider
+vendor/bin/luminor make:provider PaymentServiceProvider
 ```
 
 #### Modules
 
 ```bash
 # Create a complete module structure
-vendor/bin/lumina make:module Billing
+vendor/bin/luminor make:module Billing
 ```
 
 ### Queue Commands
 
 ```bash
 # Process queue jobs
-vendor/bin/lumina queue:work
-vendor/bin/lumina queue:work --connection=redis --queue=emails
+vendor/bin/luminor queue:work
+vendor/bin/luminor queue:work --connection=redis --queue=emails
 
 # List failed jobs
-vendor/bin/lumina queue:failed
+vendor/bin/luminor queue:failed
 
 # Retry failed jobs
-vendor/bin/lumina queue:retry job-id
-vendor/bin/lumina queue:retry --all
+vendor/bin/luminor queue:retry job-id
+vendor/bin/luminor queue:retry --all
 
 # Clear failed jobs
-vendor/bin/lumina queue:flush
-vendor/bin/lumina queue:flush --hours=24
+vendor/bin/luminor queue:flush
+vendor/bin/luminor queue:flush --hours=24
 ```
 
 ## Creating Custom Commands
@@ -152,9 +152,9 @@ vendor/bin/lumina queue:flush --hours=24
 
 namespace App\Console\Commands;
 
-use Lumina\DDD\Console\Commands\AbstractCommand;
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
+use Luminor\DDD\Console\Commands\AbstractCommand;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
 
 final class GreetCommand extends AbstractCommand
 {
@@ -193,7 +193,7 @@ Register your command in a service provider:
 
 ```php
 use App\Console\Commands\GreetCommand;
-use Lumina\DDD\Console\Application;
+use Luminor\DDD\Console\Application;
 
 public function boot(ContainerInterface $container): void
 {

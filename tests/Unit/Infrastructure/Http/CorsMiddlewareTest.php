@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
+use Luminor\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

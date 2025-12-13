@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Validation;
+namespace Luminor\DDD\Validation;
 
-use Lumina\DDD\Application\Validation\ValidationResult;
-use Lumina\DDD\Application\Validation\ValidationException;
+use Luminor\DDD\Application\Validation\ValidationResult;
+use Luminor\DDD\Application\Validation\ValidationException;
 
 /**
  * Validator

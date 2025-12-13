@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Catalog\Domain\Entities;
 
-use Lumina\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\DDD\Domain\Abstractions\AggregateRoot;
 use Example\ModularApp\Modules\Catalog\Domain\Events\ProductCreatedEvent;
 use Example\ModularApp\Modules\Catalog\Domain\ValueObjects\ProductId;
 use Example\ModularApp\Modules\Catalog\Domain\ValueObjects\Money;

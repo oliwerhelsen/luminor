@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Domain\Repository;
+namespace Luminor\DDD\Domain\Repository;
 
-use Lumina\DDD\Domain\Repository\Filter\Filter;
+use Luminor\DDD\Domain\Repository\Filter\Filter;
 
 /**
  * Criteria for querying repositories.

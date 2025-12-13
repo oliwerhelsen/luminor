@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\DDD\Infrastructure\Http\Middleware;
 
-use Lumina\DDD\Application\Validation\Rules;
-use Lumina\DDD\Application\Validation\ValidationException;
-use Lumina\DDD\Application\Validation\ValidationResult;
-use Lumina\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\DDD\Application\Validation\Rules;
+use Luminor\DDD\Application\Validation\ValidationException;
+use Luminor\DDD\Application\Validation\ValidationResult;
+use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

@@ -1,13 +1,13 @@
 # Quick Start Guide
 
-This guide will help you create a simple CRUD API using the Lumina DDD Framework.
+This guide will help you create a simple CRUD API using the Luminor DDD Framework.
 
 ## Creating Your First Entity
 
 Use the CLI to generate an entity:
 
 ```bash
-./vendor/bin/lumina make:entity User
+./vendor/bin/luminor make:entity User
 ```
 
 This creates `src/Domain/Entities/User.php`:
@@ -19,7 +19,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Lumina\DDD\Domain\Abstractions\Entity;
+use Luminor\DDD\Domain\Abstractions\Entity;
 
 final class User extends Entity
 {
@@ -58,7 +58,7 @@ final class User extends Entity
 Generate a repository interface and implementation:
 
 ```bash
-./vendor/bin/lumina make:repository User --implementation
+./vendor/bin/luminor make:repository User --implementation
 ```
 
 ## Creating Commands and Queries
@@ -67,10 +67,10 @@ Generate CQRS components:
 
 ```bash
 # Create a command with handler
-./vendor/bin/lumina make:command CreateUser
+./vendor/bin/luminor make:command CreateUser
 
 # Create a query with handler
-./vendor/bin/lumina make:query GetUserById
+./vendor/bin/luminor make:query GetUserById
 ```
 
 Example command:
@@ -82,7 +82,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Lumina\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Command;
 
 final class CreateUserCommand implements Command
 {
@@ -106,7 +106,7 @@ namespace App\Application\Handlers;
 use App\Application\Commands\CreateUserCommand;
 use App\Domain\Entities\User;
 use App\Domain\Repository\UserRepositoryInterface;
-use Lumina\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\DDD\Application\Bus\CommandHandlerInterface;
 
 final class CreateUserCommandHandler implements CommandHandlerInterface
 {
@@ -130,7 +130,7 @@ final class CreateUserCommandHandler implements CommandHandlerInterface
 Generate an API controller:
 
 ```bash
-./vendor/bin/lumina make:controller User
+./vendor/bin/luminor make:controller User
 ```
 
 Example controller usage:
@@ -143,8 +143,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Commands\CreateUserCommand;
-use Lumina\DDD\Application\Bus\CommandBusInterface;
-use Lumina\DDD\Infrastructure\Http\ApiController;
+use Luminor\DDD\Application\Bus\CommandBusInterface;
+use Luminor\DDD\Infrastructure\Http\ApiController;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 
@@ -206,7 +206,7 @@ namespace Tests\Unit\Application\Handlers;
 use App\Application\Commands\CreateUserCommand;
 use App\Application\Handlers\CreateUserCommandHandler;
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Testing\InMemoryRepository;
+use Luminor\DDD\Testing\InMemoryRepository;
 
 final class CreateUserCommandHandlerTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Database;
+namespace Luminor\DDD\Database;
 
 use PDO;
 use PDOException;

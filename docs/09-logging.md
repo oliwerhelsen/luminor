@@ -1,6 +1,6 @@
 # Logging
 
-Lumina provides a robust, PSR-3 compatible logging system with support for multiple channels and drivers.
+Luminor provides a robust, PSR-3 compatible logging system with support for multiple channels and drivers.
 
 ## Configuration
 
@@ -55,7 +55,7 @@ $logger->error('Something went wrong');
 ### Using the LogManager
 
 ```php
-use Lumina\DDD\Logging\LogManager;
+use Luminor\DDD\Logging\LogManager;
 
 $log = app(LogManager::class);
 
@@ -74,7 +74,7 @@ $log->error('Failed to process payment', [
 
 ## Log Levels
 
-Lumina supports all standard PSR-3 log levels:
+Luminor supports all standard PSR-3 log levels:
 
 | Level       | Description                       |
 | ----------- | --------------------------------- |
@@ -163,8 +163,8 @@ $log->info('User {username} logged in from {ip}', [
 Implement the `LoggerInterface` to create custom log drivers:
 
 ```php
-use Lumina\DDD\Logging\AbstractLogger;
-use Lumina\DDD\Logging\LogLevel;
+use Luminor\DDD\Logging\AbstractLogger;
+use Luminor\DDD\Logging\LogLevel;
 
 class SlackLogger extends AbstractLogger
 {
@@ -191,7 +191,7 @@ class SlackLogger extends AbstractLogger
 Use the `ArrayLogger` driver for testing:
 
 ```php
-use Lumina\DDD\Logging\Drivers\ArrayLogger;
+use Luminor\DDD\Logging\Drivers\ArrayLogger;
 
 $logger = new ArrayLogger();
 $logger->info('Test message');

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Http;
+namespace Luminor\DDD\Http;
 
 /**
  * Cookie

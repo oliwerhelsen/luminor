@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Queue\Drivers;
+namespace Luminor\DDD\Queue\Drivers;
 
 use DateTimeImmutable;
-use Lumina\DDD\Queue\JobInterface;
-use Lumina\DDD\Queue\QueuedJob;
-use Lumina\DDD\Queue\QueueInterface;
+use Luminor\DDD\Queue\JobInterface;
+use Luminor\DDD\Queue\QueuedJob;
+use Luminor\DDD\Queue\QueueInterface;
 use RuntimeException;
 
 /**
@@ -33,14 +33,14 @@ class RedisQueue implements QueueInterface
      *                                      - port: Redis port (default: 6379)
      *                                      - password: Redis password (optional)
      *                                      - database: Redis database number (default: 0)
-     *                                      - prefix: Key prefix (default: lumina_queue:)
+     *                                      - prefix: Key prefix (default: luminor_queue:)
      *                                      - queue: Default queue name (default: default)
      *                                      - retry_after: Seconds before a reserved job is released (default: 90)
      */
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        $this->prefix = $config['prefix'] ?? 'lumina_queue:';
+        $this->prefix = $config['prefix'] ?? 'luminor_queue:';
         $this->defaultQueue = $config['queue'] ?? 'default';
         $this->retryAfter = $config['retry_after'] ?? 90;
         $this->connectionName = $config['connection_name'] ?? 'redis';

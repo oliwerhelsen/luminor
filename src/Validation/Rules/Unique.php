@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Validation\Rules;
+namespace Luminor\DDD\Validation\Rules;
 
-use Lumina\DDD\Validation\Rule;
-use Lumina\DDD\Database\ConnectionInterface;
+use Luminor\DDD\Validation\Rule;
+use Luminor\DDD\Database\ConnectionInterface;
 
 /**
  * Unique Rule

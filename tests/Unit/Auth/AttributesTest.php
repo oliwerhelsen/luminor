@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Auth;
+namespace Luminor\DDD\Tests\Unit\Auth;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Auth\Attributes\RequireAuth;
-use Lumina\DDD\Auth\Attributes\RequirePermission;
-use Lumina\DDD\Auth\Attributes\RequireRole;
+use Luminor\DDD\Auth\Attributes\RequireAuth;
+use Luminor\DDD\Auth\Attributes\RequirePermission;
+use Luminor\DDD\Auth\Attributes\RequireRole;
 
 final class AttributesTest extends TestCase
 {

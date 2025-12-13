@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Auth;
+namespace Luminor\DDD\Auth;
 
 /**
  * Interface for entities that have permissions assigned.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Persistence;
+namespace Luminor\DDD\Infrastructure\Persistence;
 
-use Lumina\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\DDD\Domain\Abstractions\AggregateRoot;
 
 /**
  * Unit of Work interface for managing persistence operations.

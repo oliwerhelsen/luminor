@@ -1,6 +1,6 @@
 # Database & Migrations
 
-Lumina provides a comprehensive database layer with schema building, migrations, and query execution capabilities. The system supports multiple database engines including MySQL, PostgreSQL, and SQLite.
+Luminor provides a comprehensive database layer with schema building, migrations, and query execution capabilities. The system supports multiple database engines including MySQL, PostgreSQL, and SQLite.
 
 ## Table of Contents
 
@@ -34,7 +34,7 @@ return [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '3306'),
-            'database' => env('DB_DATABASE', 'lumina'),
+            'database' => env('DB_DATABASE', 'luminor'),
             'username' => env('DB_USERNAME', 'root'),
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8mb4',
@@ -45,7 +45,7 @@ return [
             'driver' => 'pgsql',
             'host' => env('DB_HOST', '127.0.0.1'),
             'port' => env('DB_PORT', '5432'),
-            'database' => env('DB_DATABASE', 'lumina'),
+            'database' => env('DB_DATABASE', 'luminor'),
             'username' => env('DB_USERNAME', 'postgres'),
             'password' => env('DB_PASSWORD', ''),
             'schema' => 'public',
@@ -70,7 +70,7 @@ Environment variables in `.env`:
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=lumina
+DB_DATABASE=luminor
 DB_USERNAME=root
 DB_PASSWORD=secret
 ```
@@ -80,7 +80,7 @@ DB_PASSWORD=secret
 ### Basic Usage
 
 ```php
-use Lumina\Database\Connection;
+use Luminor\Database\Connection;
 
 // Get connection instance
 $connection = $container->get(Connection::class);
@@ -107,7 +107,7 @@ $deleted = $connection->delete('DELETE FROM users WHERE id = ?', [1]);
 ### Transactions
 
 ```php
-use Lumina\Database\Connection;
+use Luminor\Database\Connection;
 
 $connection->transaction(function($connection) {
     $connection->insert('INSERT INTO users (name) VALUES (?)', ['John']);
@@ -133,7 +133,7 @@ The schema builder provides a fluent API for creating and modifying database tab
 ### Creating Tables
 
 ```php
-use Lumina\Database\Schema\Schema;
+use Luminor\Database\Schema\Schema;
 
 $schema = $container->get(Schema::class);
 
@@ -294,7 +294,7 @@ Migrations are version control for your database, allowing you to modify the dat
 Use the CLI to create a new migration:
 
 ```bash
-php bin/lumina make:migration CreateUsersTable
+php bin/luminor make:migration CreateUsersTable
 ```
 
 This creates a file in `database/migrations/`:
@@ -306,8 +306,8 @@ database/migrations/2025_12_13_100000_create_users_table.php
 ### Migration Structure
 
 ```php
-use Lumina\Database\Migrations\Migration;
-use Lumina\Database\Schema\Schema;
+use Luminor\Database\Migrations\Migration;
+use Luminor\Database\Schema\Schema;
 
 return new class extends Migration
 {
@@ -334,7 +334,7 @@ return new class extends Migration
 #### Creating a Posts Table
 
 ```bash
-php bin/lumina make:migration CreatePostsTable
+php bin/luminor make:migration CreatePostsTable
 ```
 
 ```php
@@ -373,7 +373,7 @@ return new class extends Migration
 #### Adding Columns to Existing Table
 
 ```bash
-php bin/lumina make:migration AddPhoneToUsersTable
+php bin/luminor make:migration AddPhoneToUsersTable
 ```
 
 ```php
@@ -399,7 +399,7 @@ return new class extends Migration
 #### Creating Pivot Table
 
 ```bash
-php bin/lumina make:migration CreatePostTagTable
+php bin/luminor make:migration CreatePostTagTable
 ```
 
 ```php
@@ -441,7 +441,7 @@ return new class extends Migration
 Run all pending migrations:
 
 ```bash
-php bin/lumina migrate
+php bin/luminor migrate
 ```
 
 Options:
@@ -450,10 +450,10 @@ Options:
 
 ```bash
 # Run migrations in production
-php bin/lumina migrate --force
+php bin/luminor migrate --force
 
 # Preview SQL without executing
-php bin/lumina migrate --pretend
+php bin/luminor migrate --pretend
 ```
 
 ### migrate:rollback
@@ -461,7 +461,7 @@ php bin/lumina migrate --pretend
 Rollback the last batch of migrations:
 
 ```bash
-php bin/lumina migrate:rollback
+php bin/luminor migrate:rollback
 ```
 
 Options:
@@ -470,10 +470,10 @@ Options:
 
 ```bash
 # Rollback last 3 batches
-php bin/lumina migrate:rollback --step=3
+php bin/luminor migrate:rollback --step=3
 
 # Force rollback in production
-php bin/lumina migrate:rollback --force
+php bin/luminor migrate:rollback --force
 ```
 
 ### migrate:reset
@@ -481,14 +481,14 @@ php bin/lumina migrate:rollback --force
 Rollback all migrations:
 
 ```bash
-php bin/lumina migrate:reset
+php bin/luminor migrate:reset
 ```
 
 Options:
 - `--force` - Force the operation to run in production
 
 ```bash
-php bin/lumina migrate:reset --force
+php bin/luminor migrate:reset --force
 ```
 
 ### migrate:fresh
@@ -496,7 +496,7 @@ php bin/lumina migrate:reset --force
 Drop all tables and re-run all migrations:
 
 ```bash
-php bin/lumina migrate:fresh
+php bin/luminor migrate:fresh
 ```
 
 **Warning:** This will destroy all data in the database!
@@ -507,10 +507,10 @@ Options:
 
 ```bash
 # Fresh migration in development
-php bin/lumina migrate:fresh
+php bin/luminor migrate:fresh
 
 # Fresh migration with seeders
-php bin/lumina migrate:fresh --seed
+php bin/luminor migrate:fresh --seed
 ```
 
 ### migrate:status
@@ -518,7 +518,7 @@ php bin/lumina migrate:fresh --seed
 Show the status of each migration:
 
 ```bash
-php bin/lumina migrate:status
+php bin/luminor migrate:status
 ```
 
 Output:
@@ -580,14 +580,14 @@ public function down(Schema $schema): void
 
 ```bash
 # Good
-php bin/lumina make:migration CreateUsersTable
-php bin/lumina make:migration AddEmailVerifiedAtToUsersTable
-php bin/lumina make:migration AddIndexToPostsStatusColumn
+php bin/luminor make:migration CreateUsersTable
+php bin/luminor make:migration AddEmailVerifiedAtToUsersTable
+php bin/luminor make:migration AddIndexToPostsStatusColumn
 
 # Bad
-php bin/lumina make:migration UpdateUsers
-php bin/lumina make:migration ChangeTable
-php bin/lumina make:migration NewMigration
+php bin/luminor make:migration UpdateUsers
+php bin/luminor make:migration ChangeTable
+php bin/luminor make:migration NewMigration
 ```
 
 ### 4. Order Migrations Logically
@@ -596,9 +596,9 @@ Create tables before creating foreign keys:
 
 ```bash
 # Correct order
-php bin/lumina make:migration CreateUsersTable
-php bin/lumina make:migration CreatePostsTable  # References users
-php bin/lumina make:migration CreateCommentsTable  # References posts
+php bin/luminor make:migration CreateUsersTable
+php bin/luminor make:migration CreatePostsTable  # References users
+php bin/luminor make:migration CreateCommentsTable  # References posts
 ```
 
 ### 5. Use Transactions (When Possible)
@@ -611,13 +611,13 @@ Always test both up and down migrations:
 
 ```bash
 # Run migration
-php bin/lumina migrate
+php bin/luminor migrate
 
 # Test rollback
-php bin/lumina migrate:rollback
+php bin/luminor migrate:rollback
 
 # Re-run migration
-php bin/lumina migrate
+php bin/luminor migrate
 ```
 
 ### 7. Keep Migrations Small
@@ -626,9 +626,9 @@ Break complex schema changes into multiple migrations:
 
 ```bash
 # Instead of one large migration, use multiple smaller ones
-php bin/lumina make:migration AddUserProfileFields
-php bin/lumina make:migration AddUserPreferences
-php bin/lumina make:migration AddUserNotificationSettings
+php bin/luminor make:migration AddUserProfileFields
+php bin/luminor make:migration AddUserPreferences
+php bin/luminor make:migration AddUserNotificationSettings
 ```
 
 ### 8. Use Indexes Wisely
@@ -686,20 +686,20 @@ Use `--force` flag consciously in production:
 
 ```bash
 # Development - runs automatically
-php bin/lumina migrate
+php bin/luminor migrate
 
 # Production - requires confirmation or --force
-php bin/lumina migrate --force
+php bin/luminor migrate --force
 ```
 
 ## Database Grammars
 
-Lumina supports multiple database grammars, automatically selecting the appropriate one based on your driver:
+Luminor supports multiple database grammars, automatically selecting the appropriate one based on your driver:
 
 ### MySQL
 
 ```php
-use Lumina\Database\Schema\MySqlGrammar;
+use Luminor\Database\Schema\MySqlGrammar;
 
 // Automatically used when driver is 'mysql'
 $schema->create('users', function($table) {
@@ -712,7 +712,7 @@ $schema->create('users', function($table) {
 ### PostgreSQL
 
 ```php
-use Lumina\Database\Schema\PostgresGrammar;
+use Luminor\Database\Schema\PostgresGrammar;
 
 // Automatically used when driver is 'pgsql'
 $schema->create('users', function($table) {
@@ -726,7 +726,7 @@ $schema->create('users', function($table) {
 ### SQLite
 
 ```php
-use Lumina\Database\Schema\SqliteGrammar;
+use Luminor\Database\Schema\SqliteGrammar;
 
 // Automatically used when driver is 'sqlite'
 $schema->create('users', function($table) {
@@ -765,7 +765,7 @@ Error: Table 'users' already exists
 ```
 
 Solutions:
-1. Check if migration was already run: `php bin/lumina migrate:status`
+1. Check if migration was already run: `php bin/luminor migrate:status`
 2. Use `dropIfExists()` instead of `drop()` in down method
 3. Run `migrate:rollback` before re-running
 

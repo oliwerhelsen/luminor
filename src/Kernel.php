@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD;
+namespace Luminor\DDD;
 
-use Lumina\DDD\Config\ConfigLoader;
-use Lumina\DDD\Config\ConfigRepository;
-use Lumina\DDD\Container\Container;
-use Lumina\DDD\Container\ContainerInterface;
-use Lumina\DDD\Container\ServiceProviderInterface;
-use Lumina\DDD\Module\ModuleInterface;
-use Lumina\DDD\Module\ModuleLoader;
-use Lumina\DDD\Support\Env;
+use Luminor\DDD\Config\ConfigLoader;
+use Luminor\DDD\Config\ConfigRepository;
+use Luminor\DDD\Container\Container;
+use Luminor\DDD\Container\ContainerInterface;
+use Luminor\DDD\Container\ServiceProviderInterface;
+use Luminor\DDD\Module\ModuleInterface;
+use Luminor\DDD\Module\ModuleLoader;
+use Luminor\DDD\Support\Env;
 use Utopia\Http\Http;
 
 /**

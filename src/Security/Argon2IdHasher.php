@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Security;
+namespace Luminor\DDD\Security;
 
 /**
  * Argon2id Password Hasher

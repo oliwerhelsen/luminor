@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Multitenancy;
+namespace Luminor\DDD\Multitenancy;
 
-use Lumina\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
+use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

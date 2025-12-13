@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Validation;
+namespace Luminor\DDD\Validation;
 
 /**
  * Validation Rule Interface

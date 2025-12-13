@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Infrastructure\Http\Response\ApiResponse;
-use Lumina\DDD\Application\DTO\DataTransferObject;
-use Lumina\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
+use Luminor\DDD\Application\DTO\DataTransferObject;
+use Luminor\DDD\Application\DTO\PagedResult;
 
 final class ApiResponseTest extends TestCase
 {

@@ -6,8 +6,8 @@ namespace Example\ModularApp\Modules\Inventory;
 
 use Example\ModularApp\Modules\Inventory\Domain\Repository\StockRepositoryInterface;
 use Example\ModularApp\Modules\Inventory\Infrastructure\Persistence\InMemoryStockRepository;
-use Lumina\DDD\Container\AbstractServiceProvider;
-use Lumina\DDD\Container\ContainerInterface;
+use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\DDD\Container\ContainerInterface;
 
 /**
  * Inventory module service provider.

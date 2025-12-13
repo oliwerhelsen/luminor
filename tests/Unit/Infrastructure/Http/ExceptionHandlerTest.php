@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Application\Validation\ValidationException;
-use Lumina\DDD\Application\Validation\ValidationResult;
-use Lumina\DDD\Domain\Abstractions\DomainException;
-use Lumina\DDD\Domain\Repository\AggregateNotFoundException;
-use Lumina\DDD\Infrastructure\Http\ExceptionHandler;
+use Luminor\DDD\Application\Validation\ValidationException;
+use Luminor\DDD\Application\Validation\ValidationResult;
+use Luminor\DDD\Domain\Abstractions\DomainException;
+use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
+use Luminor\DDD\Infrastructure\Http\ExceptionHandler;
 
 final class ExceptionHandlerTest extends TestCase
 {

@@ -1,5 +1,5 @@
 {
-  "name": "lumina/ddd-framework",
+  "name": "luminor/ddd-framework",
   "description": "A commercial DDD boilerplate framework for building REST APIs and domain-driven applications",
   "type": "library",
   "license": "proprietary",
@@ -9,16 +9,16 @@
     "cqrs",
     "framework",
     "rest-api",
-    "lumina",
+    "luminor",
     "php"
   ],
   "authors": [
     {
-      "name": "Lumina DDD Framework Team"
+      "name": "Luminor DDD Framework Team"
     }
   ],
   "bin": [
-    "bin/lumina"
+    "bin/luminor"
   ],
   "require": {
     "php": "^8.2",
@@ -35,7 +35,7 @@
       "src/Support/helpers.php"
     ],
     "psr-4": {
-      "Lumina\\DDD\\": "src/"
+      "Luminor\\DDD\\": "src/"
     }
   },
   "suggest": {
@@ -47,7 +47,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Lumina\\DDD\\Tests\\": "tests/"
+      "Luminor\\DDD\\Tests\\": "tests/"
     }
   },
   "scripts": {

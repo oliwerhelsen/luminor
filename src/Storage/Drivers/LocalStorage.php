@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Storage\Drivers;
+namespace Luminor\DDD\Storage\Drivers;
 
-use Lumina\DDD\Storage\StorageInterface;
+use Luminor\DDD\Storage\StorageInterface;
 
 /**
  * Local Storage Driver
@@ -29,7 +29,7 @@ final class LocalStorage implements StorageInterface
     /**
      * @inheritDoc
      */
-    public function put(string $path, string|$contents): bool
+    public function put(string $path, string|resource $contents): bool
     {
         $fullPath = $this->getFullPath($path);
         $directory = dirname($fullPath);

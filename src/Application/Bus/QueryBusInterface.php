@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Application\Bus;
+namespace Luminor\DDD\Application\Bus;
 
-use Lumina\DDD\Application\CQRS\Query;
+use Luminor\DDD\Application\CQRS\Query;
 
 /**
  * Interface for the query bus.

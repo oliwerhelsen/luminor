@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Security\Csrf;
+namespace Luminor\DDD\Security\Csrf;
 
 /**
  * CSRF Token Generator
@@ -36,7 +36,7 @@ final class CsrfToken
     /**
      * Get the token from the session.
      */
-    public static function getFromSession(\Lumina\DDD\Session\SessionInterface $session): ?string
+    public static function getFromSession(\Luminor\DDD\Session\SessionInterface $session): ?string
     {
         return $session->get('_csrf_token');
     }
@@ -44,7 +44,7 @@ final class CsrfToken
     /**
      * Store the token in the session.
      */
-    public static function storeInSession(\Lumina\DDD\Session\SessionInterface $session, string $token): void
+    public static function storeInSession(\Luminor\DDD\Session\SessionInterface $session, string $token): void
     {
         $session->put('_csrf_token', $token);
     }
@@ -52,7 +52,7 @@ final class CsrfToken
     /**
      * Regenerate the CSRF token in session.
      */
-    public static function regenerate(\Lumina\DDD\Session\SessionInterface $session): string
+    public static function regenerate(\Luminor\DDD\Session\SessionInterface $session): string
     {
         $token = self::generate();
         self::storeInSession($session, $token);

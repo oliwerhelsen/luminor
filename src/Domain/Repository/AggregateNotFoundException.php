@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Domain\Repository;
+namespace Luminor\DDD\Domain\Repository;
 
-use Lumina\DDD\Domain\Abstractions\DomainException;
+use Luminor\DDD\Domain\Abstractions\DomainException;
 
 /**
  * Exception thrown when an aggregate is not found in the repository.

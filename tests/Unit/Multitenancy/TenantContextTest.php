@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Tests\Unit\Multitenancy;
+namespace Luminor\DDD\Tests\Unit\Multitenancy;
 
 use PHPUnit\Framework\TestCase;
-use Lumina\DDD\Multitenancy\TenantContext;
-use Lumina\DDD\Multitenancy\TenantInterface;
-use Lumina\DDD\Multitenancy\TenantNotResolvedException;
+use Luminor\DDD\Multitenancy\TenantContext;
+use Luminor\DDD\Multitenancy\TenantInterface;
+use Luminor\DDD\Multitenancy\TenantNotResolvedException;
 
 final class TenantContextTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Mail;
+namespace Luminor\DDD\Mail;
 
 /**
  * Interface for mail transport implementations.

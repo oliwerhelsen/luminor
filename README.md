@@ -1,6 +1,6 @@
-# Lumina DDD Framework
+# Luminor DDD Framework
 
-A commercial Domain-Driven Design (DDD) boilerplate framework built on top of [Lumina PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications.
+A commercial Domain-Driven Design (DDD) boilerplate framework built on top of [Luminor PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications.
 
 ## Features
 
@@ -9,7 +9,7 @@ A commercial Domain-Driven Design (DDD) boilerplate framework built on top of [L
 - **Modular Architecture** - Organize your application into self-contained modules
 - **Multi-tenancy Support** - Built-in tenant resolution strategies (subdomain, header, path)
 - **Repository Pattern** - Clean data access abstractions with filtering, sorting, and pagination
-- **HTTP Layer Integration** - Seamless integration with Lumina PHP HTTP library
+- **HTTP Layer Integration** - Seamless integration with Luminor PHP HTTP library
 - **Authentication & Authorization** - Role-based access control with policy support
 - **CLI Tools** - Code generators for rapid development
 - **Testing Utilities** - In-memory implementations and test helpers
@@ -22,7 +22,7 @@ A commercial Domain-Driven Design (DDD) boilerplate framework built on top of [L
 ## Installation
 
 ```bash
-composer require lumina/ddd-framework
+composer require luminor/ddd-framework
 ```
 
 ## Quick Start
@@ -32,7 +32,7 @@ composer require lumina/ddd-framework
 
 declare(strict_types=1);
 
-use Lumina\DDD\Kernel;
+use Luminor\DDD\Kernel;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

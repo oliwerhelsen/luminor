@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Domain\Abstractions;
+namespace Luminor\DDD\Domain\Abstractions;
 
 use InvalidArgumentException;
 use ReflectionClass;

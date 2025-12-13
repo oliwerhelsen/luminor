@@ -5,7 +5,7 @@ declare(strict_types=1);
 /**
  * Framework Configuration
  *
- * This file contains the default configuration for the Lumina DDD Framework.
+ * This file contains the default configuration for the Luminor DDD Framework.
  * Copy this file to your application's config directory and customize as needed.
  */
 
@@ -20,7 +20,7 @@ return [
     | any other location as required by the application or its packages.
     |
     */
-    'name' => 'Lumina DDD Application',
+    'name' => 'Luminor DDD Application',
 
     /*
     |--------------------------------------------------------------------------
@@ -80,8 +80,8 @@ return [
     */
     'providers' => [
         // Framework Service Providers
-        // Lumina\DDD\Providers\EventServiceProvider::class,
-        // Lumina\DDD\Providers\BusServiceProvider::class,
+        // Luminor\DDD\Providers\EventServiceProvider::class,
+        // Luminor\DDD\Providers\BusServiceProvider::class,
 
         // Application Service Providers
     ],

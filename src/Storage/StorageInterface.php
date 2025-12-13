@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Storage;
+namespace Luminor\DDD\Storage;
 
 /**
  * Storage Interface

@@ -17,7 +17,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Lumina\DDD\Application\CQRS\Command;
+use Luminor\DDD\Application\CQRS\Command;
 
 final class PlaceOrderCommand implements Command
 {
@@ -46,7 +46,7 @@ use App\Application\Commands\PlaceOrderCommand;
 use App\Domain\Entities\Order;
 use App\Domain\Repository\OrderRepositoryInterface;
 use App\Domain\Repository\ProductRepositoryInterface;
-use Lumina\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\DDD\Application\Bus\CommandHandlerInterface;
 
 final class PlaceOrderCommandHandler implements CommandHandlerInterface
 {
@@ -100,7 +100,7 @@ declare(strict_types=1);
 
 namespace App\Application\Queries;
 
-use Lumina\DDD\Application\CQRS\Query;
+use Luminor\DDD\Application\CQRS\Query;
 
 final class GetOrderDetailsQuery implements Query
 {
@@ -125,7 +125,7 @@ namespace App\Application\Handlers;
 use App\Application\DTOs\OrderDetailsDto;
 use App\Application\Queries\GetOrderDetailsQuery;
 use App\Domain\Repository\OrderRepositoryInterface;
-use Lumina\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\DDD\Application\Bus\QueryHandlerInterface;
 
 final class GetOrderDetailsQueryHandler implements QueryHandlerInterface
 {
@@ -154,7 +154,7 @@ The command bus dispatches commands to their handlers.
 ```php
 <?php
 
-use Lumina\DDD\Application\Bus\CommandBusInterface;
+use Luminor\DDD\Application\Bus\CommandBusInterface;
 
 // In your controller or service
 public function placeOrder(Request $request): Response
@@ -177,7 +177,7 @@ The query bus dispatches queries to their handlers.
 ```php
 <?php
 
-use Lumina\DDD\Application\Bus\QueryBusInterface;
+use Luminor\DDD\Application\Bus\QueryBusInterface;
 
 public function getOrder(string $orderId): Response
 {
@@ -203,7 +203,7 @@ declare(strict_types=1);
 
 namespace App\Application\DTOs;
 
-use Lumina\DDD\Application\DTO\DataTransferObject;
+use Luminor\DDD\Application\DTO\DataTransferObject;
 use App\Domain\Entities\Order;
 
 final class OrderDetailsDto extends DataTransferObject
@@ -248,8 +248,8 @@ declare(strict_types=1);
 namespace App\Application\Validators;
 
 use App\Application\Commands\PlaceOrderCommand;
-use Lumina\DDD\Application\Validation\CommandValidator;
-use Lumina\DDD\Application\Validation\Rules;
+use Luminor\DDD\Application\Validation\CommandValidator;
+use Luminor\DDD\Application\Validation\Rules;
 
 final class PlaceOrderValidator extends CommandValidator
 {
@@ -276,7 +276,7 @@ declare(strict_types=1);
 
 namespace App\Application\Services;
 
-use Lumina\DDD\Application\Services\ApplicationService;
+use Luminor\DDD\Application\Services\ApplicationService;
 
 final class OrderFulfillmentService extends ApplicationService
 {

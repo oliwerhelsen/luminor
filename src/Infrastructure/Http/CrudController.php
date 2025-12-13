@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Infrastructure\Http;
+namespace Luminor\DDD\Infrastructure\Http;
 
-use Lumina\DDD\Application\DTO\DataTransferObject;
-use Lumina\DDD\Application\DTO\PagedResult;
-use Lumina\DDD\Application\Services\CrudApplicationService;
-use Lumina\DDD\Domain\Repository\AggregateNotFoundException;
-use Lumina\DDD\Domain\Repository\Criteria;
-use Lumina\DDD\Domain\Repository\Filter\EqualsFilter;
-use Lumina\DDD\Domain\Repository\Pagination;
-use Lumina\DDD\Domain\Repository\Sorting;
+use Luminor\DDD\Application\DTO\DataTransferObject;
+use Luminor\DDD\Application\DTO\PagedResult;
+use Luminor\DDD\Application\Services\CrudApplicationService;
+use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
+use Luminor\DDD\Domain\Repository\Criteria;
+use Luminor\DDD\Domain\Repository\Filter\EqualsFilter;
+use Luminor\DDD\Domain\Repository\Pagination;
+use Luminor\DDD\Domain\Repository\Sorting;
 use Utopia\Http\Request;
 use Utopia\Http\Response;
 

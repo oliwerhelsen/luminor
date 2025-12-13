@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Logging;
+namespace Luminor\DDD\Logging;
 
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**
- * Extended logger interface for Lumina applications.
+ * Extended logger interface for Luminor applications.
  *
  * Extends PSR-3 LoggerInterface with additional convenience methods
  * and channel support.

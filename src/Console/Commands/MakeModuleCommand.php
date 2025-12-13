@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Console\Commands;
+namespace Luminor\DDD\Console\Commands;
 
-use Lumina\DDD\Console\Input;
-use Lumina\DDD\Console\Output;
+use Luminor\DDD\Console\Input;
+use Luminor\DDD\Console\Output;
 
 /**
  * Command to generate a new Module structure.
@@ -218,8 +218,8 @@ declare(strict_types=1);
 
 namespace {$namespace};
 
-use Lumina\\DDD\\Container\\AbstractServiceProvider;
-use Lumina\\DDD\\Container\\ContainerInterface;
+use Luminor\\DDD\\Container\\AbstractServiceProvider;
+use Luminor\\DDD\\Container\\ContainerInterface;
 
 /**
  * Service provider for the {$moduleName} module.

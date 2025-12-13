@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Lumina\DDD\Auth\Attributes;
+namespace Luminor\DDD\Auth\Attributes;
 
 use Attribute;
 
