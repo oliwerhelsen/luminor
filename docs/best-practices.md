@@ -48,9 +48,16 @@ final class Order extends AggregateRoot
 // Domain entity with infrastructure dependency
 final class Order extends AggregateRoot
 {
+    // Using constructor property promotion (PHP 7.4+)
     public function __construct(
         private LoggerInterface $logger // ❌ Infrastructure dependency
     ) {}
+
+    // This is equivalent to:
+    // private LoggerInterface $logger;
+    // public function __construct(LoggerInterface $logger) {
+    //     $this->logger = $logger;
+    // }
 }
 ```
 
