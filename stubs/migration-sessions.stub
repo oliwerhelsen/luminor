@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+use Lumina\DDD\Database\Migrations\Migration;
+use Lumina\DDD\Database\Schema\Blueprint;
+
+/**
+ * Migration: Create Sessions Table
+ *
+ * Creates the sessions table for database session storage.
+ */
+return new class extends Migration
+{
+    /**
+     * Run the migration.
+     */
+    public function up(): void
+    {
+        $this->schema->create('sessions', function (Blueprint $table) {
+            $table->string('id', 64)->unique();
+            $table->text('data');
+            $table->bigInteger('expires_at')->unsigned();
+            $table->index(['expires_at']);
+        });
+    }
+
+    /**
+     * Reverse the migration.
+     */
+    public function down(): void
+    {
+        $this->schema->dropIfExists('sessions');
+    }
+};

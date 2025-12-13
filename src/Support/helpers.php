@@ -568,3 +568,99 @@ if (!function_exists('dispatch_sync')) {
         $sync->push($job);
     }
 }
+
+if (!function_exists('validator')) {
+    /**
+     * Create a new validator instance.
+     *
+     * @param array<string, mixed> $data Data to validate
+     * @param array<string, array<string|\Lumina\DDD\Validation\Rule>> $rules Validation rules
+     * @param array<string, string> $messages Custom error messages
+     * @return \Lumina\DDD\Validation\Validator
+     */
+    function validator(array $data, array $rules, array $messages = []): \Lumina\DDD\Validation\Validator
+    {
+        return new \Lumina\DDD\Validation\Validator($data, $rules, $messages);
+    }
+}
+
+if (!function_exists('validate')) {
+    /**
+     * Validate data and return validated data or throw exception.
+     *
+     * @param array<string, mixed> $data Data to validate
+     * @param array<string, array<string|\Lumina\DDD\Validation\Rule>> $rules Validation rules
+     * @param array<string, string> $messages Custom error messages
+     * @return array<string, mixed> Validated data
+     * @throws \Lumina\DDD\Application\Validation\ValidationException
+     */
+    function validate(array $data, array $rules, array $messages = []): array
+    {
+        return validator($data, $rules, $messages)->validated();
+    }
+}
+
+if (!function_exists('hash_make')) {
+    /**
+     * Hash a value (typically a password).
+     *
+     * @param string $value Value to hash
+     * @param string|null $driver Hash driver to use (bcrypt, argon2id)
+     * @return string Hashed value
+     */
+    function hash_make(string $value, ?string $driver = null): string
+    {
+        $kernel = Kernel::getInstance();
+
+        if ($kernel === null) {
+            throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
+        }
+
+        /** @var \Lumina\DDD\Security\HashManager $hash */
+        $hash = $kernel->make(\Lumina\DDD\Security\HashManager::class);
+
+        if ($driver !== null) {
+            return $hash->driver($driver)->make($value);
+        }
+
+        return $hash->make($value);
+    }
+}
+
+if (!function_exists('hash_check')) {
+    /**
+     * Verify a value against a hash.
+     *
+     * @param string $value Plain value
+     * @param string $hashedValue Hashed value
+     * @return bool True if value matches hash
+     */
+    function hash_check(string $value, string $hashedValue): bool
+    {
+        $kernel = Kernel::getInstance();
+
+        if ($kernel === null) {
+            throw new RuntimeException('Kernel has not been initialized. Call Kernel::boot() first.');
+        }
+
+        /** @var \Lumina\DDD\Security\HashManager $hash */
+        $hash = $kernel->make(\Lumina\DDD\Security\HashManager::class);
+
+        return $hash->check($value, $hashedValue);
+    }
+}
+
+if (!function_exists('bcrypt')) {
+    /**
+     * Hash a value using Bcrypt.
+     *
+     * @param string $value Value to hash
+     * @param int $rounds Cost factor (4-31)
+     * @return string Hashed value
+     */
+    function bcrypt(string $value, int $rounds = 10): string
+    {
+        $hasher = new \Lumina\DDD\Security\BcryptHasher($rounds);
+        return $hasher->make($value);
+    }
+}
