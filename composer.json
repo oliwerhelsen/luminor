@@ -1,7 +1,6 @@
 {
   "name": "luminor/luminor",
   "description": "A modern, open-source DDD framework for building REST APIs and domain-driven applications",
-  "version": "1.0.0",
   "type": "library",
   "license": "MIT",
   "keywords": [
