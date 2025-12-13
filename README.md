@@ -1,6 +1,10 @@
 # Luminor DDD Framework
 
-A commercial Domain-Driven Design (DDD) boilerplate framework built on top of [Luminor PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![PHP Version](https://img.shields.io/badge/php-%3E%3D8.2-8892BF.svg)](https://php.net/)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
+
+A modern, open-source Domain-Driven Design (DDD) framework built on top of [Luminor PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications.
 
 ## Features
 
@@ -95,6 +99,47 @@ composer analyse
 composer check
 ```
 
+## Contributing
+
+We welcome contributions from the community! Here's how you can help:
+
+1. **Fork the repository** and create your branch from `main`
+2. **Make your changes** and ensure tests pass
+3. **Write tests** for any new functionality
+4. **Update documentation** as needed
+5. **Submit a pull request**
+
+### Development Setup
+
+```bash
+# Clone your fork
+git clone https://github.com/YOUR_USERNAME/luminor.git
+cd luminor
+
+# Install dependencies
+composer install
+
+# Run tests
+composer test
+
+# Run static analysis
+composer analyse
+```
+
+### Code Style
+
+Please ensure your code follows PSR-12 coding standards and passes static analysis before submitting.
+
+## Community
+
+- **Issues**: Found a bug or have a feature request? [Open an issue](https://github.com/luminor/ddd-framework/issues)
+- **Discussions**: Have questions or want to discuss ideas? [Start a discussion](https://github.com/luminor/ddd-framework/discussions)
+- **Security**: For security vulnerabilities, please see our [Security Policy](SECURITY.md)
+
+## Roadmap
+
+We're constantly improving Luminor. Check out our [project board](https://github.com/luminor/ddd-framework/projects) to see what's coming next.
+
 ## License
 
-This is proprietary software. See LICENSE for details.
+This project is open-sourced software licensed under the [MIT License](LICENSE).
