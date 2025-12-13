@@ -33,7 +33,7 @@ final class ValidationResult
      *
      * @param array<string, array<int, string>> $errors
      */
-    public static function invalid(array $errors): self
+    public static function invalid(array $errors = []): self
     {
         return new self(false, $errors);
     }

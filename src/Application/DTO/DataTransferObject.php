@@ -16,6 +16,16 @@ use ReflectionProperty;
 abstract class DataTransferObject
 {
     /**
+     * Constructor can be overridden by child classes.
+     *
+     * @param array<string, mixed> $data
+     */
+    protected function __construct(array $data = [])
+    {
+        // Child classes can override this if needed
+    }
+
+    /**
      * Create a DTO from an array of data.
      *
      * @param array<string, mixed> $data

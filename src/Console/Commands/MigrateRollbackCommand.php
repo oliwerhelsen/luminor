@@ -10,6 +10,7 @@ use Luminor\DDD\Database\Migrations\Migrator;
 use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
 use Luminor\DDD\Database\Schema\Schema;
 use Luminor\DDD\Database\Connection;
+use Luminor\DDD\Container\Container;
 use PDO;
 
 /**
@@ -35,7 +36,7 @@ final class MigrateRollbackCommand extends AbstractCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    protected function handle(Input $input, Output $output): int
     {
         $output->info('Rolling back migrations...');
 
@@ -71,7 +72,7 @@ final class MigrateRollbackCommand extends AbstractCommand
         $repository = new DatabaseMigrationRepository($connection);
 
         $path = getcwd() . '/' . $input->getOption('path');
-        return new Migrator($repository, $schema, $this->container, [$path]);
+        return new Migrator($repository, $schema, Container::getInstance(), [$path]);
     }
 
     /**
