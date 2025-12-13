@@ -1,10 +1,10 @@
-# Luminor DDD Framework
+# Luminor PHP Framework
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.2-8892BF.svg)](https://php.net/)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
 
-A modern, open-source Domain-Driven Design (DDD) framework built on top of [Luminor PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications.
+A modern, open-source Domain-Driven Design (DDD) framework built on top of [Utopia PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications. Heavily inspired by [Laravel](https://laravel.com), bringing its elegant developer experience to the world of Domain-Driven Design.
 
 ## Features
 
@@ -26,7 +26,10 @@ A modern, open-source Domain-Driven Design (DDD) framework built on top of [Lumi
 ## Installation
 
 ```bash
-composer require luminor/ddd-framework
+composer require luminor/luminor
+
+# Global installation to use Luminor CLI tools (luminor new)
+composer global require luminor/luminor
 ```
 
 ## Quick Start

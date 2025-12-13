@@ -1,8 +1,8 @@
 {
   "name": "luminor/luminor",
-  "description": "A commercial DDD boilerplate framework for building REST APIs and domain-driven applications",
+  "description": "A modern, open-source DDD framework for building REST APIs and domain-driven applications",
   "type": "library",
-  "license": "proprietary",
+  "license": "MIT",
   "keywords": [
     "ddd",
     "domain-driven-design",
