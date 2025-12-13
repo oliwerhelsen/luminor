@@ -17,6 +17,22 @@ final class MakeMigrationCommand extends AbstractMakeCommand
     /**
      * @inheritDoc
      */
+    protected function getStubName(): string
+    {
+        return 'migration.stub';
+    }
+
+    /**
+     * @inheritDoc
+     */
+    protected function getDefaultDirectory(): string
+    {
+        return 'database/migrations';
+    }
+
+    /**
+     * @inheritDoc
+     */
     protected function configure(): void
     {
         $this->setName('make:migration')
@@ -37,7 +53,7 @@ final class MakeMigrationCommand extends AbstractMakeCommand
     /**
      * @inheritDoc
      */
-    protected function execute(Input $input, Output $output): int
+    protected function handle(Input $input, Output $output): int
     {
         $name = $input->getArgument('name');
         $table = $input->getOption('table') ?? $input->getOption('create');
@@ -77,7 +93,11 @@ final class MakeMigrationCommand extends AbstractMakeCommand
         $className = str_replace(' ', '', $className);
 
         // Generate migration content
-        $stub = $this->getStub('migration');
+        $stub = $this->loadStub();
+        if ($stub === null) {
+            $output->error('Migration stub file not found.');
+            return 1;
+        }
         $content = str_replace(
             ['{{className}}', '{{table}}', '{{description}}'],
             [$className, $table, ucfirst(str_replace('_', ' ', $name))],

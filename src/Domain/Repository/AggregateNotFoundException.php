@@ -28,4 +28,16 @@ final class AggregateNotFoundException extends DomainException
             ]
         );
     }
+
+    /**
+     * Create an exception for a missing aggregate.
+     * Alias for withId()
+     *
+     * @param string $aggregateType The type of aggregate that was not found
+     * @param mixed $id The identifier that was searched for
+     */
+    public static function forId(string $aggregateType, mixed $id): self
+    {
+        return self::withId($aggregateType, $id);
+    }
 }

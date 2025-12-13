@@ -57,9 +57,34 @@ final class InMemoryQueryBus implements QueryBusInterface
     /**
      * @inheritDoc
      */
-    public function registerHandler(string $queryClass, QueryHandlerInterface $handler): void
+    public function register(string $queryClass, QueryHandlerInterface $handler): void
     {
         $this->handlers[$queryClass] = $handler;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function registerLazy(string $queryClass, callable $resolver): void
+    {
+        $this->handlers[$queryClass] = $resolver;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasHandler(string $queryClass): bool
+    {
+        return isset($this->handlers[$queryClass]);
+    }
+
+    /**
+     * @inheritDoc
+     * @deprecated Use register() instead
+     */
+    public function registerHandler(string $queryClass, QueryHandlerInterface $handler): void
+    {
+        $this->register($queryClass, $handler);
     }
 
     /**

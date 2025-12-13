@@ -49,9 +49,34 @@ final class InMemoryCommandBus implements CommandBusInterface
     /**
      * @inheritDoc
      */
-    public function registerHandler(string $commandClass, CommandHandlerInterface $handler): void
+    public function register(string $commandClass, CommandHandlerInterface $handler): void
     {
         $this->handlers[$commandClass] = $handler;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function registerLazy(string $commandClass, callable $resolver): void
+    {
+        $this->handlers[$commandClass] = $resolver;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasHandler(string $commandClass): bool
+    {
+        return isset($this->handlers[$commandClass]);
+    }
+
+    /**
+     * @inheritDoc
+     * @deprecated Use register() instead
+     */
+    public function registerHandler(string $commandClass, CommandHandlerInterface $handler): void
+    {
+        $this->register($commandClass, $handler);
     }
 
     /**

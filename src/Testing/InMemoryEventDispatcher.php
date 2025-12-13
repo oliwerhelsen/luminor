@@ -58,9 +58,50 @@ final class InMemoryEventDispatcher implements EventDispatcherInterface
     /**
      * @inheritDoc
      */
+    public function dispatchAll(array $events): void
+    {
+        foreach ($events as $event) {
+            $this->dispatch($event);
+        }
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function subscribe(string $eventClass, EventHandlerInterface $handler): void
     {
         $this->handlers[$eventClass][] = $handler;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function subscribeToAll(EventHandlerInterface $handler): void
+    {
+        $this->handlers['*'][] = $handler;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function unsubscribe(string $eventClass, EventHandlerInterface $handler): void
+    {
+        if (!isset($this->handlers[$eventClass])) {
+            return;
+        }
+
+        $this->handlers[$eventClass] = array_filter(
+            $this->handlers[$eventClass],
+            fn($h) => $h !== $handler
+        );
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function hasHandlers(string $eventClass): bool
+    {
+        return isset($this->handlers[$eventClass]) && count($this->handlers[$eventClass]) > 0;
     }
 
     /**
