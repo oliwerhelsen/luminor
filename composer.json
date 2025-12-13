@@ -1,5 +1,5 @@
 {
-  "name": "luminor/ddd-framework",
+  "name": "luminor/luminor",
   "description": "A commercial DDD boilerplate framework for building REST APIs and domain-driven applications",
   "type": "library",
   "license": "proprietary",
