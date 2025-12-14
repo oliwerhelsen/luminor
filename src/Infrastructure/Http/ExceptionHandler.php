@@ -11,7 +11,7 @@ use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
 use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Response;
 
 /**
  * Global exception handler for API endpoints.

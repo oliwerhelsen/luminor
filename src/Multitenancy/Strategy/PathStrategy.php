@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Luminor\DDD\Multitenancy\Strategy;
 
 use Luminor\DDD\Multitenancy\TenantResolverInterface;
-use Utopia\Http\Request;
+use Luminor\DDD\Http\Request;
 
 /**
  * Resolves tenant from the URL path.

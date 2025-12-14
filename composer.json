@@ -34,7 +34,7 @@
     "php": "^8.2",
     "psr/container": "^2.0",
     "psr/log": "^3.0",
-    "utopia-php/http": "^0.34"
+    "symfony/http-foundation": "^7.0|^6.4"
   },
   "require-dev": {
     "phpunit/phpunit": "^10.5",

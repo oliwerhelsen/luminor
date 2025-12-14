@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Infrastructure\Http;
 
+use Luminor\DDD\Http\HttpKernel;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
+use Luminor\DDD\Http\Routing\Route;
+use Luminor\DDD\Http\Routing\Router;
 use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
-use Utopia\Http\Http;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
-use Utopia\Http\Route;
 
 /**
  * Route registration helper for DDD controllers.
@@ -21,7 +22,7 @@ final class RouteRegistrar
     /**
      * Registered middleware.
      *
-     * @var array<int, MiddlewareInterface>
+     * @var array<int, class-string<MiddlewareInterface>>
      */
     private array $middleware = [];
 
@@ -34,16 +35,32 @@ final class RouteRegistrar
      * Create a new registrar instance.
      */
     public function __construct(
-        private readonly Http $http
+        private readonly Router $router
     ) {
     }
 
     /**
-     * Create a new registrar for an Http instance.
+     * Create a new registrar for the default router.
      */
-    public static function for(Http $http): self
+    public static function create(): self
     {
-        return new self($http);
+        return new self(Router::getInstance());
+    }
+
+    /**
+     * Create a new registrar for a specific router.
+     */
+    public static function for(Router $router): self
+    {
+        return new self($router);
+    }
+
+    /**
+     * Create a registrar from the HTTP kernel.
+     */
+    public static function fromKernel(HttpKernel $kernel): self
+    {
+        return new self($kernel->getRouter());
     }
 
     /**
@@ -59,9 +76,9 @@ final class RouteRegistrar
     /**
      * Add middleware to apply to routes.
      *
-     * @param MiddlewareInterface|array<int, MiddlewareInterface> $middleware
+     * @param class-string<MiddlewareInterface>|array<int, class-string<MiddlewareInterface>> $middleware
      */
-    public function middleware(MiddlewareInterface|array $middleware): self
+    public function middleware(string|array $middleware): self
     {
         $instance = clone $this;
         $middlewares = is_array($middleware) ? $middleware : [$middleware];
@@ -183,7 +200,7 @@ final class RouteRegistrar
     }
 
     /**
-     * Register a route with the HTTP instance.
+     * Register a route with the router.
      *
      * @param callable|array{0: class-string, 1: string} $handler
      */
@@ -192,54 +209,14 @@ final class RouteRegistrar
         $fullPath = $this->prefix . '/' . ltrim($path, '/');
         $fullPath = '/' . trim($fullPath, '/');
 
-        // Create the wrapped handler with middleware
-        $wrappedHandler = $this->wrapWithMiddleware($handler);
+        $route = $this->router->addRoute($method, $fullPath, $handler);
 
-        // Register with Utopia HTTP
-        $route = match ($method) {
-            'GET' => $this->http->get($fullPath),
-            'POST' => $this->http->post($fullPath),
-            'PUT' => $this->http->put($fullPath),
-            'PATCH' => $this->http->patch($fullPath),
-            'DELETE' => $this->http->delete($fullPath),
-            default => throw new \InvalidArgumentException("Unsupported HTTP method: {$method}"),
-        };
-
-        // Set the action
-        $route->action($wrappedHandler);
+        // Apply middleware to the route
+        if (!empty($this->middleware)) {
+            $route->middleware($this->middleware);
+        }
 
         return $route;
-    }
-
-    /**
-     * Wrap a handler with middleware.
-     *
-     * @param callable|array{0: class-string, 1: string} $handler
-     * @return callable
-     */
-    private function wrapWithMiddleware(callable|array $handler): callable
-    {
-        $middleware = $this->middleware;
-
-        return function (Request $request, Response $response) use ($handler, $middleware): void {
-            // Build middleware pipeline
-            $pipeline = function (Request $request, Response $response) use ($handler): void {
-                if (is_array($handler)) {
-                    [$class, $method] = $handler;
-                    $instance = new $class();
-                    $instance->$method($request, $response);
-                } else {
-                    $handler($request, $response);
-                }
-            };
-
-            // Apply middleware in reverse order
-            foreach (array_reverse($middleware) as $m) {
-                $pipeline = fn(Request $req, Response $res) => $m->handle($req, $res, $pipeline);
-            }
-
-            $pipeline($request, $response);
-        };
     }
 
     /**
@@ -251,5 +228,13 @@ final class RouteRegistrar
     {
         $registrar = $this->prefix("/api{$prefix}");
         $callback($registrar);
+    }
+
+    /**
+     * Get the underlying router.
+     */
+    public function getRouter(): Router
+    {
+        return $this->router;
     }
 }

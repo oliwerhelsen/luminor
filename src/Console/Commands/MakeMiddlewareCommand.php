@@ -87,32 +87,30 @@ declare(strict_types=1);
 
 namespace {$namespace};
 
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
+use Luminor\DDD\Http\Middleware\MiddlewareInterface;
 
 /**
  * HTTP middleware.
  */
-final class {$className}
+final class {$className} implements MiddlewareInterface
 {
     /**
      * Handle the request.
      *
-     * @param Request \$request
-     * @param Response \$response
-     * @param callable \$next
-     * @return Response
+     * @param Request \$request The incoming request
+     * @param Response \$response The response to populate
+     * @param callable(Request, Response): void \$next The next handler
      */
-    public function handle(Request \$request, Response \$response, callable \$next): Response
+    public function handle(Request \$request, Response \$response, callable \$next): void
     {
         // Before middleware logic
-        
+
         // Call the next middleware/handler
-        \$response = \$next(\$request, \$response);
-        
+        \$next(\$request, \$response);
+
         // After middleware logic
-        
-        return \$response;
     }
 }
 
