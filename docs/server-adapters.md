@@ -4,20 +4,16 @@ Luminor supports multiple HTTP server backends, allowing you to choose the best 
 
 ## Available Servers
 
-| Server | Type | Performance | Requirements |
-|--------|------|-------------|--------------|
-| **PHP Built-in** | `fpm` | Standard | None (default) |
-| **Swoole** | `swoole` | High | ext-swoole |
-| **FrankenPHP** | `frankenphp` | High | FrankenPHP binary |
+| Server           | Type         | Performance | Requirements      |
+| ---------------- | ------------ | ----------- | ----------------- |
+| **PHP Built-in** | `fpm`        | Standard    | None (default)    |
+| **FrankenPHP**   | `frankenphp` | High        | FrankenPHP binary |
 
 ## Quick Start
 
 ```bash
 # Default (PHP built-in server)
 luminor serve
-
-# With Swoole
-luminor serve --server=swoole
 
 # With FrankenPHP
 luminor serve --server=frankenphp
@@ -37,45 +33,6 @@ luminor serve --host=0.0.0.0 --port=8080
 ```
 
 **Best for:** Local development, quick prototyping
-
-## Swoole
-
-[Swoole](https://www.swoole.com/) is a high-performance async server with coroutine support. It keeps your application in memory between requests, providing significant performance improvements.
-
-### Installation
-
-```bash
-# Using PECL
-pecl install swoole
-
-# On Ubuntu/Debian
-sudo apt-get install php-swoole
-
-# On macOS with Homebrew
-brew install swoole
-```
-
-### Usage
-
-```bash
-luminor serve --server=swoole
-luminor serve --server=swoole --workers=8
-```
-
-### Options
-
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--workers` | Number of worker processes | CPU cores * 2 |
-
-**Best for:** High-traffic APIs, real-time applications, microservices
-
-### Performance Considerations
-
-- ~4-5x faster than traditional PHP-FPM
-- Lower memory usage per request
-- Supports WebSockets and async I/O
-- Requires stateless application code
 
 ## FrankenPHP
 
@@ -106,10 +63,10 @@ luminor serve --server=frankenphp --worker-mode --workers=8
 
 ### Options
 
-| Option | Description | Default |
-|--------|-------------|---------|
-| `--workers` | Number of worker processes | 4 |
-| `--worker-mode` | Enable persistent worker mode | false |
+| Option          | Description                   | Default |
+| --------------- | ----------------------------- | ------- |
+| `--workers`     | Number of worker processes    | 4       |
+| `--worker-mode` | Enable persistent worker mode | false   |
 
 **Best for:** Production deployments, containerized environments, Caddy users
 
@@ -132,25 +89,21 @@ luminor serve
 
 ### Production
 
-For production, we recommend either Swoole or FrankenPHP:
+For production, we recommend FrankenPHP:
 
 ```bash
-# High-performance async
-luminor serve --server=swoole --workers=16
-
 # Modern with automatic HTTPS
 luminor serve --server=frankenphp --worker-mode --workers=8
 ```
 
 ### Performance Comparison
 
-| Server | Requests/sec | Latency | Memory |
-|--------|--------------|---------|--------|
-| PHP-FPM | ~1,000 | ~10ms | High |
-| Swoole | ~5,000 | ~2ms | Low |
-| FrankenPHP (worker) | ~10,000 | ~1ms | Low |
+| Server              | Requests/sec | Latency | Memory |
+| ------------------- | ------------ | ------- | ------ |
+| PHP-FPM             | ~1,000       | ~10ms   | High   |
+| FrankenPHP (worker) | ~10,000      | ~1ms    | Low    |
 
-*Benchmarks are approximate and vary based on application complexity.*
+_Benchmarks are approximate and vary based on application complexity._
 
 ## Programmatic Usage
 
@@ -161,10 +114,10 @@ use Luminor\DDD\Server\ServerFactory;
 use Luminor\DDD\Server\ServerType;
 
 // Create a specific server
-$server = ServerFactory::create(ServerType::SWOOLE);
+$server = ServerFactory::create(ServerType::FRANKENPHP);
 
 // Or from a string
-$server = ServerFactory::createFromString('swoole');
+$server = ServerFactory::createFromString('frankenphp');
 
 // Get the best available server
 $server = ServerFactory::getBestAvailable(preferHighPerformance: true);
@@ -185,7 +138,7 @@ foreach ($servers as $server) {
 
 ## Stateless Application Requirements
 
-When using Swoole or FrankenPHP worker mode, your application must be stateless. This means:
+When using FrankenPHP worker mode, your application must be stateless. This means:
 
 1. **No global state** - Avoid storing request-specific data in global variables
 2. **No static properties** - Static properties persist between requests
@@ -223,19 +176,6 @@ class UserService
 
 ## Docker Examples
 
-### Swoole
-
-```dockerfile
-FROM php:8.2-cli
-
-RUN pecl install swoole && docker-php-ext-enable swoole
-
-COPY . /app
-WORKDIR /app
-
-CMD ["php", "bin/luminor", "serve", "--server=swoole", "--host=0.0.0.0"]
-```
-
 ### FrankenPHP
 
 ```dockerfile
@@ -249,17 +189,6 @@ CMD ["frankenphp", "run", "--config", "/app/Caddyfile"]
 
 ## Troubleshooting
 
-### Swoole not found
-
-```
-Error: Swoole extension is not installed
-```
-
-Install the Swoole extension:
-```bash
-pecl install swoole
-```
-
 ### FrankenPHP not found
 
 ```
@@ -267,6 +196,7 @@ Error: FrankenPHP is not installed
 ```
 
 Install FrankenPHP:
+
 ```bash
 curl https://frankenphp.dev/install.sh | sh
 ```
@@ -278,6 +208,7 @@ Error: Port 8000 is already in use
 ```
 
 Use a different port:
+
 ```bash
 luminor serve --port=8080
 ```
@@ -285,6 +216,7 @@ luminor serve --port=8080
 ### Memory leaks in worker mode
 
 If you experience memory growth, ensure your application is stateless. Check for:
+
 - Static property accumulation
 - Unclosed database connections
 - Growing caches or buffers

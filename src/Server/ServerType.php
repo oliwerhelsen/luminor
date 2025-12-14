@@ -10,7 +10,6 @@ namespace Luminor\Server;
 enum ServerType: string
 {
     case FPM = 'fpm';
-    case SWOOLE = 'swoole';
     case FRANKENPHP = 'frankenphp';
 
     /**
@@ -20,7 +19,6 @@ enum ServerType: string
     {
         return match ($this) {
             self::FPM => 'PHP Built-in Server (FPM-compatible)',
-            self::SWOOLE => 'Swoole',
             self::FRANKENPHP => 'FrankenPHP',
         };
     }
@@ -32,7 +30,6 @@ enum ServerType: string
     {
         return match ($this) {
             self::FPM => 'Standard PHP development server, no additional extensions required',
-            self::SWOOLE => 'High-performance async server with coroutines (requires ext-swoole)',
             self::FRANKENPHP => 'Modern PHP application server built on Caddy (requires FrankenPHP binary)',
         };
     }
@@ -44,7 +41,6 @@ enum ServerType: string
     {
         return match ($this) {
             self::FPM => false,
-            self::SWOOLE => true,
             self::FRANKENPHP => false, // Uses external binary
         };
     }
@@ -56,7 +52,6 @@ enum ServerType: string
     {
         return match ($this) {
             self::FPM => null,
-            self::SWOOLE => 'swoole',
             self::FRANKENPHP => null,
         };
     }
