@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Http\Routing;
+namespace Luminor\Http\Routing;
 
 /**
  * Represents a single HTTP route.

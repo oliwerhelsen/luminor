@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
+use Luminor\Infrastructure\Http\Response\ErrorResponse;
 
 final class ErrorResponseTest extends TestCase
 {

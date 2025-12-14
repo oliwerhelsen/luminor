@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Abstractions;
+namespace Luminor\Domain\Abstractions;
 
 /**
  * Base class for the Specification pattern.

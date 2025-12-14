@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Auth;
+namespace Luminor\Tests\Unit\Auth;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Auth\AbstractPolicy;
-use Luminor\DDD\Auth\AuthenticatableInterface;
-use Luminor\DDD\Auth\AuthorizationException;
-use Luminor\DDD\Auth\AuthorizationService;
-use Luminor\DDD\Auth\CurrentUser;
-use Luminor\DDD\Auth\HasPermissionsInterface;
-use Luminor\DDD\Auth\HasRolesInterface;
-use Luminor\DDD\Auth\PermissionInterface;
-use Luminor\DDD\Auth\RoleInterface;
+use Luminor\Auth\AbstractPolicy;
+use Luminor\Auth\AuthenticatableInterface;
+use Luminor\Auth\AuthorizationException;
+use Luminor\Auth\AuthorizationService;
+use Luminor\Auth\CurrentUser;
+use Luminor\Auth\HasPermissionsInterface;
+use Luminor\Auth\HasRolesInterface;
+use Luminor\Auth\PermissionInterface;
+use Luminor\Auth\RoleInterface;
 
 final class AuthorizationServiceTest extends TestCase
 {

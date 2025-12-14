@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Session\Drivers;
+namespace Luminor\Session\Drivers;
 
-use Luminor\DDD\Session\SessionDriver;
+use Luminor\Session\SessionDriver;
 
 /**
  * File Session Driver

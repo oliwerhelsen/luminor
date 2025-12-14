@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
+use Luminor\Console\Input;
 
 /**
  * Command to generate a new Entity class.

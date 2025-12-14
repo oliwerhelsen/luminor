@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 use ReflectionClass;
 use ReflectionProperty;
 

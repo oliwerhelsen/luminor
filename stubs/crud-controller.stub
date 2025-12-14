@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use Luminor\DDD\Infrastructure\Http\CrudController;
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\CrudController;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * {{ class }} CRUD controller.

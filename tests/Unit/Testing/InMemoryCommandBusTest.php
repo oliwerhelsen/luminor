@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Testing;
+namespace Luminor\Tests\Unit\Testing;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Application\CQRS\Command;
-use Luminor\DDD\Testing\InMemoryCommandBus;
+use Luminor\Application\CQRS\Command;
+use Luminor\Testing\InMemoryCommandBus;
 
 final class InMemoryCommandBusTest extends TestCase
 {

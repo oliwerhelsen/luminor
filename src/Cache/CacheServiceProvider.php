@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Cache;
+namespace Luminor\Cache;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\Container\AbstractServiceProvider;
 
 /**
  * Cache Service Provider

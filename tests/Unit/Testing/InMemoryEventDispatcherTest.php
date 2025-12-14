@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Testing;
+namespace Luminor\Tests\Unit\Testing;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Testing\InMemoryEventDispatcher;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Testing\InMemoryEventDispatcher;
 
 final class InMemoryEventDispatcherTest extends TestCase
 {

@@ -46,7 +46,7 @@
       "src/Support/helpers.php"
     ],
     "psr-4": {
-      "Luminor\\DDD\\": "src/"
+      "Luminor\\": "src/"
     }
   },
   "suggest": {
@@ -60,7 +60,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Luminor\\DDD\\Tests\\": "tests/"
+      "Luminor\\Tests\\": "tests/"
     }
   },
   "scripts": {

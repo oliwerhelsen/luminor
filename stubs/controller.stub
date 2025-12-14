@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * {{ class }} controller.

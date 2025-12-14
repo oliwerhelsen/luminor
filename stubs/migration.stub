@@ -2,8 +2,8 @@
 
 declare(strict_types=1);
 
-use Luminor\DDD\Database\Migrations\Migration;
-use Luminor\DDD\Database\Schema\Blueprint;
+use Luminor\Database\Migrations\Migration;
+use Luminor\Database\Schema\Blueprint;
 
 /**
  * Migration: {{className}}

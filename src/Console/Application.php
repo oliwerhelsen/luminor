@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console;
+namespace Luminor\Console;
 
-use Luminor\DDD\Console\Commands\CommandInterface;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Console\Commands\CommandInterface;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Console application for CLI commands.

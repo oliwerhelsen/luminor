@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Console;
+namespace Luminor\Tests\Unit\Console;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Console\Output;
+use Luminor\Console\Output;
 
 final class OutputTest extends TestCase
 {

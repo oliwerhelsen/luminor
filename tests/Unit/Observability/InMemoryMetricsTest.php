@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Observability;
+namespace Luminor\Tests\Unit\Observability;
 
-use Luminor\DDD\Observability\InMemoryMetrics;
+use Luminor\Observability\InMemoryMetrics;
 use PHPUnit\Framework\TestCase;
 
 final class InMemoryMetricsTest extends TestCase

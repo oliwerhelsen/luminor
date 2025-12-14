@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Queue\Drivers;
+namespace Luminor\Queue\Drivers;
 
 /**
  * Valkey-backed queue driver.

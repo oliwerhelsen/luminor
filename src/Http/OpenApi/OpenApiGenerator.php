@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Http\OpenApi;
+namespace Luminor\Http\OpenApi;
 
 /**
  * OpenAPI specification generator.

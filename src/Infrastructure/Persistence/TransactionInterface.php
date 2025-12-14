@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
 /**
  * Interface for database transaction management.

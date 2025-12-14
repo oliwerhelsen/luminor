@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Session;
+namespace Luminor\Session;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\Container\AbstractServiceProvider;
 
 /**
  * Session Service Provider
@@ -29,7 +29,7 @@ final class SessionServiceProvider extends AbstractServiceProvider
                 ),
                 'array' => SessionManager::array($sessionName),
                 'database' => SessionManager::database(
-                    $container->make(\Luminor\DDD\Database\ConnectionInterface::class),
+                    $container->make(\Luminor\Database\ConnectionInterface::class),
                     getenv('SESSION_TABLE') ?: 'sessions',
                     $sessionName
                 ),

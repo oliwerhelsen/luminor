@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Logging;
+namespace Luminor\Logging;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**

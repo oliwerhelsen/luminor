@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Config;
+namespace Luminor\Tests\Unit\Config;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Config\ConfigRepository;
+use Luminor\Config\ConfigRepository;
 
 final class ConfigRepositoryTest extends TestCase
 {

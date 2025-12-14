@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Testing;
+namespace Luminor\Testing;
 
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Domain\Events\EventDispatcherInterface;
-use Luminor\DDD\Domain\Events\EventHandlerInterface;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Events\EventDispatcherInterface;
+use Luminor\Domain\Events\EventHandlerInterface;
 
 /**
  * In-memory event dispatcher for testing.

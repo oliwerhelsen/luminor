@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Queue;
+namespace Luminor\Queue;
 
-use Luminor\DDD\Queue\Drivers\DatabaseQueue;
-use Luminor\DDD\Queue\Drivers\RedisQueue;
-use Luminor\DDD\Queue\Drivers\SyncQueue;
-use Luminor\DDD\Queue\Drivers\ValkeyQueue;
+use Luminor\Queue\Drivers\DatabaseQueue;
+use Luminor\Queue\Drivers\RedisQueue;
+use Luminor\Queue\Drivers\SyncQueue;
+use Luminor\Queue\Drivers\ValkeyQueue;
 use RuntimeException;
 
 /**

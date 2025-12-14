@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
 /**
  * Transaction wrapper for database operations.

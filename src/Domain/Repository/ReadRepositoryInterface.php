@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Repository;
+namespace Luminor\Domain\Repository;
 
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Abstractions\AggregateRoot;
 
 /**
  * Interface for read-only repository operations.

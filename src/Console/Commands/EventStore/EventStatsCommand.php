@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands\EventStore;
+namespace Luminor\Console\Commands\EventStore;
 
-use Luminor\DDD\Console\Command;
-use Luminor\DDD\Domain\Events\EventStoreInterface;
+use Luminor\Console\Command;
+use Luminor\Domain\Events\EventStoreInterface;
 
 /**
  * Display event store statistics.

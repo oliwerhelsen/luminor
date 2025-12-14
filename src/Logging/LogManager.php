@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Logging;
+namespace Luminor\Logging;
 
-use Luminor\DDD\Logging\Drivers\ArrayLogger;
-use Luminor\DDD\Logging\Drivers\FileLogger;
-use Luminor\DDD\Logging\Drivers\NullLogger;
-use Luminor\DDD\Logging\Drivers\StdoutLogger;
+use Luminor\Logging\Drivers\ArrayLogger;
+use Luminor\Logging\Drivers\FileLogger;
+use Luminor\Logging\Drivers\NullLogger;
+use Luminor\Logging\Drivers\StdoutLogger;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 use RuntimeException;
 use Stringable;

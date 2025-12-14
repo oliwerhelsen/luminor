@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Kernel;
+namespace Luminor\Tests\Unit\Kernel;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Config\ConfigRepository;
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\Container;
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Kernel;
+use Luminor\Config\ConfigRepository;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\Container;
+use Luminor\Container\ContainerInterface;
+use Luminor\Kernel;
 
 final class KernelTest extends TestCase
 {

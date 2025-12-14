@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Multitenancy;
+namespace Luminor\Multitenancy;
 
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
-use Luminor\DDD\Domain\Repository\Criteria;
-use Luminor\DDD\Domain\Repository\Filter\EqualsFilter;
-use Luminor\DDD\Domain\Repository\RepositoryInterface;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Repository\AggregateNotFoundException;
+use Luminor\Domain\Repository\Criteria;
+use Luminor\Domain\Repository\Filter\EqualsFilter;
+use Luminor\Domain\Repository\RepositoryInterface;
 
 /**
  * Repository decorator that automatically scopes all operations to the current tenant.

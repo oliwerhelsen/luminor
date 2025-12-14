@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Server;
+namespace Luminor\Server;
 
 /**
  * Enum representing available server types.

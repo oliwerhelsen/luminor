@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence\InMemory;
+namespace Luminor\Infrastructure\Persistence\InMemory;
 
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
-use Luminor\DDD\Domain\Repository\Criteria;
-use Luminor\DDD\Domain\Repository\Filter\AndFilter;
-use Luminor\DDD\Domain\Repository\Filter\ComparisonFilter;
-use Luminor\DDD\Domain\Repository\Filter\ContainsFilter;
-use Luminor\DDD\Domain\Repository\Filter\EqualsFilter;
-use Luminor\DDD\Domain\Repository\Filter\Filter;
-use Luminor\DDD\Domain\Repository\Filter\InFilter;
-use Luminor\DDD\Domain\Repository\Filter\IsNullFilter;
-use Luminor\DDD\Domain\Repository\Filter\NotEqualsFilter;
-use Luminor\DDD\Domain\Repository\Filter\OrFilter;
-use Luminor\DDD\Domain\Repository\RepositoryInterface;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Repository\AggregateNotFoundException;
+use Luminor\Domain\Repository\Criteria;
+use Luminor\Domain\Repository\Filter\AndFilter;
+use Luminor\Domain\Repository\Filter\ComparisonFilter;
+use Luminor\Domain\Repository\Filter\ContainsFilter;
+use Luminor\Domain\Repository\Filter\EqualsFilter;
+use Luminor\Domain\Repository\Filter\Filter;
+use Luminor\Domain\Repository\Filter\InFilter;
+use Luminor\Domain\Repository\Filter\IsNullFilter;
+use Luminor\Domain\Repository\Filter\NotEqualsFilter;
+use Luminor\Domain\Repository\Filter\OrFilter;
+use Luminor\Domain\Repository\RepositoryInterface;
 
 /**
  * In-memory repository implementation for testing.

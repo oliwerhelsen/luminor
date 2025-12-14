@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Bus;
+namespace Luminor\Infrastructure\Bus;
 
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerNotFoundException;
-use Luminor\DDD\Application\CQRS\Command;
-use Luminor\DDD\Application\Validation\CommandValidator;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerNotFoundException;
+use Luminor\Application\CQRS\Command;
+use Luminor\Application\Validation\CommandValidator;
 
 /**
  * Simple in-memory command bus implementation.

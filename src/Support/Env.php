@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Support;
+namespace Luminor\Support;
 
 /**
  * Environment variable helper for retrieving and type-casting environment values.

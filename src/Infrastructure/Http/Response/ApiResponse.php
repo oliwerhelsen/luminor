@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http\Response;
+namespace Luminor\Infrastructure\Http\Response;
 
-use Luminor\DDD\Application\DTO\DataTransferObject;
-use Luminor\DDD\Application\DTO\PagedResult;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\DTO\DataTransferObject;
+use Luminor\Application\DTO\PagedResult;
+use Luminor\Http\Response;
 
 /**
  * Standardized API response format.

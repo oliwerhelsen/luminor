@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Multitenancy;
+namespace Luminor\Multitenancy;
 
-use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\Middleware\MiddlewareInterface;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Middleware that resolves and sets the current tenant.

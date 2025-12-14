@@ -80,8 +80,8 @@ return [
     */
     'providers' => [
         // Framework Service Providers
-        // Luminor\DDD\Providers\EventServiceProvider::class,
-        // Luminor\DDD\Providers\BusServiceProvider::class,
+        // Luminor\Providers\EventServiceProvider::class,
+        // Luminor\Providers\BusServiceProvider::class,
 
         // Application Service Providers
     ],

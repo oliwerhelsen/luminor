@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Bus;
+namespace Luminor\Infrastructure\Bus;
 
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerNotFoundException;
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerNotFoundException;
+use Luminor\Application\CQRS\Query;
 
 /**
  * Simple in-memory query bus implementation.

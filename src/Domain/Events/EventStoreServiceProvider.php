@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Events;
+namespace Luminor\Domain\Events;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Database\ConnectionInterface;
-use Luminor\DDD\Infrastructure\Persistence\DatabaseEventStore;
-use Luminor\DDD\Infrastructure\Persistence\InMemoryEventStore;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
+use Luminor\Database\ConnectionInterface;
+use Luminor\Infrastructure\Persistence\DatabaseEventStore;
+use Luminor\Infrastructure\Persistence\InMemoryEventStore;
 
 /**
  * Service provider for the event store.

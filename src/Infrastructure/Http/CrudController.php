@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http;
+namespace Luminor\Infrastructure\Http;
 
-use Luminor\DDD\Application\DTO\DataTransferObject;
-use Luminor\DDD\Application\DTO\PagedResult;
-use Luminor\DDD\Application\Services\CrudApplicationService;
-use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
-use Luminor\DDD\Domain\Repository\Criteria;
-use Luminor\DDD\Domain\Repository\Filter\EqualsFilter;
-use Luminor\DDD\Domain\Repository\Pagination;
-use Luminor\DDD\Domain\Repository\Sorting;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\DTO\DataTransferObject;
+use Luminor\Application\DTO\PagedResult;
+use Luminor\Application\Services\CrudApplicationService;
+use Luminor\Domain\Repository\AggregateNotFoundException;
+use Luminor\Domain\Repository\Criteria;
+use Luminor\Domain\Repository\Filter\EqualsFilter;
+use Luminor\Domain\Repository\Pagination;
+use Luminor\Domain\Repository\Sorting;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Base controller for automatic CRUD endpoints.

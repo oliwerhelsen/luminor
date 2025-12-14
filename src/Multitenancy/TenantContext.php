@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Multitenancy;
+namespace Luminor\Multitenancy;
 
 /**
  * Holds the current tenant context for the application.

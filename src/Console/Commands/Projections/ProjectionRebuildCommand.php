@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands\Projections;
+namespace Luminor\Console\Commands\Projections;
 
-use Luminor\DDD\Console\Command;
-use Luminor\DDD\Domain\Events\ProjectionManager;
+use Luminor\Console\Command;
+use Luminor\Domain\Events\ProjectionManager;
 
 /**
  * Rebuild event projections.

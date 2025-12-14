@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Http;
+namespace Luminor\Http;
 
 use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 

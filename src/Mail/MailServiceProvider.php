@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Mail;
+namespace Luminor\Mail;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Queue\QueueManager;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
+use Luminor\Queue\QueueManager;
 
 /**
  * Service provider for mail services.

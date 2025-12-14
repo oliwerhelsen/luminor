@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Testing\Assertions;
+namespace Luminor\Testing\Assertions;
 
 use PHPUnit\Framework\Assert;
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Domain\Abstractions\Entity;
-use Luminor\DDD\Domain\Abstractions\ValueObject;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\ValueObject;
 
 /**
  * Domain-specific assertions for testing.

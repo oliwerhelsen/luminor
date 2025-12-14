@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Queue;
+namespace Luminor\Queue;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
 use Psr\Container\ContainerInterface as PsrContainerInterface;
 
 /**

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Observability;
+namespace Luminor\Observability;
 
 /**
  * In-memory metrics implementation.

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Multitenancy;
+namespace Luminor\Multitenancy;
 
-use Luminor\DDD\Http\Request;
+use Luminor\Http\Request;
 
 /**
  * Interface for tenant resolution strategies.

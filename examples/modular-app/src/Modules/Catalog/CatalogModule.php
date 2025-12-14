@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Catalog;
 
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Module\AbstractModule;
-use Luminor\DDD\Module\ModuleDefinition;
+use Luminor\Container\ContainerInterface;
+use Luminor\Module\AbstractModule;
+use Luminor\Module\ModuleDefinition;
 
 /**
  * Catalog Module - Product catalog management.

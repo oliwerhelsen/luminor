@@ -9,11 +9,11 @@ use Example\BasicApi\Application\Commands\DeleteProductCommand;
 use Example\BasicApi\Application\Commands\UpdateProductCommand;
 use Example\BasicApi\Application\Queries\GetProductQuery;
 use Example\BasicApi\Application\Queries\ListProductsQuery;
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Product API Controller demonstrating CQRS pattern usage.

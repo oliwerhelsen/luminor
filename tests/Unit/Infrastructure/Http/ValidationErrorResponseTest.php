@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Application\Validation\ValidationResult;
-use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\Application\Validation\ValidationResult;
+use Luminor\Infrastructure\Http\Response\ValidationErrorResponse;
 
 final class ValidationErrorResponseTest extends TestCase
 {

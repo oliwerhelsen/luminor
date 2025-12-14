@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Support;
+namespace Luminor\Tests\Unit\Support;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Support\Env;
+use Luminor\Support\Env;
 
 final class EnvTest extends TestCase
 {

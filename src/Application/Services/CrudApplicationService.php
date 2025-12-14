@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\Services;
+namespace Luminor\Application\Services;
 
-use Luminor\DDD\Application\DTO\DataTransferObject;
-use Luminor\DDD\Application\DTO\Mapper;
-use Luminor\DDD\Application\DTO\PagedResult;
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Repository\Criteria;
-use Luminor\DDD\Domain\Repository\Pagination;
-use Luminor\DDD\Domain\Repository\RepositoryInterface;
+use Luminor\Application\DTO\DataTransferObject;
+use Luminor\Application\DTO\Mapper;
+use Luminor\Application\DTO\PagedResult;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Repository\Criteria;
+use Luminor\Domain\Repository\Pagination;
+use Luminor\Domain\Repository\RepositoryInterface;
 
 /**
  * Base class for CRUD application services.

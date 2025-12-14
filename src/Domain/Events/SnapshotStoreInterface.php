@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Events;
+namespace Luminor\Domain\Events;
 
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
 
 /**
  * Interface for persisting aggregate snapshots.

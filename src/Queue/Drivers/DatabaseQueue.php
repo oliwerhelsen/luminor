@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Queue\Drivers;
+namespace Luminor\Queue\Drivers;
 
 use DateTimeImmutable;
-use Luminor\DDD\Queue\JobInterface;
-use Luminor\DDD\Queue\QueuedJob;
-use Luminor\DDD\Queue\QueueInterface;
+use Luminor\Queue\JobInterface;
+use Luminor\Queue\QueuedJob;
+use Luminor\Queue\QueueInterface;
 use PDO;
 use RuntimeException;
 

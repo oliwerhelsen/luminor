@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Config;
+namespace Luminor\Config;
 
 /**
  * Loads configuration files from a directory.

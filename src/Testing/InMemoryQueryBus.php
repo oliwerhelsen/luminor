@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Testing;
+namespace Luminor\Testing;
 
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\CQRS\Query;
 
 /**
  * In-memory query bus for testing.

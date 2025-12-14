@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\Infrastructure\Http\Middleware;
 
-use Luminor\DDD\Session\SessionInterface;
-use Luminor\DDD\Security\Csrf\CsrfToken;
-use Luminor\DDD\Security\Csrf\CsrfException;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Session\SessionInterface;
+use Luminor\Security\Csrf\CsrfToken;
+use Luminor\Security\Csrf\CsrfException;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * CSRF Protection Middleware

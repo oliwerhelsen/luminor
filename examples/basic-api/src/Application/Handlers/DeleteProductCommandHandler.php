@@ -6,7 +6,7 @@ namespace Example\BasicApi\Application\Handlers;
 
 use Example\BasicApi\Application\Commands\DeleteProductCommand;
 use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 /**
  * Handler for DeleteProductCommand.

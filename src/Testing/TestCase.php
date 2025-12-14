@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Testing;
+namespace Luminor\Testing;
 
 use PHPUnit\Framework\TestCase as PHPUnitTestCase;
-use Luminor\DDD\Container\Container;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\Container;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Base test case for framework testing.

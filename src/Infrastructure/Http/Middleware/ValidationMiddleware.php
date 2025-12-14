@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\Infrastructure\Http\Middleware;
 
-use Luminor\DDD\Application\Validation\Rules;
-use Luminor\DDD\Application\Validation\ValidationException;
-use Luminor\DDD\Application\Validation\ValidationResult;
-use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Validation\Rules;
+use Luminor\Application\Validation\ValidationException;
+use Luminor\Application\Validation\ValidationResult;
+use Luminor\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Middleware for validating incoming request data.

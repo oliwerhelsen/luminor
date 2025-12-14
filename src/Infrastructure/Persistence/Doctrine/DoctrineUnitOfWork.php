@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence\Doctrine;
+namespace Luminor\Infrastructure\Persistence\Doctrine;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Events\DomainEventPublisher;
-use Luminor\DDD\Infrastructure\Persistence\UnitOfWorkInterface;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Events\DomainEventPublisher;
+use Luminor\Infrastructure\Persistence\UnitOfWorkInterface;
 
 /**
  * Doctrine-based Unit of Work implementation.

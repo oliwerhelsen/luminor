@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Repository;
+namespace Luminor\Domain\Repository;
 
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
-use Luminor\DDD\Domain\Events\EventStoreInterface;
-use Luminor\DDD\Domain\Events\SnapshotStoreInterface;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Events\EventStoreInterface;
+use Luminor\Domain\Events\SnapshotStoreInterface;
 
 /**
  * Repository for event-sourced aggregates.

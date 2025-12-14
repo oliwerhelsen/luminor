@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Domain;
+namespace Luminor\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
-use Luminor\DDD\Domain\Abstractions\DomainException;
+use Luminor\Domain\Abstractions\DomainException;
 
 final class DomainExceptionTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Container;
+namespace Luminor\Container;
 
 use Closure;
 use ReflectionClass;

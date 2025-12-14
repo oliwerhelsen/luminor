@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace {{ namespace }};
 
 use {{ queryNamespace }}\{{ queryName }}Query;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
 
 /**
  * Handler for {{ queryName }}Query.

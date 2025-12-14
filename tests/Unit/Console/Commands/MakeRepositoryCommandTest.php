@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Console\Commands;
+namespace Luminor\Tests\Unit\Console\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Console\Commands\MakeRepositoryCommand;
+use Luminor\Console\Commands\MakeRepositoryCommand;
 
 final class MakeRepositoryCommandTest extends TestCase
 {

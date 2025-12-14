@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD;
+namespace Luminor;
 
-use Luminor\DDD\Config\ConfigLoader;
-use Luminor\DDD\Config\ConfigRepository;
-use Luminor\DDD\Container\Container;
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Container\ServiceProviderInterface;
-use Luminor\DDD\Module\ModuleInterface;
-use Luminor\DDD\Module\ModuleLoader;
-use Luminor\DDD\Support\Env;
+use Luminor\Config\ConfigLoader;
+use Luminor\Config\ConfigRepository;
+use Luminor\Container\Container;
+use Luminor\Container\ContainerInterface;
+use Luminor\Container\ServiceProviderInterface;
+use Luminor\Module\ModuleInterface;
+use Luminor\Module\ModuleLoader;
+use Luminor\Support\Env;
 
 /**
  * Application kernel for bootstrapping the DDD framework.

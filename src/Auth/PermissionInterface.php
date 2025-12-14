@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Auth;
+namespace Luminor\Auth;
 
 /**
  * Interface representing a permission in the authorization system.

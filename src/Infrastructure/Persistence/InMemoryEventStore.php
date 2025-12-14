@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
 use DateTimeImmutable;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Domain\Events\EventStoreInterface;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Events\EventStoreInterface;
 
 /**
  * In-memory event store implementation.

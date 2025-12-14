@@ -7,7 +7,7 @@ namespace Example\BasicApi\Application\Handlers;
 use Example\BasicApi\Application\Commands\UpdateProductCommand;
 use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
 use Example\BasicApi\Domain\ValueObjects\Money;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 /**
  * Handler for UpdateProductCommand.

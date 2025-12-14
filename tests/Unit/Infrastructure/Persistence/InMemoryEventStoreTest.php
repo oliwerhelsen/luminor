@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Infrastructure\Persistence;
+namespace Luminor\Tests\Unit\Infrastructure\Persistence;
 
 use DateTimeImmutable;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Infrastructure\Persistence\InMemoryEventStore;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Infrastructure\Persistence\InMemoryEventStore;
 use PHPUnit\Framework\TestCase;
 
 final class InMemoryEventStoreTest extends TestCase

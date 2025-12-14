@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\Middleware\CorsMiddleware;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class CorsMiddlewareTest extends TestCase
 {

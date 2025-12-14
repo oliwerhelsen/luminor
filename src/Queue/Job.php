@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Queue;
+namespace Luminor\Queue;
 
 /**
  * Abstract base class for queueable jobs.

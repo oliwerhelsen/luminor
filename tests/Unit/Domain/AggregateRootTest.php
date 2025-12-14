@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Domain;
+namespace Luminor\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Abstractions\DomainEvent;
 
 final class AggregateRootTest extends TestCase
 {

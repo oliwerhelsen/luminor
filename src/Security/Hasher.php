@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Security;
+namespace Luminor\Security;
 
 /**
  * Password Hasher Interface

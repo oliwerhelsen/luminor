@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\DTO;
+namespace Luminor\Application\DTO;
 
 /**
  * Represents a paginated result set.

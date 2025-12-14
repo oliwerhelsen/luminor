@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Orders;
 
-use Luminor\DDD\Module\AbstractModule;
-use Luminor\DDD\Module\ModuleDefinition;
+use Luminor\Module\AbstractModule;
+use Luminor\Module\ModuleDefinition;
 
 /**
  * Orders Module - Order management.

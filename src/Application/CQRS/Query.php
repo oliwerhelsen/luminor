@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\CQRS;
+namespace Luminor\Application\CQRS;
 
 /**
  * Marker interface for queries.

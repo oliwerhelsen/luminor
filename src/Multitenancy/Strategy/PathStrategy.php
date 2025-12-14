@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Multitenancy\Strategy;
+namespace Luminor\Multitenancy\Strategy;
 
-use Luminor\DDD\Multitenancy\TenantResolverInterface;
-use Luminor\DDD\Http\Request;
+use Luminor\Multitenancy\TenantResolverInterface;
+use Luminor\Http\Request;
 
 /**
  * Resolves tenant from the URL path.

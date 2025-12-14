@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Domain\Events;
+namespace Luminor\Tests\Unit\Domain\Events;
 
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
 use PHPUnit\Framework\TestCase;
 
 final class EventSourcedAggregateRootTest extends TestCase

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\Validation;
+namespace Luminor\Application\Validation;
 
 /**
  * Collection of common validation rules.

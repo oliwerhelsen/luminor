@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Logging\Drivers;
+namespace Luminor\Logging\Drivers;
 
-use Luminor\DDD\Logging\AbstractLogger;
-use Luminor\DDD\Logging\LogLevel;
+use Luminor\Logging\AbstractLogger;
+use Luminor\Logging\LogLevel;
 
 /**
  * Logger that writes to stdout/stderr.

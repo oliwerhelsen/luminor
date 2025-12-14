@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Validation;
+namespace Luminor\Validation;
 
-use Luminor\DDD\Application\Validation\ValidationResult;
-use Luminor\DDD\Application\Validation\ValidationException;
+use Luminor\Application\Validation\ValidationResult;
+use Luminor\Application\Validation\ValidationException;
 
 /**
  * Validator

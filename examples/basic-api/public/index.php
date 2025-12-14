@@ -22,11 +22,11 @@ use Example\BasicApi\Application\Queries\GetProductQuery;
 use Example\BasicApi\Application\Queries\ListProductsQuery;
 use Example\BasicApi\Infrastructure\Http\Controllers\ProductController;
 use Example\BasicApi\Infrastructure\Persistence\InMemoryProductRepository;
-use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
-use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
-use Luminor\DDD\Http\HttpKernel;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Bus\SimpleCommandBus;
+use Luminor\Infrastructure\Bus\SimpleQueryBus;
+use Luminor\Http\HttpKernel;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 // Create the HTTP kernel
 $http = HttpKernel::getInstance();

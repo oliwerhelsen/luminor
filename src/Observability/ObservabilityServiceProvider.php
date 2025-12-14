@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Observability;
+namespace Luminor\Observability;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Service provider for observability features.

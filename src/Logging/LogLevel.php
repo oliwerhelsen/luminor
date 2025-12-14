@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Logging;
+namespace Luminor\Logging;
 
 /**
  * Log level enumeration following PSR-3 log levels.

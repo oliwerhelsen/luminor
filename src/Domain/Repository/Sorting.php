@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Repository;
+namespace Luminor\Domain\Repository;
 
 /**
  * Value object representing sorting configuration.

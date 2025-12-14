@@ -2,19 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Multitenancy;
+namespace Luminor\Tests\Unit\Multitenancy;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
-use Luminor\DDD\Domain\Repository\Criteria;
-use Luminor\DDD\Domain\Repository\RepositoryInterface;
-use Luminor\DDD\Infrastructure\Persistence\InMemory\InMemoryRepository;
-use Luminor\DDD\Multitenancy\TenantAccessDeniedException;
-use Luminor\DDD\Multitenancy\TenantAware;
-use Luminor\DDD\Multitenancy\TenantContext;
-use Luminor\DDD\Multitenancy\TenantInterface;
-use Luminor\DDD\Multitenancy\TenantNotResolvedException;
-use Luminor\DDD\Multitenancy\TenantScopedRepository;
+use Luminor\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Repository\Criteria;
+use Luminor\Domain\Repository\RepositoryInterface;
+use Luminor\Infrastructure\Persistence\InMemory\InMemoryRepository;
+use Luminor\Multitenancy\TenantAccessDeniedException;
+use Luminor\Multitenancy\TenantAware;
+use Luminor\Multitenancy\TenantContext;
+use Luminor\Multitenancy\TenantInterface;
+use Luminor\Multitenancy\TenantNotResolvedException;
+use Luminor\Multitenancy\TenantScopedRepository;
 
 final class TenantScopedRepositoryTest extends TestCase
 {

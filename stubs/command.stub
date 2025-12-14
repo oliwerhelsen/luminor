@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace {{ namespace }};
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 /**
  * {{ class }} command.

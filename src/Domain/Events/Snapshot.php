@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Events;
+namespace Luminor\Domain\Events;
 
 use DateTimeImmutable;
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
 
 /**
  * Represents a snapshot of an aggregate at a specific version.

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
 use DateTimeImmutable;
-use Luminor\DDD\Database\ConnectionInterface;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
-use Luminor\DDD\Domain\Events\EventStoreInterface;
-use Luminor\DDD\Domain\Events\StoredEvent;
+use Luminor\Database\ConnectionInterface;
+use Luminor\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Events\EventStoreInterface;
+use Luminor\Domain\Events\StoredEvent;
 use PDO;
 
 /**

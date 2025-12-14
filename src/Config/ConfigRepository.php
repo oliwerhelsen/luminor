@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Config;
+namespace Luminor\Config;
 
 /**
  * Configuration repository for storing and retrieving configuration values.

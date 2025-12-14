@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Infrastructure\Http;
+namespace Luminor\Tests\Unit\Infrastructure\Http;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Application\Validation\ValidationException;
-use Luminor\DDD\Application\Validation\ValidationResult;
-use Luminor\DDD\Domain\Abstractions\DomainException;
-use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
-use Luminor\DDD\Infrastructure\Http\ExceptionHandler;
+use Luminor\Application\Validation\ValidationException;
+use Luminor\Application\Validation\ValidationResult;
+use Luminor\Domain\Abstractions\DomainException;
+use Luminor\Domain\Repository\AggregateNotFoundException;
+use Luminor\Infrastructure\Http\ExceptionHandler;
 
 final class ExceptionHandlerTest extends TestCase
 {
@@ -154,7 +154,7 @@ final class ExceptionHandlerTest extends TestCase
         });
 
         // Create a mock response to test handle() method
-        // Since we can't easily mock Luminor\DDD\Http\Response, we test toArray instead
+        // Since we can't easily mock Luminor\Http\Response, we test toArray instead
         // which is used internally
         $exception = new \Exception('Test error');
         $handler->toArray($exception);

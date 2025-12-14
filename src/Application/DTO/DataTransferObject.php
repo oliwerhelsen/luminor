@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\DTO;
+namespace Luminor\Application\DTO;
 
 use ReflectionClass;
 use ReflectionProperty;

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Database\Migrations;
+namespace Luminor\Database\Migrations;
 
 /**
  * Migration Repository Interface

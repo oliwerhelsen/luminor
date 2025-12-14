@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Auth;
+namespace Luminor\Tests\Unit\Auth;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Auth\AuthenticatableInterface;
-use Luminor\DDD\Auth\AuthenticationException;
-use Luminor\DDD\Auth\CurrentUser;
-use Luminor\DDD\Auth\HasPermissionsInterface;
-use Luminor\DDD\Auth\HasRolesInterface;
-use Luminor\DDD\Auth\PermissionInterface;
-use Luminor\DDD\Auth\RoleInterface;
+use Luminor\Auth\AuthenticatableInterface;
+use Luminor\Auth\AuthenticationException;
+use Luminor\Auth\CurrentUser;
+use Luminor\Auth\HasPermissionsInterface;
+use Luminor\Auth\HasRolesInterface;
+use Luminor\Auth\PermissionInterface;
+use Luminor\Auth\RoleInterface;
 
 final class CurrentUserTest extends TestCase
 {

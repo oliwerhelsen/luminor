@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Bus;
+namespace Luminor\Infrastructure\Bus;
 
 use Psr\Container\ContainerInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
 
 /**
  * Resolves handlers from a dependency injection container or factory.

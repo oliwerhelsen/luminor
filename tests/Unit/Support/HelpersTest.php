@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Support;
+namespace Luminor\Tests\Unit\Support;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Kernel;
-use Luminor\DDD\Config\ConfigRepository;
+use Luminor\Kernel;
+use Luminor\Config\ConfigRepository;
 
 final class HelpersTest extends TestCase
 {

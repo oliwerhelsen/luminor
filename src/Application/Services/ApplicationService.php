@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\Services;
+namespace Luminor\Application\Services;
 
-use Luminor\DDD\Domain\Events\DomainEventPublisher;
-use Luminor\DDD\Domain\Events\EventDispatcherInterface;
+use Luminor\Domain\Events\DomainEventPublisher;
+use Luminor\Domain\Events\EventDispatcherInterface;
 
 /**
  * Base class for application services.

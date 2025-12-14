@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Cache;
+namespace Luminor\Cache;
 
-use Luminor\DDD\Cache\Drivers\FileCache;
-use Luminor\DDD\Cache\Drivers\ArrayCache;
+use Luminor\Cache\Drivers\FileCache;
+use Luminor\Cache\Drivers\ArrayCache;
 
 /**
  * Cache Manager

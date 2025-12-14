@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Session;
+namespace Luminor\Session;
 
-use Luminor\DDD\Session\Drivers\FileSessionDriver;
-use Luminor\DDD\Session\Drivers\ArraySessionDriver;
-use Luminor\DDD\Session\Drivers\DatabaseSessionDriver;
-use Luminor\DDD\Database\ConnectionInterface;
+use Luminor\Session\Drivers\FileSessionDriver;
+use Luminor\Session\Drivers\ArraySessionDriver;
+use Luminor\Session\Drivers\DatabaseSessionDriver;
+use Luminor\Database\ConnectionInterface;
 
 /**
  * Session Manager

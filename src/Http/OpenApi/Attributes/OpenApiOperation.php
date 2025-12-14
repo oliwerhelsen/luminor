@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Http\OpenApi\Attributes;
+namespace Luminor\Http\OpenApi\Attributes;
 
 use Attribute;
 

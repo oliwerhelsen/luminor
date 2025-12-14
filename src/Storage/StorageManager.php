@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Storage;
+namespace Luminor\Storage;
 
-use Luminor\DDD\Storage\Drivers\LocalStorage;
+use Luminor\Storage\Drivers\LocalStorage;
 
 /**
  * Storage Manager

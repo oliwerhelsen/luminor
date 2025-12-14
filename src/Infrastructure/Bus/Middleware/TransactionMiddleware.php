@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Bus\Middleware;
+namespace Luminor\Infrastructure\Bus\Middleware;
 
-use Luminor\DDD\Application\CQRS\Command;
-use Luminor\DDD\Application\CQRS\Query;
-use Luminor\DDD\Infrastructure\Bus\MiddlewareInterface;
-use Luminor\DDD\Infrastructure\Persistence\TransactionInterface;
+use Luminor\Application\CQRS\Command;
+use Luminor\Application\CQRS\Query;
+use Luminor\Infrastructure\Bus\MiddlewareInterface;
+use Luminor\Infrastructure\Persistence\TransactionInterface;
 
 /**
  * Middleware that wraps command execution in a database transaction.

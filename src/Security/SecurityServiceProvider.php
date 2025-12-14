@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Security;
+namespace Luminor\Security;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
+use Luminor\Container\AbstractServiceProvider;
 
 /**
  * Security Service Provider

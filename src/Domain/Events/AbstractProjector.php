@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Events;
+namespace Luminor\Domain\Events;
 
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\DomainEvent;
 
 /**
  * Base class for event projectors.

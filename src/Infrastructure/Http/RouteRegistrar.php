@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http;
+namespace Luminor\Infrastructure\Http;
 
-use Luminor\DDD\Http\HttpKernel;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
-use Luminor\DDD\Http\Routing\Route;
-use Luminor\DDD\Http\Routing\Router;
-use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
+use Luminor\Http\HttpKernel;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
+use Luminor\Http\Routing\Route;
+use Luminor\Http\Routing\Router;
+use Luminor\Infrastructure\Http\Middleware\MiddlewareInterface;
 
 /**
  * Route registration helper for DDD controllers.

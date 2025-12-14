@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Domain;
+namespace Luminor\Tests\Unit\Domain;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Domain\Abstractions\Specification;
+use Luminor\Domain\Abstractions\Specification;
 
 final class SpecificationTest extends TestCase
 {

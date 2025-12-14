@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
-use Luminor\DDD\Domain\Events\Snapshot;
-use Luminor\DDD\Domain\Events\SnapshotStoreInterface;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Events\Snapshot;
+use Luminor\Domain\Events\SnapshotStoreInterface;
 
 /**
  * In-memory snapshot store implementation.

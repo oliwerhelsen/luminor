@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Logging;
+namespace Luminor\Logging;
 
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Domain;
+namespace Luminor\Tests\Unit\Domain;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\DomainEvent;
 
 final class DomainEventTest extends TestCase
 {

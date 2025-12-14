@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\DTO;
+namespace Luminor\Application\DTO;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 
 /**
  * Maps between domain entities and DTOs.

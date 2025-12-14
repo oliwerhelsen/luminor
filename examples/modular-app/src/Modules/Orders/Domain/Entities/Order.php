@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Orders\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Abstractions\AggregateRoot;
 use Example\ModularApp\Modules\Orders\Domain\Events\OrderPlacedEvent;
 use Example\ModularApp\Modules\Orders\Domain\Events\OrderCompletedEvent;
 use Example\ModularApp\Modules\Orders\Domain\ValueObjects\OrderStatus;

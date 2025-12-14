@@ -7,7 +7,7 @@ namespace Example\BasicApi\Application\Handlers;
 use Example\BasicApi\Application\DTOs\ProductDto;
 use Example\BasicApi\Application\Queries\GetProductQuery;
 use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
 
 /**
  * Handler for GetProductQuery.

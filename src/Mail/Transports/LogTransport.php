@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Mail\Transports;
+namespace Luminor\Mail\Transports;
 
-use Luminor\DDD\Mail\Message;
-use Luminor\DDD\Mail\TransportInterface;
+use Luminor\Mail\Message;
+use Luminor\Mail\TransportInterface;
 use Psr\Log\LoggerInterface;
 
 /**

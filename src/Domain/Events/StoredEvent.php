@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Events;
+namespace Luminor\Domain\Events;
 
 use DateTimeImmutable;
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\DomainEvent;
 
 /**
  * Wrapper for persisted domain events.

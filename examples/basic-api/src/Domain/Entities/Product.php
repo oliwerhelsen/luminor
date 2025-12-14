@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\BasicApi\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 use Example\BasicApi\Domain\ValueObjects\Money;
 
 /**

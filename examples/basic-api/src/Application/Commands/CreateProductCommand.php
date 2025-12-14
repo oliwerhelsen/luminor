@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\BasicApi\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 /**
  * Command to create a new product.

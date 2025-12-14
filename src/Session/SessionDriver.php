@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Session;
+namespace Luminor\Session;
 
 /**
  * Session Driver Interface

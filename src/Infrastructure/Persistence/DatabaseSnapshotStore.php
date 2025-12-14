@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Persistence;
+namespace Luminor\Infrastructure\Persistence;
 
 use DateTimeImmutable;
-use Luminor\DDD\Database\ConnectionInterface;
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
-use Luminor\DDD\Domain\Events\Snapshot;
-use Luminor\DDD\Domain\Events\SnapshotStoreInterface;
+use Luminor\Database\ConnectionInterface;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Events\Snapshot;
+use Luminor\Domain\Events\SnapshotStoreInterface;
 
 /**
  * Database-backed snapshot store implementation.

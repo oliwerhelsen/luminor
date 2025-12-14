@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Testing;
+namespace Luminor\Testing;
 
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\CQRS\Command;
 
 /**
  * In-memory command bus for testing.

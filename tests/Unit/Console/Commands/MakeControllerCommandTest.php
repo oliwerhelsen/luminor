@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Console\Commands;
+namespace Luminor\Tests\Unit\Console\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Console\Commands\MakeControllerCommand;
+use Luminor\Console\Commands\MakeControllerCommand;
 
 final class MakeControllerCommandTest extends TestCase
 {

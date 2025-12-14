@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
-use Luminor\DDD\Kernel;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
+use Luminor\Kernel;
 
 /**
  * Command to generate a new service provider class.
@@ -98,8 +98,8 @@ declare(strict_types=1);
 
 namespace {$namespace};
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Service provider for registering application services.

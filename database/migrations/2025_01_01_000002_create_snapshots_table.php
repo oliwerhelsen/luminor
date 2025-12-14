@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-use Luminor\DDD\Database\Migrations\Migration;
-use Luminor\DDD\Database\Schema\Blueprint;
-use Luminor\DDD\Database\Schema\Schema;
+use Luminor\Database\Migrations\Migration;
+use Luminor\Database\Schema\Blueprint;
+use Luminor\Database\Schema\Schema;
 
 return new class extends Migration
 {

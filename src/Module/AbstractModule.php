@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Module;
+namespace Luminor\Module;
 
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Abstract base class for modules.

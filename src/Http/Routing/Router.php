@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Http\Routing;
+namespace Luminor\Http\Routing;
 
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Simple HTTP router for matching requests to handlers.

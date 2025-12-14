@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Multitenancy;
+namespace Luminor\Multitenancy;
 
 /**
  * Interface representing a tenant in a multi-tenant application.

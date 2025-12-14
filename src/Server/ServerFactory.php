@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Server;
+namespace Luminor\Server;
 
-use Luminor\DDD\Server\Adapters\FpmServer;
-use Luminor\DDD\Server\Adapters\FrankenPhpServer;
-use Luminor\DDD\Server\Adapters\SwooleServer;
+use Luminor\Server\Adapters\FpmServer;
+use Luminor\Server\Adapters\FrankenPhpServer;
+use Luminor\Server\Adapters\SwooleServer;
 
 /**
  * Factory for creating server instances.

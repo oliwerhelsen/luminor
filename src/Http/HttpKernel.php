@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Http;
+namespace Luminor\Http;
 
-use Luminor\DDD\Http\Routing\Router;
+use Luminor\Http\Routing\Router;
 
 /**
  * HTTP Kernel for handling HTTP requests.

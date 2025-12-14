@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\Infrastructure\Http\Middleware;
 
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Interface for authentication middleware.

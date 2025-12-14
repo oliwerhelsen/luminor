@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Cache\Drivers;
+namespace Luminor\Cache\Drivers;
 
-use Luminor\DDD\Cache\CacheInterface;
+use Luminor\Cache\CacheInterface;
 
 /**
  * File Cache Driver

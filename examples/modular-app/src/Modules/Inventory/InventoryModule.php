@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Inventory;
 
-use Luminor\DDD\Module\AbstractModule;
-use Luminor\DDD\Module\ModuleDefinition;
+use Luminor\Module\AbstractModule;
+use Luminor\Module\ModuleDefinition;
 
 /**
  * Inventory Module - Stock management.

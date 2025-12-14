@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Observability;
+namespace Luminor\Observability;
 
 /**
  * Interface for metrics collection.

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands\Metrics;
+namespace Luminor\Console\Commands\Metrics;
 
-use Luminor\DDD\Console\Command;
-use Luminor\DDD\Observability\InMemoryMetrics;
-use Luminor\DDD\Observability\MetricsInterface;
+use Luminor\Console\Command;
+use Luminor\Observability\InMemoryMetrics;
+use Luminor\Observability\MetricsInterface;
 
 /**
  * Display application metrics.

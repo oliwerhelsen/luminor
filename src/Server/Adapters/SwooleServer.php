@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Server\Adapters;
+namespace Luminor\Server\Adapters;
 
-use Luminor\DDD\Server\ServerInterface;
-use Luminor\DDD\Server\ServerType;
+use Luminor\Server\ServerInterface;
+use Luminor\Server\ServerType;
 
 /**
  * Swoole HTTP Server adapter.

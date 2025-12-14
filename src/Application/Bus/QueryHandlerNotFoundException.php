@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Application\Bus;
+namespace Luminor\Application\Bus;
 
 use RuntimeException;
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\CQRS\Query;
 
 /**
  * Exception thrown when no handler is found for a query.

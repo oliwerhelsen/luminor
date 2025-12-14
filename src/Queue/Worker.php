@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Queue;
+namespace Luminor\Queue;
 
-use Luminor\DDD\Logging\LoggerInterface;
+use Luminor\Logging\LoggerInterface;
 use Psr\Log\LoggerInterface as PsrLoggerInterface;
 
 /**

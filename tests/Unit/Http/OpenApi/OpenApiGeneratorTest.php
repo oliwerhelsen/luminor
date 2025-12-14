@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Http\OpenApi;
+namespace Luminor\Tests\Unit\Http\OpenApi;
 
-use Luminor\DDD\Http\OpenApi\OpenApiGenerator;
+use Luminor\Http\OpenApi\OpenApiGenerator;
 use PHPUnit\Framework\TestCase;
 
 final class OpenApiGeneratorTest extends TestCase

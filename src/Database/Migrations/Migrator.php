@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Database\Migrations;
+namespace Luminor\Database\Migrations;
 
-use Luminor\DDD\Database\Schema\Schema;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Database\Schema\Schema;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Migrator

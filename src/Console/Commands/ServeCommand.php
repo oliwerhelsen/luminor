@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
-use Luminor\DDD\Server\ServerFactory;
-use Luminor\DDD\Server\ServerType;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
+use Luminor\Server\ServerFactory;
+use Luminor\Server\ServerType;
 
 /**
  * Command to start the HTTP development server.

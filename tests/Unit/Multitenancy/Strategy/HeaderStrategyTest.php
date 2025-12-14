@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Multitenancy\Strategy;
+namespace Luminor\Tests\Unit\Multitenancy\Strategy;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Multitenancy\Strategy\HeaderStrategy;
-use Luminor\DDD\Http\Request;
+use Luminor\Multitenancy\Strategy\HeaderStrategy;
+use Luminor\Http\Request;
 
 final class HeaderStrategyTest extends TestCase
 {

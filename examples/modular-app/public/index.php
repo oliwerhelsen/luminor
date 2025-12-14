@@ -20,9 +20,9 @@ use Example\ModularApp\Modules\Inventory\Infrastructure\Persistence\InMemoryStoc
 use Example\ModularApp\Modules\Orders\Domain\Entities\Order;
 use Example\ModularApp\Modules\Orders\Domain\Repository\OrderRepositoryInterface;
 use Example\ModularApp\Modules\Orders\Infrastructure\Persistence\InMemoryOrderRepository;
-use Luminor\DDD\Http\HttpKernel;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\HttpKernel;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 // Create the HTTP kernel
 $http = HttpKernel::getInstance();

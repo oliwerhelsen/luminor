@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Validation\Rules;
+namespace Luminor\Validation\Rules;
 
-use Luminor\DDD\Validation\Rule;
-use Luminor\DDD\Database\ConnectionInterface;
+use Luminor\Validation\Rule;
+use Luminor\Database\ConnectionInterface;
 
 /**
  * Exists Rule

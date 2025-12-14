@@ -6,8 +6,8 @@ namespace Example\ModularApp\Modules\Catalog;
 
 use Example\ModularApp\Modules\Catalog\Domain\Repository\ProductRepositoryInterface;
 use Example\ModularApp\Modules\Catalog\Infrastructure\Persistence\InMemoryProductRepository;
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
 
 /**
  * Catalog module service provider.

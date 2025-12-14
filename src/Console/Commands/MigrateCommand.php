@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
-use Luminor\DDD\Database\Migrations\Migrator;
-use Luminor\DDD\Database\Migrations\DatabaseMigrationRepository;
-use Luminor\DDD\Database\Schema\Schema;
-use Luminor\DDD\Database\Connection;
-use Luminor\DDD\Container\Container;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
+use Luminor\Database\Migrations\Migrator;
+use Luminor\Database\Migrations\DatabaseMigrationRepository;
+use Luminor\Database\Schema\Schema;
+use Luminor\Database\Connection;
+use Luminor\Container\Container;
 use PDO;
 
 /**

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
-use Luminor\DDD\Kernel;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
+use Luminor\Kernel;
 
 /**
  * Command to generate a new middleware class.
@@ -87,9 +87,9 @@ declare(strict_types=1);
 
 namespace {$namespace};
 
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
-use Luminor\DDD\Http\Middleware\MiddlewareInterface;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
+use Luminor\Http\Middleware\MiddlewareInterface;
 
 /**
  * HTTP middleware.

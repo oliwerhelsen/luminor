@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain\Repository\Filter;
+namespace Luminor\Domain\Repository\Filter;
 
 /**
  * Composite filter that combines two filters with AND logic.

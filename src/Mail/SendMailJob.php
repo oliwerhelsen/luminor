@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Mail;
+namespace Luminor\Mail;
 
-use Luminor\DDD\Queue\Job;
+use Luminor\Queue\Job;
 
 /**
  * Queue job for sending mail asynchronously.

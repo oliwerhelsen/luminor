@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Queue\FailedJobProviderInterface;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
+use Luminor\Container\ContainerInterface;
+use Luminor\Queue\FailedJobProviderInterface;
 
 /**
  * Command to flush (delete) all failed jobs.

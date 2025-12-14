@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Tests\Unit\Container;
+namespace Luminor\Tests\Unit\Container;
 
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Container\Container;
-use Luminor\DDD\Container\ContainerException;
+use Luminor\Container\Container;
+use Luminor\Container\ContainerException;
 
 final class ContainerTest extends TestCase
 {

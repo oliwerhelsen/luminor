@@ -2,18 +2,18 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http;
+namespace Luminor\Infrastructure\Http;
 
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Application\CQRS\Command;
-use Luminor\DDD\Application\CQRS\Query;
-use Luminor\DDD\Application\DTO\PagedResult;
-use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
-use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
-use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Application\CQRS\Command;
+use Luminor\Application\CQRS\Query;
+use Luminor\Application\DTO\PagedResult;
+use Luminor\Infrastructure\Http\Response\ApiResponse;
+use Luminor\Infrastructure\Http\Response\ErrorResponse;
+use Luminor\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 /**
  * Base API controller with common helpers.

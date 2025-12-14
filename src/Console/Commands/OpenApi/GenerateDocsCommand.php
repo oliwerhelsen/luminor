@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands\OpenApi;
+namespace Luminor\Console\Commands\OpenApi;
 
-use Luminor\DDD\Console\Command;
-use Luminor\DDD\Http\OpenApi\OpenApiGenerator;
+use Luminor\Console\Command;
+use Luminor\Http\OpenApi\OpenApiGenerator;
 
 /**
  * Generate OpenAPI documentation.

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Example\ModularApp\Modules\Catalog\Domain\ValueObjects;
 
-use Luminor\DDD\Domain\Abstractions\ValueObject;
+use Luminor\Domain\Abstractions\ValueObject;
 
 /**
  * Money value object.

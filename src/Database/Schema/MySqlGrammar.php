@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Database\Schema;
+namespace Luminor\Database\Schema;
 
 /**
  * MySQL Schema Grammar

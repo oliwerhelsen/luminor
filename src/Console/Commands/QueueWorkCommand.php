@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Console\Commands;
+namespace Luminor\Console\Commands;
 
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
-use Luminor\DDD\Container\ContainerInterface;
-use Luminor\DDD\Queue\QueueManager;
-use Luminor\DDD\Queue\Worker;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
+use Luminor\Container\ContainerInterface;
+use Luminor\Queue\QueueManager;
+use Luminor\Queue\Worker;
 
 /**
  * Command to process queued jobs.

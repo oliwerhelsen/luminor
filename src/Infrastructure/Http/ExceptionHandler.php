@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http;
+namespace Luminor\Infrastructure\Http;
 
 use Throwable;
-use Luminor\DDD\Application\Validation\ValidationException;
-use Luminor\DDD\Domain\Abstractions\DomainException;
-use Luminor\DDD\Domain\Repository\AggregateNotFoundException;
-use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
-use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
-use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Validation\ValidationException;
+use Luminor\Domain\Abstractions\DomainException;
+use Luminor\Domain\Repository\AggregateNotFoundException;
+use Luminor\Infrastructure\Http\Response\ApiResponse;
+use Luminor\Infrastructure\Http\Response\ErrorResponse;
+use Luminor\Infrastructure\Http\Response\ValidationErrorResponse;
+use Luminor\Http\Response;
 
 /**
  * Global exception handler for API endpoints.
