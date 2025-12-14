@@ -63,7 +63,7 @@ $logger->error('Something went wrong');
 ### Using the LogManager
 
 ```php
-use Luminor\DDD\Logging\LogManager;
+use Luminor\Logging\LogManager;
 
 $log = app(LogManager::class);
 
@@ -171,8 +171,8 @@ $log->info('User {username} logged in from {ip}', [
 Implement the `LoggerInterface` to create custom log drivers:
 
 ```php
-use Luminor\DDD\Logging\AbstractLogger;
-use Luminor\DDD\Logging\LogLevel;
+use Luminor\Logging\AbstractLogger;
+use Luminor\Logging\LogLevel;
 
 class SlackLogger extends AbstractLogger
 {
@@ -199,7 +199,7 @@ class SlackLogger extends AbstractLogger
 Use the `ArrayLogger` driver for testing:
 
 ```php
-use Luminor\DDD\Logging\Drivers\ArrayLogger;
+use Luminor\Logging\Drivers\ArrayLogger;
 
 $logger = new ArrayLogger();
 $logger->info('Test message');

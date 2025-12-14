@@ -76,8 +76,8 @@ Create a job class that extends `Job` and implements `ShouldQueue`:
 
 namespace App\Jobs;
 
-use Luminor\DDD\Queue\Job;
-use Luminor\DDD\Queue\ShouldQueue;
+use Luminor\Queue\Job;
+use Luminor\Queue\ShouldQueue;
 
 final class ProcessPayment extends Job implements ShouldQueue
 {
@@ -126,7 +126,7 @@ dispatch_sync(new ProcessPayment($orderId, $amount));
 ### Using the Queue Manager
 
 ```php
-use Luminor\DDD\Queue\QueueManager;
+use Luminor\Queue\QueueManager;
 
 $queue = app(QueueManager::class);
 

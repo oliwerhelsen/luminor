@@ -27,7 +27,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 
 final class User extends Entity
 {
@@ -90,7 +90,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class CreateUserCommand implements Command
 {
@@ -114,7 +114,7 @@ namespace App\Application\Handlers;
 use App\Application\Commands\CreateUserCommand;
 use App\Domain\Entities\User;
 use App\Domain\Repository\UserRepositoryInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 final class CreateUserCommandHandler implements CommandHandlerInterface
 {
@@ -151,10 +151,10 @@ declare(strict_types=1);
 namespace App\Infrastructure\Http\Controllers;
 
 use App\Application\Commands\CreateUserCommand;
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class UserController extends ApiController
 {
@@ -187,7 +187,7 @@ In your `public/index.php` or a routes file:
 ```php
 <?php
 
-use Luminor\DDD\Http\HttpKernel;
+use Luminor\Http\HttpKernel;
 
 $http = Http::getInstance();
 
@@ -214,7 +214,7 @@ namespace Tests\Unit\Application\Handlers;
 use App\Application\Commands\CreateUserCommand;
 use App\Application\Handlers\CreateUserCommandHandler;
 use PHPUnit\Framework\TestCase;
-use Luminor\DDD\Testing\InMemoryRepository;
+use Luminor\Testing\InMemoryRepository;
 
 final class CreateUserCommandHandlerTest extends TestCase
 {

@@ -51,7 +51,7 @@ if ($autoloader === null) {
 
 require $autoloader;
 
-use Luminor\DDD\Console\Application;
+use Luminor\Console\Application;
 
 // Create and run the console application
 $app = new Application();

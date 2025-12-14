@@ -114,7 +114,7 @@ declare(strict_types=1);
 
 namespace App\Domain\User;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 use Luminor\Auth\AuthenticatableInterface;
 
 final class User extends Entity implements AuthenticatableInterface
@@ -425,13 +425,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\AuthenticationException;
 use App\Auth\SessionAuthService;
 use App\Mail\PasswordResetMail;
 use App\Mail\VerificationMail;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class AuthController extends ApiController
 {
@@ -699,82 +699,73 @@ final class AuthController extends ApiController
 <!-- views/auth/login.blade.php -->
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Login</title>
-    <link rel="stylesheet" href="/css/auth.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/auth.css" />
+  </head>
+  <body>
     <div class="auth-container">
-        <h1>Login</h1>
+      <h1>Login</h1>
 
-        <?php if (isset($errors['credentials'])): ?>
-            <div class="alert alert-error">
-                <?= htmlspecialchars($errors['credentials'][0]) ?>
-            </div>
-        <?php endif; ?>
+      <?php if (isset($errors['credentials'])): ?>
+      <div class="alert alert-error">
+        <?= htmlspecialchars($errors['credentials'][0]) ?>
+      </div>
+      <?php endif; ?>
 
-        <?php if (isset($_SESSION['flash']['success'])): ?>
-            <div class="alert alert-success">
-                <?= htmlspecialchars($_SESSION['flash']['success']) ?>
-            </div>
-            <?php unset($_SESSION['flash']['success']); ?>
-        <?php endif; ?>
+      <?php if (isset($_SESSION['flash']['success'])): ?>
+      <div class="alert alert-success">
+        <?= htmlspecialchars($_SESSION['flash']['success']) ?>
+      </div>
+      <?php unset($_SESSION['flash']['success']); ?>
+      <?php endif; ?>
 
-        <form method="POST" action="/login">
-            <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+      <form method="POST" action="/login">
+        <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>" />
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="<?= htmlspecialchars($old['email'] ?? '') ?>"
-                    required
-                    autofocus
-                >
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    required
-                >
-            </div>
-
-            <div class="form-group">
-                <label class="checkbox">
-                    <input type="checkbox" name="remember" value="1">
-                    Remember me
-                </label>
-            </div>
-
-            <button type="submit" class="btn btn-primary">Login</button>
-
-            <div class="auth-links">
-                <a href="/forgot-password">Forgot your password?</a>
-                <a href="/register">Don't have an account? Register</a>
-            </div>
-        </form>
-
-        <!-- SSO Options -->
-        <div class="sso-divider">
-            <span>or continue with</span>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value="<?= htmlspecialchars($old['email'] ?? '') ?>"
+            required
+            autofocus
+          />
         </div>
 
-        <div class="sso-buttons">
-            <a href="/auth/google" class="btn btn-google">
-                Google
-            </a>
-            <a href="/auth/azure" class="btn btn-microsoft">
-                Microsoft
-            </a>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required />
         </div>
+
+        <div class="form-group">
+          <label class="checkbox">
+            <input type="checkbox" name="remember" value="1" />
+            Remember me
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Login</button>
+
+        <div class="auth-links">
+          <a href="/forgot-password">Forgot your password?</a>
+          <a href="/register">Don't have an account? Register</a>
+        </div>
+      </form>
+
+      <!-- SSO Options -->
+      <div class="sso-divider">
+        <span>or continue with</span>
+      </div>
+
+      <div class="sso-buttons">
+        <a href="/auth/google" class="btn btn-google"> Google </a>
+        <a href="/auth/azure" class="btn btn-microsoft"> Microsoft </a>
+      </div>
     </div>
-</body>
+  </body>
 </html>
 ```
 
@@ -784,86 +775,86 @@ final class AuthController extends ApiController
 <!-- views/auth/register.blade.php -->
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>Register</title>
-    <link rel="stylesheet" href="/css/auth.css">
-</head>
-<body>
+    <link rel="stylesheet" href="/css/auth.css" />
+  </head>
+  <body>
     <div class="auth-container">
-        <h1>Create Account</h1>
+      <h1>Create Account</h1>
 
-        <form method="POST" action="/register">
-            <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>">
+      <form method="POST" action="/register">
+        <input type="hidden" name="csrf_token" value="<?= $csrfToken ?>" />
 
-            <div class="form-group">
-                <label for="name">Full Name</label>
-                <input
-                    type="text"
-                    id="name"
-                    name="name"
-                    value="<?= htmlspecialchars($old['name'] ?? '') ?>"
-                    required
-                    autofocus
-                >
-                <?php if (isset($errors['name'])): ?>
-                    <span class="error"><?= $errors['name'][0] ?></span>
-                <?php endif; ?>
-            </div>
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value="<?= htmlspecialchars($old['name'] ?? '') ?>"
+            required
+            autofocus
+          />
+          <?php if (isset($errors['name'])): ?>
+          <span class="error"><?= $errors['name'][0] ?></span>
+          <?php endif; ?>
+        </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value="<?= htmlspecialchars($old['email'] ?? '') ?>"
-                    required
-                >
-                <?php if (isset($errors['email'])): ?>
-                    <span class="error"><?= $errors['email'][0] ?></span>
-                <?php endif; ?>
-            </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value="<?= htmlspecialchars($old['email'] ?? '') ?>"
+            required
+          />
+          <?php if (isset($errors['email'])): ?>
+          <span class="error"><?= $errors['email'][0] ?></span>
+          <?php endif; ?>
+        </div>
 
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input
-                    type="password"
-                    id="password"
-                    name="password"
-                    minlength="8"
-                    required
-                >
-                <?php if (isset($errors['password'])): ?>
-                    <span class="error"><?= $errors['password'][0] ?></span>
-                <?php endif; ?>
-                <small>Minimum 8 characters</small>
-            </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            minlength="8"
+            required
+          />
+          <?php if (isset($errors['password'])): ?>
+          <span class="error"><?= $errors['password'][0] ?></span>
+          <?php endif; ?>
+          <small>Minimum 8 characters</small>
+        </div>
 
-            <div class="form-group">
-                <label for="password_confirmation">Confirm Password</label>
-                <input
-                    type="password"
-                    id="password_confirmation"
-                    name="password_confirmation"
-                    required
-                >
-            </div>
+        <div class="form-group">
+          <label for="password_confirmation">Confirm Password</label>
+          <input
+            type="password"
+            id="password_confirmation"
+            name="password_confirmation"
+            required
+          />
+        </div>
 
-            <div class="form-group">
-                <label class="checkbox">
-                    <input type="checkbox" name="terms" value="1" required>
-                    I agree to the <a href="/terms" target="_blank">Terms of Service</a>
-                </label>
-            </div>
+        <div class="form-group">
+          <label class="checkbox">
+            <input type="checkbox" name="terms" value="1" required />
+            I agree to the <a href="/terms" target="_blank">Terms of Service</a>
+          </label>
+        </div>
 
-            <button type="submit" class="btn btn-primary">Create Account</button>
+        <button type="submit" class="btn btn-primary">Create Account</button>
 
-            <div class="auth-links">
-                <a href="/login">Already have an account? Login</a>
-            </div>
-        </form>
+        <div class="auth-links">
+          <a href="/login">Already have an account? Login</a>
+        </div>
+      </form>
     </div>
-</body>
+  </body>
 </html>
 ```
 

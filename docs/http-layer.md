@@ -23,9 +23,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class ProductController extends ApiController
 {
@@ -124,7 +124,7 @@ $this->serverError($response, 'Something went wrong');
 ```php
 <?php
 
-use Luminor\DDD\Http\Routing\Router;
+use Luminor\Http\Routing\Router;
 use App\Infrastructure\Http\Controllers\ProductController;
 
 $router = Router::getInstance();
@@ -152,7 +152,7 @@ Use route groups for shared attributes:
 ```php
 <?php
 
-use Luminor\DDD\Http\Routing\Router;
+use Luminor\Http\Routing\Router;
 use App\Infrastructure\Http\Middleware\AuthMiddleware;
 
 $router = Router::getInstance();
@@ -195,9 +195,9 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Http\Middleware;
 
-use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\Middleware\MiddlewareInterface;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class RateLimitMiddleware implements MiddlewareInterface
 {
@@ -234,7 +234,7 @@ final class RateLimitMiddleware implements MiddlewareInterface
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Http\Middleware\AbstractAuthMiddleware;
+use Luminor\Infrastructure\Http\Middleware\AbstractAuthMiddleware;
 
 final class JwtAuthMiddleware extends AbstractAuthMiddleware
 {
@@ -279,7 +279,7 @@ final class JwtAuthMiddleware extends AbstractAuthMiddleware
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Http\Middleware\CorsMiddleware;
+use Luminor\Infrastructure\Http\Middleware\CorsMiddleware;
 
 $cors = new CorsMiddleware(
     allowedOrigins: ['https://example.com', 'https://app.example.com'],
@@ -296,8 +296,8 @@ $cors = new CorsMiddleware(
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Http\ExceptionHandler;
-use Luminor\DDD\Http\HttpKernel;
+use Luminor\Infrastructure\Http\ExceptionHandler;
+use Luminor\Http\HttpKernel;
 
 $handler = new ExceptionHandler(debug: $config['app']['debug']);
 
@@ -331,8 +331,8 @@ $kernel->run();
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Http\Middleware\ValidationMiddleware;
-use Luminor\DDD\Http\Routing\Router;
+use Luminor\Infrastructure\Http\Middleware\ValidationMiddleware;
+use Luminor\Http\Routing\Router;
 
 $router = Router::getInstance();
 

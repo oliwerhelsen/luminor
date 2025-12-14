@@ -28,6 +28,7 @@ New in v2.0: Comprehensive metrics collection and application performance monito
 Observability helps you understand what's happening inside your application by collecting metrics, traces, and logs.
 
 **Key Benefits:**
+
 - Identify performance bottlenecks
 - Track business KPIs
 - Alert on anomalies
@@ -66,7 +67,7 @@ Inject `MetricsInterface` into your classes:
 ```php
 <?php
 
-use Luminor\DDD\Observability\MetricsInterface;
+use Luminor\Observability\MetricsInterface;
 
 final class OrderService
 {
@@ -122,6 +123,7 @@ $metrics->decrement('queue.pending');
 ```
 
 **Use for:**
+
 - Request counts
 - Error counts
 - Items processed
@@ -144,6 +146,7 @@ $metrics->gauge('cpu.usage', $cpuPercent, [
 ```
 
 **Use for:**
+
 - Memory usage
 - Queue depth
 - Connection pool size
@@ -162,6 +165,7 @@ $metrics->histogram('orders.value', $order->getTotal());
 ```
 
 **Use for:**
+
 - Request/response sizes
 - Value distributions
 - Batch sizes
@@ -192,6 +196,7 @@ $stopTimer();
 ```
 
 **Use for:**
+
 - Request duration
 - Database query time
 - External API calls
@@ -208,7 +213,7 @@ Track database queries that exceed a threshold:
 ```php
 <?php
 
-use Luminor\DDD\Observability\MetricsInterface;
+use Luminor\Observability\MetricsInterface;
 
 final class DatabaseConnection
 {
@@ -244,7 +249,7 @@ Monitor HTTP request performance:
 ```php
 <?php
 
-use Luminor\DDD\Http\Middleware\MetricsMiddleware;
+use Luminor\Http\Middleware\MetricsMiddleware;
 
 final class MetricsMiddleware implements MiddlewareInterface
 {
@@ -282,7 +287,7 @@ Track CLI command execution:
 ```php
 <?php
 
-use Luminor\DDD\Console\Command;
+use Luminor\Console\Command;
 
 final class ProcessOrdersCommand extends Command
 {
@@ -318,6 +323,7 @@ php luminor metrics:show
 ```
 
 Output:
+
 ```
 Application Metrics
 ==================
@@ -352,7 +358,7 @@ For production, integrate with StatsD:
 ```php
 <?php
 
-use Luminor\DDD\Observability\MetricsInterface;
+use Luminor\Observability\MetricsInterface;
 
 final class StatsDMetrics implements MetricsInterface
 {

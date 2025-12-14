@@ -21,7 +21,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 
 final class Product extends Entity
 {
@@ -63,7 +63,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\AggregateRoot;
+use Luminor\Domain\Abstractions\AggregateRoot;
 
 final class Order extends AggregateRoot
 {
@@ -132,7 +132,7 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObjects;
 
-use Luminor\DDD\Domain\Abstractions\ValueObject;
+use Luminor\Domain\Abstractions\ValueObject;
 
 final class Money extends ValueObject
 {
@@ -192,7 +192,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Events;
 
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\DomainEvent;
 
 final class OrderSubmittedEvent extends DomainEvent
 {
@@ -216,7 +216,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Specifications;
 
-use Luminor\DDD\Domain\Abstractions\Specification;
+use Luminor\Domain\Abstractions\Specification;
 use App\Domain\Entities\Order;
 
 final class HighValueOrderSpecification extends Specification
@@ -259,7 +259,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Repository;
 
-use Luminor\DDD\Domain\Repository\RepositoryInterface;
+use Luminor\Domain\Repository\RepositoryInterface;
 use App\Domain\Entities\Order;
 
 interface OrderRepositoryInterface extends RepositoryInterface
@@ -285,7 +285,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Exceptions;
 
-use Luminor\DDD\Domain\Abstractions\DomainException;
+use Luminor\Domain\Abstractions\DomainException;
 
 final class InsufficientStockException extends DomainException
 {

@@ -64,7 +64,7 @@ mail('user@example.com')
 ### Using the Mailer
 
 ```php
-use Luminor\DDD\Mail\Mailer;
+use Luminor\Mail\Mailer;
 
 $mailer = app(Mailer::class);
 
@@ -89,8 +89,8 @@ vendor/bin/luminor make:mail OrderConfirmation --queued
 
 namespace App\Mail;
 
-use Luminor\DDD\Mail\Mailable;
-use Luminor\DDD\Mail\Message;
+use Luminor\Mail\Mailable;
+use Luminor\Mail\Message;
 
 final class WelcomeEmail extends Mailable
 {
@@ -188,8 +188,8 @@ For time-consuming email operations, queue your mailables:
 ### Implement ShouldQueue
 
 ```php
-use Luminor\DDD\Mail\Mailable;
-use Luminor\DDD\Mail\ShouldQueue;
+use Luminor\Mail\Mailable;
+use Luminor\Mail\ShouldQueue;
 
 final class MonthlyReport extends Mailable implements ShouldQueue
 {
@@ -268,7 +268,7 @@ Stores emails in memory (useful for testing):
 Use the array transport to capture sent emails:
 
 ```php
-use Luminor\DDD\Mail\Transports\ArrayTransport;
+use Luminor\Mail\Transports\ArrayTransport;
 
 // Get the transport
 $transport = app(ArrayTransport::class);

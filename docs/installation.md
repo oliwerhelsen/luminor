@@ -135,8 +135,8 @@ declare(strict_types=1);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Luminor\DDD\Kernel;
-use Luminor\DDD\Http\HttpKernel;
+use Luminor\Kernel;
+use Luminor\Http\HttpKernel;
 
 // Bootstrap the framework
 $kernel = new Kernel(__DIR__ . '/..');

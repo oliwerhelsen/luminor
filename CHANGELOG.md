@@ -45,7 +45,7 @@ This release brings a major architectural improvement by replacing the Utopia HT
 
 - **Swoole is now optional** - No longer a required dependency
 - **Composer Dependencies** - Replaced `utopia-php/http` with `symfony/http-foundation ^7.0|^6.4`
-- **Test Namespaces** - Refactored from `Luminor\DDD\Tests\Unit` to `Luminor\Tests\Unit`
+- **Test Namespaces** - Refactored from `Luminor\Tests\Unit` to `Luminor\Tests\Unit`
 - **Command Output** - Simplified usage instructions and enhanced user experience
 - **Documentation** - Updated all guides to reflect Symfony HttpFoundation migration
 

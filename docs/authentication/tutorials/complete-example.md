@@ -13,6 +13,7 @@ This guide provides a complete, production-ready authentication setup combining 
 ## Overview
 
 This example demonstrates:
+
 - JWT authentication for API endpoints
 - Session authentication for web pages
 - OpenID Connect SSO (Azure AD)
@@ -549,8 +550,8 @@ namespace App\Http\Middleware;
 
 use Luminor\Auth\AuthenticationManager;
 use Luminor\Auth\CurrentUser;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class AuthMiddleware
 {
@@ -614,8 +615,8 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use Luminor\Auth\CurrentUser;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class GuestMiddleware
 {
@@ -643,7 +644,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\CurrentUser;
 use Luminor\Auth\AuthenticationException;
 use Luminor\Auth\Jwt\JwtService;
@@ -654,8 +655,8 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 use App\Mail\PasswordResetMail;
 use App\Mail\VerificationMail;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class AuthController extends ApiController
 {

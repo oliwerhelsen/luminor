@@ -110,8 +110,8 @@ _Benchmarks are approximate and vary based on application complexity._
 You can also use the server adapters programmatically:
 
 ```php
-use Luminor\DDD\Server\ServerFactory;
-use Luminor\DDD\Server\ServerType;
+use Luminor\Server\ServerFactory;
+use Luminor\Server\ServerType;
 
 // Create a specific server
 $server = ServerFactory::create(ServerType::FRANKENPHP);

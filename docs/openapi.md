@@ -29,6 +29,7 @@ New in v2.0: Automatic OpenAPI documentation generation with PHP attributes.
 OpenAPI (formerly Swagger) is the industry standard for documenting REST APIs. Luminor provides automatic OpenAPI generation using PHP attributes.
 
 **Benefits:**
+
 - Interactive API explorer (Swagger UI)
 - Client SDK generation
 - API testing tools
@@ -43,11 +44,11 @@ OpenAPI (formerly Swagger) is the industry standard for documenting REST APIs. L
 ```php
 <?php
 
-use Luminor\DDD\Http\Controllers\ApiController;
-use Luminor\DDD\Http\OpenApi\Attributes\OpenApiOperation;
-use Luminor\DDD\Http\OpenApi\Attributes\OpenApiParameter;
-use Luminor\DDD\Http\OpenApi\Attributes\OpenApiResponse;
-use Luminor\DDD\Http\OpenApi\Attributes\OpenApiRequestBody;
+use Luminor\Http\Controllers\ApiController;
+use Luminor\Http\OpenApi\Attributes\OpenApiOperation;
+use Luminor\Http\OpenApi\Attributes\OpenApiParameter;
+use Luminor\Http\OpenApi\Attributes\OpenApiResponse;
+use Luminor\Http\OpenApi\Attributes\OpenApiRequestBody;
 
 final class ProductController extends ApiController
 {
@@ -125,20 +126,23 @@ Include Swagger UI in your HTML:
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <title>API Documentation</title>
-    <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
-</head>
-<body>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swagger-ui-dist/swagger-ui.css"
+    />
+  </head>
+  <body>
     <div id="swagger-ui"></div>
     <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
     <script>
-        SwaggerUIBundle({
-            url: '/openapi.json',
-            dom_id: '#swagger-ui'
-        });
+      SwaggerUIBundle({
+        url: "/openapi.json",
+        dom_id: "#swagger-ui",
+      });
     </script>
-</body>
+  </body>
 </html>
 ```
 
@@ -160,6 +164,7 @@ Include Swagger UI in your HTML:
 ### Parameters
 
 **Query Parameters:**
+
 ```php
 #[OpenApiParameter(
     name: 'search',
@@ -171,6 +176,7 @@ Include Swagger UI in your HTML:
 ```
 
 **Path Parameters:**
+
 ```php
 #[OpenApiParameter(
     name: 'id',
@@ -182,6 +188,7 @@ Include Swagger UI in your HTML:
 ```
 
 **Header Parameters:**
+
 ```php
 #[OpenApiParameter(
     name: 'X-API-Key',
@@ -235,7 +242,7 @@ Include Swagger UI in your HTML:
 ```php
 <?php
 
-use Luminor\DDD\Http\OpenApi\OpenApiGenerator;
+use Luminor\Http\OpenApi\OpenApiGenerator;
 
 $generator = new OpenApiGenerator('My API', '1.0.0');
 
@@ -365,7 +372,7 @@ php luminor openapi:generate
 ```php
 <?php
 
-use Luminor\DDD\Http\OpenApi\OpenApiGenerator;
+use Luminor\Http\OpenApi\OpenApiGenerator;
 
 $generator = new OpenApiGenerator(
     title: 'My API',
@@ -421,12 +428,14 @@ file_put_contents('public/openapi.json', $json);
 ### Documentation Quality
 
 ✅ **Good:**
+
 - Descriptive summaries
 - Complete examples
 - All required parameters documented
 - Error responses included
 
 ❌ **Bad:**
+
 - Missing descriptions
 - No examples
 - Incomplete parameter documentation
@@ -434,6 +443,7 @@ file_put_contents('public/openapi.json', $json);
 ### Versioning
 
 Include API version:
+
 ```php
 $generator = new OpenApiGenerator('My API', '2.0.0');
 ```
@@ -441,6 +451,7 @@ $generator = new OpenApiGenerator('My API', '2.0.0');
 ### Tags
 
 Group related endpoints:
+
 ```php
 #[OpenApiOperation(
     summary: 'Create product',
@@ -451,6 +462,7 @@ Group related endpoints:
 ### Examples
 
 Provide realistic examples:
+
 ```php
 #[OpenApiResponse(
     statusCode: 200,

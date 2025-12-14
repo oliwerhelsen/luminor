@@ -62,7 +62,7 @@ Here's a taste of what building with Luminor looks like:
 ```php
 <?php
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 
 final class Product extends Entity
 {
@@ -86,7 +86,7 @@ final class Product extends Entity
 ```php
 <?php
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class CreateProductCommand implements Command
 {
@@ -103,7 +103,7 @@ final class CreateProductCommand implements Command
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 
 final class ProductController extends ApiController
 {

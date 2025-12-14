@@ -145,7 +145,7 @@ Documentation improvements are always welcome! This includes:
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Domain;
+namespace Luminor\Domain;
 
 /**
  * Represents a domain entity with identity.

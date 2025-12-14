@@ -512,12 +512,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\CurrentUser;
 use Luminor\Auth\AuthenticationException;
 use App\Auth\Mfa\MfaService;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class MfaController extends ApiController
 {
@@ -666,13 +666,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\AuthenticationException;
 use App\Auth\SessionAuthService;
 use App\Auth\Mfa\MfaService;
 use Luminor\Session\Session;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class AuthController extends ApiController
 {
@@ -834,208 +834,216 @@ $router->post('/login/mfa', [AuthController::class, 'verifyMfa']);
 
 ```html
 <div id="mfa-setup">
-    <h2>Two-Factor Authentication</h2>
+  <h2>Two-Factor Authentication</h2>
 
-    <!-- Status -->
-    <div id="mfa-status" class="status-card"></div>
+  <!-- Status -->
+  <div id="mfa-status" class="status-card"></div>
 
-    <!-- Setup Section (if not enabled) -->
-    <div id="setup-section" style="display: none;">
-        <button onclick="initSetup()" class="btn btn-primary">
-            Enable Two-Factor Authentication
-        </button>
+  <!-- Setup Section (if not enabled) -->
+  <div id="setup-section" style="display: none;">
+    <button onclick="initSetup()" class="btn btn-primary">
+      Enable Two-Factor Authentication
+    </button>
+  </div>
+
+  <!-- QR Code Section -->
+  <div id="qr-section" style="display: none;">
+    <h3>Step 1: Scan QR Code</h3>
+    <p>
+      Scan this QR code with your authenticator app (Google Authenticator,
+      Authy, etc.)
+    </p>
+
+    <div id="qr-code"></div>
+
+    <details>
+      <summary>Can't scan? Enter code manually</summary>
+      <code id="manual-secret"></code>
+    </details>
+
+    <h3>Step 2: Enter Verification Code</h3>
+    <form onsubmit="confirmMfa(event)">
+      <input
+        type="text"
+        id="verification-code"
+        placeholder="000000"
+        pattern="[0-9]{6}"
+        maxlength="6"
+        required
+        autofocus
+      />
+      <button type="submit" class="btn btn-primary">Verify & Enable</button>
+    </form>
+  </div>
+
+  <!-- Recovery Codes Section -->
+  <div id="recovery-section" style="display: none;">
+    <h3>Recovery Codes</h3>
+    <p class="warning">
+      Save these codes in a secure location. Each code can only be used once.
+    </p>
+
+    <div id="recovery-codes" class="codes-grid"></div>
+
+    <button onclick="downloadCodes()" class="btn btn-secondary">
+      Download Codes
+    </button>
+    <button onclick="copyAllCodes()" class="btn btn-secondary">Copy All</button>
+
+    <button onclick="finishSetup()" class="btn btn-primary">
+      I've Saved My Codes
+    </button>
+  </div>
+
+  <!-- Management Section (if enabled) -->
+  <div id="manage-section" style="display: none;">
+    <h3>Manage Two-Factor Authentication</h3>
+
+    <div class="info-card">
+      <p>Recovery codes remaining: <strong id="codes-remaining">0</strong></p>
     </div>
 
-    <!-- QR Code Section -->
-    <div id="qr-section" style="display: none;">
-        <h3>Step 1: Scan QR Code</h3>
-        <p>Scan this QR code with your authenticator app (Google Authenticator, Authy, etc.)</p>
+    <button onclick="showRegenerateCodes()" class="btn btn-secondary">
+      Regenerate Recovery Codes
+    </button>
 
-        <div id="qr-code"></div>
-
-        <details>
-            <summary>Can't scan? Enter code manually</summary>
-            <code id="manual-secret"></code>
-        </details>
-
-        <h3>Step 2: Enter Verification Code</h3>
-        <form onsubmit="confirmMfa(event)">
-            <input
-                type="text"
-                id="verification-code"
-                placeholder="000000"
-                pattern="[0-9]{6}"
-                maxlength="6"
-                required
-                autofocus
-            >
-            <button type="submit" class="btn btn-primary">Verify & Enable</button>
-        </form>
-    </div>
-
-    <!-- Recovery Codes Section -->
-    <div id="recovery-section" style="display: none;">
-        <h3>Recovery Codes</h3>
-        <p class="warning">Save these codes in a secure location. Each code can only be used once.</p>
-
-        <div id="recovery-codes" class="codes-grid"></div>
-
-        <button onclick="downloadCodes()" class="btn btn-secondary">Download Codes</button>
-        <button onclick="copyAllCodes()" class="btn btn-secondary">Copy All</button>
-
-        <button onclick="finishSetup()" class="btn btn-primary">I've Saved My Codes</button>
-    </div>
-
-    <!-- Management Section (if enabled) -->
-    <div id="manage-section" style="display: none;">
-        <h3>Manage Two-Factor Authentication</h3>
-
-        <div class="info-card">
-            <p>Recovery codes remaining: <strong id="codes-remaining">0</strong></p>
-        </div>
-
-        <button onclick="showRegenerateCodes()" class="btn btn-secondary">
-            Regenerate Recovery Codes
-        </button>
-
-        <button onclick="showDisableMfa()" class="btn btn-danger">
-            Disable 2FA
-        </button>
-    </div>
+    <button onclick="showDisableMfa()" class="btn btn-danger">
+      Disable 2FA
+    </button>
+  </div>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.1/build/qrcode.min.js"></script>
 <script>
-let currentSecret = '';
-let recoveryCodes = [];
+  let currentSecret = "";
+  let recoveryCodes = [];
 
-async function loadStatus() {
-    const response = await fetch('/account/mfa/status', {
-        headers: { 'Authorization': `Bearer ${getToken()}` }
+  async function loadStatus() {
+    const response = await fetch("/account/mfa/status", {
+      headers: { Authorization: `Bearer ${getToken()}` },
     });
     const data = await response.json();
 
     if (data.mfa_enabled) {
-        document.getElementById('setup-section').style.display = 'none';
-        document.getElementById('manage-section').style.display = 'block';
-        document.getElementById('codes-remaining').textContent = data.recovery_codes_remaining;
+      document.getElementById("setup-section").style.display = "none";
+      document.getElementById("manage-section").style.display = "block";
+      document.getElementById("codes-remaining").textContent =
+        data.recovery_codes_remaining;
     } else {
-        document.getElementById('setup-section').style.display = 'block';
-        document.getElementById('manage-section').style.display = 'none';
+      document.getElementById("setup-section").style.display = "block";
+      document.getElementById("manage-section").style.display = "none";
     }
-}
+  }
 
-async function initSetup() {
-    const response = await fetch('/account/mfa/setup', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${getToken()}`,
-            'Content-Type': 'application/json'
-        }
+  async function initSetup() {
+    const response = await fetch("/account/mfa/setup", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
+      },
     });
 
     const data = await response.json();
 
     if (response.ok) {
-        currentSecret = data.secret;
+      currentSecret = data.secret;
 
-        // Generate QR code
-        QRCode.toCanvas(
-            document.getElementById('qr-code'),
-            data.qr_code_uri,
-            { width: 200 }
-        );
+      // Generate QR code
+      QRCode.toCanvas(document.getElementById("qr-code"), data.qr_code_uri, {
+        width: 200,
+      });
 
-        document.getElementById('manual-secret').textContent = data.secret;
-        document.getElementById('setup-section').style.display = 'none';
-        document.getElementById('qr-section').style.display = 'block';
+      document.getElementById("manual-secret").textContent = data.secret;
+      document.getElementById("setup-section").style.display = "none";
+      document.getElementById("qr-section").style.display = "block";
     } else {
-        alert('Error: ' + data.message);
+      alert("Error: " + data.message);
     }
-}
+  }
 
-async function confirmMfa(event) {
+  async function confirmMfa(event) {
     event.preventDefault();
 
-    const code = document.getElementById('verification-code').value;
+    const code = document.getElementById("verification-code").value;
 
-    const response = await fetch('/account/mfa/confirm', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${getToken()}`,
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ code })
+    const response = await fetch("/account/mfa/confirm", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${getToken()}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ code }),
     });
 
     const data = await response.json();
 
     if (response.ok) {
-        recoveryCodes = data.recovery_codes;
-        displayRecoveryCodes(recoveryCodes);
+      recoveryCodes = data.recovery_codes;
+      displayRecoveryCodes(recoveryCodes);
 
-        document.getElementById('qr-section').style.display = 'none';
-        document.getElementById('recovery-section').style.display = 'block';
+      document.getElementById("qr-section").style.display = "none";
+      document.getElementById("recovery-section").style.display = "block";
     } else {
-        alert('Error: ' + data.message);
+      alert("Error: " + data.message);
     }
-}
+  }
 
-function displayRecoveryCodes(codes) {
-    const container = document.getElementById('recovery-codes');
-    container.innerHTML = codes.map(code =>
-        `<code class="recovery-code">${code}</code>`
-    ).join('');
-}
+  function displayRecoveryCodes(codes) {
+    const container = document.getElementById("recovery-codes");
+    container.innerHTML = codes
+      .map((code) => `<code class="recovery-code">${code}</code>`)
+      .join("");
+  }
 
-function downloadCodes() {
-    const text = recoveryCodes.join('\n');
-    const blob = new Blob([text], { type: 'text/plain' });
+  function downloadCodes() {
+    const text = recoveryCodes.join("\n");
+    const blob = new Blob([text], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
 
-    const a = document.createElement('a');
+    const a = document.createElement("a");
     a.href = url;
-    a.download = 'recovery-codes.txt';
+    a.download = "recovery-codes.txt";
     a.click();
 
     URL.revokeObjectURL(url);
-}
+  }
 
-function copyAllCodes() {
-    navigator.clipboard.writeText(recoveryCodes.join('\n'));
-    alert('Recovery codes copied to clipboard!');
-}
+  function copyAllCodes() {
+    navigator.clipboard.writeText(recoveryCodes.join("\n"));
+    alert("Recovery codes copied to clipboard!");
+  }
 
-function finishSetup() {
-    document.getElementById('recovery-section').style.display = 'none';
+  function finishSetup() {
+    document.getElementById("recovery-section").style.display = "none";
     loadStatus();
-}
+  }
 
-loadStatus();
+  loadStatus();
 </script>
 
 <style>
-.codes-grid {
+  .codes-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 8px;
     margin: 16px 0;
-}
+  }
 
-.recovery-code {
+  .recovery-code {
     background: #f5f5f5;
     padding: 8px 12px;
     border-radius: 4px;
     font-family: monospace;
     font-size: 14px;
-}
+  }
 
-.warning {
+  .warning {
     background: #fff3cd;
     padding: 12px;
     border-radius: 4px;
     color: #856404;
-}
+  }
 </style>
 ```
 
@@ -1043,117 +1051,117 @@ loadStatus();
 
 ```html
 <div id="login-form">
-    <h2>Login</h2>
+  <h2>Login</h2>
 
-    <!-- Credentials Form -->
-    <form id="credentials-form" onsubmit="submitCredentials(event)">
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" required>
-        </div>
+  <!-- Credentials Form -->
+  <form id="credentials-form" onsubmit="submitCredentials(event)">
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" name="email" required />
+    </div>
 
-        <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" required>
-        </div>
+    <div class="form-group">
+      <label>Password</label>
+      <input type="password" name="password" required />
+    </div>
 
-        <div class="form-group">
-            <label>
-                <input type="checkbox" name="remember">
-                Remember me
-            </label>
-        </div>
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="remember" />
+        Remember me
+      </label>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Login</button>
-    </form>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </form>
 
-    <!-- MFA Form -->
-    <form id="mfa-form" style="display: none;" onsubmit="submitMfa(event)">
-        <h3>Two-Factor Authentication</h3>
-        <p>Enter the 6-digit code from your authenticator app</p>
+  <!-- MFA Form -->
+  <form id="mfa-form" style="display: none;" onsubmit="submitMfa(event)">
+    <h3>Two-Factor Authentication</h3>
+    <p>Enter the 6-digit code from your authenticator app</p>
 
-        <div class="form-group">
-            <input
-                type="text"
-                name="code"
-                placeholder="000000"
-                maxlength="10"
-                autocomplete="one-time-code"
-                required
-                autofocus
-            >
-            <small>Or enter a recovery code</small>
-        </div>
+    <div class="form-group">
+      <input
+        type="text"
+        name="code"
+        placeholder="000000"
+        maxlength="10"
+        autocomplete="one-time-code"
+        required
+        autofocus
+      />
+      <small>Or enter a recovery code</small>
+    </div>
 
-        <button type="submit" class="btn btn-primary">Verify</button>
+    <button type="submit" class="btn btn-primary">Verify</button>
 
-        <button type="button" onclick="cancelMfa()" class="btn btn-link">
-            Cancel
-        </button>
-    </form>
+    <button type="button" onclick="cancelMfa()" class="btn btn-link">
+      Cancel
+    </button>
+  </form>
 </div>
 
 <script>
-async function submitCredentials(event) {
+  async function submitCredentials(event) {
     event.preventDefault();
 
     const form = event.target;
     const formData = new FormData(form);
 
-    const response = await fetch('/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            email: formData.get('email'),
-            password: formData.get('password'),
-            remember: formData.get('remember') === 'on'
-        })
+    const response = await fetch("/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: formData.get("email"),
+        password: formData.get("password"),
+        remember: formData.get("remember") === "on",
+      }),
     });
 
     const data = await response.json();
 
     if (response.ok) {
-        if (data.requires_mfa) {
-            // Show MFA form
-            document.getElementById('credentials-form').style.display = 'none';
-            document.getElementById('mfa-form').style.display = 'block';
-        } else {
-            // Login complete
-            window.location.href = '/dashboard';
-        }
+      if (data.requires_mfa) {
+        // Show MFA form
+        document.getElementById("credentials-form").style.display = "none";
+        document.getElementById("mfa-form").style.display = "block";
+      } else {
+        // Login complete
+        window.location.href = "/dashboard";
+      }
     } else {
-        alert('Error: ' + data.message);
+      alert("Error: " + data.message);
     }
-}
+  }
 
-async function submitMfa(event) {
+  async function submitMfa(event) {
     event.preventDefault();
 
     const form = event.target;
     const code = form.code.value;
 
-    const response = await fetch('/login/mfa', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ code })
+    const response = await fetch("/login/mfa", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ code }),
     });
 
     const data = await response.json();
 
     if (response.ok) {
-        if (data.warning) {
-            alert(data.warning);
-        }
-        window.location.href = '/dashboard';
+      if (data.warning) {
+        alert(data.warning);
+      }
+      window.location.href = "/dashboard";
     } else {
-        alert('Error: ' + data.message);
+      alert("Error: " + data.message);
     }
-}
+  }
 
-function cancelMfa() {
-    document.getElementById('credentials-form').style.display = 'block';
-    document.getElementById('mfa-form').style.display = 'none';
-}
+  function cancelMfa() {
+    document.getElementById("credentials-form").style.display = "block";
+    document.getElementById("mfa-form").style.display = "none";
+  }
 </script>
 ```
 

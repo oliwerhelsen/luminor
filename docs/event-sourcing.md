@@ -31,6 +31,7 @@ New in v2.0: Luminor now includes complete event sourcing support with event sto
 ### Why Event Sourcing?
 
 **Benefits:**
+
 - **Complete Audit Trail** - Every state change is preserved forever
 - **Temporal Queries** - Answer "what was the state on date X?"
 - **Event Replay** - Rebuild state from events
@@ -39,6 +40,7 @@ New in v2.0: Luminor now includes complete event sourcing support with event sto
 - **Event-Driven Architecture** - Natural fit for microservices
 
 **Trade-offs:**
+
 - Increased complexity
 - Cannot delete data easily (GDPR considerations)
 - Eventual consistency in read models
@@ -46,12 +48,14 @@ New in v2.0: Luminor now includes complete event sourcing support with event sto
 ### When to Use Event Sourcing
 
 ✅ **Good fit:**
+
 - Financial systems requiring audit trails
 - Systems with complex business workflows
 - Applications needing temporal queries
 - Event-driven architectures
 
 ❌ **Not ideal:**
+
 - Simple CRUD applications
 - Systems with strict GDPR delete requirements
 - Teams unfamiliar with the pattern
@@ -67,7 +71,7 @@ Events represent facts about what happened in your domain.
 ```php
 <?php
 
-use Luminor\DDD\Domain\Abstractions\DomainEvent;
+use Luminor\Domain\Abstractions\DomainEvent;
 
 final class OrderPlaced extends DomainEvent
 {
@@ -98,7 +102,7 @@ The event store persists all domain events in append-only fashion.
 ```php
 <?php
 
-use Luminor\DDD\Domain\Events\EventStoreInterface;
+use Luminor\Domain\Events\EventStoreInterface;
 
 // Get events for an aggregate
 $events = $eventStore->getEventsForAggregate($orderId);
@@ -129,6 +133,7 @@ return [
 ```
 
 **Available drivers:**
+
 - `database` - PostgreSQL, MySQL, SQLite (production)
 - `memory` - In-memory storage (testing)
 
@@ -147,7 +152,7 @@ This creates the `domain_events` and `snapshots` tables.
 ```php
 <?php
 
-use Luminor\DDD\Domain\Events\EventStoreInterface;
+use Luminor\Domain\Events\EventStoreInterface;
 
 class OrderService
 {
@@ -173,7 +178,7 @@ Extend `EventSourcedAggregateRoot` instead of `AggregateRoot`:
 ```php
 <?php
 
-use Luminor\DDD\Domain\Events\EventSourcedAggregateRoot;
+use Luminor\Domain\Events\EventSourcedAggregateRoot;
 
 final class Order extends EventSourcedAggregateRoot
 {
@@ -249,7 +254,7 @@ Create a repository that loads aggregates from events:
 ```php
 <?php
 
-use Luminor\DDD\Domain\Repository\EventSourcedRepository;
+use Luminor\Domain\Repository\EventSourcedRepository;
 
 final class OrderRepository extends EventSourcedRepository
 {
@@ -333,7 +338,7 @@ Projections build read models from event streams, optimized for queries.
 ```php
 <?php
 
-use Luminor\DDD\Domain\Events\AbstractProjector;
+use Luminor\Domain\Events\AbstractProjector;
 
 final class OrderSummaryProjector extends AbstractProjector
 {
@@ -394,7 +399,7 @@ final class OrderSummaryProjector extends AbstractProjector
 ```php
 <?php
 
-use Luminor\DDD\Domain\Events\ProjectionManager;
+use Luminor\Domain\Events\ProjectionManager;
 
 // In your service provider
 $projectionManager = $container->get(ProjectionManager::class);
@@ -440,6 +445,7 @@ php luminor events:stats
 ```
 
 Output:
+
 ```
 Event Store Statistics
 ======================
@@ -474,11 +480,13 @@ php luminor projection:rebuild OrderSummaryProjector
 ### Event Naming
 
 ✅ **Good:**
+
 - Past tense: `OrderPlaced`, `PaymentProcessed`
 - Business language: `CustomerRegistered` not `UserCreated`
 - Specific: `OrderShipped` not `OrderUpdated`
 
 ❌ **Bad:**
+
 - Present tense: `PlaceOrder`, `ProcessPayment`
 - Technical: `DataInserted`, `RecordUpdated`
 - Generic: `OrderChanged`, `OrderModified`
@@ -486,11 +494,13 @@ php luminor projection:rebuild OrderSummaryProjector
 ### Event Granularity
 
 **Too Coarse:**
+
 ```php
 class OrderUpdated extends DomainEvent {} // What changed?
 ```
 
 **Too Fine:**
+
 ```php
 class OrderTotalChanged extends DomainEvent {}
 class OrderItemAdded extends DomainEvent {}
@@ -499,6 +509,7 @@ class OrderItemQuantityChanged extends DomainEvent {}
 ```
 
 **Just Right:**
+
 ```php
 class OrderItemAdded extends DomainEvent {}
 class OrderItemRemoved extends DomainEvent {}
@@ -539,7 +550,7 @@ final class OrderPlacedV2 extends DomainEvent
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Persistence\InMemoryEventStore;
+use Luminor\Infrastructure\Persistence\InMemoryEventStore;
 
 class OrderTest extends TestCase
 {
@@ -580,4 +591,4 @@ class OrderTest extends TestCase
 ## Additional Resources
 
 - [Event Sourcing by Martin Fowler](https://martinfowler.com/eaaDev/EventSourcing.html)
-- [CQRS Journey by Microsoft](https://docs.microsoft.com/en-us/previous-versions/msp-n-p/jj554200(v=pandp.10))
+- [CQRS Journey by Microsoft](<https://docs.microsoft.com/en-us/previous-versions/msp-n-p/jj554200(v=pandp.10)>)

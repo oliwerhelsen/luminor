@@ -54,7 +54,7 @@ composer global require luminor/luminor
 
 declare(strict_types=1);
 
-use Luminor\DDD\Kernel;
+use Luminor\Kernel;
 
 require_once __DIR__ . '/vendor/autoload.php';
 

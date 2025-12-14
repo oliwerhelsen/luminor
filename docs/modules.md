@@ -54,8 +54,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Inventory;
 
-use Luminor\DDD\Module\AbstractModule;
-use Luminor\DDD\Module\ModuleDefinition;
+use Luminor\Module\AbstractModule;
+use Luminor\Module\ModuleDefinition;
 
 final class InventoryModule extends AbstractModule
 {
@@ -108,8 +108,8 @@ declare(strict_types=1);
 
 namespace App\Modules\Inventory;
 
-use Luminor\DDD\Container\AbstractServiceProvider;
-use Luminor\DDD\Container\ContainerInterface;
+use Luminor\Container\AbstractServiceProvider;
+use Luminor\Container\ContainerInterface;
 
 final class InventoryServiceProvider extends AbstractServiceProvider
 {
@@ -177,7 +177,7 @@ Define routes in the module's routes file:
 
 declare(strict_types=1);
 
-use Luminor\DDD\Http\HttpKernel;
+use Luminor\Http\HttpKernel;
 
 $http = Http::getInstance();
 
@@ -299,7 +299,7 @@ declare(strict_types=1);
 
 namespace Tests\Modules\Inventory;
 
-use Luminor\DDD\Testing\TestCase;
+use Luminor\Testing\TestCase;
 use App\Modules\Inventory\InventoryModule;
 
 final class InventoryModuleTest extends TestCase

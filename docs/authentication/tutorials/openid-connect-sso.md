@@ -104,15 +104,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\OpenId\OpenIdProvider;
 use Luminor\Auth\OpenId\OpenIdService;
 use Luminor\Auth\AuthenticationException;
 use Luminor\Session\Session;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class AzureSsoController extends ApiController
 {
@@ -279,17 +279,17 @@ $router->get('/auth/azure/callback', [AzureSsoController::class, 'callback']);
 ```html
 <!-- Login page -->
 <a href="/auth/azure" class="btn btn-microsoft">
-    <svg><!-- Microsoft icon --></svg>
-    Sign in with Microsoft
+  <svg><!-- Microsoft icon --></svg>
+  Sign in with Microsoft
 </a>
 
 <!-- Or with JavaScript for SPA -->
 <script>
-function loginWithAzure() {
+  function loginWithAzure() {
     // Store current URL to return after login
     const returnTo = encodeURIComponent(window.location.pathname);
     window.location.href = `/auth/azure?return_to=${returnTo}`;
-}
+  }
 </script>
 ```
 
@@ -326,13 +326,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\OpenId\OpenIdProvider;
 use Luminor\Auth\OpenId\OpenIdService;
 use Luminor\Session\Session;
 use App\Domain\User\UserRepository;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class GoogleSsoController extends ApiController
 {
@@ -456,11 +456,11 @@ namespace App\Http\Controllers;
 
 use Luminor\Auth\OpenId\OpenIdProvider;
 use Luminor\Auth\OpenId\OpenIdService;
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Session\Session;
 use App\Domain\User\UserRepository;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class OktaSsoController extends ApiController
 {
@@ -548,9 +548,9 @@ namespace App\Http\Controllers;
 
 use Luminor\Auth\OpenId\OpenIdProvider;
 use Luminor\Auth\OpenId\OpenIdService;
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class SsoController extends ApiController
 {
@@ -668,22 +668,22 @@ $router->get('/auth/{provider}/callback', [SsoController::class, 'callback']);
 <div id="sso-buttons"></div>
 
 <script>
-async function loadSsoProviders() {
-    const response = await fetch('/auth/providers');
+  async function loadSsoProviders() {
+    const response = await fetch("/auth/providers");
     const { providers } = await response.json();
 
-    const container = document.getElementById('sso-buttons');
+    const container = document.getElementById("sso-buttons");
 
-    providers.forEach(provider => {
-        const button = document.createElement('a');
-        button.href = provider.url;
-        button.className = `btn btn-sso btn-${provider.name}`;
-        button.textContent = provider.label;
-        container.appendChild(button);
+    providers.forEach((provider) => {
+      const button = document.createElement("a");
+      button.href = provider.url;
+      button.className = `btn btn-sso btn-${provider.name}`;
+      button.textContent = provider.label;
+      container.appendChild(button);
     });
-}
+  }
 
-loadSsoProviders();
+  loadSsoProviders();
 </script>
 ```
 
@@ -735,16 +735,19 @@ $user->setOidcRefreshToken($encryptedToken);
 ## Troubleshooting
 
 ### "Invalid redirect_uri" error
+
 - Ensure the callback URL exactly matches what's registered
 - Check for trailing slashes
 - Verify HTTPS vs HTTP
 
 ### "State mismatch" error
+
 - Check session configuration
 - Ensure cookies are being set properly
 - Verify session storage is working
 
 ### "Invalid client" error
+
 - Double-check client ID and secret
 - Ensure credentials haven't expired
 - Verify the app is properly registered

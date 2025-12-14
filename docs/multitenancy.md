@@ -37,7 +37,7 @@ Resolve tenant from a request header:
 ```php
 <?php
 
-use Luminor\DDD\Multitenancy\Strategy\HeaderStrategy;
+use Luminor\Multitenancy\Strategy\HeaderStrategy;
 
 $strategy = new HeaderStrategy('X-Tenant-ID');
 
@@ -52,7 +52,7 @@ Resolve tenant from subdomain:
 ```php
 <?php
 
-use Luminor\DDD\Multitenancy\Strategy\SubdomainStrategy;
+use Luminor\Multitenancy\Strategy\SubdomainStrategy;
 
 $strategy = new SubdomainStrategy();
 
@@ -67,7 +67,7 @@ Resolve tenant from URL path:
 ```php
 <?php
 
-use Luminor\DDD\Multitenancy\Strategy\PathStrategy;
+use Luminor\Multitenancy\Strategy\PathStrategy;
 
 $strategy = new PathStrategy();
 
@@ -82,7 +82,7 @@ Access the current tenant throughout your application:
 ```php
 <?php
 
-use Luminor\DDD\Multitenancy\TenantContext;
+use Luminor\Multitenancy\TenantContext;
 
 // In a controller or service
 public function __construct(
@@ -109,8 +109,8 @@ The tenant middleware resolves and sets the current tenant:
 ```php
 <?php
 
-use Luminor\DDD\Multitenancy\TenantMiddleware;
-use Luminor\DDD\Multitenancy\TenantResolver;
+use Luminor\Multitenancy\TenantMiddleware;
+use Luminor\Multitenancy\TenantResolver;
 
 $resolver = new TenantResolver(
     strategy: new HeaderStrategy('X-Tenant-ID'),
@@ -138,8 +138,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
-use Luminor\DDD\Multitenancy\TenantAware;
+use Luminor\Domain\Abstractions\Entity;
+use Luminor\Multitenancy\TenantAware;
 
 final class Product extends Entity
 {
@@ -167,7 +167,7 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Persistence;
 
-use Luminor\DDD\Multitenancy\TenantScopedRepository;
+use Luminor\Multitenancy\TenantScopedRepository;
 
 final class ProductRepository extends TenantScopedRepository implements ProductRepositoryInterface
 {
@@ -190,8 +190,8 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
-use Luminor\DDD\Multitenancy\TenantInterface;
+use Luminor\Domain\Abstractions\Entity;
+use Luminor\Multitenancy\TenantInterface;
 
 final class Organization extends Entity implements TenantInterface
 {
@@ -232,8 +232,8 @@ declare(strict_types=1);
 
 namespace App\Infrastructure\Multitenancy;
 
-use Luminor\DDD\Multitenancy\TenantProviderInterface;
-use Luminor\DDD\Multitenancy\TenantInterface;
+use Luminor\Multitenancy\TenantProviderInterface;
+use Luminor\Multitenancy\TenantInterface;
 
 final class DatabaseTenantProvider implements TenantProviderInterface
 {
@@ -298,8 +298,8 @@ final class TenantDatabaseManager
 ```php
 <?php
 
-use Luminor\DDD\Multitenancy\TenantNotResolvedException;
-use Luminor\DDD\Multitenancy\TenantAccessDeniedException;
+use Luminor\Multitenancy\TenantNotResolvedException;
+use Luminor\Multitenancy\TenantAccessDeniedException;
 
 // In exception handler
 $handler->register(TenantNotResolvedException::class, function ($e, $response) {

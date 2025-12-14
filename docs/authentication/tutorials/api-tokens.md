@@ -28,15 +28,16 @@ This tutorial walks you through implementing API token authentication for servic
 
 ## API Tokens vs JWT
 
-| Feature | API Tokens | JWT |
-|---------|-----------|-----|
-| **Lifetime** | Long-lived (months/years) | Short-lived (minutes/hours) |
-| **Storage** | Database | Stateless (no storage) |
-| **Revocation** | Immediate | Requires blacklist |
-| **Use Case** | Service accounts, integrations | User sessions, mobile apps |
-| **Scopes** | Fine-grained | Typically user-level |
+| Feature        | API Tokens                     | JWT                         |
+| -------------- | ------------------------------ | --------------------------- |
+| **Lifetime**   | Long-lived (months/years)      | Short-lived (minutes/hours) |
+| **Storage**    | Database                       | Stateless (no storage)      |
+| **Revocation** | Immediate                      | Requires blacklist          |
+| **Use Case**   | Service accounts, integrations | User sessions, mobile apps  |
+| **Scopes**     | Fine-grained                   | Typically user-level        |
 
 **Use API tokens when:**
+
 - Building integrations with third-party services
 - Creating service accounts for automation
 - Providing CLI tool authentication
@@ -180,7 +181,7 @@ declare(strict_types=1);
 
 namespace App\Domain\ApiToken;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 
 final class ApiToken extends Entity
 {
@@ -545,7 +546,7 @@ use Luminor\Auth\AuthenticationProvider;
 use Luminor\Auth\AuthenticatableInterface;
 use Luminor\Auth\AuthenticationException;
 use App\Domain\User\UserRepository;
-use Luminor\DDD\Http\Request;
+use Luminor\Http\Request;
 
 final class ApiTokenAuthenticationProvider implements AuthenticationProvider
 {
@@ -644,12 +645,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\CurrentUser;
 use App\Auth\ApiTokenService;
 use App\Auth\TokenScopes;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class ApiTokenController extends ApiController
 {
@@ -791,8 +792,8 @@ namespace App\Http\Middleware;
 
 use Luminor\Auth\AuthorizationException;
 use App\Auth\TokenScopes;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class RequireScope
 {
@@ -882,6 +883,7 @@ curl -X POST https://api.yourapp.com/api/tokens \
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Token created successfully. Save this token - it will not be shown again.",
@@ -913,100 +915,107 @@ curl https://api.yourapp.com/api/posts \
 ```html
 <!-- Token creation form -->
 <form id="create-token-form">
-    <div class="form-group">
-        <label>Token Name</label>
-        <input type="text" name="name" placeholder="e.g., CI/CD Pipeline" required>
-    </div>
+  <div class="form-group">
+    <label>Token Name</label>
+    <input
+      type="text"
+      name="name"
+      placeholder="e.g., CI/CD Pipeline"
+      required
+    />
+  </div>
 
-    <div class="form-group">
-        <label>Scopes</label>
-        <div id="scopes-container"></div>
-    </div>
+  <div class="form-group">
+    <label>Scopes</label>
+    <div id="scopes-container"></div>
+  </div>
 
-    <div class="form-group">
-        <label>Expiration</label>
-        <select name="expires_in_days">
-            <option value="">Never</option>
-            <option value="30">30 days</option>
-            <option value="90">90 days</option>
-            <option value="365">1 year</option>
-        </select>
-    </div>
+  <div class="form-group">
+    <label>Expiration</label>
+    <select name="expires_in_days">
+      <option value="">Never</option>
+      <option value="30">30 days</option>
+      <option value="90">90 days</option>
+      <option value="365">1 year</option>
+    </select>
+  </div>
 
-    <button type="submit">Create Token</button>
+  <button type="submit">Create Token</button>
 </form>
 
 <!-- Token display modal -->
 <div id="token-modal" class="modal" style="display: none;">
-    <div class="modal-content">
-        <h2>Token Created</h2>
-        <p class="warning">Copy this token now. It will not be shown again!</p>
-        <div class="token-display">
-            <code id="token-value"></code>
-            <button onclick="copyToken()">Copy</button>
-        </div>
-        <button onclick="closeModal()">I've Copied the Token</button>
+  <div class="modal-content">
+    <h2>Token Created</h2>
+    <p class="warning">Copy this token now. It will not be shown again!</p>
+    <div class="token-display">
+      <code id="token-value"></code>
+      <button onclick="copyToken()">Copy</button>
     </div>
+    <button onclick="closeModal()">I've Copied the Token</button>
+  </div>
 </div>
 
 <script>
-// Load available scopes
-async function loadScopes() {
-    const response = await fetch('/api/tokens/scopes', {
-        headers: { 'Authorization': `Bearer ${getAccessToken()}` }
+  // Load available scopes
+  async function loadScopes() {
+    const response = await fetch("/api/tokens/scopes", {
+      headers: { Authorization: `Bearer ${getAccessToken()}` },
     });
     const { scopes } = await response.json();
 
-    const container = document.getElementById('scopes-container');
-    scopes.forEach(scope => {
-        container.innerHTML += `
+    const container = document.getElementById("scopes-container");
+    scopes.forEach((scope) => {
+      container.innerHTML += `
             <label class="checkbox">
                 <input type="checkbox" name="scopes[]" value="${scope.value}">
                 ${scope.label}
             </label>
         `;
     });
-}
+  }
 
-// Create token
-document.getElementById('create-token-form').addEventListener('submit', async (e) => {
-    e.preventDefault();
+  // Create token
+  document
+    .getElementById("create-token-form")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    const formData = new FormData(e.target);
-    const scopes = formData.getAll('scopes[]');
+      const formData = new FormData(e.target);
+      const scopes = formData.getAll("scopes[]");
 
-    const response = await fetch('/api/tokens', {
-        method: 'POST',
+      const response = await fetch("/api/tokens", {
+        method: "POST",
         headers: {
-            'Authorization': `Bearer ${getAccessToken()}`,
-            'Content-Type': 'application/json'
+          Authorization: `Bearer ${getAccessToken()}`,
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            name: formData.get('name'),
-            scopes: scopes,
-            expires_in_days: formData.get('expires_in_days') || null
-        })
+          name: formData.get("name"),
+          scopes: scopes,
+          expires_in_days: formData.get("expires_in_days") || null,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        // Show token in modal
+        document.getElementById("token-value").textContent = data.token.token;
+        document.getElementById("token-modal").style.display = "flex";
+        loadTokens(); // Refresh token list
+      } else {
+        alert("Error: " + data.message);
+      }
     });
 
-    const data = await response.json();
-
-    if (response.ok) {
-        // Show token in modal
-        document.getElementById('token-value').textContent = data.token.token;
-        document.getElementById('token-modal').style.display = 'flex';
-        loadTokens(); // Refresh token list
-    } else {
-        alert('Error: ' + data.message);
-    }
-});
-
-function copyToken() {
-    const token = document.getElementById('token-value').textContent;
+  function copyToken() {
+    const token = document.getElementById("token-value").textContent;
     navigator.clipboard.writeText(token);
-    alert('Token copied to clipboard!');
-}
+    alert("Token copied to clipboard!");
+  }
 
-loadScopes();
+  loadScopes();
 </script>
 ```
 

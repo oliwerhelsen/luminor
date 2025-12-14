@@ -160,9 +160,9 @@ vendor/bin/luminor queue:flush --hours=24
 
 namespace App\Console\Commands;
 
-use Luminor\DDD\Console\Commands\AbstractCommand;
-use Luminor\DDD\Console\Input;
-use Luminor\DDD\Console\Output;
+use Luminor\Console\Commands\AbstractCommand;
+use Luminor\Console\Input;
+use Luminor\Console\Output;
 
 final class GreetCommand extends AbstractCommand
 {
@@ -201,7 +201,7 @@ Register your command in a service provider:
 
 ```php
 use App\Console\Commands\GreetCommand;
-use Luminor\DDD\Console\Application;
+use Luminor\Console\Application;
 
 public function boot(ContainerInterface $container): void
 {

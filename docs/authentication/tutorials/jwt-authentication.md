@@ -30,6 +30,7 @@ This tutorial walks you through implementing JWT (JSON Web Token) authentication
 ## Step 1: Understanding JWT Authentication
 
 JWT tokens consist of three parts:
+
 1. **Header** - Algorithm and token type
 2. **Payload** - Claims (user data, expiration, etc.)
 3. **Signature** - Verification hash
@@ -189,12 +190,12 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use Luminor\DDD\Infrastructure\Http\ApiController;
+use Luminor\Infrastructure\Http\ApiController;
 use Luminor\Auth\AuthenticationException;
 use Luminor\Auth\CurrentUser;
 use App\Auth\AuthService;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class AuthController extends ApiController
 {
@@ -419,6 +420,7 @@ curl -X POST http://localhost:8080/auth/register \
 ```
 
 **Response:**
+
 ```json
 {
   "message": "Registration successful",
@@ -474,19 +476,19 @@ Here's how to handle token refresh in a JavaScript client:
 class AuthClient {
   constructor(baseUrl) {
     this.baseUrl = baseUrl;
-    this.accessToken = localStorage.getItem('access_token');
-    this.refreshToken = localStorage.getItem('refresh_token');
+    this.accessToken = localStorage.getItem("access_token");
+    this.refreshToken = localStorage.getItem("refresh_token");
   }
 
   async request(endpoint, options = {}) {
     const url = `${this.baseUrl}${endpoint}`;
     const headers = {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
       ...options.headers,
     };
 
     if (this.accessToken) {
-      headers['Authorization'] = `Bearer ${this.accessToken}`;
+      headers["Authorization"] = `Bearer ${this.accessToken}`;
     }
 
     let response = await fetch(url, { ...options, headers });
@@ -497,7 +499,7 @@ class AuthClient {
 
       if (refreshed) {
         // Retry the original request with new token
-        headers['Authorization'] = `Bearer ${this.accessToken}`;
+        headers["Authorization"] = `Bearer ${this.accessToken}`;
         response = await fetch(url, { ...options, headers });
       }
     }
@@ -508,8 +510,8 @@ class AuthClient {
   async refreshAccessToken() {
     try {
       const response = await fetch(`${this.baseUrl}/auth/refresh`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ refresh_token: this.refreshToken }),
       });
 
@@ -519,7 +521,7 @@ class AuthClient {
         return true;
       }
     } catch (error) {
-      console.error('Token refresh failed:', error);
+      console.error("Token refresh failed:", error);
     }
 
     this.clearTokens();
@@ -529,31 +531,31 @@ class AuthClient {
   setTokens(accessToken, refreshToken) {
     this.accessToken = accessToken;
     this.refreshToken = refreshToken;
-    localStorage.setItem('access_token', accessToken);
-    localStorage.setItem('refresh_token', refreshToken);
+    localStorage.setItem("access_token", accessToken);
+    localStorage.setItem("refresh_token", refreshToken);
   }
 
   clearTokens() {
     this.accessToken = null;
     this.refreshToken = null;
-    localStorage.removeItem('access_token');
-    localStorage.removeItem('refresh_token');
+    localStorage.removeItem("access_token");
+    localStorage.removeItem("refresh_token");
   }
 }
 
 // Usage
-const auth = new AuthClient('http://localhost:8080');
+const auth = new AuthClient("http://localhost:8080");
 
 // Login
-const loginResponse = await auth.request('/auth/login', {
-  method: 'POST',
-  body: JSON.stringify({ email: 'john@example.com', password: 'secret' }),
+const loginResponse = await auth.request("/auth/login", {
+  method: "POST",
+  body: JSON.stringify({ email: "john@example.com", password: "secret" }),
 });
 const { data } = await loginResponse.json();
 auth.setTokens(data.access_token, data.refresh_token);
 
 // Make authenticated requests
-const meResponse = await auth.request('/auth/me');
+const meResponse = await auth.request("/auth/me");
 const user = await meResponse.json();
 ```
 
@@ -649,16 +651,19 @@ public function authenticate(Request $request): ?AuthenticatableInterface
 ## Troubleshooting
 
 ### "Token expired" errors
+
 - Check your server's time synchronization
 - Verify `JWT_TTL` is set correctly
 - Ensure client clock is synchronized
 
 ### "Invalid signature" errors
+
 - Verify `JWT_SECRET` matches across all servers
 - Ensure the secret hasn't been changed
 - Check for whitespace in environment variable
 
 ### Tokens not being extracted
+
 - Verify `Authorization: Bearer <token>` header format
 - Check for middleware order issues
 - Ensure the auth provider is registered

@@ -82,7 +82,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 
 final class Todo extends Entity
 {
@@ -206,7 +206,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class CreateTodoCommand implements Command
 {
@@ -228,7 +228,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class CompleteTodoCommand implements Command
 {
@@ -250,7 +250,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class DeleteTodoCommand implements Command
 {
@@ -278,7 +278,7 @@ declare(strict_types=1);
 
 namespace App\Application\Queries;
 
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\CQRS\Query;
 
 final class GetTodoQuery implements Query
 {
@@ -300,7 +300,7 @@ declare(strict_types=1);
 
 namespace App\Application\Queries;
 
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\CQRS\Query;
 
 final class ListTodosQuery implements Query
 {
@@ -331,7 +331,7 @@ namespace App\Application\Handlers;
 use App\Application\Commands\CreateTodoCommand;
 use App\Domain\Entities\Todo;
 use App\Domain\Repository\TodoRepositoryInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 final class CreateTodoCommandHandler implements CommandHandlerInterface
 {
@@ -364,7 +364,7 @@ namespace App\Application\Handlers;
 
 use App\Application\Commands\CompleteTodoCommand;
 use App\Domain\Repository\TodoRepositoryInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 final class CompleteTodoCommandHandler implements CommandHandlerInterface
 {
@@ -402,7 +402,7 @@ namespace App\Application\Handlers;
 
 use App\Application\Commands\DeleteTodoCommand;
 use App\Domain\Repository\TodoRepositoryInterface;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 final class DeleteTodoCommandHandler implements CommandHandlerInterface
 {
@@ -439,7 +439,7 @@ namespace App\Application\Handlers;
 
 use App\Application\Queries\GetTodoQuery;
 use App\Domain\Repository\TodoRepositoryInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
 
 final class GetTodoQueryHandler implements QueryHandlerInterface
 {
@@ -485,7 +485,7 @@ namespace App\Application\Handlers;
 
 use App\Application\Queries\ListTodosQuery;
 use App\Domain\Repository\TodoRepositoryInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
 
 final class ListTodosQueryHandler implements QueryHandlerInterface
 {
@@ -580,11 +580,11 @@ use App\Application\Commands\CompleteTodoCommand;
 use App\Application\Commands\DeleteTodoCommand;
 use App\Application\Queries\GetTodoQuery;
 use App\Application\Queries\ListTodosQuery;
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class TodoController extends ApiController
 {
@@ -700,9 +700,9 @@ use App\Application\Queries\GetTodoQuery;
 use App\Application\Queries\ListTodosQuery;
 use App\Infrastructure\Http\Controllers\TodoController;
 use App\Infrastructure\Persistence\InMemoryTodoRepository;
-use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
-use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
-use Luminor\DDD\Http\HttpKernel;
+use Luminor\Infrastructure\Bus\SimpleCommandBus;
+use Luminor\Infrastructure\Bus\SimpleQueryBus;
+use Luminor\Http\HttpKernel;
 
 // Create HTTP instance
 $http = Http::getInstance();

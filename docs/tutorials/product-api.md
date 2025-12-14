@@ -89,7 +89,7 @@ declare(strict_types=1);
 
 namespace App\Domain\ValueObjects;
 
-use Luminor\DDD\Domain\Abstractions\ValueObject;
+use Luminor\Domain\Abstractions\ValueObject;
 
 final class Money extends ValueObject
 {
@@ -182,7 +182,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Entities;
 
-use Luminor\DDD\Domain\Abstractions\Entity;
+use Luminor\Domain\Abstractions\Entity;
 use App\Domain\ValueObjects\Money;
 
 final class Product extends Entity
@@ -321,7 +321,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class CreateProductCommand implements Command
 {
@@ -347,7 +347,7 @@ declare(strict_types=1);
 
 namespace App\Application\Commands;
 
-use Luminor\DDD\Application\CQRS\Command;
+use Luminor\Application\CQRS\Command;
 
 final class UpdateProductCommand implements Command
 {
@@ -374,7 +374,7 @@ declare(strict_types=1);
 
 namespace App\Application\Queries;
 
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\CQRS\Query;
 
 final class GetProductQuery implements Query
 {
@@ -396,7 +396,7 @@ declare(strict_types=1);
 
 namespace App\Application\Queries;
 
-use Luminor\DDD\Application\CQRS\Query;
+use Luminor\Application\CQRS\Query;
 
 final class ListProductsQuery implements Query
 {
@@ -429,7 +429,7 @@ use App\Application\Commands\CreateProductCommand;
 use App\Domain\Entities\Product;
 use App\Domain\Repository\ProductRepositoryInterface;
 use App\Domain\ValueObjects\Money;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 final class CreateProductCommandHandler implements CommandHandlerInterface
 {
@@ -468,7 +468,7 @@ namespace App\Application\Handlers;
 use App\Application\Commands\UpdateProductCommand;
 use App\Domain\Repository\ProductRepositoryInterface;
 use App\Domain\ValueObjects\Money;
-use Luminor\DDD\Application\Bus\CommandHandlerInterface;
+use Luminor\Application\Bus\CommandHandlerInterface;
 
 final class UpdateProductCommandHandler implements CommandHandlerInterface
 {
@@ -526,7 +526,7 @@ namespace App\Application\Handlers;
 
 use App\Application\Queries\GetProductQuery;
 use App\Domain\Repository\ProductRepositoryInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\Bus\QueryHandlerInterface;
 
 final class GetProductQueryHandler implements QueryHandlerInterface
 {
@@ -569,8 +569,8 @@ namespace App\Application\Handlers;
 
 use App\Application\Queries\ListProductsQuery;
 use App\Domain\Repository\ProductRepositoryInterface;
-use Luminor\DDD\Application\Bus\QueryHandlerInterface;
-use Luminor\DDD\Application\DTO\PaginatedResult;
+use Luminor\Application\Bus\QueryHandlerInterface;
+use Luminor\Application\DTO\PaginatedResult;
 
 final class ListProductsQueryHandler implements QueryHandlerInterface
 {
@@ -673,11 +673,11 @@ use App\Application\Commands\CreateProductCommand;
 use App\Application\Commands\UpdateProductCommand;
 use App\Application\Queries\GetProductQuery;
 use App\Application\Queries\ListProductsQuery;
-use Luminor\DDD\Application\Bus\CommandBusInterface;
-use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Luminor\DDD\Infrastructure\Http\ApiController;
-use Luminor\DDD\Http\Request;
-use Luminor\DDD\Http\Response;
+use Luminor\Application\Bus\CommandBusInterface;
+use Luminor\Application\Bus\QueryBusInterface;
+use Luminor\Infrastructure\Http\ApiController;
+use Luminor\Http\Request;
+use Luminor\Http\Response;
 
 final class ProductController extends ApiController
 {
@@ -804,9 +804,9 @@ use App\Application\Queries\GetProductQuery;
 use App\Application\Queries\ListProductsQuery;
 use App\Infrastructure\Http\Controllers\ProductController;
 use App\Infrastructure\Persistence\InMemoryProductRepository;
-use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
-use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
-use Luminor\DDD\Http\HttpKernel;
+use Luminor\Infrastructure\Bus\SimpleCommandBus;
+use Luminor\Infrastructure\Bus\SimpleQueryBus;
+use Luminor\Http\HttpKernel;
 
 // Create HTTP instance
 $http = Http::getInstance();
