@@ -5,6 +5,53 @@ All notable changes to the Luminor DDD Framework will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0] - 2025-12-14
+
+### 🚀 Symfony HttpFoundation Migration & Multi-Server Support
+
+This release brings a major architectural improvement by replacing the Utopia HTTP layer with Symfony HttpFoundation, making Swoole completely optional and enabling flexible server backends.
+
+### ⚠️ Breaking Changes
+
+- **HTTP Layer Migration** - Replaced `utopia-php/http` with Symfony HttpFoundation
+  - Replace `Utopia\Http\Request` with `Luminor\Http\Request`
+  - Replace `Utopia\Http\Response` with `Luminor\Http\Response`
+  - Replace `Utopia\Http\Http` with `Luminor\Http\HttpKernel`
+  - Update RouteRegistrar to use new Router API
+
+### Added
+
+#### Multi-Server Support
+- **Server Adapters** - Laravel Octane-inspired architecture for flexible server backends
+  - `FpmServer` - PHP built-in server (default, no extra requirements)
+  - `SwooleServer` - High-performance async server (optional, requires ext-swoole)
+  - `FrankenPhpServer` - Modern PHP app server (optional, requires binary)
+- **ServerFactory** - Automatic server selection and availability detection
+- **ServeCommand Options** - `--server`, `--workers`, `--worker-mode`, `--list-servers`
+- **Server Adapters Documentation** - Comprehensive guide for server configuration
+
+#### New HTTP Layer
+- `Luminor\Http\Request` - Request wrapper with familiar API
+- `Luminor\Http\Response` - Response wrapper with `json()`, `noContent()`, etc.
+- `Luminor\Http\HttpKernel` - Application entry point
+- `Luminor\Http\Routing\Router` - Simple regex-based router
+- `Luminor\Http\Routing\Route` - Route definition with middleware support
+- `Luminor\Http\Middleware\MiddlewareInterface` - New middleware contract
+- `Request::getHostname()` - Alias for `getHost()` method
+
+### Changed
+
+- **Swoole is now optional** - No longer a required dependency
+- **Composer Dependencies** - Replaced `utopia-php/http` with `symfony/http-foundation ^7.0|^6.4`
+- **Test Namespaces** - Refactored from `Luminor\DDD\Tests\Unit` to `Luminor\Tests\Unit`
+- **Command Output** - Simplified usage instructions and enhanced user experience
+- **Documentation** - Updated all guides to reflect Symfony HttpFoundation migration
+
+### Removed
+
+- **Swoole Requirement** - Removed from CI tests and core dependencies
+- **Utopia HTTP** - Replaced with Symfony HttpFoundation
+
 ## [2.0.0] - 2025-12-13
 
 ### 🎉 Major Release - Event Sourcing, OpenAPI & Observability
