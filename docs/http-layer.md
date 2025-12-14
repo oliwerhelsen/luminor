@@ -8,7 +8,7 @@ description: "Controllers, Routes, Middleware, and Request/Response handling"
 
 # HTTP Layer
 
-The HTTP layer provides a clean, expressive API for building REST APIs with your domain-driven application. Built on Symfony HttpFoundation, it offers flexibility to run on PHP-FPM, Swoole, or FrankenPHP.
+The HTTP layer provides a clean, expressive API for building REST APIs with your domain-driven application. Built on Symfony HttpFoundation, it offers flexibility to run on PHP-FPM or FrankenPHP.
 
 ## Controllers
 

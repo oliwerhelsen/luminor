@@ -6,7 +6,6 @@ namespace Luminor\Server;
 
 use Luminor\Server\Adapters\FpmServer;
 use Luminor\Server\Adapters\FrankenPhpServer;
-use Luminor\Server\Adapters\SwooleServer;
 
 /**
  * Factory for creating server instances.
@@ -25,7 +24,6 @@ final class ServerFactory
     {
         return match ($type) {
             ServerType::FPM => new FpmServer(),
-            ServerType::SWOOLE => new SwooleServer(),
             ServerType::FRANKENPHP => new FrankenPhpServer(),
         };
     }
@@ -45,7 +43,7 @@ final class ServerFactory
             throw new \InvalidArgumentException(sprintf(
                 'Unknown server type "%s". Available types: %s',
                 $type,
-                implode(', ', array_map(fn (ServerType $t) => $t->value, ServerType::cases()))
+                implode(', ', array_map(fn(ServerType $t) => $t->value, ServerType::cases()))
             ));
         }
 
@@ -57,8 +55,7 @@ final class ServerFactory
      *
      * Priority order:
      * 1. FrankenPHP (if binary available)
-     * 2. Swoole (if extension loaded)
-     * 3. FPM/Built-in (always available, fallback)
+     * 2. FPM/Built-in (always available, fallback)
      *
      * @param bool $preferHighPerformance If true, prioritize high-performance servers
      */
@@ -66,11 +63,6 @@ final class ServerFactory
     {
         if ($preferHighPerformance) {
             // Check for high-performance options first
-            $swoole = new SwooleServer();
-            if ($swoole->isAvailable()) {
-                return $swoole;
-            }
-
             $frankenphp = new FrankenPhpServer();
             if ($frankenphp->isAvailable()) {
                 return $frankenphp;

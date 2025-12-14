@@ -9,6 +9,7 @@ A modern, open-source Domain-Driven Design (DDD) framework built on [Symfony Htt
 ## Features
 
 ### Core DDD Features
+
 - **Domain-Driven Design** - Built-in abstractions for Entities, Aggregate Roots, Value Objects, Domain Events, and Specifications
 - **CQRS Pattern** - Command and Query Responsibility Segregation with dedicated buses
 - **Repository Pattern** - Clean data access abstractions with filtering, sorting, and pagination
@@ -16,6 +17,7 @@ A modern, open-source Domain-Driven Design (DDD) framework built on [Symfony Htt
 - **Multi-tenancy Support** - Built-in tenant resolution strategies (subdomain, header, path)
 
 ### Event Sourcing (v2.0+)
+
 - **Event Store** - Persist all domain events with database and in-memory implementations
 - **Event-Sourced Aggregates** - Rebuild state from event streams with automatic rehydration
 - **Snapshots** - Performance optimization for aggregates with many events
@@ -23,7 +25,8 @@ A modern, open-source Domain-Driven Design (DDD) framework built on [Symfony Htt
 - **Temporal Queries** - Query events by date range, type, or aggregate
 
 ### Infrastructure & Tools
-- **HTTP Layer Integration** - Built on Symfony HttpFoundation with support for PHP-FPM, Swoole, and FrankenPHP
+
+- **HTTP Layer Integration** - Built on Symfony HttpFoundation with support for PHP-FPM and FrankenPHP
 - **Authentication & Authorization** - Role-based access control with policy support
 - **OpenAPI Documentation** - Automatic API documentation generation with PHP attributes
 - **Observability & Metrics** - Track performance with counters, gauges, histograms, and timers
@@ -62,23 +65,27 @@ $kernel->boot();
 ## Documentation
 
 ### Getting Started
+
 - [Installation Guide](docs/installation.md)
 - [Quick Start](docs/quick-start.md)
 - [Core Concepts](docs/core-concepts.md)
 - [Tutorials](docs/tutorials.md)
 
 ### Architecture
+
 - [Domain Layer](docs/domain-layer.md)
 - [Application Layer](docs/application-layer.md)
 - [HTTP Layer](docs/http-layer.md)
 - [Modules](docs/modules.md)
 
 ### Event Sourcing (v2.0+)
+
 - [Event Sourcing Guide](docs/event-sourcing.md)
 - [OpenAPI Documentation](docs/openapi.md)
 - [Observability & Metrics](docs/observability.md)
 
 ### Features
+
 - [Authentication](docs/AUTHENTICATION.md)
 - [Multi-tenancy](docs/multitenancy.md)
 - [Testing](docs/testing.md)

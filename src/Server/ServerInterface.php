@@ -8,7 +8,7 @@ namespace Luminor\Server;
  * Interface for HTTP server adapters.
  *
  * Inspired by Laravel Octane, this interface defines the contract
- * for different server implementations (PHP-FPM, Swoole, FrankenPHP).
+ * for different server implementations (PHP-FPM and FrankenPHP).
  */
 interface ServerInterface
 {

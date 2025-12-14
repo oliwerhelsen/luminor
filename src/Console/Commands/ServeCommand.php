@@ -14,7 +14,6 @@ use Luminor\Server\ServerType;
  *
  * Supports multiple server backends:
  * - fpm: PHP built-in development server (default, no extra requirements)
- * - swoole: High-performance async server (requires ext-swoole)
  * - frankenphp: Modern PHP application server (requires FrankenPHP binary)
  */
 final class ServeCommand extends AbstractCommand
@@ -43,12 +42,12 @@ final class ServeCommand extends AbstractCommand
             ])
             ->addOption('server', [
                 'shortcut' => 's',
-                'description' => 'Server type: fpm (default), swoole, or frankenphp',
+                'description' => 'Server type: fpm (default) or frankenphp',
                 'default' => 'fpm',
             ])
             ->addOption('workers', [
                 'shortcut' => 'w',
-                'description' => 'Number of worker processes (swoole/frankenphp only)',
+                'description' => 'Number of worker processes (frankenphp only)',
                 'default' => '4',
             ])
             ->addOption('worker-mode', [
