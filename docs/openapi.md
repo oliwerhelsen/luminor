@@ -11,11 +11,12 @@ permalink: /openapi/
 Generate beautiful, interactive API documentation automatically using OpenAPI (Swagger) specifications.
 
 {: .highlight }
-New in v2.0: Automatic OpenAPI documentation generation with PHP attributes.
+New in v2.2: Swagger UI as the default index page in development mode—inspired by Laravel Scramble!
 
 ## Table of Contents
 
 - [Introduction](#introduction)
+- [Development Mode Swagger UI](#development-mode-swagger-ui)
 - [Quick Start](#quick-start)
 - [Documenting Endpoints](#documenting-endpoints)
 - [Schemas](#schemas)
@@ -34,6 +35,75 @@ OpenAPI (formerly Swagger) is the industry standard for documenting REST APIs. L
 - Client SDK generation
 - API testing tools
 - Clear contracts between frontend and backend
+
+---
+
+## Development Mode Swagger UI
+
+{: .new }
+New in v2.2: Enable interactive API documentation at your root URL during development.
+
+In development mode, you can automatically serve Swagger UI at your application's index page (`/`). This makes it easy to explore and test your API without any additional setup.
+
+### Enable Development Docs
+
+Add one line to your entry point to enable Swagger UI:
+
+```php
+<?php
+
+use Luminor\Http\HttpKernel;
+
+$http = HttpKernel::getInstance();
+
+// Load your config
+$config = require __DIR__ . '/../config/framework.php';
+
+// Enable Swagger UI at "/" in development mode
+if ($config['debug'] ?? false) {
+    $http->enableDevelopmentDocs($config);
+}
+
+// Register your routes...
+$http->get('/products', [ProductController::class, 'index']);
+// ...
+
+$http->run();
+```
+
+### Configuration
+
+Configure the Swagger UI in your `config/framework.php`:
+
+```php
+return [
+    'name' => 'My API',
+    'debug' => true, // Enable development mode
+
+    'openapi' => [
+        'info' => [
+            'title' => 'My API Documentation',
+            'version' => '1.0.0',
+            'description' => 'Interactive API documentation',
+        ],
+        'spec_path' => '/api/openapi.json',
+        'servers' => [
+            [
+                'url' => 'http://localhost:8000',
+                'description' => 'Development server',
+            ],
+        ],
+    ],
+];
+```
+
+### Features
+
+- **Interactive Try It Out** - Test endpoints directly from the documentation
+- **Beautiful UI** - Modern Swagger UI with dark mode support
+- **Development Badge** - Visual indicator that you're in development mode
+- **Auto-refresh** - Spec is always up-to-date with your code
+- **Zero Configuration** - Works out of the box with sensible defaults
 
 ---
 

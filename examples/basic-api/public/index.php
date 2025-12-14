@@ -28,8 +28,16 @@ use Luminor\Http\HttpKernel;
 use Luminor\Http\Request;
 use Luminor\Http\Response;
 
+// Load configuration
+$config = require __DIR__ . '/../config/framework.php';
+
 // Create the HTTP kernel
 $http = HttpKernel::getInstance();
+
+// Enable Swagger UI at index in development mode
+if ($config['debug'] ?? false) {
+    $http->enableDevelopmentDocs($config);
+}
 
 // Set up repository (in-memory for this example)
 $productRepository = new InMemoryProductRepository();

@@ -108,4 +108,30 @@ return [
     |
     */
     'storage_path' => null, // Defaults to {base_path}/storage
+
+    /*
+    |--------------------------------------------------------------------------
+    | OpenAPI / Swagger UI Configuration
+    |--------------------------------------------------------------------------
+    |
+    | Configure automatic API documentation generation and the Swagger UI
+    | that displays at the index route in development mode.
+    |
+    | Enable with: $http->enableDevelopmentDocs($config);
+    |
+    */
+    'openapi' => [
+        'info' => [
+            'title' => 'API Documentation',
+            'version' => '1.0.0',
+            'description' => 'Interactive API documentation powered by Swagger UI',
+        ],
+        'spec_path' => '/api/openapi.json',
+        'servers' => [
+            [
+                'url' => 'http://localhost:8000',
+                'description' => 'Development server',
+            ],
+        ],
+    ],
 ];
