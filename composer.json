@@ -54,7 +54,9 @@
     "doctrine/dbal": "Required for database queue driver (^3.0|^4.0)",
     "doctrine/migrations": "Required for database migrations (^3.0)",
     "predis/predis": "Required for Redis queue/cache driver (^2.0)",
-    "monolog/monolog": "For advanced logging features (^3.0)"
+    "monolog/monolog": "For advanced logging features (^3.0)",
+    "ext-swoole": "For high-performance async HTTP server (use: luminor serve --server=swoole)",
+    "ext-openswoole": "Alternative to ext-swoole for async HTTP server"
   },
   "autoload-dev": {
     "psr-4": {
