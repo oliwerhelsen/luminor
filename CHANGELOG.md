@@ -5,9 +5,26 @@ All notable changes to the Luminor DDD Framework will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0] - 2025-12-14
+
+### ✨ Development Mode Swagger UI
+
+This release adds automatic API documentation with Swagger UI in development mode, inspired by Laravel Scramble.
+
+### Added
+
+- **Development Mode Swagger UI** - Auto-enable API documentation at index in development
+  - New `OpenApiDevelopmentRoutes` class for registering Swagger UI routes
+  - `HttpKernel::enableDevelopmentDocs()` method for easy setup
+  - Serves Swagger UI at "/" when in development mode
+  - Serves OpenAPI spec at "/api/openapi.json"
+  - Beautiful, interactive API explorer with "Try it out" functionality
+  - Inspired by Laravel Scramble for automatic API documentation
+  - Configurable via framework config (title, version, servers)
+
 ## [2.2.0] - 2025-12-14
 
-### ✨ Test Command, Namespace Simplification & Development Docs
+### ✨ Test Command & Namespace Simplification
 
 This release adds a convenient test runner command, simplifies the namespace structure, and introduces Swagger UI as the default index in development mode.
 
