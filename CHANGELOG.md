@@ -22,6 +22,7 @@ This release brings a major architectural improvement by replacing the Utopia HT
 ### Added
 
 #### Multi-Server Support
+
 - **Server Adapters** - Laravel Octane-inspired architecture for flexible server backends
   - `FpmServer` - PHP built-in server (default, no extra requirements)
   - `SwooleServer` - High-performance async server (optional, requires ext-swoole)
@@ -31,6 +32,7 @@ This release brings a major architectural improvement by replacing the Utopia HT
 - **Server Adapters Documentation** - Comprehensive guide for server configuration
 
 #### New HTTP Layer
+
 - `Luminor\Http\Request` - Request wrapper with familiar API
 - `Luminor\Http\Response` - Response wrapper with `json()`, `noContent()`, etc.
 - `Luminor\Http\HttpKernel` - Application entry point
@@ -61,6 +63,7 @@ The v2.0 release brings three major feature additions to Luminor, significantly 
 ### Added
 
 #### Event Sourcing
+
 - **Event Store** - Database and in-memory implementations for persisting domain events
   - `DatabaseEventStore` - Production-ready event store with MySQL, PostgreSQL, and SQLite support
   - `InMemoryEventStore` - Fast in-memory storage for testing and development
@@ -91,6 +94,7 @@ The v2.0 release brings three major feature additions to Luminor, significantly 
 - **Configuration** - `config/events.php` for event store and projection settings
 
 #### OpenAPI Documentation
+
 - **OpenAPI Generator** - Automatic API documentation generation
   - OpenAPI 3.0 specification support
   - JSON and YAML output formats
@@ -108,6 +112,7 @@ The v2.0 release brings three major feature additions to Luminor, significantly 
 - **Documentation** - Comprehensive guide for API documentation
 
 #### Observability & Metrics
+
 - **Metrics Collection** - Track application performance and health
   - `MetricsInterface` with multiple implementations
   - `InMemoryMetrics` - Development and testing
@@ -129,11 +134,13 @@ The v2.0 release brings three major feature additions to Luminor, significantly 
 - **Production Integration** - Examples for StatsD, Prometheus, and CloudWatch
 
 #### Enhanced Domain Events
+
 - **Metadata Support** - Added metadata field to `DomainEvent` base class
 - **Payload Method** - Made `getPayload()` public for event serialization
 - **Event Methods** - Added `withMetadata()` for event enrichment
 
 #### Documentation
+
 - **Event Sourcing Guide** - Complete guide with examples and best practices
 - **OpenAPI Documentation** - Step-by-step guide for API documentation
 - **Observability Guide** - Metrics collection and monitoring guide
@@ -147,6 +154,7 @@ The v2.0 release brings three major feature additions to Luminor, significantly 
 ### Technical Details
 
 #### Event Sourcing Architecture
+
 ```
 Event Store -> Events -> Aggregate Rehydration
             ↓
@@ -156,10 +164,12 @@ Event Store -> Events -> Aggregate Rehydration
 ```
 
 #### New Service Providers
+
 - `EventStoreServiceProvider` - Registers event store implementations
 - `ObservabilityServiceProvider` - Registers metrics collection
 
 #### Database Tables
+
 - `domain_events` - Stores all domain events with full payload
 - `snapshots` - Caches aggregate state at specific versions
 
@@ -168,20 +178,24 @@ Event Store -> Events -> Aggregate Rehydration
 #### For Existing Applications
 
 1. **Run Migrations**
+
    ```bash
    php luminor migrate
    ```
 
 2. **Update Configuration**
+
    - Add `config/events.php` for event sourcing
    - Add `config/observability.php` for metrics
 
 3. **Optional: Convert to Event Sourcing**
+
    - Change aggregates from `AggregateRoot` to `EventSourcedAggregateRoot`
    - Implement apply methods for events
    - Update repositories to extend `EventSourcedRepository`
 
 4. **Add API Documentation** (Optional)
+
    - Annotate controllers with OpenAPI attributes
    - Generate documentation: `php luminor openapi:generate`
 
@@ -219,12 +233,14 @@ The first stable release of Luminor - a modern, open-source Domain-Driven Design
 ### Added
 
 #### Core DDD Features
+
 - **Domain Layer** - Entities, Aggregate Roots, Value Objects, Domain Events, Specifications, and Enumerations
 - **Application Layer** - Complete CQRS implementation with Commands, Queries, and Handlers
 - **Repository Pattern** - Clean data access with filtering, sorting, and pagination support
 - **Event System** - Domain event publishing and handling with event dispatcher
 
 #### Infrastructure
+
 - **HTTP Layer** - ApiController, CrudController base classes with standardized responses
 - **Middleware** - Authentication, Authorization, CORS, CSRF, Validation, Rate Limiting, and Tenant middleware
 - **Database** - Schema builder with migrations support for MySQL, PostgreSQL, and SQLite
@@ -236,6 +252,7 @@ The first stable release of Luminor - a modern, open-source Domain-Driven Design
 - **Logging** - PSR-3 compatible logging with File, Stdout, Array, and Null drivers
 
 #### Authentication & Authorization
+
 - **JWT Authentication** - Token-based authentication with customizable expiration
 - **API Token Management** - Generate and manage API tokens
 - **Session Authentication** - Traditional session-based auth
@@ -245,16 +262,19 @@ The first stable release of Luminor - a modern, open-source Domain-Driven Design
 - **Security Features** - Password hashing (Bcrypt, Argon2), CSRF protection, rate limiting
 
 #### Multi-tenancy
+
 - **Tenant Resolution Strategies** - Subdomain, Header, and Path-based tenant identification
 - **Tenant Context** - Automatic tenant context management
 - **Tenant-Scoped Repositories** - Data isolation at the repository level
 
 #### Modules System
+
 - **Modular Architecture** - Organize applications into bounded contexts
 - **Module Lifecycle** - Register, boot, and manage modules
 - **Service Providers** - Dependency injection and service registration per module
 
 #### Developer Experience
+
 - **CLI Tools** - 24+ console commands for code generation and management
   - Entity, Command, Query, Handler, Repository, Controller generators
   - Migration commands (migrate, rollback, reset, fresh, status)
@@ -266,12 +286,14 @@ The first stable release of Luminor - a modern, open-source Domain-Driven Design
 - **Dependency Injection** - PSR-11 compatible container with auto-wiring
 
 #### Documentation & Examples
+
 - **Comprehensive Documentation** - 27 documentation files covering all features
 - **Tutorials** - Step-by-step guides for building Todo and Product APIs
 - **Authentication Tutorials** - 7 detailed authentication implementation guides
 - **Working Examples** - Complete example applications (basic-api, modular-app)
 
 #### Quality Assurance
+
 - **PHPUnit Tests** - Comprehensive test coverage with Unit and Integration test suites
 - **PHPStan Level 8** - Maximum static analysis strictness
 - **Strict Types** - 100% of source files use `declare(strict_types=1)`
@@ -279,10 +301,12 @@ The first stable release of Luminor - a modern, open-source Domain-Driven Design
 - **PSR-12 Compliant** - Follows PHP-FIG coding standards
 
 ### Requirements
+
 - PHP 8.2 or higher
 - Composer 2.x
 
 ### Optional Dependencies
+
 - `vlucas/phpdotenv` ^5.5 - For .env file support
 - `doctrine/dbal` ^3.0|^4.0 - For database functionality
 - `doctrine/migrations` ^3.0 - For database migrations
