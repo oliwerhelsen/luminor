@@ -1159,20 +1159,25 @@ XML;
         $output->newLine();
         $output->line("  1. <info>cd {$name}</info>");
         $output->line('  2. <info>cp .env.example .env</info> (configure your environment)');
-        $output->line('  3. <info>composer serve</info> (start development server)');
+        $output->line('  3. <info>composer serve</info> or <info>luminor serve</info> (start development server)');
         $output->newLine();
 
         $output->comment('Useful commands:');
         $output->newLine();
-        $output->line('  <info>vendor/bin/luminor make:entity</info>      Create a new entity');
-        $output->line('  <info>vendor/bin/luminor make:command</info>     Create a new command');
-        $output->line('  <info>vendor/bin/luminor make:query</info>       Create a new query');
-        $output->line('  <info>vendor/bin/luminor make:controller</info>  Create a new controller');
+        $output->line('  <info>luminor make:entity</info>      Create a new entity');
+        $output->line('  <info>luminor make:command</info>     Create a new command');
+        $output->line('  <info>luminor make:query</info>       Create a new query');
+        $output->line('  <info>luminor make:controller</info>  Create a new controller');
 
         if ($config['type'] === 'modular') {
-            $output->line('  <info>vendor/bin/luminor make:module</info>     Create a new module');
+            $output->line('  <info>luminor make:module</info>     Create a new module');
         }
 
+        $output->newLine();
+        $output->comment('Pro tip:');
+        $output->newLine();
+        $output->line('  Add <info>vendor/bin</info> to your PATH to use <info>luminor</info> directly:');
+        $output->line('  <comment>export PATH="./vendor/bin:$PATH"</comment>');
         $output->newLine();
         $output->info('Happy coding with Luminor! 🚀');
         $output->newLine();
