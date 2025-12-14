@@ -111,8 +111,8 @@ use Luminor\Auth\AuthenticationException;
 use Luminor\Session\Session;
 use App\Domain\User\User;
 use App\Domain\User\UserRepository;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class AzureSsoController extends ApiController
 {
@@ -331,8 +331,8 @@ use Luminor\Auth\OpenId\OpenIdProvider;
 use Luminor\Auth\OpenId\OpenIdService;
 use Luminor\Session\Session;
 use App\Domain\User\UserRepository;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class GoogleSsoController extends ApiController
 {
@@ -459,8 +459,8 @@ use Luminor\Auth\OpenId\OpenIdService;
 use Luminor\DDD\Infrastructure\Http\ApiController;
 use Luminor\Session\Session;
 use App\Domain\User\UserRepository;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class OktaSsoController extends ApiController
 {
@@ -549,8 +549,8 @@ namespace App\Http\Controllers;
 use Luminor\Auth\OpenId\OpenIdProvider;
 use Luminor\Auth\OpenId\OpenIdService;
 use Luminor\DDD\Infrastructure\Http\ApiController;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class SsoController extends ApiController
 {

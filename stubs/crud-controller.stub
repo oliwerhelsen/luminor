@@ -7,8 +7,8 @@ namespace {{ namespace }};
 use Luminor\DDD\Infrastructure\Http\CrudController;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Application\Bus\QueryBusInterface;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 /**
  * {{ class }} CRUD controller.

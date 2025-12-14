@@ -12,8 +12,8 @@ use Example\BasicApi\Application\Queries\ListProductsQuery;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Application\Bus\QueryBusInterface;
 use Luminor\DDD\Infrastructure\Http\ApiController;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 /**
  * Product API Controller demonstrating CQRS pattern usage.

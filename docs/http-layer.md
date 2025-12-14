@@ -8,7 +8,7 @@ description: "Controllers, Routes, Middleware, and Request/Response handling"
 
 # HTTP Layer
 
-The HTTP layer integrates with Utopia PHP to provide a clean API for your domain-driven application.
+The HTTP layer provides a clean, expressive API for building REST APIs with your domain-driven application. Built on Symfony HttpFoundation, it offers flexibility to run on PHP-FPM, Swoole, or FrankenPHP.
 
 ## Controllers
 
@@ -24,8 +24,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Http\Controllers;
 
 use Luminor\DDD\Infrastructure\Http\ApiController;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class ProductController extends ApiController
 {
@@ -124,58 +124,64 @@ $this->serverError($response, 'Something went wrong');
 ```php
 <?php
 
-use Utopia\Http\Http;
+use Luminor\DDD\Http\Routing\Router;
+use App\Infrastructure\Http\Controllers\ProductController;
 
-$http = Http::getInstance();
+$router = Router::getInstance();
 
 // GET request
-$http->get('/products')
-    ->inject('request')
-    ->inject('response')
-    ->inject('productController')
-    ->action(function ($request, $response, $controller) {
-        return $controller->index($request, $response);
-    });
+$router->get('/products', [ProductController::class, 'index']);
 
 // GET with parameter
-$http->get('/products/:id')
-    ->param('id', '', 'string', 'Product ID')
-    ->inject('request')
-    ->inject('response')
-    ->inject('productController')
-    ->action(function ($id, $request, $response, $controller) {
-        return $controller->show($request, $response, $id);
-    });
+$router->get('/products/:id', [ProductController::class, 'show']);
 
 // POST request
-$http->post('/products')
-    ->inject('request')
-    ->inject('response')
-    ->inject('productController')
-    ->action(function ($request, $response, $controller) {
-        return $controller->store($request, $response);
-    });
+$router->post('/products', [ProductController::class, 'store']);
+
+// PUT request
+$router->put('/products/:id', [ProductController::class, 'update']);
+
+// DELETE request
+$router->delete('/products/:id', [ProductController::class, 'destroy']);
 ```
 
 ### Route Groups
 
-Use the RouteRegistrar for cleaner route definitions:
+Use route groups for shared attributes:
 
 ```php
 <?php
 
-use Luminor\DDD\Infrastructure\Http\RouteRegistrar;
+use Luminor\DDD\Http\Routing\Router;
+use App\Infrastructure\Http\Middleware\AuthMiddleware;
 
-$registrar = new RouteRegistrar($http);
+$router = Router::getInstance();
 
-$registrar->group('/api/v1', function (RouteRegistrar $routes) {
-    $routes->resource('products', ProductController::class);
-    $routes->resource('orders', OrderController::class);
+$router->group(['prefix' => '/api/v1', 'middleware' => [AuthMiddleware::class]], function (Router $r) {
+    $r->resource('/products', ProductController::class);
+    $r->resource('/orders', OrderController::class);
 
-    $routes->group('/admin', function (RouteRegistrar $routes) {
-        $routes->resource('users', AdminUserController::class);
+    $r->group(['prefix' => '/admin'], function (Router $r) {
+        $r->resource('/users', AdminUserController::class);
     });
 });
+```
+
+### Resource Routes
+
+Register all CRUD routes with a single call:
+
+```php
+<?php
+
+// Creates: GET /products, POST /products, GET /products/:id, PUT /products/:id, DELETE /products/:id
+$router->resource('/products', ProductController::class);
+
+// Only specific actions
+$router->resource('/products', ProductController::class, ['only' => ['index', 'show']]);
+
+// Except specific actions
+$router->resource('/products', ProductController::class, ['except' => ['destroy']]);
 ```
 
 ## Middleware
@@ -190,8 +196,8 @@ declare(strict_types=1);
 namespace App\Infrastructure\Http\Middleware;
 
 use Luminor\DDD\Infrastructure\Http\Middleware\MiddlewareInterface;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class RateLimitMiddleware implements MiddlewareInterface
 {
@@ -291,35 +297,31 @@ $cors = new CorsMiddleware(
 <?php
 
 use Luminor\DDD\Infrastructure\Http\ExceptionHandler;
+use Luminor\DDD\Http\HttpKernel;
 
 $handler = new ExceptionHandler(debug: $config['app']['debug']);
 
 // Register custom handlers
 $handler->register(ValidationException::class, function ($e, $response) {
-    return $response
-        ->setStatusCode(422)
-        ->json([
-            'error' => 'Validation failed',
-            'errors' => $e->getErrors(),
-        ]);
+    $response->setStatusCode(422);
+    return $response->json([
+        'error' => 'Validation failed',
+        'errors' => $e->getErrors(),
+    ]);
 });
 
 $handler->register(DomainException::class, function ($e, $response) {
-    return $response
-        ->setStatusCode(400)
-        ->json([
-            'error' => $e->getMessage(),
-            'code' => $e->getCode(),
-        ]);
+    $response->setStatusCode(400);
+    return $response->json([
+        'error' => $e->getMessage(),
+        'code' => $e->getCode(),
+    ]);
 });
 
-// Use in error handling
-$http->error()
-    ->inject('error')
-    ->inject('response')
-    ->action(function ($error, $response) use ($handler) {
-        return $handler->handle($error, $response);
-    });
+// Use in HttpKernel
+$kernel = new HttpKernel($basePath);
+$kernel->setExceptionHandler($handler);
+$kernel->run();
 ```
 
 ## Request Validation
@@ -330,20 +332,48 @@ $http->error()
 <?php
 
 use Luminor\DDD\Infrastructure\Http\Middleware\ValidationMiddleware;
+use Luminor\DDD\Http\Routing\Router;
 
-$validation = new ValidationMiddleware([
-    'name' => ['required', 'string', 'max:255'],
-    'email' => ['required', 'email'],
-    'password' => ['required', 'string', 'min:8'],
-]);
+$router = Router::getInstance();
 
-$http->post('/users')
-    ->middleware($validation)
-    ->inject('request')
-    ->inject('response')
-    ->action(function ($request, $response) {
-        // Request is already validated
-    });
+// Apply validation middleware to route
+$router->post('/users', [UserController::class, 'store'])
+    ->middleware([
+        new ValidationMiddleware([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email'],
+            'password' => ['required', 'string', 'min:8'],
+        ]),
+    ]);
+```
+
+### Controller-Level Validation
+
+```php
+<?php
+
+final class UserController extends ApiController
+{
+    public function store(Request $request, Response $response): Response
+    {
+        $data = $request->getPayload();
+
+        // Manual validation
+        $errors = [];
+        if (empty($data['name'])) {
+            $errors['name'] = ['Name is required'];
+        }
+        if (empty($data['email']) || !filter_var($data['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = ['Valid email is required'];
+        }
+
+        if (!empty($errors)) {
+            return $this->validationError($response, $errors);
+        }
+
+        // Process validated data...
+    }
+}
 ```
 
 ## Best Practices

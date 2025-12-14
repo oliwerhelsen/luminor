@@ -297,55 +297,22 @@ declare(strict_types=1);
  * Define your module's HTTP routes here.
  */
 
-use Utopia\\Http\\Http;
+use Luminor\\DDD\\Http\\Routing\\Router;
 
 // Example routes for the {$moduleName} module
 // Uncomment and customize as needed
 
-// \$http = Http::getInstance();
+// \$router = Router::getInstance();
 
-// List all
-// \$http->get('/{$resourcePlural}')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (\$request, \$response) {
-//         // Handle list request
-//     });
+// Register resource routes (CRUD)
+// \$router->resource('/{$resourcePlural}', {$moduleName}Controller::class);
 
-// Get one
-// \$http->get('/{$resourcePlural}/:id')
-//     ->param('id', '', 'string', 'Resource ID')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (string \$id, \$request, \$response) {
-//         // Handle get request
-//     });
-
-// Create
-// \$http->post('/{$resourcePlural}')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (\$request, \$response) {
-//         // Handle create request
-//     });
-
-// Update
-// \$http->put('/{$resourcePlural}/:id')
-//     ->param('id', '', 'string', 'Resource ID')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (string \$id, \$request, \$response) {
-//         // Handle update request
-//     });
-
-// Delete
-// \$http->delete('/{$resourcePlural}/:id')
-//     ->param('id', '', 'string', 'Resource ID')
-//     ->inject('request')
-//     ->inject('response')
-//     ->action(function (string \$id, \$request, \$response) {
-//         // Handle delete request
-//     });
+// Or register individual routes:
+// \$router->get('/{$resourcePlural}', [{$moduleName}Controller::class, 'index']);
+// \$router->get('/{$resourcePlural}/:id', [{$moduleName}Controller::class, 'show']);
+// \$router->post('/{$resourcePlural}', [{$moduleName}Controller::class, 'store']);
+// \$router->put('/{$resourcePlural}/:id', [{$moduleName}Controller::class, 'update']);
+// \$router->delete('/{$resourcePlural}/:id', [{$moduleName}Controller::class, 'destroy']);
 
 PHP;
 

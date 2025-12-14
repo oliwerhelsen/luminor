@@ -11,8 +11,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 /**
  * HTTP Response wrapper providing a clean API over Symfony HttpFoundation.
  *
- * This class maintains API compatibility with the previous Utopia HTTP integration
- * while using Symfony HttpFoundation under the hood.
+ * Provides convenient methods for building HTTP responses including JSON,
+ * redirects, cookies, and more.
  */
 class Response
 {

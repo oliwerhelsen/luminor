@@ -9,8 +9,8 @@ use Symfony\Component\HttpFoundation\Request as SymfonyRequest;
 /**
  * HTTP Request wrapper providing a clean API over Symfony HttpFoundation.
  *
- * This class maintains API compatibility with the previous Utopia HTTP integration
- * while using Symfony HttpFoundation under the hood.
+ * Provides convenient methods for accessing request data including query parameters,
+ * payload data, headers, and more.
  */
 class Request
 {

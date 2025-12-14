@@ -7,7 +7,7 @@ namespace Luminor\DDD\Tests\Unit\Multitenancy;
 use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Multitenancy\TenantResolver;
 use Luminor\DDD\Multitenancy\TenantResolverInterface;
-use Utopia\Http\Request;
+use Luminor\DDD\Http\Request;
 
 final class TenantResolverTest extends TestCase
 {

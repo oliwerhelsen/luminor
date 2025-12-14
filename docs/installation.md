@@ -136,7 +136,7 @@ declare(strict_types=1);
 require __DIR__ . '/../vendor/autoload.php';
 
 use Luminor\DDD\Kernel;
-use Utopia\Http\Http;
+use Luminor\DDD\Http\HttpKernel;
 
 // Bootstrap the framework
 $kernel = new Kernel(__DIR__ . '/..');

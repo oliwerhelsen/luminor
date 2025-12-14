@@ -10,7 +10,7 @@ permalink: /
 
 {: .fs-9 }
 
-A modern, open-source Domain-Driven Design (DDD) framework for PHP, built on top of Utopia PHP.
+A modern, open-source Domain-Driven Design (DDD) framework for PHP, built on Symfony HttpFoundation.
 {: .fs-6 .fw-300 }
 
 [Get Started](getting-started){: .btn .btn-primary .fs-5 .mb-4 .mb-md-0 .mr-2 }
