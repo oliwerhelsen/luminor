@@ -4,7 +4,7 @@
 [![PHP Version](https://img.shields.io/badge/php-%3E%3D8.2-8892BF.svg)](https://php.net/)
 [![Tests](https://img.shields.io/badge/tests-passing-brightgreen.svg)]()
 
-A modern, open-source Domain-Driven Design (DDD) framework built on top of [Utopia PHP](https://github.com/utopia-php), designed for building REST APIs and domain-driven applications. Heavily inspired by [Laravel](https://laravel.com), bringing its elegant developer experience to the world of Domain-Driven Design.
+A modern, open-source Domain-Driven Design (DDD) framework built on [Symfony HttpFoundation](https://symfony.com/doc/current/components/http_foundation.html), designed for building REST APIs and domain-driven applications. Heavily inspired by [Laravel](https://laravel.com), bringing its elegant developer experience to the world of Domain-Driven Design.
 
 ## Features
 
@@ -23,7 +23,7 @@ A modern, open-source Domain-Driven Design (DDD) framework built on top of [Utop
 - **Temporal Queries** - Query events by date range, type, or aggregate
 
 ### Infrastructure & Tools
-- **HTTP Layer Integration** - Seamless integration with Utopia PHP HTTP library
+- **HTTP Layer Integration** - Built on Symfony HttpFoundation with support for PHP-FPM, Swoole, and FrankenPHP
 - **Authentication & Authorization** - Role-based access control with policy support
 - **OpenAPI Documentation** - Automatic API documentation generation with PHP attributes
 - **Observability & Metrics** - Track performance with counters, gauges, histograms, and timers

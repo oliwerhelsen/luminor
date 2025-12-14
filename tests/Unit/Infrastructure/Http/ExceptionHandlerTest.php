@@ -154,7 +154,7 @@ final class ExceptionHandlerTest extends TestCase
         });
 
         // Create a mock response to test handle() method
-        // Since we can't easily mock Utopia\Http\Response, we test toArray instead
+        // Since we can't easily mock Luminor\DDD\Http\Response, we test toArray instead
         // which is used internally
         $exception = new \Exception('Test error');
         $handler->toArray($exception);

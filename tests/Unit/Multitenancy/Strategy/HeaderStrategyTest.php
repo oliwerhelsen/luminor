@@ -6,7 +6,7 @@ namespace Luminor\DDD\Tests\Unit\Multitenancy\Strategy;
 
 use PHPUnit\Framework\TestCase;
 use Luminor\DDD\Multitenancy\Strategy\HeaderStrategy;
-use Utopia\Http\Request;
+use Luminor\DDD\Http\Request;
 
 final class HeaderStrategyTest extends TestCase
 {

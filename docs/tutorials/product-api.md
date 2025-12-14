@@ -676,8 +676,8 @@ use App\Application\Queries\ListProductsQuery;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Application\Bus\QueryBusInterface;
 use Luminor\DDD\Infrastructure\Http\ApiController;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class ProductController extends ApiController
 {
@@ -806,7 +806,7 @@ use App\Infrastructure\Http\Controllers\ProductController;
 use App\Infrastructure\Persistence\InMemoryProductRepository;
 use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
 use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
-use Utopia\Http\Http;
+use Luminor\DDD\Http\HttpKernel;
 
 // Create HTTP instance
 $http = Http::getInstance();

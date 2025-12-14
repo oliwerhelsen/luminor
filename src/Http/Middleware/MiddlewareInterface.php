@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Luminor\DDD\Infrastructure\Http\Middleware;
+namespace Luminor\DDD\Http\Middleware;
 
 use Luminor\DDD\Http\Request;
 use Luminor\DDD\Http\Response;
@@ -10,16 +10,16 @@ use Luminor\DDD\Http\Response;
 /**
  * Interface for HTTP middleware.
  *
- * Middleware can intercept HTTP requests before they reach
- * their handlers and responses before they are sent to clients.
+ * Middleware can inspect and modify requests and responses,
+ * and control whether the next handler in the pipeline is called.
  */
 interface MiddlewareInterface
 {
     /**
-     * Handle an HTTP request.
+     * Handle the request.
      *
      * @param Request $request The incoming request
-     * @param Response $response The response object
+     * @param Response $response The response to populate
      * @param callable(Request, Response): void $next The next handler in the pipeline
      */
     public function handle(Request $request, Response $response, callable $next): void;

@@ -549,8 +549,8 @@ namespace App\Http\Middleware;
 
 use Luminor\Auth\AuthenticationManager;
 use Luminor\Auth\CurrentUser;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class AuthMiddleware
 {
@@ -614,8 +614,8 @@ declare(strict_types=1);
 namespace App\Http\Middleware;
 
 use Luminor\Auth\CurrentUser;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class GuestMiddleware
 {
@@ -654,8 +654,8 @@ use App\Domain\User\User;
 use App\Domain\User\UserRepository;
 use App\Mail\PasswordResetMail;
 use App\Mail\VerificationMail;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class AuthController extends ApiController
 {

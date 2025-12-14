@@ -545,7 +545,7 @@ use Luminor\Auth\AuthenticationProvider;
 use Luminor\Auth\AuthenticatableInterface;
 use Luminor\Auth\AuthenticationException;
 use App\Domain\User\UserRepository;
-use Utopia\Http\Request;
+use Luminor\DDD\Http\Request;
 
 final class ApiTokenAuthenticationProvider implements AuthenticationProvider
 {
@@ -648,8 +648,8 @@ use Luminor\DDD\Infrastructure\Http\ApiController;
 use Luminor\Auth\CurrentUser;
 use App\Auth\ApiTokenService;
 use App\Auth\TokenScopes;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class ApiTokenController extends ApiController
 {
@@ -791,8 +791,8 @@ namespace App\Http\Middleware;
 
 use Luminor\Auth\AuthorizationException;
 use App\Auth\TokenScopes;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class RequireScope
 {

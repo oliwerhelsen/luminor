@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 /**
  * Basic API Example - Entry Point
- * 
+ *
  * This demonstrates a simple REST API using the Luminor DDD Framework.
  */
 
@@ -20,17 +20,16 @@ use Example\BasicApi\Application\Handlers\ListProductsQueryHandler;
 use Example\BasicApi\Application\Handlers\UpdateProductCommandHandler;
 use Example\BasicApi\Application\Queries\GetProductQuery;
 use Example\BasicApi\Application\Queries\ListProductsQuery;
-use Example\BasicApi\Domain\Repository\ProductRepositoryInterface;
 use Example\BasicApi\Infrastructure\Http\Controllers\ProductController;
 use Example\BasicApi\Infrastructure\Persistence\InMemoryProductRepository;
 use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
 use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
-use Utopia\Http\Http;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\HttpKernel;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
-// Create the HTTP instance
-$http = Http::getInstance();
-$http->setMode(Http::MODE_DEFAULT);
+// Create the HTTP kernel
+$http = HttpKernel::getInstance();
 
 // Set up repository (in-memory for this example)
 $productRepository = new InMemoryProductRepository();
@@ -65,55 +64,34 @@ $queryBus->registerHandler(
 $productController = new ProductController($commandBus, $queryBus);
 
 // Define routes
-$http->get('/products')
-    ->inject('request')
-    ->inject('response')
-    ->action(function ($request, $response) use ($productController) {
-        return $productController->index($request, $response);
-    });
+$http->get('/products', function (Request $request, Response $response) use ($productController) {
+    $productController->index($request, $response);
+});
 
-$http->get('/products/:id')
-    ->param('id', '', 'string', 'Product ID')
-    ->inject('request')
-    ->inject('response')
-    ->action(function ($id, $request, $response) use ($productController) {
-        return $productController->show($request, $response, $id);
-    });
+$http->get('/products/:id', function (Request $request, Response $response) use ($productController) {
+    $productController->show($request, $response);
+});
 
-$http->post('/products')
-    ->inject('request')
-    ->inject('response')
-    ->action(function ($request, $response) use ($productController) {
-        return $productController->store($request, $response);
-    });
+$http->post('/products', function (Request $request, Response $response) use ($productController) {
+    $productController->store($request, $response);
+});
 
-$http->put('/products/:id')
-    ->param('id', '', 'string', 'Product ID')
-    ->inject('request')
-    ->inject('response')
-    ->action(function ($id, $request, $response) use ($productController) {
-        return $productController->update($request, $response, $id);
-    });
+$http->put('/products/:id', function (Request $request, Response $response) use ($productController) {
+    $productController->update($request, $response);
+});
 
-$http->delete('/products/:id')
-    ->param('id', '', 'string', 'Product ID')
-    ->inject('request')
-    ->inject('response')
-    ->action(function ($id, $request, $response) use ($productController) {
-        return $productController->destroy($request, $response, $id);
-    });
+$http->delete('/products/:id', function (Request $request, Response $response) use ($productController) {
+    $productController->destroy($request, $response);
+});
 
 // Error handling
-$http->error()
-    ->inject('error')
-    ->inject('response')
-    ->action(function ($error, Response $response) {
-        $response->setStatusCode(500);
-        return $response->json([
-            'error' => 'Internal Server Error',
-            'message' => $error->getMessage(),
-        ]);
-    });
+$http->onError(function (\Throwable $error, Request $request, Response $response) {
+    $response->setStatusCode(500);
+    $response->json([
+        'error' => 'Internal Server Error',
+        'message' => $error->getMessage(),
+    ]);
+});
 
-// Start the application
-$http->start();
+// Run the application
+$http->run();

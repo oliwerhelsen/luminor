@@ -12,8 +12,8 @@ use Luminor\DDD\Domain\Repository\Criteria;
 use Luminor\DDD\Domain\Repository\Filter\EqualsFilter;
 use Luminor\DDD\Domain\Repository\Pagination;
 use Luminor\DDD\Domain\Repository\Sorting;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 /**
  * Base controller for automatic CRUD endpoints.

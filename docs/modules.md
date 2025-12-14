@@ -177,7 +177,7 @@ Define routes in the module's routes file:
 
 declare(strict_types=1);
 
-use Utopia\Http\Http;
+use Luminor\DDD\Http\HttpKernel;
 
 $http = Http::getInstance();
 

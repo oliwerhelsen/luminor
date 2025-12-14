@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Luminor\DDD\Multitenancy;
 
-use Utopia\Http\Request;
+use Luminor\DDD\Http\Request;
 
 /**
  * Composite tenant resolver that tries multiple strategies in order.

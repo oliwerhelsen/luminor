@@ -153,8 +153,8 @@ namespace App\Infrastructure\Http\Controllers;
 use App\Application\Commands\CreateUserCommand;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Infrastructure\Http\ApiController;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class UserController extends ApiController
 {
@@ -187,7 +187,7 @@ In your `public/index.php` or a routes file:
 ```php
 <?php
 
-use Utopia\Http\Http;
+use Luminor\DDD\Http\HttpKernel;
 
 $http = Http::getInstance();
 

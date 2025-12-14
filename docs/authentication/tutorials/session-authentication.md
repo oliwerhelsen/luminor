@@ -430,8 +430,8 @@ use Luminor\Auth\AuthenticationException;
 use App\Auth\SessionAuthService;
 use App\Mail\PasswordResetMail;
 use App\Mail\VerificationMail;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class AuthController extends ApiController
 {

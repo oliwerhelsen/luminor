@@ -516,8 +516,8 @@ use Luminor\DDD\Infrastructure\Http\ApiController;
 use Luminor\Auth\CurrentUser;
 use Luminor\Auth\AuthenticationException;
 use App\Auth\Mfa\MfaService;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class MfaController extends ApiController
 {
@@ -671,8 +671,8 @@ use Luminor\Auth\AuthenticationException;
 use App\Auth\SessionAuthService;
 use App\Auth\Mfa\MfaService;
 use Luminor\Session\Session;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class AuthController extends ApiController
 {

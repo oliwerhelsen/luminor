@@ -8,8 +8,8 @@ use Luminor\DDD\Application\Validation\Rules;
 use Luminor\DDD\Application\Validation\ValidationException;
 use Luminor\DDD\Application\Validation\ValidationResult;
 use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 /**
  * Middleware for validating incoming request data.

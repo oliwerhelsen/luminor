@@ -12,7 +12,6 @@ use Luminor\DDD\Container\ServiceProviderInterface;
 use Luminor\DDD\Module\ModuleInterface;
 use Luminor\DDD\Module\ModuleLoader;
 use Luminor\DDD\Support\Env;
-use Utopia\Http\Http;
 
 /**
  * Application kernel for bootstrapping the DDD framework.

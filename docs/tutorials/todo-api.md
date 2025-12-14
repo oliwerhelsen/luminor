@@ -583,8 +583,8 @@ use App\Application\Queries\ListTodosQuery;
 use Luminor\DDD\Application\Bus\CommandBusInterface;
 use Luminor\DDD\Application\Bus\QueryBusInterface;
 use Luminor\DDD\Infrastructure\Http\ApiController;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class TodoController extends ApiController
 {
@@ -702,7 +702,7 @@ use App\Infrastructure\Http\Controllers\TodoController;
 use App\Infrastructure\Persistence\InMemoryTodoRepository;
 use Luminor\DDD\Infrastructure\Bus\SimpleCommandBus;
 use Luminor\DDD\Infrastructure\Bus\SimpleQueryBus;
-use Utopia\Http\Http;
+use Luminor\DDD\Http\HttpKernel;
 
 // Create HTTP instance
 $http = Http::getInstance();

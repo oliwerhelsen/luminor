@@ -6,7 +6,7 @@ namespace Luminor\DDD\Infrastructure\Http\Response;
 
 use Luminor\DDD\Application\DTO\DataTransferObject;
 use Luminor\DDD\Application\DTO\PagedResult;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Response;
 
 /**
  * Standardized API response format.

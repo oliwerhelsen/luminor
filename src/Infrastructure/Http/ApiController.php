@@ -12,8 +12,8 @@ use Luminor\DDD\Application\DTO\PagedResult;
 use Luminor\DDD\Infrastructure\Http\Response\ApiResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ErrorResponse;
 use Luminor\DDD\Infrastructure\Http\Response\ValidationErrorResponse;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 /**
  * Base API controller with common helpers.

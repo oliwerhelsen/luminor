@@ -7,8 +7,8 @@ namespace Luminor\DDD\Infrastructure\Http\Middleware;
 use Luminor\DDD\Session\SessionInterface;
 use Luminor\DDD\Security\Csrf\CsrfToken;
 use Luminor\DDD\Security\Csrf\CsrfException;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 /**
  * CSRF Protection Middleware

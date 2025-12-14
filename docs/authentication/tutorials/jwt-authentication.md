@@ -193,8 +193,8 @@ use Luminor\DDD\Infrastructure\Http\ApiController;
 use Luminor\Auth\AuthenticationException;
 use Luminor\Auth\CurrentUser;
 use App\Auth\AuthService;
-use Utopia\Http\Request;
-use Utopia\Http\Response;
+use Luminor\DDD\Http\Request;
+use Luminor\DDD\Http\Response;
 
 final class AuthController extends ApiController
 {
