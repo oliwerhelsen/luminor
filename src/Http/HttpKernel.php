@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Luminor\Http;
 
+use Luminor\Http\OpenApi\OpenApiDevelopmentRoutes;
+use Luminor\Http\OpenApi\OpenApiGenerator;
 use Luminor\Http\Routing\Router;
 
 /**
@@ -17,6 +19,8 @@ class HttpKernel
     private static ?HttpKernel $instance = null;
 
     private Router $router;
+
+    private ?OpenApiGenerator $openApiGenerator = null;
 
     /** @var callable|null Error handler */
     private $errorHandler = null;
@@ -186,6 +190,56 @@ class HttpKernel
     public function pushMiddleware(string|array $middleware): self
     {
         $this->router->pushMiddleware($middleware);
+        return $this;
+    }
+
+    // ========================================
+    // Development Mode Features
+    // ========================================
+
+    /**
+     * Enable Swagger UI as the index page in development mode.
+     *
+     * This registers:
+     * - "/" - Swagger UI for interactive API documentation
+     * - "/api/openapi.json" - OpenAPI specification endpoint
+     *
+     * @param array{
+     *     name?: string,
+     *     version?: string,
+     *     openapi?: array{
+     *         info?: array{title?: string, version?: string, description?: string},
+     *         spec_path?: string,
+     *         servers?: array<array{url: string, description?: string}>
+     *     }
+     * } $config Application configuration
+     */
+    public function enableDevelopmentDocs(array $config = []): self
+    {
+        $devRoutes = OpenApiDevelopmentRoutes::createFromConfig($this, $config);
+        $devRoutes->register();
+
+        return $this;
+    }
+
+    /**
+     * Get or create the OpenAPI generator for this kernel.
+     */
+    public function getOpenApiGenerator(): OpenApiGenerator
+    {
+        if ($this->openApiGenerator === null) {
+            $this->openApiGenerator = new OpenApiGenerator('API', '1.0.0');
+        }
+
+        return $this->openApiGenerator;
+    }
+
+    /**
+     * Set the OpenAPI generator for this kernel.
+     */
+    public function setOpenApiGenerator(OpenApiGenerator $generator): self
+    {
+        $this->openApiGenerator = $generator;
         return $this;
     }
 }
