@@ -5,6 +5,31 @@ All notable changes to the Luminor DDD Framework will be documented in this file
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0] - 2025-12-14
+
+### ✨ Test Command & Namespace Simplification
+
+This release adds a convenient test runner command and simplifies the namespace structure for better developer experience.
+
+### Added
+
+- **TestCommand** - New `test` console command for running PHPUnit tests
+  - Filter tests by class name, method name, or pattern
+  - Code coverage support with `--coverage` and `--coverage-html` options
+  - Test suite filtering with `--testsuite` option
+  - Group filtering with `--group` and `--exclude-group` options
+  - Stop on failure/error options for faster feedback
+  - Parallel test execution support with ParaTest (`--parallel`)
+  - Configurable process count for parallel runs
+  - Verbose output mode
+
+### Changed
+
+- **Namespace Simplification** - Refactored from `Luminor\DDD` to `Luminor` for consistency
+  - Simplified import statements across the framework
+  - Updated all documentation to reflect new namespace structure
+  - Improved code organization and maintainability
+
 ## [2.1.0] - 2025-12-14
 
 ### 🚀 Symfony HttpFoundation Migration & Multi-Server Support
