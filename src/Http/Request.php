@@ -235,6 +235,14 @@ class Request
     }
 
     /**
+     * Get the hostname (alias for getHost).
+     */
+    public function getHostname(): string
+    {
+        return $this->symfonyRequest->getHost();
+    }
+
+    /**
      * Get the full URL.
      */
     public function getUrl(): string
