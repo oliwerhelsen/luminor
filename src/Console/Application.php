@@ -104,6 +104,9 @@ final class Application
         $this->register(new Commands\MigrateResetCommand());
         $this->register(new Commands\MigrateFreshCommand());
         $this->register(new Commands\MigrateStatusCommand());
+
+        // Testing commands
+        $this->register(new Commands\TestCommand());
     }
 
     /**
